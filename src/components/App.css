@@ -1,0 +1,132 @@
+@import '~antd/dist/antd.css';
+
+.daily_chart_container{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.write_container img{
+  cursor: pointer;
+}
+.ant-btn{
+  font-size:11px;
+}
+svg{
+  cursor: pointer;
+}
+
+.logo img{
+  width:110px;
+  padding-left:20px;
+  margin-bottom:-15px;
+
+}
+.ant-layout-header{
+  padding:0;
+}
+
+.ant-layout-content{
+  min-height: 80vh;
+  background:white;
+  width:100%;
+  margin:auto;
+}
+.ant-layout{
+  background-color:white;
+}
+
+.ant-alert.ant-alert-no-icon{
+  margin:auto;
+  margin-bottom:10px;
+  width:1340px;
+  padding:0 0 0 10px;
+}
+
+.book_ads_card_container{
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  width:1340px;
+  margin:auto;
+  margin-top:20px;
+  margin-bottom:20px;
+}
+.ant-card-cover img{
+  margin-top:-1px;
+}
+
+.welcome_img_container{
+  width:100%;
+  margin:auto;
+}
+
+.daily_chart_container{
+  width:1340px;
+  margin:auto;
+}
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+  line-height: 1;
+  height:100%;
+}
+html {
+  height:100%;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+*{
+  box-sizing: border-box;
+}
+
+.ant-layout-footer {
+  margin-top:30px;
+  font-size:10px;
+  height: 100px;
+  width: 100%;
+  color: #a6a6a6;
+  background-color: #f5f5f5;
+}
+.opensky_logo{
+  width:50px;
+  margin-bottom:-5px;
+}
