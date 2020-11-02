@@ -1,13 +1,10 @@
 import React, { Suspense } from 'react';
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import NavBar from "./Main/NavBar/NavBar";
 import { Layout, Affix } from 'antd';
 import './App.css'
+import Register from './Account/Register'
 const { Header, Content, Footer } = Layout;
-
-//null   Anyone Can go inside
-//true   only logged in user can go inside
-//false  logged in user can't go inside
 
 function App() {
   return (
@@ -20,7 +17,7 @@ function App() {
         </Header>
         <Content>
           <Switch>
-
+            <Route exact path="/register" component={Register} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>
