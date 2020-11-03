@@ -13,7 +13,6 @@
   transform: translateX(-50%);
   width: 400px;
   margin:auto;
-  border-radius:5px;
 }
 
 .register_form .ant-form-item-label{
@@ -27,5 +26,4 @@
   left:50%;
   transform: translateX(-50%);
   margin:auto;
-  border-radius:5px;
 }

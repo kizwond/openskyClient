@@ -4,6 +4,7 @@ import NavBar from "./Main/NavBar/NavBar";
 import { Layout, Affix } from 'antd';
 import './App.css'
 import Register from './Account/Register'
+import Login from './Account/Login'
 const { Header, Content, Footer } = Layout;
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Content>
           <Switch>
             <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>

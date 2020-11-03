@@ -1,0 +1,27 @@
+
+
+.login-form-button{
+  width:300px;
+}
+.find_my_info_container{
+  width:300px;
+  font-size:10px;
+  text-align: center;
+}
+
+.login_container {
+  position: relative;
+  min-height: 83vh;
+  background: #f5f5f5;
+  width: 100%;
+  margin: auto;
+}
+
+.login-form{
+  position: absolute;
+  top:30%;
+  left:50%;
+  transform: translateX(-50%);
+  width: 300px;
+  margin:auto;
+}
