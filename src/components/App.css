@@ -1,20 +1,7 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
-.daily_chart_container{
-  display:flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
 
-.write_container img{
-  cursor: pointer;
-}
-.ant-btn{
-  font-size:11px;
-}
-svg{
-  cursor: pointer;
-}
 
 .logo img{
   width:110px;
@@ -32,10 +19,6 @@ svg{
   width:100%;
   margin:auto;
 }
-.ant-layout{
-  background-color:white;
-}
-
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -65,6 +48,7 @@ footer, header, hgroup, menu, nav, section {
 body {
   line-height: 1;
   height:100%;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 html {
   height:100%;

@@ -1,11 +1,9 @@
 @import '~antd/dist/antd.css';
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap');
+
 .ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub{
   background-color:#222;
-  border-bottom:1px solid black;
 }
 .ant-layout-header{
-
   height:52px;
   line-height: 52px;
 }
@@ -53,5 +51,6 @@
 
 .ant-menu-item{
   font-family: 'Nanum Gothic', sans-serif;
+  font-weight:700;
   font-size:12px;
 }

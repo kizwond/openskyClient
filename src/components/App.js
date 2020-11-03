@@ -5,6 +5,7 @@ import { Layout, Affix } from 'antd';
 import './App.css'
 import Register from './Account/Register'
 import Login from './Account/Login'
+import Home from './Main/Home/Home'
 const { Header, Content, Footer } = Layout;
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         </Header>
         <Content>
           <Switch>
+            <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
           </Switch>

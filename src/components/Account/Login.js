@@ -9,6 +9,7 @@ const NormalLoginForm = () => {
 
   return (
     <div className="login_container">
+      <div className="login_title"><img src="img/logo.png" alt="logo"/></div>
       <Form
         name="normal_login"
         className="login-form"

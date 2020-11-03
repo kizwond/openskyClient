@@ -28,7 +28,7 @@ const RegistrationForm = () => {
   );
   return (
     <div className="register_form_container">
-      <div className="register_title">콕북 회원가입</div>
+      <div className="register_title"><img src="img/logo.png" alt="logo"/></div>
       <Form
         form={form}
         className="register_form"
