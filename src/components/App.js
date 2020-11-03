@@ -6,6 +6,9 @@ import './App.css'
 import Register from './Account/Register'
 import Login from './Account/Login'
 import Home from './Main/Home/Home'
+import Study from './Study/Study'
+import Write from './Write/Write'
+import Store from './Store/Store'
 const { Header, Content, Footer } = Layout;
 
 function App() {
@@ -22,6 +25,9 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/study" component={Study} />
+            <Route exact path="/write" component={Write} />
+            <Route exact path="/store" component={Store} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>

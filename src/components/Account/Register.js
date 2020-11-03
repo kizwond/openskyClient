@@ -9,11 +9,12 @@ import {
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import './Register.css'
 
-const RegistrationForm = () => {
+const RegistrationForm = (props) => {
   const [form] = Form.useForm();
   const { Option } = Select;
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    console.log('Received values of form: ', values)
+    props.history.push("/login");
   };
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>

@@ -18,8 +18,8 @@ class NavBar extends React.Component {
     this.setState({ current: e.key });
   };
 
-  onClickLogoHandler = e => {
-    this.setState({ current : e.key})
+  onClickLogoHandler = () => {
+    this.setState({ current : "home"})
   }
 
   render(){

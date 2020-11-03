@@ -1,6 +1,7 @@
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './Login.css'
+import { NavLink} from 'react-router-dom';
 
 const NormalLoginForm = () => {
   const onFinish = (values) => {
@@ -53,7 +54,7 @@ const NormalLoginForm = () => {
         <div className="find_my_info_container">
             <a className="login-form-forgot" href="/">아이디 찾기 / </a>
             <a className="login-form-forgot" href="/"> 비밀번호 찾기 / </a>
-            <a href="/register"> 회원가입</a>
+            <NavLink to="/register">회원가입</NavLink>
         </div>
       </Form>
     </div>
