@@ -16,17 +16,17 @@ const RegistrationForm = (props) => {
     console.log('Received values of form: ', values)
     props.history.push("/login");
   };
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="82">+82</Option>
-      </Select>
-    </Form.Item>
-  );
+  // const prefixSelector = (
+  //   <Form.Item name="prefix" noStyle>
+  //     <Select
+  //       style={{
+  //         width: 70,
+  //       }}
+  //     >
+  //       <Option value="82">+82</Option>
+  //     </Select>
+  //   </Form.Item>
+  // );
   return (
     <div className="register_form_container">
       <div className="register_title"><img src="img/logo.png" alt="logo"/></div>
@@ -90,7 +90,7 @@ const RegistrationForm = (props) => {
         >
           <Input.Password />
         </Form.Item>
-
+{/* 
         <Form.Item
           name="name"
           label="이름"
@@ -172,7 +172,7 @@ const RegistrationForm = (props) => {
           <Checkbox>
             CogBook <a href="/">이용약관</a> 동의
           </Checkbox>
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Register
