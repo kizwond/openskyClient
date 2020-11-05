@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import {
   Form,
   Select,
@@ -13,8 +15,19 @@ const RegistrationForm = (props) => {
   const [form] = Form.useForm();
   const { Option } = Select;
   const onFinish = (values) => {
-    console.log('Received values of form: ', values)
-    props.history.push("/login");
+    console.log(values)
+    axios.post('api/user/register', {
+      user_id:values.user_id,
+      password:values.password
+    })
+    .then(res => {
+      console.log(res.data)
+      // props.history.push("/login");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
   };
   // const prefixSelector = (
   //   <Form.Item name="prefix" noStyle>
