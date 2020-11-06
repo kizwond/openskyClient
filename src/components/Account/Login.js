@@ -2,10 +2,27 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './Login.css'
 import { NavLink} from 'react-router-dom';
+import axios from 'axios'
 
-const NormalLoginForm = () => {
+const NormalLoginForm = (props) => {
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    axios.post('api/user/login', {
+      user_id:values.user_id,
+      password:values.password
+    })
+    .then(res => {
+      console.log(res.data)
+      if(res.data.msg === "아이디가 없는 듯요"){
+        alert('유저정보가 없습니다. 아이디와 비밀번호를 확인하여 주세요.')
+      } else {
+        alert('로그인 성공, 메인화면으로 이동합니다.')
+        props.history.push('/')
+      }
+      
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   return (
@@ -20,7 +37,7 @@ const NormalLoginForm = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          name="username"
+          name="user_id"
           rules={[
             {
               required: true,
