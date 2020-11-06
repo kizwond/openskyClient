@@ -1,4 +1,5 @@
 import axios from 'axios'
+import React, { useState } from 'react';
 
 import {
   Form,
@@ -12,6 +13,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import './Register.css'
 
 const RegistrationForm = (props) => {
+  const [msg, setMsg] = useState("중복된 아이디가 있습니다.");
   const [form] = Form.useForm();
   const { Option } = Select;
   const onFinish = (values) => {
@@ -22,7 +24,12 @@ const RegistrationForm = (props) => {
     })
     .then(res => {
       console.log(res.data)
-      // props.history.push("/login");
+      if(res.data.msg === "중복된 아이디가 있습니다."){
+          alert(msg)
+      } else {
+        alert('회원가입에 성공하셨습니다. 로그인 페이지로 이동합니다.')
+        props.history.push('/login')
+      }
     })
     .catch(function (error) {
       console.log(error);
