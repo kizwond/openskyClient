@@ -24,6 +24,17 @@ const NormalLoginForm = (props) => {
       console.log(error);
     });
   };
+  const onClick = () => {
+    axios.post('api/user/user-auth', {
+      user_id:'test'
+    })
+    .then(res => {
+      console.log(res.data)      
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   return (
     <div className="login_container">
@@ -74,6 +85,7 @@ const NormalLoginForm = (props) => {
             <NavLink to="/register">회원가입</NavLink>
         </div>
       </Form>
+      
     </div>
   );
 };
