@@ -41,7 +41,7 @@ const HorizontalLoginForm = () => {
     let completed = false; 
 
     async function get() {
-      const result = await axios.get('api/write/get-categorylist',{params: { userId: userId }})
+      const result = await axios.get('api/write/get-categorylist')
       if (!completed) setData(result.data.category);
     }
     get();
@@ -80,7 +80,6 @@ const HorizontalLoginForm = () => {
   }
 
   const onFinish = values => {
-    values.userId = user.user
     handleSubmit(values)
   };
 
@@ -98,9 +97,11 @@ const HorizontalLoginForm = () => {
             rules={[{ required: false, message: '카테고리를 선택해 주세요' }]}
           >
             <Select placeholder="(미지정)">
-              {data.length > 0 && data.length !== undefined ? data.map((category)=>(
+              {/* {data !== undefined ? data.map((category)=>(
                                     <Option key={category._id} value={category.category_name}>{category.category_name}</Option>
-                                  )) : <Option value="미지정">미지정</Option>}
+                                  )) :  */}
+                                  <Option value="미지정">미지정</Option>
+                                  {/* } */}
             </Select>
           </Form.Item>
           <Form.Item
