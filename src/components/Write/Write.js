@@ -46,7 +46,7 @@ class WriteMain extends Component {
     })
   }
   getOnlyShowTitle() {
-    axios.get('api/create/get-show-title',{params: { userId: userId }})
+    axios.get('api/write/get-booklist',{params: { userId: userId }})
     .then(res => {
       console.log('get show')
       this.setState({
