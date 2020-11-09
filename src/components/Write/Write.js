@@ -34,7 +34,7 @@ class WriteMain extends Component {
     })
   }
   getAllTitle() {
-    axios.get('api/create/get-all-title',{params: { userId: userId }})
+    axios.get('api/write/get-booklist',{params: { userId: userId }})
     .then(res => {
       console.log('get all')
       this.setState({

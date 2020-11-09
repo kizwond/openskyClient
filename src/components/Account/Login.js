@@ -24,18 +24,7 @@ const NormalLoginForm = (props) => {
       console.log(error);
     });
   };
-  const onClick = () => {
-    axios.post('api/user/user-auth', {
-      user_id:'test'
-    })
-    .then(res => {
-      console.log(res.data)      
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
+  
   return (
     <div className="login_container">
       <div className="login_title"><img src="img/logo.png" alt="logo"/></div>

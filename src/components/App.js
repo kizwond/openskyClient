@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./Main/NavBar/NavBar";
 import { Layout, Affix } from 'antd';
@@ -10,6 +10,7 @@ import Study from './Study/Study'
 import Write from './Write/Write'
 import Store from './Store/Store'
 import BookNaming from './Write/BookEditing/BookNaming'
+
 const { Header, Content, Footer } = Layout;
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
       <Layout className="layout">
         <Header>
           <Affix offsetTop={0}>
-            <NavBar />
+            <NavBar/>
           </Affix>
         </Header>
         <Content>

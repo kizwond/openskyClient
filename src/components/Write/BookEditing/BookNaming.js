@@ -41,7 +41,7 @@ const HorizontalLoginForm = () => {
     let completed = false; 
 
     async function get() {
-      const result = await axios.get('api/create/get-all-category',{params: { userId: userId }})
+      const result = await axios.get('api/write/get-categorylist',{params: { userId: userId }})
       if (!completed) setData(result.data.category);
     }
     get();
@@ -51,7 +51,7 @@ const HorizontalLoginForm = () => {
   }, [query]); 
 
   const handleSubmit = (values) => {
-    var url = '/api/create/naming';
+    var url = '/api/write/create-book';
     if(values.category === undefined) {
       values.category = '미지정'
     }  
