@@ -89,15 +89,20 @@ class CategoryModal extends Component {
   }
 
   render() {
-    const categoryList = this.props.category.map((category)=>(
-      <CategoryList categoryListOrderHandler={this.props.categoryListOrderHandler} 
-                    categoryDeleteHandler={this.props.categoryDeleteHandler} 
-                    changeCategoryHandler={this.props.changeCategoryHandler} 
-                    addCategory={this.props.addCategory} 
-                    key={category._id} 
-                    categoryTotal={this.props.category} 
-                    category={category}/>
-    ))
+    if(this.props.category){
+      var categoryList = this.props.category.map((category)=>(
+        <CategoryList categoryListOrderHandler={this.props.categoryListOrderHandler} 
+                      categoryDeleteHandler={this.props.categoryDeleteHandler} 
+                      changeCategoryHandler={this.props.changeCategoryHandler} 
+                      addCategory={this.props.addCategory} 
+                      key={category._id} 
+                      categoryTotal={this.props.category} 
+                      category={category}/>
+      ))
+    } else {
+      var categoryList = 'none'
+    }
+    
     
     return (
       <>

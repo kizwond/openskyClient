@@ -124,18 +124,23 @@ class CategoryListContainer extends Component {
      };
   }
   render() {
-    const bookList = this.props.bookTitle.map((book_title)=>(
-      <ListContent category={this.props.category} 
-                  currentCategory={this.state.category}
-                  key={book_title._id} 
-                  bookCategoryMove={this.props.bookCategoryMove} 
-                  bookInfo={book_title} 
-                  listOrderHandler={this.props.listOrderHandler} 
-                  changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                  bookDeleteHandler={this.props.bookDeleteHandler} 
-                  onClickLike={this.props.onClickLike} 
-                  onClickHideOrShow={this.props.onClickHideOrShow}/>
-    ))
+    if(this.props.bookTitle){
+      var bookList = this.props.bookTitle.map((book_title)=>(
+        <ListContent category={this.props.category} 
+                    currentCategory={this.state.category}
+                    key={book_title._id} 
+                    bookCategoryMove={this.props.bookCategoryMove} 
+                    bookInfo={book_title} 
+                    listOrderHandler={this.props.listOrderHandler} 
+                    changeBookTitleHandler={this.props.changeBookTitleHandler} 
+                    bookDeleteHandler={this.props.bookDeleteHandler} 
+                    onClickLike={this.props.onClickLike} 
+                    onClickHideOrShow={this.props.onClickHideOrShow}/>
+      ))
+    } else {
+      var bookList = 'none'
+    }
+    
     return (
 
       <div className="each_category_container">{bookList}</div>
@@ -146,16 +151,21 @@ class CategoryListContainer extends Component {
 
 class ListSectionContent extends Component {
   render() { 
-    const categoryList = this.props.category.map((category)=>(
-      <CategoryListContainer key={category._id} categoryName={category.category_name} category={this.props.category} 
-                                                                                      bookCategoryMove={this.props.bookCategoryMove} 
-                                                                                      bookTitle={this.props.bookTitle} 
-                                                                                      listOrderHandler={this.props.listOrderHandler} 
-                                                                                      changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                                                      bookDeleteHandler={this.props.bookDeleteHandler} 
-                                                                                      onClickLike={this.props.onClickLike} 
-                                                                                      onClickHideOrShow={this.props.onClickHideOrShow}/>
-    ))
+    if(this.props.category){
+      var categoryList = this.props.category.map((category)=>(
+        <CategoryListContainer key={category._id} categoryName={category.category_name} category={this.props.category} 
+                                                                                        bookCategoryMove={this.props.bookCategoryMove} 
+                                                                                        bookTitle={this.props.bookTitle} 
+                                                                                        listOrderHandler={this.props.listOrderHandler} 
+                                                                                        changeBookTitleHandler={this.props.changeBookTitleHandler} 
+                                                                                        bookDeleteHandler={this.props.bookDeleteHandler} 
+                                                                                        onClickLike={this.props.onClickLike} 
+                                                                                        onClickHideOrShow={this.props.onClickHideOrShow}/>
+      ))
+    } else {
+      var categoryList = 'none'
+    }
+    
     return ( 
       <div className="like_list_container">
         <ListColumns categoryListOrderHandler={this.props.categoryListOrderHandler} 
