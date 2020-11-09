@@ -7,18 +7,13 @@ class Home extends Component {
     this.state = {  };
   }
   onClick = () => {
-    fetch('api/user/user-auth',{
-      method:'get',
-      credentials:'include',
-      mode: 'cors'
-    })
+    axios('api/user/logout')
        .then(res => console.log(res));
   }
   render() {
     return (
       <div className="main_page_container">
-        메인
-        <button onClick={this.onClick}>test</button>
+        <button onClick={this.onClick}>로그아웃</button>
       </div>
     );
   }
