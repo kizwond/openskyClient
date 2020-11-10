@@ -1,9 +1,11 @@
 import React from 'react';
-import { Layout, Menu, Row, Col } from 'antd';
+import { Layout, Menu, Row, Col, Modal, Button  } from 'antd';
 import './Navbar.css';
 import { NavLink} from 'react-router-dom';
 import { HomeOutlined, ReadOutlined, FormOutlined, ShopOutlined,ShoppingCartOutlined,SolutionOutlined,UserOutlined,UserAddOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import Login from '../../Account/Login'
+
 const { Header } = Layout;
 
 class NavBar extends React.Component {
@@ -11,7 +13,8 @@ class NavBar extends React.Component {
     super(props);
     this.state = { 
       current: 'home',
-      isLoggedIn : false
+      isLoggedIn : false,
+      visible:false
      }
   }
 
@@ -44,6 +47,27 @@ class NavBar extends React.Component {
        .then(res => {this.setState({isLoggedIn:res.data.isLoggedIn})});
   }
 
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+      isLoggedIn:true
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
   render(){
     const { current } = this.state;
     console.log('isloggedIn? :',this.state.isLoggedIn)
@@ -70,7 +94,7 @@ class NavBar extends React.Component {
             </Menu>
           </Col>
           <Col flex="0 1 430px">
-            <Menu onClick={this.handleClick} selectedKeys={[current]} theme="dark" mode="horizontal">
+            <Menu onClick={this.handleClick} selectedKeys={[current]} style={{textAlign:'right'}} theme="dark" mode="horizontal">
             {this.state.isLoggedIn
                 ? <>
                     <Menu.Item key="logout" icon={<ShoppingCartOutlined />}>
@@ -85,7 +109,18 @@ class NavBar extends React.Component {
                   </>
                 : <>
                   <Menu.Item key="mail" icon={<UserOutlined />}>
-                    <NavLink to="/login">로그인</NavLink>
+                    <NavLink to="/" onClick={this.showModal}>로그인</NavLink>
+                    <Modal
+                      title={null}
+                      visible={this.state.visible}
+                      onOk={this.handleOk}
+                      onCancel={this.handleCancel}
+                      footer={null}
+                      closable={false}
+                      className="login_modal"
+                    >
+                      <Login onOk={this.handleOk} />
+                    </Modal>
                   </Menu.Item>
                   <Menu.Item key="app" icon={<UserAddOutlined />}>
                     <NavLink to="/register">회원가입</NavLink>

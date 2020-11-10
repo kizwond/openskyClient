@@ -125,6 +125,7 @@ class CategoryListContainer extends Component {
   }
   render() {
     if(this.props.bookTitle){
+      console.log('test:', this.props.bookTitle)
       var bookList = this.props.bookTitle.map((book_title)=>(
         <ListContent category={this.props.category} 
                     currentCategory={this.state.category}

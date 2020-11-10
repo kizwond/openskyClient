@@ -54,3 +54,6 @@
   font-weight:700;
   font-size:12px;
 }
+.login_modal .ant-modal-body{
+  padding:0;
+}
