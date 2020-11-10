@@ -65,12 +65,12 @@ class ListContent extends Component {
   }
   render() { 
     const info = this.props.bookInfo;
-    const date = info.date.slice(0,10)
-    const update_date = info.date.slice(0,10)
+    const date = info.time_create.slice(0,10)
+    const update_date = info.time_create.slice(0,10)
     const classes = `like_list_contents`
     const renderLike = () => {
-      if(info.hide_or_show === 'true'){
-          if(info.like === 'true') {
+      if(info.hide_or_show === false){
+          if(info.like === true) {
             return <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>
           }else {
             return <StarOutlined onClick={()=>this.props.onClickLike({value:'false',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
@@ -81,20 +81,18 @@ class ListContent extends Component {
       }
     return ( 
       <>
-      {info.category === this.props.currentCategory ? 
-      
-        <div className={classes}>
+       <div className={classes}>
           <ul>
-            <li>{info.category}</li>
+            <li>{this.props.currentCategory}</li>
             <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                             category={this.props.category} 
                                                             changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                            onClick={this.titleChangeHandleClick}/> : info.book_title}</li>
+                                                            onClick={this.titleChangeHandleClick}/> : info.title}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
-            <li>{info.division}</li>
-            <li>{info.user_nick}</li>
-            <li>{info.total_pages}</li>
-            <li>{info.recent_input}</li>
+            <li>{info.type}</li>
+            <li>{info.owner}</li>
+            <li>{info.num_pages}</li>
+            <li>{info.num_cards}</li>
             <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
             <li>{date}</li>
             <li>{update_date}</li>
@@ -102,16 +100,14 @@ class ListContent extends Component {
             <li>
               {renderLike()}
             </li>
-            <li>{info.hide_or_show === 'true' ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
+            <li>{info.hide_or_show === false ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
                                               <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'list', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/></> : ''}
             </li>
-            <li>{info.hide_or_show === 'true' ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
+            <li>{info.hide_or_show === false ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
                                     <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:'false',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>
             <li><DeleteBook bookTitle={info} bookDeleteHandler={this.props.bookDeleteHandler} /></li>
           </ul>
         </div> 
-      
-      : ''}
       </>
      );
   }
@@ -124,9 +120,9 @@ class CategoryListContainer extends Component {
      };
   }
   render() {
-    if(this.props.bookTitle){
-      console.log('test:', this.props.bookTitle)
-      var bookList = this.props.bookTitle.map((book_title)=>(
+    if(this.props.category){
+      console.log('test:', this.props.category[0].books)
+      var bookList = this.props.category[0].books.map((book_title)=>(
         <ListContent category={this.props.category} 
                     currentCategory={this.state.category}
                     key={book_title._id} 
@@ -154,9 +150,8 @@ class ListSectionContent extends Component {
   render() { 
     if(this.props.category){
       var categoryList = this.props.category.map((category)=>(
-        <CategoryListContainer key={category._id} categoryName={category.category_name} category={this.props.category} 
+        <CategoryListContainer key={category._id} categoryName={category.name} category={this.props.category} 
                                                                                         bookCategoryMove={this.props.bookCategoryMove} 
-                                                                                        bookTitle={this.props.bookTitle} 
                                                                                         listOrderHandler={this.props.listOrderHandler} 
                                                                                         changeBookTitleHandler={this.props.changeBookTitleHandler} 
                                                                                         bookDeleteHandler={this.props.bookDeleteHandler} 

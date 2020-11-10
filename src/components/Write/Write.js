@@ -46,14 +46,14 @@ class WriteMain extends Component {
     })
   }
   getOnlyShowTitle() {
-    axios.get('api/write/get-booklist',{params: { userId: userId }})
+    axios.get('api/write/get-booklist')
     .then(res => {
       console.log(res.data)
       console.log('get show')
       this.setState({
-        bookTitle:res.data.books,
-        likeTitle:res.data.likeTitle,
-        category:res.data.category
+        // bookTitle:res.data.categorybooklist.,
+        // likeTitle:res.data.likeTitle,
+        category:res.data.categorybooklist
       })
     })
   }
@@ -296,7 +296,7 @@ class WriteMain extends Component {
                               changeBookTitleHandler={this.changeBookTitleHandler} 
                               bookDeleteHandler={this.bookDeleteHandler} 
                               onClickHideOrShow={this.eyeClickHandler} 
-                              bookTitle={this.state.bookTitle}/>
+                              />
         </div>
       </div>
      );
