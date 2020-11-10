@@ -53,12 +53,6 @@ const HorizontalLoginForm = () => {
 
   const handleSubmit = (values) => {
     var url = '/api/write/create-book';
-    if(values.category_id === undefined) {
-      values.category_id = '미지정'
-    }  
-    if(values.size === undefined){
-      values.size = 'a4'
-    }
     var data = values;
     console.log(data)
 
@@ -95,9 +89,9 @@ const HorizontalLoginForm = () => {
             name={['category_id']}
             style={{width:"255px"}}
             label="카테고리"
-            rules={[{ required: false, message: '카테고리를 선택해 주세요' }]}
+            rules={[{ required: true, message: '카테고리를 선택해 주세요' }]}
           >
-            <Select placeholder="(미지정)">
+            <Select placeholder="카테고리를 선택해 주세요.">
               {data.length > 0 ? data.map((category)=>(
                                     <Option key={category._id} value={category.category_id}>{category.name}</Option>
                                   )) : 
@@ -123,9 +117,9 @@ const HorizontalLoginForm = () => {
             name={['size']}
             style={{width:"255px"}}
             label="책 크기"
-            rules={[{ required: false, message: '책 크기를 선택해 주세요' }]}
+            rules={[{ required: true, message: '책 크기를 선택해 주세요' }]}
           >
-            <Select placeholder="A4">
+            <Select placeholder="사이즈를 선택해 주세요.">
               <Option value="a4">a4</Option>
             </Select>
           </Form.Item>
