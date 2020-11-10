@@ -109,7 +109,7 @@ class NavBar extends React.Component {
                   </>
                 : <>
                   <Menu.Item key="mail" icon={<UserOutlined />}>
-                    <NavLink to="/" onClick={this.showModal}>로그인</NavLink>
+                    <NavLink to="#" onClick={this.showModal}>로그인</NavLink>
                     <Modal
                       title={null}
                       visible={this.state.visible}
