@@ -53,8 +53,8 @@ const HorizontalLoginForm = () => {
 
   const handleSubmit = (values) => {
     var url = '/api/write/create-book';
-    if(values.category === undefined) {
-      values.category = '미지정'
+    if(values.category_id === undefined) {
+      values.category_id = '미지정'
     }  
     if(values.size === undefined){
       values.size = 'a4'
@@ -92,7 +92,7 @@ const HorizontalLoginForm = () => {
         <Form form={form} name="book_naming" layout="block" onFinish={onFinish}>
           <Form.Item
             className="category_select_naming"
-            name={['category']}
+            name={['category_id']}
             style={{width:"255px"}}
             label="카테고리"
             rules={[{ required: false, message: '카테고리를 선택해 주세요' }]}
