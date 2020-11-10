@@ -42,7 +42,8 @@ const HorizontalLoginForm = () => {
 
     async function get() {
       const result = await axios.get('api/write/get-categorylist')
-      if (!completed) setData(result.data.category);
+      if (!completed) setData(result.data.categories);
+      console.log('category_list :',result.data.categories)
     }
     get();
     return () => {
@@ -97,11 +98,10 @@ const HorizontalLoginForm = () => {
             rules={[{ required: false, message: '카테고리를 선택해 주세요' }]}
           >
             <Select placeholder="(미지정)">
-              {/* {data !== undefined ? data.map((category)=>(
-                                    <Option key={category._id} value={category.category_name}>{category.category_name}</Option>
-                                  )) :  */}
-                                  <Option value="미지정">미지정</Option>
-                                  {/* } */}
+              {data.length > 0 ? data.map((category)=>(
+                                    <Option key={category._id} value={category.category_id}>{category.name}</Option>
+                                  )) : 
+                                  <Option value="미지정">0</Option>}
             </Select>
           </Form.Item>
           <Form.Item
