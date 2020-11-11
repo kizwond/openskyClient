@@ -17,7 +17,7 @@ class CategoryList extends Component {
   }  
 
   onFinish = value => {
-    this.props.addCategory({value, prevCategoryId:this.props.category._id})
+    this.props.addCategory({value, prevCategoryId:this.props.category.category_id})
     this.newInputVisible()
   };
 
@@ -52,7 +52,10 @@ class CategoryList extends Component {
           </Space>
         </Form>
     );
-
+    const bookListInCategory = this.props.category.books
+    const bookList = bookListInCategory.map((book)=>(
+      <span>{book.title}, </span>
+    ))
     return(
         <div className="category_setting_content">
           <ul>
@@ -61,17 +64,17 @@ class CategoryList extends Component {
                 <PlusOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} />
               </Popover>
             </li>
-            <li>{this.state.inputArea ? <ChangeCategoryName vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} category={this.props.category} changeCategoryHandler={this.props.changeCategoryHandler}/> : <>{this.props.category.category_name}/순서:{this.props.category.category_order} </>}</li>
+            <li>{this.state.inputArea ? <ChangeCategoryName vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} category={this.props.category} changeCategoryHandler={this.props.changeCategoryHandler}/> : <>{this.props.category.name}/순서:{this.props.category.seq} </>}</li>
             <li>
-              {this.props.category.category_name === '미지정' ? '' :<EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/>}
+              {this.props.category.name === '(미지정)' ? '' :<EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/>}
             </li>
             <li>
-              {this.props.category.category_name === '미지정' ? '' : <><ArrowUpOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'up', categoryId: this.props.category._id})} style={{fontSize:'14px'}}/>
+              {this.props.category.name === '(미지정)' ? '' : <><ArrowUpOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'up', categoryId: this.props.category._id})} style={{fontSize:'14px'}}/>
                                                                        <ArrowDownOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'down', categoryId: this.props.category._id})} style={{fontSize:'14px'}}/></>}
             </li>
-            <li>{this.props.category.category_name === '미지정' ? '' :<DeleteCategory categoryTotal={this.props.categoryTotal} category={this.props.category} categoryDeleteHandler={this.props.categoryDeleteHandler}/>}</li>
+            <li>{this.props.category.name === '(미지정)' ? '' :<DeleteCategory categoryTotal={this.props.categoryTotal} category={this.props.category} categoryDeleteHandler={this.props.categoryDeleteHandler}/>}</li>
             <li>{this.props.category.contents_quantity}</li>
-            <li>한국사1, 한국사2, 한국사3, 한국사4, 한국사5, 한국사6, 한국사7, 한국사8</li>
+            <li>{bookList}</li>
           </ul>
         </div>
     )

@@ -177,6 +177,7 @@ class WriteMain extends Component {
   }
 
   addCategory = (value) => {
+    console.log(value)
     axios.post('api/create/add-category',{
       prevCategoryId : value.prevCategoryId,
       newCategory : value.value.newCategory,

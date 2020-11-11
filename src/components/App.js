@@ -35,7 +35,7 @@ function App() {
             <Route exact path="/writing" strict component={BookWriting} />
           </Switch>
         </Content>
-        <Footer style={{ textAlign: 'center' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>
+        <Footer style={{ textAlign: 'center',display:'block' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>
       </Layout>
     </Suspense>
   );
