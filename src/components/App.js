@@ -10,6 +10,7 @@ import Study from './Study/Study'
 import Write from './Write/Write'
 import Store from './Store/Store'
 import BookNaming from './Write/BookEditing/BookNaming'
+import BookWriting from './Write/BookEditing/BookWriting'
 
 const { Header, Content, Footer } = Layout;
 
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/write" component={Write} />
             <Route exact path="/store" component={Store} />
             <Route exact path="/naming" strict component={BookNaming} />
+            <Route exact path="/writing" strict component={BookWriting} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>

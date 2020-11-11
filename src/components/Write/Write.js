@@ -7,9 +7,6 @@ import { Button } from 'antd';
 import { DownCircleTwoTone,UpCircleTwoTone } from '@ant-design/icons';
 import axios from 'axios'
 
-
-var userId = localStorage.getItem('userId')
-
 class WriteMain extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +22,6 @@ class WriteMain extends Component {
   }
   onClickToggle = () => {
     axios.post('api/create/like-hide-or-show-toggle',{
-      userId: userId,
       isToggleOn : !this.state.isToggleOn
     }).then(res => {
       this.setState({
@@ -34,7 +30,7 @@ class WriteMain extends Component {
     })
   }
   getAllTitle() {
-    axios.get('api/write/get-booklist',{params: { userId: userId }})
+    axios.get('api/write/get-booklist')
     .then(res => {
       console.log('get all')
       this.setState({
@@ -77,11 +73,7 @@ class WriteMain extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      user: userId
-    })
     this.getOnlyShowTitle()
-    
   }
   saveLikeChange = (value) => {
     if (value.value === 'true') {
@@ -92,7 +84,6 @@ class WriteMain extends Component {
     axios.post('api/create/like',{
       bookId : value.bookId,
       like: like,
-      userId: userId
     }).then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
@@ -110,7 +101,6 @@ class WriteMain extends Component {
     axios.post('api/create/hide-or-show',{
       bookId : value.bookId,
       hide_or_show: eye,
-      userId: userId
     }).then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
@@ -119,22 +109,19 @@ class WriteMain extends Component {
     })
   }
   bookDeleteHandler = (value) => {
-    axios.post('api/create/delete-book',{
-      bookId : value.bookId,
-      userId : userId
-    }).then(res => {
-      this.setState({
-        bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle,
-        category:res.data.category
-      })
-    })
+    console.log(value)
+    // axios.post('api/write/delete-book',{
+    //   book_id : value.book_id,
+    // }).then(res => {
+    //   this.setState({
+    //     category:res.data.categorybooklist
+    //   })
+    // })
   }
 
   changeBookTitleHandler = (value) => {
     axios.post('api/create/change-book-title',{
       bookId : value.bookId,
-      userId : userId,
       newName : value.value.newName
     })
     .then(res => {
@@ -155,7 +142,6 @@ class WriteMain extends Component {
   listOrder = (value) => {
     axios.post('api/create/change-list-order',{
       bookId : value.bookId,
-      userId : userId,
       action : value.action,
       from : value.from
     }).then(res => {
@@ -169,7 +155,6 @@ class WriteMain extends Component {
   bookCategoryMove = (value) => {
     axios.post('api/create/book-category-move',{
       bookId : value.bookId,
-      userId : userId,
       prevCategory : value.prevCategory,
       category : value.category,
     }).then(res => {
@@ -190,7 +175,6 @@ class WriteMain extends Component {
 
   addCategory = (value) => {
     axios.post('api/create/add-category',{
-      userId : userId,
       prevCategoryId : value.prevCategoryId,
       newCategory : value.value.newCategory,
     }).then(res => {
@@ -210,7 +194,6 @@ class WriteMain extends Component {
   changeCategoryHandler = (value) => {
     axios.post('api/create/change-category-name',{
       categoryId : value.categoryId,
-      userId : userId,
       newName : value.value.newName
     })
     .then(res => {
@@ -232,7 +215,6 @@ class WriteMain extends Component {
     axios.post('api/create/delete-category',{
       categoryId : value.value.categoryId,
       moveTo : value.moveTo,
-      userId : userId
     }).then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
@@ -245,7 +227,6 @@ class WriteMain extends Component {
   categoryListOrder = (value) => {
     axios.post('api/create/change-category-order',{
       categoryId : value.categoryId,
-      userId : userId,
       action : value.action,
     }).then(res => {
       console.log(res.data)
