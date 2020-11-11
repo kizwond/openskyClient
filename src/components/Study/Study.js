@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './Study.css'
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 const { SubMenu } = Menu;
 
 class Study extends Component {
@@ -47,17 +47,17 @@ class Study extends Component {
         <Layout className="layout">
           <Header style={{background:'white', paddingLeft:100}}>
           <Space size='large'>
-              <Dropdown overlay={menu_1} trigger={['click']}>
+              <Dropdown overlay={menu_1} >
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   보기
                 </a>
               </Dropdown>
-              <Dropdown overlay={menu_2} trigger={['click']}>
+              <Dropdown overlay={menu_2} >
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   서식
                 </a>
               </Dropdown>
-              <Dropdown overlay={menu_3} trigger={['click']}>
+              <Dropdown overlay={menu_3} >
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   학습
                 </a>
