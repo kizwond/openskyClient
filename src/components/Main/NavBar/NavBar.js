@@ -43,8 +43,11 @@ class NavBar extends React.Component {
     });
   }
   onClick = () => {
-    axios('api/user/logout')
-       .then(res => {this.setState({isLoggedIn:res.data.isLoggedIn})});
+    axios.get('api/user/logout')
+       .then(res => {
+         this.setState({isLoggedIn:res.data.isLoggedIn})
+         window.location.href = '/'
+        });
   }
 
   showModal = () => {

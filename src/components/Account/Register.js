@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useState } from 'react';
-
 import {
   Form,
   Select,
@@ -8,12 +7,16 @@ import {
   Tooltip,
   Checkbox,
   Button,
+  Modal
 } from 'antd';
+import Login from './Login'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import './Register.css'
 
 const RegistrationForm = (props) => {
   const [msg, setMsg] = useState("중복된 아이디가 있습니다.");
+  const [visible, setVisible] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [form] = Form.useForm();
   const { Option } = Select;
   const onFinish = (values) => {
@@ -28,7 +31,10 @@ const RegistrationForm = (props) => {
           alert(msg)
       } else {
         alert('회원가입에 성공하셨습니다. 로그인 페이지로 이동합니다.')
-        props.history.push('/login')
+        // props.history.push('/login')
+        document.getElementById("register_form").innerHTML='';
+        document.getElementById("register_title").innerHTML='';
+        showModal()
       }
     })
     .catch(function (error) {
@@ -47,12 +53,37 @@ const RegistrationForm = (props) => {
   //     </Select>
   //   </Form.Item>
   // );
+
+  const showModal = () => {
+    setVisible({
+      visible: true,
+    });
+  };
+
+  const handleOk = e => {
+    console.log(e);
+    setVisible({
+      visible: false,
+    });
+    // setIsLoggedIn({
+    //   isLoggedIn:true
+    // });
+  };
+
+  const handleCancel = e => {
+    console.log(e);
+    setVisible({
+      visible: false,
+    });
+  };
+
   return (
     <div className="register_form_container">
-      <div className="register_title"><img src="img/logo.png" alt="logo"/></div>
+      <div id='register_title' className="register_title"><img src="img/logo.png" alt="logo"/></div>
       <Form
         form={form}
         className="register_form"
+        id='register_form'
         name="register"
         onFinish={onFinish}
         initialValues={{
@@ -199,6 +230,17 @@ const RegistrationForm = (props) => {
           </Button>
         </Form.Item>
       </Form>
+      <Modal
+        title={null}
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        closable={false}
+        className="login_modal"
+      >
+        <Login onOk={handleOk} />
+      </Modal>
     </div>
   );
 };

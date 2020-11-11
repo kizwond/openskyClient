@@ -16,7 +16,7 @@ const NormalLoginForm = (props) => {
         alert('유저정보가 없습니다. 아이디와 비밀번호를 확인하여 주세요.')
       } else {
         props.onOk()
-        props.history.push('/')
+        window.location.href = '/'
       }
       
     })
