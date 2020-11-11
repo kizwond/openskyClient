@@ -11,6 +11,13 @@ class Study extends Component {
     this.state = {  };
   }
   render() {
+    const menu_0 = (
+      <Menu>
+        <Menu.ItemGroup>
+          <Menu.Item>앞/뒷면 서식 설정</Menu.Item>
+        </Menu.ItemGroup>
+      </Menu>
+    );
     const menu_1 = (
       <Menu>
         <SubMenu title="카드 보기 모드"  trigger={['click']}>
@@ -46,6 +53,11 @@ class Study extends Component {
       <div className="study_page_container">
         <Layout className="layout">
           <Header style={{background:'white', paddingLeft:100}}>
+            <Dropdown overlay={menu_0} >
+              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                보기
+              </a>
+            </Dropdown>
           <Space size='large'>
               <Dropdown overlay={menu_1} >
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>

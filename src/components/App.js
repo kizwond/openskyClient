@@ -18,7 +18,7 @@ function App() {
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
       <Layout className="layout">
-        <Header>
+        <Header className='nav_bar' id='nav_bar'>
           <Affix offsetTop={0}>
             <NavBar/>
           </Affix>

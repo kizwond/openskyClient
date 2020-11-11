@@ -16,3 +16,6 @@
 .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title{
   font-size:12px;
 }
+.nav_bar_hidden{
+  display: none;
+}

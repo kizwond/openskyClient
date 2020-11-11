@@ -110,13 +110,16 @@ class WriteMain extends Component {
   }
   bookDeleteHandler = (value) => {
     console.log(value)
-    // axios.post('api/write/delete-book',{
-    //   book_id : value.book_id,
-    // }).then(res => {
-    //   this.setState({
-    //     category:res.data.categorybooklist
-    //   })
-    // })
+    axios.post('api/write/delete-book',{
+      book_id : value.book_id,
+      seq_in_category : value.seq_in_category,
+      seq_in_like : value.seq_in_like,
+      category_id : value.category_id,
+    }).then(res => {
+      this.setState({
+        category:res.data.categorybooklist
+      })
+    })
   }
 
   changeBookTitleHandler = (value) => {
