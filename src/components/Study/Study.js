@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink} from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Dropdown, Space } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
+import axios from 'axios'
 import './Study.css'
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;
@@ -15,6 +16,15 @@ class Study extends Component {
     document.getElementById("nav_bar").classList.remove('nav_bar_hidden');
     document.getElementById("nav_bar").classList.add('nav_bar');
   }
+  onClick = () => {
+    axios('api/user/logout')
+       .then(res => {
+         console.log('logout from location study:',res.data)
+        document.getElementById("nav_bar").classList.remove('nav_bar_hidden');
+        document.getElementById("nav_bar").classList.add('nav_bar');
+        window.location.href = '/'
+       });
+  }
   render() {
     const menu_0 = (
       <Menu>
@@ -22,7 +32,7 @@ class Study extends Component {
           <Menu.Item><NavLink to="/" exact onClick={this.onMenuClick}>메인</NavLink></Menu.Item>
           <Menu.Item><NavLink to="/write" exact onClick={this.onMenuClick}>만들기</NavLink></Menu.Item>
           <Menu.Item><NavLink to="/store" exact onClick={this.onMenuClick}>서점</NavLink></Menu.Item>
-          <Menu.Item>로그아웃</Menu.Item>
+          <Menu.Item><NavLink to="#" onClick={this.onClick}>로그아웃</NavLink></Menu.Item>
         </Menu.ItemGroup>
       </Menu>
     );
@@ -68,25 +78,25 @@ class Study extends Component {
                 </a>
               </Dropdown>
               <div style={{display:'flex', width:'90%', flexDirection:'row', justifyContent:'space-between'}}>
-              <Space size='large'>
-                <Dropdown overlay={menu_1} >
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                    보기
-                  </a>
-                </Dropdown>
-                <Dropdown overlay={menu_2} >
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                    서식
-                  </a>
-                </Dropdown>
-                <Dropdown overlay={menu_3} >
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                    학습
-                  </a>
-                </Dropdown>
-              </Space>
-              <Menu>
-                  <Menu.Item>학습종료</Menu.Item>
+                <Space size='large'>
+                  <Dropdown overlay={menu_1} >
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                      보기
+                    </a>
+                  </Dropdown>
+                  <Dropdown overlay={menu_2} >
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                      서식
+                    </a>
+                  </Dropdown>
+                  <Dropdown overlay={menu_3} >
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                      학습
+                    </a>
+                  </Dropdown>
+                </Space>
+                <Menu style={{height:'90%'}}>
+                  <Menu.Item><NavLink to="/" exact onClick={this.onMenuClick}>학습종료</NavLink></Menu.Item>
                 </Menu>
               </div>
             </div>
