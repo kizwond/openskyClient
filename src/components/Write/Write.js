@@ -156,10 +156,12 @@ class WriteMain extends Component {
   }
 
   bookCategoryMove = (value) => {
-    axios.post('api/create/book-category-move',{
+    console.log(value)
+    axios.post('api/write/move-book-between-category',{
       bookId : value.bookId,
       prevCategory : value.prevCategory,
-      category : value.category,
+      movoTocategory : value.category,
+      seq_in_category: value.seq_in_category
     }).then(res => {
       if(res.data.error === "같은 카테고리를 선택하셨습니다."){
         this.setState({
@@ -168,9 +170,7 @@ class WriteMain extends Component {
         alert(this.state.message)
       } else {
         this.setState({
-          bookTitle:res.data.bookTitle,
-          likeTitle:res.data.likeTitle,
-          category:res.data.category
+          category:res.data.categorybooklist
         })
       }
     })

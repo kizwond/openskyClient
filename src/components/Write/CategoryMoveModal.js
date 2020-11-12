@@ -24,6 +24,7 @@ class CategoryMoveModal extends Component {
 
   handleOk = (book_id, event) => {
     console.log("clicked")
+    console.log(book_id, event)
     this.setState({
       confirmLoading: true,
     });
@@ -31,7 +32,7 @@ class CategoryMoveModal extends Component {
       visible: false,
       confirmLoading: false,
     });
-    event({bookId:book_id._id, category:this.state.moveTo, prevCategory:book_id.category})
+    event({bookId:book_id.book_id, category:this.state.moveTo, prevCategory:book_id.category_objectID.category_id, seq_in_category:book_id.seq_in_category})
   };
 
   handleCancel = () => {
@@ -51,8 +52,9 @@ class CategoryMoveModal extends Component {
   render() {
     const { visible, confirmLoading } = this.state;
     if(this.props.category) {
+      console.log('category move:', this.props.category)
       var optionList = this.props.category.map((category)=>(
-        <Option key={category._id} value={category.category_name}>{category.category_name}</Option>
+        <Option key={category.category_id} value={category.category_id}>{category.name}</Option>
       ))
     } else {
       optionList = ''
@@ -72,7 +74,7 @@ class CategoryMoveModal extends Component {
           onCancel={this.handleCancel}
           footer={null}
         >
-          <div><span className="selected_book">[{this.props.bookTitle.book_title}]</span>이 이동할 카테고리를 선택해 주세요.</div>
+          <div><span className="selected_book">[{this.props.bookTitle.title}]</span>이 이동할 카테고리를 선택해 주세요.</div>
           <div>
           <Select defaultValue="카테고리 선택" size="small" style={{ width: 120 }} onChange={this.handleChange}>
             {optionList}
