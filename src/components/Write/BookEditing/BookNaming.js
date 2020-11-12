@@ -75,6 +75,9 @@ const HorizontalLoginForm = () => {
   }
 
   const onFinish = values => {
+    if(values.size === undefined){
+      values.size = 'a4'
+    }
     handleSubmit(values)
   };
 
@@ -89,13 +92,13 @@ const HorizontalLoginForm = () => {
             name={['category_id']}
             style={{width:"255px"}}
             label="카테고리"
-            rules={[{ required: true, message: '카테고리를 선택해 주세요' }]}
+            rules={[{ required: false, message: '카테고리를 선택해 주세요' }]}
           >
             <Select placeholder="카테고리를 선택해 주세요.">
               {data.length > 0 ? data.map((category)=>(
                                     <Option key={category._id} value={category.category_id}>{category.name}</Option>
                                   )) : 
-                                  <Option value="미지정">0</Option>}
+                                  <Option value="">서버오류</Option>}
             </Select>
           </Form.Item>
           <Form.Item
@@ -117,9 +120,9 @@ const HorizontalLoginForm = () => {
             name={['size']}
             style={{width:"255px"}}
             label="책 크기"
-            rules={[{ required: true, message: '책 크기를 선택해 주세요' }]}
+            rules={[{ required: false, message: '책 크기를 선택해 주세요' }]}
           >
-            <Select placeholder="사이즈를 선택해 주세요.">
+            <Select defaultValue='a4' placeholder="사이즈를 선택해 주세요.">
               <Option value="a4">a4</Option>
             </Select>
           </Form.Item>
