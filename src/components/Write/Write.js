@@ -144,7 +144,7 @@ class WriteMain extends Component {
 
   listOrder = (value) => {
     console.log(value)
-    axios.post('api/create/change-list-order',{
+    axios.post('api/create/change-book-order',{
       bookId : value.bookId,
       action : value.action,
       from : value.from,
