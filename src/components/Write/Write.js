@@ -145,7 +145,7 @@ class WriteMain extends Component {
   listOrder = (value) => {
     console.log(value)
     axios.post('api/create/change-book-order',{
-      bookId : value.bookId,
+      book_id : value.bookId,
       action : value.action,
       from : value.from,
       seq_in_category:value.seq_in_category
@@ -193,7 +193,7 @@ class WriteMain extends Component {
 
   changeCategoryHandler = (value) => {
     axios.post('api/create/change-category-name',{
-      categoryId : value.categoryId,
+      category_id : value.categoryId,
       newName : value.value.newName
     })
     .then(res => {
@@ -218,7 +218,7 @@ class WriteMain extends Component {
     }
     console.log('final:',value)
     axios.post('api/write/delete-category',{
-      categoryId : value.value.categoryId,
+      category_id : value.value.categoryId,
       moveTo : value.moveTo,
     }).then(res => {
       this.setState({
@@ -229,7 +229,7 @@ class WriteMain extends Component {
 
   categoryListOrder = (value) => {
     axios.post('api/write/change-category-order',{
-      categoryId : value.categoryId,
+      category_id : value.categoryId,
       action : value.action,
       seq:value.categorySeq
     }).then(res => {
