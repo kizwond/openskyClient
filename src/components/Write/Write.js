@@ -81,7 +81,7 @@ class WriteMain extends Component {
     } else {
       like = 'true'
     }
-    axios.post('api/create/like',{
+    axios.post('api/write/like',{
       bookId : value.bookId,
       like: like,
     }).then(res => {
@@ -93,12 +93,12 @@ class WriteMain extends Component {
   }
 
   eyeClickHandler = (value) =>{
-    if (value.value === 'true') {
-      var eye = 'false'
+    if (value.value === false) {
+      var eye = true
     } else {
-      eye = 'true'
+      eye = false
     }
-    axios.post('api/create/hide-or-show',{
+    axios.post('api/write/hide-or-show',{
       bookId : value.bookId,
       hide_or_show: eye,
     }).then(res => {
@@ -143,10 +143,12 @@ class WriteMain extends Component {
   }
 
   listOrder = (value) => {
+    console.log(value)
     axios.post('api/create/change-list-order',{
       bookId : value.bookId,
       action : value.action,
-      from : value.from
+      from : value.from,
+      seq_in_category:value.seq_in_category
     }).then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
