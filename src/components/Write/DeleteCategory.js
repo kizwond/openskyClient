@@ -33,13 +33,13 @@ class DeleteCategory extends Component {
     console.log(this)
     if(this.props.categoryTotal.length >= 0) {
       var optionList = this.props.categoryTotal.map((category)=>(
-        <Option key={category._id} value={category.category_name}>{category.category_name}</Option>
+        <Option key={category._id} value={category.category_id}>{category.name}</Option>
       ))
     } else {
       optionList = <Option value="j">j</Option>
     }
     confirm({
-      title: [`[${this.state.category.category_name}] 카테고리를 삭제하시겠습니까?`],
+      title: [`[${this.state.category.name}] 카테고리를 삭제하시겠습니까?`],
       okText: '삭제',
       cancelText: '취소',
       icon: <ExclamationCircleOutlined />,
@@ -53,7 +53,7 @@ class DeleteCategory extends Component {
                                                     {optionList}
                                                   </Select> <span>로 이동 후</span></div>],
       onOk() {  
-        event({categoryId:category_id._id})
+        event({categoryId:category_id.category_id})
       },
       onCancel() {
         handleChangeInside()

@@ -69,11 +69,11 @@ class CategoryList extends Component {
               {this.props.category.name === '(미지정)' ? '' :<EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/>}
             </li>
             <li>
-              {this.props.category.name === '(미지정)' ? '' : <><ArrowUpOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'up', categoryId: this.props.category._id})} style={{fontSize:'14px'}}/>
-                                                                       <ArrowDownOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'down', categoryId: this.props.category._id})} style={{fontSize:'14px'}}/></>}
+              {this.props.category.name === '(미지정)' ? '' : <><ArrowUpOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'up', categoryId: this.props.category.category_id, categorySeq: this.props.category.seq})} style={{fontSize:'14px'}}/>
+                                                               <ArrowDownOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'down', categoryId: this.props.category.category_id, categorySeq: this.props.category.seq})} style={{fontSize:'14px'}}/></>}
             </li>
             <li>{this.props.category.name === '(미지정)' ? '' :<DeleteCategory categoryTotal={this.props.categoryTotal} category={this.props.category} categoryDeleteHandler={this.props.categoryDeleteHandler}/>}</li>
-            <li>{this.props.category.contents_quantity}</li>
+            <li>{bookList.length}</li>
             <li>{bookList}</li>
           </ul>
         </div>

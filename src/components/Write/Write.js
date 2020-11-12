@@ -160,9 +160,9 @@ class WriteMain extends Component {
   bookCategoryMove = (value) => {
     console.log(value)
     axios.post('api/write/move-book-between-category',{
-      bookId : value.bookId,
-      prevCategory : value.prevCategory,
-      targetCategory : value.category,
+      book_id : value.bookId,
+      prev_category_id : value.prevCategory,
+      target_category_id : value.category,
       seq_in_category: value.seq_in_category
     }).then(res => { 
         this.setState({
@@ -212,28 +212,30 @@ class WriteMain extends Component {
     })
   }
   categoryDeleteHandler = (value) => {
-    axios.post('api/create/delete-category',{
+    console.log(value)
+    if(value.moveTo === ""){
+      value.moveTo = 'none'
+    }
+    console.log('final:',value)
+    axios.post('api/write/delete-category',{
       categoryId : value.value.categoryId,
       moveTo : value.moveTo,
     }).then(res => {
       this.setState({
-        bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle,
-        category:res.data.category
+        category:res.data.categorybooklist
       })
     })
   }
 
   categoryListOrder = (value) => {
-    axios.post('api/create/change-category-order',{
+    axios.post('api/write/change-category-order',{
       categoryId : value.categoryId,
       action : value.action,
+      seq:value.categorySeq
     }).then(res => {
       console.log(res.data)
       this.setState({
-        bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle,
-        category:res.data.category
+        category:res.data.categorybooklist
       })
     })
   }
