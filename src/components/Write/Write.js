@@ -190,7 +190,7 @@ class WriteMain extends Component {
         alert(this.state.message)
       } else {
         this.setState({
-          category:res.data.category
+          category:res.data.categorybooklist
         })
       }
     })
