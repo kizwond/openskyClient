@@ -180,6 +180,7 @@ class WriteMain extends Component {
     console.log(value)
     axios.post('api/create/add-category',{
       prev_category_id : value.prevCategoryId,
+      prev_category_seq : value.prevCategorySeq,
       new_category : value.value.newCategory,
     }).then(res => {
       if(res.data.error === "동일한 이름의 카테고리명이 이미 존재합니다."){

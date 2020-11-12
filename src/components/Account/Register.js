@@ -65,9 +65,6 @@ const RegistrationForm = (props) => {
     setVisible({
       visible: false,
     });
-    // setIsLoggedIn({
-    //   isLoggedIn:true
-    // });
   };
 
   const handleCancel = e => {

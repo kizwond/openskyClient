@@ -17,7 +17,7 @@ class CategoryList extends Component {
   }  
 
   onFinish = value => {
-    this.props.addCategory({value, prevCategoryId:this.props.category.category_id})
+    this.props.addCategory({value, prevCategoryId:this.props.category.category_id,prevCategorySeq:this.props.category.seq})
     this.newInputVisible()
   };
 
