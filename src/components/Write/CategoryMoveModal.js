@@ -23,16 +23,18 @@ class CategoryMoveModal extends Component {
   };
 
   handleOk = (book_id, event) => {
-    console.log("clicked")
-    console.log(book_id, event)
-    this.setState({
-      confirmLoading: true,
-    });
-    this.setState({
-      visible: false,
-      confirmLoading: false,
-    });
-    event({bookId:book_id.book_id, category:this.state.moveTo, prevCategory:book_id.category_objectID.category_id, seq_in_category:book_id.seq_in_category})
+    if(book_id.category_objectID.category_id === this.state.moveTo){
+      alert('동일한 카테고리를 선택하셨습니다.')
+    }else {
+      this.setState({
+        confirmLoading: true,
+      });
+      this.setState({
+        visible: false,
+        confirmLoading: false,
+      });
+      event({bookId:book_id.book_id, category:this.state.moveTo, prevCategory:book_id.category_objectID.category_id, seq_in_category:book_id.seq_in_category})
+    }
   };
 
   handleCancel = () => {

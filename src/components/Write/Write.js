@@ -162,17 +162,10 @@ class WriteMain extends Component {
       prevCategory : value.prevCategory,
       movoTocategory : value.category,
       seq_in_category: value.seq_in_category
-    }).then(res => {
-      if(res.data.error === "같은 카테고리를 선택하셨습니다."){
-        this.setState({
-          message:res.data.error
-        })
-        alert(this.state.message)
-      } else {
+    }).then(res => { 
         this.setState({
           category:res.data.categorybooklist
         })
-      }
     })
   }
 
