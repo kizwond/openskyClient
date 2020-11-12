@@ -160,7 +160,7 @@ class WriteMain extends Component {
     axios.post('api/write/move-book-between-category',{
       bookId : value.bookId,
       prevCategory : value.prevCategory,
-      movoTocategory : value.category,
+      targetCategory : value.category,
       seq_in_category: value.seq_in_category
     }).then(res => { 
         this.setState({
