@@ -54,7 +54,6 @@ class CategoryMoveModal extends Component {
   render() {
     const { visible, confirmLoading } = this.state;
     if(this.props.category) {
-      console.log('category move:', this.props.category)
       var optionList = this.props.category.map((category)=>(
         <Option key={category.category_id} value={category.category_id}>{category.name}</Option>
       ))

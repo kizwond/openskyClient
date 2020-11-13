@@ -58,11 +58,13 @@ class LikeListContent extends Component {
     const info = this.props.bookInfo;
     const date = info.date.slice(0,10)
     const update_date = info.date.slice(0,10)
-    const classes = `like_list_contents hide_or_show_${info.hide_or_show}`
+    const classes = `like_list_contents hide_or_show_false`
+    // const classes = `like_list_contents hide_or_show_${info.hide_or_show}`
     return ( 
       <>
-        {info.like === 'true'  ? 
-        <div className={classes}>
+        {info.like === false  ? 
+        <div>
+        {/* <div className={classes}> */}
         <ul>
           <li>{info.category}</li>
           <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} changeBookTitleHandler={this.props.changeBookTitleHandler} onClick={this.titleChangeHandleClick}/> : info.book_title}</li>
@@ -75,14 +77,14 @@ class LikeListContent extends Component {
           <li>{date}</li>
           <li>{update_date}</li>
           <li><CategoryMoveModal category={this.props.category} bookTitle={info} bookCategoryMove={this.props.bookCategoryMove}/></li>
-          <li>{info.like === 'true'  ? <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>:
+          <li>{info.like === false  ? <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>:
                                        <StarOutlined onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}
           </li>
           <li>
           <ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'like', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
           <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'like', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
           </li>
-          <li>{info.hide_or_show === 'true' ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
+          <li>{info.hide_or_show === false ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
                                               <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:'false',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>
           <li><DeleteBook bookTitle={info} bookDeleteHandler={this.props.bookDeleteHandler} /></li>
         </ul>
@@ -97,6 +99,7 @@ class LikeListContent extends Component {
 
 class LikeSectionContent extends Component {
   render() { 
+    console.log('like page:',this.props.category)
     const bookList = this.props.bookTitle.map((book_title)=>(
       <LikeListContent key={book_title._id} 
                       category={this.props.category} 

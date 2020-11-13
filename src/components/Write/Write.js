@@ -11,7 +11,7 @@ class WriteMain extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      isToggleOn: '',
+      isToggleOn: true,
       user:'',
       bookTitle:[],
       likeTitle:[],
@@ -30,9 +30,8 @@ class WriteMain extends Component {
     })
   }
   getAllTitle() {
-    axios.get('api/write/get-booklist')
+    axios.get('api/write/get-booklist')   
     .then(res => {
-      console.log('get all')
       this.setState({
         bookTitle:res.data.bookTitle,
         likeTitle:res.data.likeTitle,
@@ -44,11 +43,7 @@ class WriteMain extends Component {
   getOnlyShowTitle() {
     axios.get('api/write/get-booklist')
     .then(res => {
-      console.log(res.data)
-      console.log('get show')
       this.setState({
-        // bookTitle:res.data.categorybooklist.,
-        // likeTitle:res.data.likeTitle,
         category:res.data.categorybooklist
       })
     })
@@ -109,7 +104,6 @@ class WriteMain extends Component {
     })
   }
   bookDeleteHandler = (value) => {
-    console.log(value)
     axios.post('api/write/delete-book',{
       book_id : value.book_id,
       seq_in_category : value.seq_in_category,
@@ -143,7 +137,6 @@ class WriteMain extends Component {
   }
 
   listOrder = (value) => {
-    console.log(value)
     axios.post('api/create/change-book-order',{
       book_id : value.bookId,
       action : value.action,
@@ -158,7 +151,6 @@ class WriteMain extends Component {
   }
 
   bookCategoryMove = (value) => {
-    console.log(value)
     axios.post('api/write/move-book-between-category',{
       book_id : value.bookId,
       prev_category_id : value.prevCategory,
@@ -172,7 +164,6 @@ class WriteMain extends Component {
   }
 
   addCategory = (value) => {
-    console.log(value)
     axios.post('api/write/create-category',{
       prev_category_id : value.prevCategoryId,
       prev_category_seq : value.prevCategorySeq,
@@ -212,14 +203,12 @@ class WriteMain extends Component {
     })
   }
   categoryDeleteHandler = (value) => {
-    console.log(value)
     if(value.moveTo === ""){
       value.moveTo = 'none'
     }
-    console.log('final:',value)
     axios.post('api/write/delete-category',{
       category_id : value.value.categoryId,
-      moveTo : value.moveTo,
+      target_category : value.moveTo,
     }).then(res => {
       this.setState({
         category:res.data.categorybooklist
@@ -233,7 +222,6 @@ class WriteMain extends Component {
       action : value.action,
       seq:value.categorySeq
     }).then(res => {
-      console.log(res.data)
       this.setState({
         category:res.data.categorybooklist
       })

@@ -57,7 +57,6 @@ class NavBar extends React.Component {
   };
 
   handleOk = e => {
-    console.log(e);
     this.setState({
       visible: false,
       isLoggedIn:true
@@ -65,7 +64,6 @@ class NavBar extends React.Component {
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -77,7 +75,6 @@ class NavBar extends React.Component {
 
   render(){
     const { current } = this.state;
-    console.log('isloggedIn? :',this.state.isLoggedIn)
     return (
         <Row>
           <Col flex="1 1 300px">

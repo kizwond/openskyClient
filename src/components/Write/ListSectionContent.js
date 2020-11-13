@@ -121,7 +121,6 @@ class CategoryListContainer extends Component {
   }
   render() {
     if(this.props.category){
-      console.log('inspect 2:', this.props.category)
       var bookList = this.props.category.books.map((book_title)=>(
         <ListContent category={this.props.category} 
                     currentCategory={this.state.category}
@@ -150,7 +149,6 @@ class CategoryListContainer extends Component {
 class ListSectionContent extends Component {
   render() { 
     if(this.props.category){
-      console.log('inspect here:', this.props.category)
       var categoryList = this.props.category.map((category)=>(
         <CategoryListContainer key={category._id} 
                               categoryName={category.name} 
