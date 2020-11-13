@@ -120,22 +120,31 @@ class CategoryListContainer extends Component {
      };
   }
   render() {
-    if(this.props.category){
-      var bookList = this.props.category.books.map((book_title)=>(
-        <ListContent category={this.props.category} 
-                    currentCategory={this.state.category}
-                    key={book_title._id} 
-                    categoryTotal={this.props.categoryTotal}
-                    bookCategoryMove={this.props.bookCategoryMove} 
-                    bookInfo={book_title} 
-                    listOrderHandler={this.props.listOrderHandler} 
-                    changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                    bookDeleteHandler={this.props.bookDeleteHandler} 
-                    onClickLike={this.props.onClickLike} 
-                    onClickHideOrShow={this.props.onClickHideOrShow}/>
-      ))
+    console.log(this.props.category.books)
+    if(this.props.category.books.length > 0){
+      var bookList = this.props.category.books.map((book_title) =>
+        {
+          if(book_title){
+           return <ListContent category={this.props.category} 
+                      currentCategory={this.state.category}
+                      key={book_title._id} 
+                      categoryTotal={this.props.categoryTotal}
+                      bookCategoryMove={this.props.bookCategoryMove} 
+                      bookInfo={book_title} 
+                      listOrderHandler={this.props.listOrderHandler} 
+                      changeBookTitleHandler={this.props.changeBookTitleHandler} 
+                      bookDeleteHandler={this.props.bookDeleteHandler} 
+                      onClickLike={this.props.onClickLike} 
+                      onClickHideOrShow={this.props.onClickHideOrShow}/>
+          } else{
+            console.log('no books')
+            return <div>hello</div>
+          }
+        
+        }
+      )
     } else {
-      var bookList = 'none'
+      var bookList = this.props.category.name
     }
     
     return (
