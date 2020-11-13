@@ -149,9 +149,9 @@ class WriteMain extends Component {
       seq_in_category:value.seq_in_category,
       category_id: value.category_id
     }).then(res => {
+      console.log('순서조정후 res:', res.data)
       this.setState({
-        bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle
+        category:res.data.categorybooklist
       })
     })
   }

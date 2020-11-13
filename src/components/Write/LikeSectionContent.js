@@ -100,17 +100,18 @@ class LikeListContent extends Component {
 class LikeSectionContent extends Component {
   render() { 
     console.log('like page:',this.props.category)
-    const bookList = this.props.bookTitle.map((book_title)=>(
-      <LikeListContent key={book_title._id} 
-                      category={this.props.category} 
-                      bookCategoryMove={this.props.bookCategoryMove} 
-                      bookInfo={book_title} 
-                      listOrderHandler={this.props.listOrderHandler} 
-                      changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                      bookDeleteHandler={this.props.bookDeleteHandler} 
-                      onClickLike={this.props.onClickLike} 
-                      onClickHideOrShow={this.props.onClickHideOrShow}/>
-    ))
+    // const bookList = this.props.bookTitle.map((book_title)=>(
+    //   <LikeListContent key={book_title._id} 
+    //                   category={this.props.category} 
+    //                   bookCategoryMove={this.props.bookCategoryMove} 
+    //                   bookInfo={book_title} 
+    //                   listOrderHandler={this.props.listOrderHandler} 
+    //                   changeBookTitleHandler={this.props.changeBookTitleHandler} 
+    //                   bookDeleteHandler={this.props.bookDeleteHandler} 
+    //                   onClickLike={this.props.onClickLike} 
+    //                   onClickHideOrShow={this.props.onClickHideOrShow}/>
+    // ))
+    const bookList = 'hello'
     return ( 
       <div className="like_list_container">
         <LikeListColumns hideOrShowClass={this.props.hideOrShowClass} hideOrShowToggle={this.props.hideOrShowToggle}/>
