@@ -77,12 +77,11 @@ class WriteMain extends Component {
       like = 'true'
     }
     axios.post('api/write/like',{
-      bookId : value.bookId,
+      book_id : value.bookId,
       like: like,
     }).then(res => {
       this.setState({
-        bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle
+        category:res.data.categorybooklist
       })
     })
   }
