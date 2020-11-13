@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import LeftDrawer from './BookWritingLeftDrawer'
 import './BookWriting.css'
-import {Button, Select } from 'antd';
+import {Button, Select,Modal } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
-
 
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
@@ -20,7 +19,7 @@ import 'froala-editor//css/themes/gray.min.css'
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
-
+import BookRelocate from './BookRelocate'
 
 
 
@@ -31,6 +30,7 @@ export class BookWriting extends Component {
   constructor(props) {
     super(props)
     this.state = {
+       visible: false,
        bookTitle:'',
        bookId:'',
        category:'',
@@ -59,9 +59,30 @@ export class BookWriting extends Component {
        contents:[],
        card_selected:'',
        arrayForEditor:[],
-       current_card:{}
+       current_card:{},
     }
   }
+
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
 
   componentDidMount() {
     this.setState({
@@ -495,7 +516,15 @@ export class BookWriting extends Component {
         <div className="editor_container_templete_position_absolute">
           <div className="editor_top_menu">
             <div>
-              <Button size='small'>카드 이동/삭제</Button><span className="book_title">책 제목 : {this.state.bookTitle}</span>
+              <Button size='small' onClick={this.showModal}>카드 이동/삭제</Button><span className="book_title">책 제목 : {this.state.bookTitle}</span>
+              <Modal
+                title="카드 이동 및 삭제"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+              >
+                <BookRelocate/>
+              </Modal>
             </div>
             <div>
               <Select size='small' defaultValue={'카드선택'} style={{width:'150px'}} onChange={this.selectCardTypeHandler}>
