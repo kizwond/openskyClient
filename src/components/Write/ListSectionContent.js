@@ -100,8 +100,8 @@ class ListContent extends Component {
             <li>
               {renderLike()}
             </li>
-            <li>{info.hide_or_show === false ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list', bookId: this.props.bookInfo.book_id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/>
-                                              <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'list', bookId: this.props.bookInfo.book_id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/></> : ''}
+            <li>{info.hide_or_show === false ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list',category_id: this.props.bookInfo.category_objectID.category_id, bookId: this.props.bookInfo.book_id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/>
+                                              <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'list',category_id: this.props.bookInfo.category_objectID.category_id, bookId: this.props.bookInfo.book_id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/></> : ''}
             </li>
             <li>{info.hide_or_show === false ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo.book_id})} style={{fontSize:'14px'}}/>:
                                     <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:true,bookId:this.props.bookInfo.book_id})} style={{fontSize:'14px'}}/>}</li>

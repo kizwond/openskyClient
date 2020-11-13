@@ -141,11 +141,13 @@ class WriteMain extends Component {
     console.log('action :', value.action)
     console.log('from :', value.from)
     console.log('seq_in_category :', value.seq_in_category)
+    console.log('category_id :', value.category_id)
     axios.post('api/write/change-book-order',{
       book_id : value.bookId,
       action : value.action,
       from : value.from,
-      seq_in_category:value.seq_in_category
+      seq_in_category:value.seq_in_category,
+      category_id: value.category_id
     }).then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
