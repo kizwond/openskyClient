@@ -43,6 +43,7 @@ class WriteMain extends Component {
   getOnlyShowTitle() {
     axios.get('api/write/get-booklist')
     .then(res => {
+      console.log(res)
       this.setState({
         category:res.data.categorybooklist
       })

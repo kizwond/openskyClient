@@ -56,6 +56,7 @@ class CategoryList extends Component {
     const bookList = bookListInCategory.map((book)=>(
       <span>{book.title}, </span>
     ))
+    console.log('hello there :',this.props.category)
     return(
         <div className="category_setting_content">
           <ul>
@@ -69,8 +70,8 @@ class CategoryList extends Component {
               {this.props.category.name === '(미지정)' ? '' :<EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/>}
             </li>
             <li>
-              {this.props.category.name === '(미지정)' ? '' : <><ArrowUpOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'up', categoryId: this.props.category.category_id, categorySeq: this.props.category.seq})} style={{fontSize:'14px'}}/>
-                                                               <ArrowDownOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'down', categoryId: this.props.category.category_id, categorySeq: this.props.category.seq})} style={{fontSize:'14px'}}/></>}
+              {this.props.category.name === '(미지정)' ? '' : <><ArrowUpOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'up', categoryId: this.props.category._id, categorySeq: this.props.category.seq})} style={{fontSize:'14px'}}/>
+                                                               <ArrowDownOutlined onClick={()=>this.props.categoryListOrderHandler({action: 'down', categoryId: this.props.category._id, categorySeq: this.props.category.seq})} style={{fontSize:'14px'}}/></>}
             </li>
             <li>{this.props.category.name === '(미지정)' ? '' :<DeleteCategory categoryTotal={this.props.categoryTotal} category={this.props.category} categoryDeleteHandler={this.props.categoryDeleteHandler}/>}</li>
             <li>{bookList.length}</li>
