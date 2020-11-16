@@ -33,7 +33,7 @@ class DeleteCategory extends Component {
     console.log(this)
     if(this.props.categoryTotal.length >= 0) {
       var optionList = this.props.categoryTotal.map((category)=>(
-        <Option key={category._id} value={category.category_id}>{category.name}</Option>
+        <Option key={category._id} value={category._id}>{category.name}</Option>
       ))
     } else {
       optionList = <Option value="j">j</Option>
@@ -53,7 +53,7 @@ class DeleteCategory extends Component {
                                                     {optionList}
                                                   </Select> <span>로 이동 후</span></div>],
       onOk() {  
-        event({categoryId:category_id.category_id})
+        event({categoryId:category_id._id})
       },
       onCancel() {
         handleChangeInside()
