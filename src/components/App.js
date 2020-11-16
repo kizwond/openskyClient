@@ -6,7 +6,7 @@ import './App.css'
 import Register from './Account/Register'
 import Login from './Account/Login'
 import Home from './Main/Home/Home'
-import Study from './Study/Study'
+import StudyMain from './Study/StudyMain'
 import Write from './Write/Write'
 import Store from './Store/Store'
 import BookNaming from './Write/BookEditing/BookNaming'
@@ -28,7 +28,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/study" component={Study} />
+            <Route exact path="/study" component={StudyMain} />
             <Route exact path="/write" component={Write} />
             <Route exact path="/store" component={Store} />
             <Route exact path="/naming" strict component={BookNaming} />

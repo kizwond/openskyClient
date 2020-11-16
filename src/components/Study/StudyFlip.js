@@ -4,10 +4,12 @@ import { Layout, Menu, Breadcrumb, Dropdown, Space } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import './Study.css'
+import StudyList from './StudyList'
+
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;
 
-class Study extends Component {
+class StudyFlip extends Component {
   constructor(props) {
     super(props);
     this.state = {  };
@@ -101,8 +103,8 @@ class Study extends Component {
               </div>
             </div>
           </Header>
-          <Content style={{ padding: '100px 50px' }}>
-            <div className="site-layout-content">Content</div>
+          <Content style={{ padding: '10px' }}>
+            <div>content</div>
           </Content>
         </Layout>
       </div>
@@ -110,4 +112,4 @@ class Study extends Component {
   }
 }
 
-export default Study;
+export default StudyFlip;
