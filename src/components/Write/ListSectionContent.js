@@ -121,7 +121,7 @@ class CategoryListContainer extends Component {
   }
   render() {
     console.log(this.props.category.books)
-    if(this.props.category.books.length > 0){
+    if(this.props.category.book_ids.length > 0){
       var bookList = this.props.category.books.map((book_title) =>
         {
           if(book_title){
