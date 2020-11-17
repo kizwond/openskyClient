@@ -41,7 +41,7 @@ const HorizontalLoginForm = () => {
     let completed = false; 
 
     async function get() {
-      const result = await axios.get('api/write/get-categorylist')
+      const result = await axios.get('api/book/get-categorylist')
       if (!completed) setData(result.data.categories);
       console.log('category_list :',result.data.categories)
     }
@@ -52,7 +52,7 @@ const HorizontalLoginForm = () => {
   }, [query]); 
 
   const handleSubmit = (values) => {
-    var url = '/api/write/create-book';
+    var url = '/api/book/create-book';
     var data = values;
     console.log(data)
 
