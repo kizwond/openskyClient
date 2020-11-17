@@ -23,7 +23,7 @@ class CategoryMoveModal extends Component {
   };
 
   handleOk = (book_id, event) => {
-    if(book_id.category_objectID.category_id === this.state.moveTo){
+    if(book_id.category_id._id === this.state.moveTo){
       alert('동일한 카테고리를 선택하셨습니다.')
     }else {
       this.setState({
@@ -33,7 +33,7 @@ class CategoryMoveModal extends Component {
         visible: false,
         confirmLoading: false,
       });
-      event({bookId:book_id.book_id, category:this.state.moveTo, prevCategory:book_id.category_objectID.category_id, seq_in_category:book_id.seq_in_category})
+      event({bookId:book_id._id, category:this.state.moveTo, prevCategory:book_id.category_id._id, seq_in_category:book_id.seq_in_category})
     }
   };
 
@@ -55,7 +55,7 @@ class CategoryMoveModal extends Component {
     const { visible, confirmLoading } = this.state;
     if(this.props.category) {
       var optionList = this.props.category.map((category)=>(
-        <Option key={category.category_id} value={category.category_id}>{category.name}</Option>
+        <Option key={category._id} value={category._id}>{category.name}</Option>
       ))
     } else {
       optionList = ''
