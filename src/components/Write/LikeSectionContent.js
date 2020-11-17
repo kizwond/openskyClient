@@ -83,8 +83,8 @@ class LikeListContent extends Component {
                                        <StarOutlined onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}
           </li>
           <li>
-          <ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'like', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
-          <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'like', bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
+          <ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'like', seq_in_like:this.props.bookInfo.seq_in_like,bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
+          <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'like', seq_in_like:this.props.bookInfo.seq_in_like,bookId: this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
           </li>
           <li>{info.hide_or_show === false ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
                                               <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:'false',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>

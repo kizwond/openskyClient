@@ -81,7 +81,7 @@ class WriteMain extends Component {
     }
     console.log("book_id :",value.bookId)
     console.log("like :",like)
-    axios.post('api/book/like',{
+    axios.post('api/book/apply-likebook',{
       book_id : value.bookId,
       like: like,
     }).then(res => {
@@ -143,25 +143,36 @@ class WriteMain extends Component {
   }
 
   listOrder = (value) => {
-    console.log('book_id :', value.bookId)
-    console.log('action :', value.action)
-    console.log('from :', value.from)
-    console.log('seq_in_category :', value.seq_in_category)
-    console.log('category_id :', value.category_id)
-    axios.post('api/book/change-book-order',{
-      book_id : value.bookId,
-      action : value.action,
-      from : value.from,
-      seq_in_category:value.seq_in_category,
-      category_id: value.category_id
-    }).then(res => {
-      console.log('순서조정후 res:', res.data)
-      this.setState({
-        category:res.data.categorybooklist,
-        likeTitle:res.data.likebooklist
+    console.log(value)
+    if(value.from === "list"){
+      axios.post('api/book/change-book-order',{
+        book_id : value.bookId,
+        action : value.action,
+        seq_in_category:value.seq_in_category,
+        category_id: value.category_id
+      }).then(res => {
+        console.log('순서조정후 res:', res.data)
+        this.setState({
+          category:res.data.categorybooklist,
+          likeTitle:res.data.likebooklist
+        })
       })
-    })
+    } else {
+      axios.post('api/book/change-likebook-order',{
+        book_id : value.bookId,
+        action : value.action,
+        seq_in_like:value.seq_in_like,
+      }).then(res => {
+        console.log('순서조정후 res:', res.data)
+        this.setState({
+          category:res.data.categorybooklist,
+          likeTitle:res.data.likebooklist
+        })
+      })
+    }
+    
   }
+  
 
   bookCategoryMove = (value) => {
     axios.post('api/book/move-book-between-category',{
