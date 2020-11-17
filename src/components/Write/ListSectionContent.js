@@ -5,7 +5,7 @@ import CategorySettingModal from './CategorySettingModal'
 import CategoryMoveModal from './CategoryMoveModal'
 import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
-
+import { Empty } from 'antd';
 
 class ListColumns extends Component {
   constructor(props) {
@@ -170,7 +170,7 @@ class ListSectionContent extends Component {
                               onClickHideOrShow={this.props.onClickHideOrShow}/>
       ))
     } else {
-      var categoryList = 'none'
+      var categoryList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
     }
     
     return ( 
