@@ -43,9 +43,10 @@ class WriteMain extends Component {
   getOnlyShowTitle() {
     axios.get('api/book/get-booklist')
     .then(res => {
-      console.log(res)
+      console.log("first axios :",res)
       this.setState({
-        category:res.data.categorybooklist
+        category:res.data.categorybooklist,
+        likeTitle:res.data.likebooklist
       })
     })
   }
@@ -72,17 +73,21 @@ class WriteMain extends Component {
     this.getOnlyShowTitle()
   }
   saveLikeChange = (value) => {
+    console.log("like clicked!!! ")
     if (value.value === 'true') {
       var like = 'false'
     } else {
       like = 'true'
     }
+    console.log("book_id :",value.bookId)
+    console.log("like :",like)
     axios.post('api/book/like',{
       book_id : value.bookId,
       like: like,
     }).then(res => {
       this.setState({
-        category:res.data.categorybooklist
+        category:res.data.categorybooklist,
+        likeTitle:res.data.likeTitle
       })
     })
   }

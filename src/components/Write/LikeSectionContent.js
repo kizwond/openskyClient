@@ -4,6 +4,7 @@ import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlin
 import CategoryMoveModal from './CategoryMoveModal'
 import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
+import { Empty } from 'antd';
 
 class LikeListColumns extends Component {
   constructor(props) {
@@ -67,12 +68,14 @@ class LikeListContent extends Component {
         {/* <div className={classes}> */}
         <ul>
           <li>{info.category}</li>
-          <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} changeBookTitleHandler={this.props.changeBookTitleHandler} onClick={this.titleChangeHandleClick}/> : info.book_title}</li>
+          <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
+                                                            changeBookTitleHandler={this.props.changeBookTitleHandler} 
+                                                            onClick={this.titleChangeHandleClick}/> : info.title}</li>
           <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
-          <li>{info.division}</li>
-          <li>{info.user_nick}</li>
-          <li>{info.total_pages}</li>
-          <li>{info.recent_input}</li>
+          <li>{info.type}</li>
+          <li>{info.owner}</li>
+          <li>{info.num_pages}</li>
+          <li>{info.num_cards}</li>
           <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
           <li>{date}</li>
           <li>{update_date}</li>
@@ -99,19 +102,25 @@ class LikeListContent extends Component {
 
 class LikeSectionContent extends Component {
   render() { 
-    console.log('like page:',this.props.category)
-    // const bookList = this.props.bookTitle.map((book_title)=>(
-    //   <LikeListContent key={book_title._id} 
-    //                   category={this.props.category} 
-    //                   bookCategoryMove={this.props.bookCategoryMove} 
-    //                   bookInfo={book_title} 
-    //                   listOrderHandler={this.props.listOrderHandler} 
-    //                   changeBookTitleHandler={this.props.changeBookTitleHandler} 
-    //                   bookDeleteHandler={this.props.bookDeleteHandler} 
-    //                   onClickLike={this.props.onClickLike} 
-    //                   onClickHideOrShow={this.props.onClickHideOrShow}/>
-    // ))
-    const bookList = 'hello'
+    console.log('like page_bookTitle:',this.props.bookTitle)
+    console.log('like page_category:',this.props.category)
+    if(this.props.bookTitle.length > 0){
+      var bookList = this.props.bookTitle.map((book_title)=>(
+        <LikeListContent key={book_title._id} 
+                        category={this.props.category} 
+                        bookCategoryMove={this.props.bookCategoryMove} 
+                        bookInfo={book_title} 
+                        listOrderHandler={this.props.listOrderHandler} 
+                        changeBookTitleHandler={this.props.changeBookTitleHandler} 
+                        bookDeleteHandler={this.props.bookDeleteHandler} 
+                        onClickLike={this.props.onClickLike} 
+                        onClickHideOrShow={this.props.onClickHideOrShow}/>
+      ))
+    } else {
+      var bookList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    }
+    
+    
     return ( 
       <div className="like_list_container">
         <LikeListColumns hideOrShowClass={this.props.hideOrShowClass} hideOrShowToggle={this.props.hideOrShowToggle}/>
