@@ -68,7 +68,7 @@ const HorizontalLoginForm = () => {
       if(response.error === "동일한 이름의 책이 이미 존재합니다."){
         setMessage(response.error)
       } else {
-        window.location.href = '/writing'
+        window.location.href = '/write'
       }
     })
     .catch(error => console.error('Error:', error));
