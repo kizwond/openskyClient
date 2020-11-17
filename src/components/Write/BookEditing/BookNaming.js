@@ -96,7 +96,7 @@ const HorizontalLoginForm = () => {
           >
             <Select placeholder="카테고리를 선택해 주세요.">
               {data.length > 0 ? data.map((category)=>(
-                                    <Option key={category._id} value={category.category_id}>{category.name}</Option>
+                                    <Option key={category._id} value={category._id}>{category.name}</Option>
                                   )) : 
                                   <Option value="">서버오류</Option>}
             </Select>
