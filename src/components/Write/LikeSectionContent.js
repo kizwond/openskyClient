@@ -57,17 +57,16 @@ class LikeListContent extends Component {
   }
   render() { 
     const info = this.props.bookInfo;
-    const date = info.date.slice(0,10)
-    const update_date = info.date.slice(0,10)
-    const classes = `like_list_contents hide_or_show_false`
+    const date = info.time_create.slice(0,10)
+    const update_date = info.time_create.slice(0,10)
+    const classes = `like_list_contents hide_or_show_true`
     // const classes = `like_list_contents hide_or_show_${info.hide_or_show}`
     return ( 
       <>
-        {info.like === false  ? 
-        <div>
-        {/* <div className={classes}> */}
+        {info.like === true  ? 
+        <div className={classes}>
         <ul>
-          <li>{info.category}</li>
+          <li>{info.category_id.name}</li>
           <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                             changeBookTitleHandler={this.props.changeBookTitleHandler} 
                                                             onClick={this.titleChangeHandleClick}/> : info.title}</li>
@@ -80,7 +79,7 @@ class LikeListContent extends Component {
           <li>{date}</li>
           <li>{update_date}</li>
           <li><CategoryMoveModal category={this.props.category} bookTitle={info} bookCategoryMove={this.props.bookCategoryMove}/></li>
-          <li>{info.like === false  ? <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>:
+          <li>{info.like === true  ? <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>:
                                        <StarOutlined onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}
           </li>
           <li>
@@ -104,7 +103,7 @@ class LikeSectionContent extends Component {
   render() { 
     console.log('like page_bookTitle:',this.props.bookTitle)
     console.log('like page_category:',this.props.category)
-    if(this.props.bookTitle.length > 0){
+    if(this.props.bookTitle){
       var bookList = this.props.bookTitle.map((book_title)=>(
         <LikeListContent key={book_title._id} 
                         category={this.props.category} 

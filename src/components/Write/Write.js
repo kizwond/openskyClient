@@ -87,7 +87,7 @@ class WriteMain extends Component {
     }).then(res => {
       this.setState({
         category:res.data.categorybooklist,
-        likeTitle:res.data.likeTitle
+        likeTitle:res.data.likebooklist
       })
     })
   }
@@ -104,7 +104,7 @@ class WriteMain extends Component {
     }).then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle
+        likeTitle:res.data.likebooklist
       })
     })
   }
@@ -135,7 +135,7 @@ class WriteMain extends Component {
       } else {
         this.setState({
           bookTitle:res.data.bookTitle,
-          likeTitle:res.data.likeTitle
+          likeTitle:res.data.likebooklist
         })
       }
     })
@@ -207,7 +207,7 @@ class WriteMain extends Component {
       } else {
         this.setState({
           bookTitle:res.data.bookTitle,
-          likeTitle:res.data.likeTitle,
+          likeTitle:res.data.likebooklist,
           category:res.data.category
         })
       }
