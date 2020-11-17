@@ -52,7 +52,7 @@ class CategoryList extends Component {
           </Space>
         </Form>
     );
-    const bookListInCategory = this.props.category.books
+    const bookListInCategory = this.props.category.book_ids
     const bookList = bookListInCategory.map((book)=>(
       <span>{book.title}, </span>
     ))
