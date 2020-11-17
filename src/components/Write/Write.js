@@ -21,7 +21,7 @@ class WriteMain extends Component {
      }
   }
   onClickToggle = () => {
-    axios.post('api/create/like-hide-or-show-toggle',{
+    axios.post('api/book/like-hide-or-show-toggle',{
       isToggleOn : !this.state.isToggleOn
     }).then(res => {
       this.setState({
@@ -30,7 +30,7 @@ class WriteMain extends Component {
     })
   }
   getAllTitle() {
-    axios.get('api/write/get-booklist')   
+    axios.get('api/book/get-booklist')   
     .then(res => {
       this.setState({
         bookTitle:res.data.bookTitle,
@@ -41,7 +41,7 @@ class WriteMain extends Component {
     })
   }
   getOnlyShowTitle() {
-    axios.get('api/write/get-booklist')
+    axios.get('api/book/get-booklist')
     .then(res => {
       console.log(res)
       this.setState({
@@ -77,7 +77,7 @@ class WriteMain extends Component {
     } else {
       like = 'true'
     }
-    axios.post('api/write/like',{
+    axios.post('api/book/like',{
       book_id : value.bookId,
       like: like,
     }).then(res => {
@@ -93,7 +93,7 @@ class WriteMain extends Component {
     } else {
       eye = false
     }
-    axios.post('api/write/hide-or-show',{
+    axios.post('api/book/hide-or-show',{
       bookId : value.bookId,
       hide_or_show: eye,
     }).then(res => {
@@ -104,7 +104,7 @@ class WriteMain extends Component {
     })
   }
   bookDeleteHandler = (value) => {
-    axios.post('api/write/delete-book',{
+    axios.post('api/book/delete-book',{
       book_id : value.book_id,
       seq_in_category : value.seq_in_category,
       seq_in_like : value.seq_in_like,
@@ -117,7 +117,7 @@ class WriteMain extends Component {
   }
 
   changeBookTitleHandler = (value) => {
-    axios.post('api/create/change-book-title',{
+    axios.post('api/book/change-book-title',{
       bookId : value.bookId,
       newName : value.value.newName
     })
@@ -142,7 +142,7 @@ class WriteMain extends Component {
     console.log('from :', value.from)
     console.log('seq_in_category :', value.seq_in_category)
     console.log('category_id :', value.category_id)
-    axios.post('api/write/change-book-order',{
+    axios.post('api/book/change-book-order',{
       book_id : value.bookId,
       action : value.action,
       from : value.from,
@@ -157,7 +157,7 @@ class WriteMain extends Component {
   }
 
   bookCategoryMove = (value) => {
-    axios.post('api/write/move-book-between-category',{
+    axios.post('api/book/move-book-between-category',{
       book_id : value.bookId,
       prev_category_id : value.prevCategory,
       target_category_id : value.category,
@@ -170,7 +170,7 @@ class WriteMain extends Component {
   }
 
   addCategory = (value) => {
-    axios.post('api/write/create-category',{
+    axios.post('api/book/create-category',{
       prev_category_id : value.prevCategoryId,
       prev_category_seq : value.prevCategorySeq,
       new_category : value.value.newCategory,
@@ -189,7 +189,7 @@ class WriteMain extends Component {
   }
 
   changeCategoryHandler = (value) => {
-    axios.post('api/create/change-category-name',{
+    axios.post('api/book/change-category-name',{
       category_id : value.categoryId,
       newName : value.value.newName
     })
@@ -212,7 +212,7 @@ class WriteMain extends Component {
     if(value.moveTo === ""){
       value.moveTo = 'none'
     }
-    axios.post('api/write/delete-category',{
+    axios.post('api/book/delete-category',{
       category_id : value.value.categoryId,
       target_category : value.moveTo,
     }).then(res => {
@@ -226,7 +226,7 @@ class WriteMain extends Component {
     console.log('category_id:',value.categoryId)
     console.log('action:',value.action)
     console.log('seq:',value.categorySeq)
-    axios.post('api/write/change-category-order',{
+    axios.post('api/book/change-category-order',{
       category_id : value.categoryId,
       action : value.action,
       seq:value.categorySeq
