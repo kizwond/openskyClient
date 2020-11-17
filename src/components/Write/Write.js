@@ -93,17 +93,13 @@ class WriteMain extends Component {
   }
 
   eyeClickHandler = (value) =>{
-    if (value.value === false) {
-      var eye = true
-    } else {
-      eye = false
-    }
-    axios.post('api/book/hide-or-show',{
-      bookId : value.bookId,
-      hide_or_show: eye,
+    console.log('hide_or_show : ',value.value)
+    axios.post('api/book/change-hide-or-show',{
+      book_id : value.bookId,
+      hide_or_show: value.value,
     }).then(res => {
       this.setState({
-        bookTitle:res.data.bookTitle,
+        category:res.data.categorybooklist,
         likeTitle:res.data.likebooklist
       })
     })
@@ -124,8 +120,8 @@ class WriteMain extends Component {
 
   changeBookTitleHandler = (value) => {
     axios.post('api/book/change-book-title',{
-      bookId : value.bookId,
-      newName : value.value.newName
+      book_id : value.bookId,
+      name : value.value.newName
     })
     .then(res => {
       if(res.data.error === "동일한 이름의 책이 이미 존재합니다."){
@@ -135,7 +131,7 @@ class WriteMain extends Component {
         alert(this.state.message)
       } else {
         this.setState({
-          bookTitle:res.data.bookTitle,
+          category:res.data.categorybooklist,
           likeTitle:res.data.likebooklist
         })
       }
@@ -211,7 +207,7 @@ class WriteMain extends Component {
   changeCategoryHandler = (value) => {
     axios.post('api/book/change-category-name',{
       category_id : value.categoryId,
-      newName : value.value.newName
+      name : value.value.newName
     })
     .then(res => {
       if(res.data.error === "동일한 카테고리명이 존재합니다."){
@@ -221,9 +217,8 @@ class WriteMain extends Component {
         alert(this.state.message)
       } else {
         this.setState({
-          bookTitle:res.data.bookTitle,
-          likeTitle:res.data.likebooklist,
-          category:res.data.category
+          category:res.data.categorybooklist,
+          likeTitle:res.data.likebooklist
         })
       }
     })

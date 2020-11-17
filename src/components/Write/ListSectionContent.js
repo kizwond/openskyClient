@@ -69,7 +69,7 @@ class ListContent extends Component {
     const update_date = info.time_create.slice(0,10)
     const classes = `like_list_contents`
     const renderLike = () => {
-      if(info.hide_or_show === false){
+      if(info.hide_or_show === true){
           if(info.like === true) {
             return <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>
           }else {
@@ -100,11 +100,11 @@ class ListContent extends Component {
             <li>
               {renderLike()}
             </li>
-            <li>{info.hide_or_show === false ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/>
-                                              <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'list',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/></> : ''}
+            <li>{info.hide_or_show === true ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/>
+                                                 <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'list',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/></> : ''}
             </li>
-            <li>{info.hide_or_show === false ? <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
-                                    <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:true,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>
+            <li>{info.hide_or_show === false ? <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:true,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
+                                               <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>
             <li><DeleteBook bookTitle={info} bookDeleteHandler={this.props.bookDeleteHandler} /></li>
           </ul>
         </div> 
@@ -123,6 +123,7 @@ class CategoryListContainer extends Component {
     if(this.props.category.book_ids.length > 0){
       var bookList = this.props.category.book_ids.map((book_title) =>
         {
+          console.log(book_title.hide_or_show)
           if(book_title){
            return <ListContent category={this.props.category} 
                       currentCategory={this.state.category}
