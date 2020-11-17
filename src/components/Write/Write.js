@@ -116,7 +116,8 @@ class WriteMain extends Component {
       category_id : value.category_id,
     }).then(res => {
       this.setState({
-        category:res.data.categorybooklist
+        category:res.data.categorybooklist,
+        likeTitle:res.data.likebooklist
       })
     })
   }
@@ -156,7 +157,8 @@ class WriteMain extends Component {
     }).then(res => {
       console.log('순서조정후 res:', res.data)
       this.setState({
-        category:res.data.categorybooklist
+        category:res.data.categorybooklist,
+        likeTitle:res.data.likebooklist
       })
     })
   }
@@ -169,7 +171,8 @@ class WriteMain extends Component {
       seq_in_category: value.seq_in_category
     }).then(res => { 
         this.setState({
-          category:res.data.categorybooklist
+          category:res.data.categorybooklist,
+          likeTitle:res.data.likebooklist
         })
     })
   }
@@ -187,7 +190,8 @@ class WriteMain extends Component {
         alert(this.state.message)
       } else {
         this.setState({
-          category:res.data.categorybooklist
+          category:res.data.categorybooklist,
+          likeTitle:res.data.likebooklist
         })
       }
     })
@@ -222,7 +226,8 @@ class WriteMain extends Component {
       target_category : value.moveTo,
     }).then(res => {
       this.setState({
-        category:res.data.categorybooklist
+        category:res.data.categorybooklist,
+        likeTitle:res.data.likebooklist
       })
     })
   }
@@ -237,7 +242,8 @@ class WriteMain extends Component {
       seq:value.categorySeq
     }).then(res => {
       this.setState({
-        category:res.data.categorybooklist
+        category:res.data.categorybooklist,
+        likeTitle:res.data.likebooklist
       })
     })
   }
