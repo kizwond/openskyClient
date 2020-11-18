@@ -88,7 +88,7 @@ class LikeListContent extends Component {
               <li>{info.category_id.name}</li>
               <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                                 changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                                onClick={this.titleChangeHandleClick}/> : <>{info.title}/{info.seq_in_like}</>}</li>
+                                                                onClick={this.titleChangeHandleClick}/> : <>{info.title}/순서 : {info.seq_in_like}</>}</li>
               <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
               <li>{info.type}</li>
               <li>{info.owner}</li>
@@ -116,7 +116,7 @@ class LikeListContent extends Component {
               <li>{info.category_id.name}</li>
               <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                                 changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                                onClick={this.titleChangeHandleClick}/> : <>{info.title}/{info.seq_in_like}</>}</li>
+                                                                onClick={this.titleChangeHandleClick}/> : <>{info.title}/순서 : {info.seq_in_like}</>}</li>
               <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
               <li>{info.type}</li>
               <li>{info.owner}</li>

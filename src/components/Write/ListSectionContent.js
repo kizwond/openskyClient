@@ -96,7 +96,7 @@ class ListContent extends Component {
             <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                             category={this.props.category} 
                                                             changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                            onClick={this.titleChangeHandleClick}/> : <>{info.title}/{info.seq_in_category}</>}</li>
+                                                            onClick={this.titleChangeHandleClick}/> : <>{info.title}/순서 : {info.seq_in_category}</>}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
             <li>{info.type}</li>
             <li>{info.owner}</li>
@@ -124,7 +124,7 @@ class ListContent extends Component {
                   <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                                   category={this.props.category} 
                                                                   changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                                  onClick={this.titleChangeHandleClick}/> : <>{info.title}/{info.seq_in_category}</>}</li>
+                                                                  onClick={this.titleChangeHandleClick}/> : <>{info.title}/순서 : {info.seq_in_category}</>}</li>
                   <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
                   <li>{info.type}</li>
                   <li>{info.owner}</li>
