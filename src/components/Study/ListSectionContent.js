@@ -66,6 +66,32 @@ const data = [
     reorder: '위/아래',
     hide: '숨기기눈깔',
   },
+  {
+    key: '2',
+    category: '블라블라',
+    book_title : '책이름름책이름름책이름름책이름름책이름름책이름름',
+    progress:'00%',
+    remain_new:'00장',
+    today_review:'00장',
+    recent_study:'00월/00일/0000년',
+    today_goal:'00장',
+    like:'별모양',
+    reorder: '위/아래',
+    hide: '숨기기눈깔',
+  },
+  {
+    key: '3',
+    category: '블라블라',
+    book_title : '책이름름책이름름책이름름책이름름책이름름책이름름',
+    progress:'00%',
+    remain_new:'00장',
+    today_review:'00장',
+    recent_study:'00월/00일/0000년',
+    today_goal:'00장',
+    like:'별모양',
+    reorder: '위/아래',
+    hide: '숨기기눈깔',
+  },
   
 ]; // rowSelection object indicates the need for row selection
 
