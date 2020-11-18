@@ -21,7 +21,7 @@ class WriteMain extends Component {
      }
   }
   onClickToggle = () => {
-    axios.post('api/book/like-hide-or-show-toggle',{
+    axios.post('api/book/change-config',{
       isToggleOn : !this.state.isToggleOn
     }).then(res => {
       this.setState({
@@ -43,11 +43,11 @@ class WriteMain extends Component {
   getOnlyShowTitle() {
     axios.get('api/book/get-booklist')
     .then(res => {
-      console.log("first axios :",res.data.config[0].config.likebook)
+      console.log("first axios :",res.data)
       this.setState({
         category:res.data.categorybooklist,
         likeTitle:res.data.likebooklist,
-        isToggleOn:res.data.config[0].config.likebook
+        // isToggleOn:res.data.config[0].config.likebook
       })
     })
   }
