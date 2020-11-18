@@ -23,15 +23,19 @@ class WriteMain extends Component {
      }
   }
   hideOrShowToggle = () => {
-    this.setState(state => ({
-      hide_or_show: !state.hide_or_show
-    }));
+    axios.post('api/book/change-hide-config',{
+      hide_toggle : !this.state.hide_or_show
+    }).then(res => {
+      this.setState({
+        hide_or_show:res.data.write_config[0].write_config.hide_or_show
+      })
+    })
   }
-  hideOrShowToggleLike = () => {
-    this.setState(state => ({
-      hide_or_show_like: !state.hide_or_show_like
-    }));
-  }
+  // hideOrShowToggleLike = () => {
+  //   this.setState(state => ({
+  //     hide_or_show_like: !state.hide_or_show_like
+  //   }));
+  // }
 
   onClickToggle = () => {
     axios.post('api/book/change-like-config',{
@@ -61,7 +65,8 @@ class WriteMain extends Component {
       this.setState({
         category:res.data.categorybooklist,
         likeTitle:res.data.likebooklist,
-        isToggleOn:res.data.write_config[0].write_config.likebook
+        isToggleOn:res.data.write_config[0].write_config.likebook,
+        hide_or_show:res.data.write_config[0].write_config.hide_or_show
       })
     })
   }
