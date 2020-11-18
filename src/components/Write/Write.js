@@ -17,9 +17,22 @@ class WriteMain extends Component {
       likeTitle:[],
       message:'',
       hideOrShowClass : false,
-      category : []
+      category : [],
+      hide_or_show: false,
+      hide_or_show_like :false
      }
   }
+  hideOrShowToggle = () => {
+    this.setState(state => ({
+      hide_or_show: !state.hide_or_show
+    }));
+  }
+  hideOrShowToggleLike = () => {
+    this.setState(state => ({
+      hide_or_show_like: !state.hide_or_show_like
+    }));
+  }
+
   onClickToggle = () => {
     axios.post('api/book/change-config',{
       isToggleOn : !this.state.isToggleOn
@@ -52,23 +65,23 @@ class WriteMain extends Component {
     })
   }
 
-  hideOrShowToggle = () => {
-    if (this.state.hideOrShowClass === false){
-      this.getAllTitle()
-      this.setState((prevState)=>({
-          hideOrShowClass : !prevState.hideOrShowClass
-        })
-      )
-    } else if (this.state.hideOrShowClass === true){
-      this.getOnlyShowTitle()
-      this.setState((prevState)=>({
-          hideOrShowClass : !prevState.hideOrShowClass
-        })
-      )
-    }
+  // hideOrShowToggle = () => {
+  //   if (this.state.hideOrShowClass === false){
+  //     this.getAllTitle()
+  //     this.setState((prevState)=>({
+  //         hideOrShowClass : !prevState.hideOrShowClass
+  //       })
+  //     )
+  //   } else if (this.state.hideOrShowClass === true){
+  //     this.getOnlyShowTitle()
+  //     this.setState((prevState)=>({
+  //         hideOrShowClass : !prevState.hideOrShowClass
+  //       })
+  //     )
+  //   }
     
 
-  }
+  // }
 
   componentDidMount() {
     this.getOnlyShowTitle()
@@ -269,7 +282,9 @@ class WriteMain extends Component {
                                                      changeBookTitleHandler={this.changeBookTitleHandler} 
                                                      bookDeleteHandler={this.bookDeleteHandler} 
                                                      onClickHideOrShow={this.eyeClickHandler} 
-                                                     bookTitle={this.state.likeTitle}/> : ''}
+                                                     bookTitle={this.state.likeTitle}
+                                                     hideOrShowToggleStateLike={this.state.hide_or_show_like}
+                                                     hideOrShowToggleHandeler={this.hideOrShowToggleLike}/> : ''}
         
         <div style={{textAlign:"center", marginTop:"-20px"}}>
         {this.state.isToggleOn ? <UpCircleTwoTone twoToneColor="#bfbfbf" onClick={this.onClickToggle} style={{fontSize:'25px'}}/> 
@@ -294,6 +309,8 @@ class WriteMain extends Component {
                               changeBookTitleHandler={this.changeBookTitleHandler} 
                               bookDeleteHandler={this.bookDeleteHandler} 
                               onClickHideOrShow={this.eyeClickHandler} 
+                              hideOrShowToggleState={this.state.hide_or_show}
+                              hideOrShowToggleHandeler={this.hideOrShowToggle}
                               />
         </div>
       </div>

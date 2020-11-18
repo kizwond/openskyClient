@@ -5,7 +5,7 @@ import CategorySettingModal from './CategorySettingModal'
 import CategoryMoveModal from './CategoryMoveModal'
 import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
-import { Empty } from 'antd';
+import { Empty,Switch } from 'antd';
 
 class ListColumns extends Component {
   constructor(props) {
@@ -14,7 +14,12 @@ class ListColumns extends Component {
       
      }
   }
+  onChange = (checked) => {
+    console.log(`switch to ${checked}`);
+    this.props.hideOrShowToggle()
+  }
 
+  
   render() { 
     return ( 
       <ul className="like_list_columns">
@@ -35,10 +40,11 @@ class ListColumns extends Component {
         <li>카테고리<br/>이동</li>
         <li>즐겨찾기</li>
         <li>순서이동</li>
-        <li>목록에서<br/>감추기 
+        {/* <li>목록에서<br/>감추기 
             {this.props.hideOrShowClass === false  ? <span onClick={this.props.hideOrShowToggle} className="hide_or_show_title_btn">OFF</span> : 
                                                      <span onClick={this.props.hideOrShowToggle} className="hide_or_show_title_btn">ON</span>}
-        </li>
+        </li> */}
+        <li><Switch size="small" onChange={this.onChange} /></li>
         <li>삭제</li>
       </ul> 
     );
@@ -63,11 +69,13 @@ class ListContent extends Component {
       editBookTitle: !state.editBookTitle
     }));
   }
+  
   render() { 
     const info = this.props.bookInfo;
+    const toggleProps = this.props.hideOrShowToggleState;
     const date = info.time_create.slice(0,10)
     const update_date = info.time_create.slice(0,10)
-    const classes = `like_list_contents hide_or_show_${info.hide_or_show}`
+    const classes = `like_list_contents`
     const renderLike = () => {
       if(info.hide_or_show === true){
           if(info.like === true) {
@@ -81,7 +89,8 @@ class ListContent extends Component {
       }
     return ( 
       <>
-       <div className={classes}>
+      {toggleProps === true ?
+        <div className={classes}>
           <ul>
             <li>{this.props.currentCategory}</li>
             <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
@@ -107,7 +116,39 @@ class ListContent extends Component {
                                                <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>
             <li><DeleteBook bookTitle={info} bookDeleteHandler={this.props.bookDeleteHandler} /></li>
           </ul>
-        </div> 
+        </div> : 
+        <>{info.hide_or_show === true  ? 
+            <div className={classes}>
+                <ul>
+                  <li>{this.props.currentCategory}</li>
+                  <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
+                                                                  category={this.props.category} 
+                                                                  changeBookTitleHandler={this.props.changeBookTitleHandler} 
+                                                                  onClick={this.titleChangeHandleClick}/> : <>{info.title}/{info.seq_in_category}</>}</li>
+                  <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
+                  <li>{info.type}</li>
+                  <li>{info.owner}</li>
+                  <li>{info.num_pages}</li>
+                  <li>{info.num_cards}</li>
+                  <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
+                  <li>{date}</li>
+                  <li>{update_date}</li>
+                  <li><CategoryMoveModal category={this.props.categoryTotal} bookTitle={info} bookCategoryMove={this.props.bookCategoryMove}/></li>
+                  <li>
+                    {renderLike()}
+                  </li>
+                  <li>{info.hide_or_show === true ? <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'list',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/>
+                                                      <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'list',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category})} style={{fontSize:'14px'}}/></> : ''}
+                  </li>
+                  <li>{info.hide_or_show === false ? <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:true,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>:
+                                                    <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>}</li>
+                  <li><DeleteBook bookTitle={info} bookDeleteHandler={this.props.bookDeleteHandler} /></li>
+                </ul>
+              </div> 
+          : ''} 
+        </>
+      }
+      
       </>
      );
   }
@@ -119,7 +160,9 @@ class CategoryListContainer extends Component {
       category:this.props.categoryName
      };
   }
+  
   render() {
+    console.log('category section',this.props.hideOrShowToggleState)
     if(this.props.category.book_ids.length > 0){
       var bookList = this.props.category.book_ids.map((book_title) =>
         {
@@ -135,7 +178,8 @@ class CategoryListContainer extends Component {
                       changeBookTitleHandler={this.props.changeBookTitleHandler} 
                       bookDeleteHandler={this.props.bookDeleteHandler} 
                       onClickLike={this.props.onClickLike} 
-                      onClickHideOrShow={this.props.onClickHideOrShow}/>
+                      onClickHideOrShow={this.props.onClickHideOrShow}
+                      hideOrShowToggleState={this.props.hideOrShowToggleState}/>
           } else{
             console.log('no books')
             return <div>hello</div>
@@ -156,6 +200,13 @@ class CategoryListContainer extends Component {
 }
 
 class ListSectionContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      
+     };
+  }
+
   render() { 
     if(this.props.category){
       var categoryList = this.props.category.map((category)=>(
@@ -168,7 +219,8 @@ class ListSectionContent extends Component {
                               changeBookTitleHandler={this.props.changeBookTitleHandler} 
                               bookDeleteHandler={this.props.bookDeleteHandler} 
                               onClickLike={this.props.onClickLike} 
-                              onClickHideOrShow={this.props.onClickHideOrShow}/>
+                              onClickHideOrShow={this.props.onClickHideOrShow}
+                              hideOrShowToggleState={this.props.hideOrShowToggleState}/>
       ))
     } else {
       var categoryList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -182,7 +234,8 @@ class ListSectionContent extends Component {
                     addCategory={this.props.addCategory} 
                     category={this.props.category} 
                     hideOrShowClass={this.props.hideOrShowClass} 
-                    hideOrShowToggle={this.props.hideOrShowToggle} />
+                    hideOrShowToggle={this.props.hideOrShowToggleHandeler}
+                     />
         {categoryList}
       </div>
      );
