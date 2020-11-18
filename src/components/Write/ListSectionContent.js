@@ -157,7 +157,6 @@ class CategoryListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      category:this.props.categoryName
      };
   }
   
@@ -169,7 +168,7 @@ class CategoryListContainer extends Component {
           console.log(book_title.hide_or_show)
           if(book_title){
            return <ListContent category={this.props.category} 
-                      currentCategory={this.state.category}
+                      currentCategory={this.props.categoryName}
                       key={book_title._id} 
                       categoryTotal={this.props.categoryTotal}
                       bookCategoryMove={this.props.bookCategoryMove} 
