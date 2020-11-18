@@ -34,26 +34,26 @@ class WriteMain extends Component {
   }
 
   onClickToggle = () => {
-    axios.post('api/book/change-config',{
-      isToggleOn : !this.state.isToggleOn
+    axios.post('api/book/change-like-config',{
+      like_toggle : !this.state.isToggleOn
     }).then(res => {
       this.setState({
-        isToggleOn : res.data.likeToggle.toggle
+        isToggleOn:res.data.write_config[0].write_config.likebook
       })
     })
   }
 
-  getAllTitle() {
-    axios.get('api/book/get-booklist')   
-    .then(res => {
-      this.setState({
-        bookTitle:res.data.bookTitle,
-        likeTitle:res.data.likeTitle,
-        category:res.data.category,
-        isToggleOn:res.data.LikeToggle
-      })
-    })
-  }
+  // getAllTitle() {
+  //   axios.get('api/book/get-booklist')   
+  //   .then(res => {
+  //     this.setState({
+  //       bookTitle:res.data.bookTitle,
+  //       likeTitle:res.data.likeTitle,
+  //       category:res.data.category,
+  //       isToggleOn:res.data.LikeToggle
+  //     })
+  //   })
+  // }
   getOnlyShowTitle() {
     axios.get('api/book/get-booklist')
     .then(res => {
@@ -61,7 +61,7 @@ class WriteMain extends Component {
       this.setState({
         category:res.data.categorybooklist,
         likeTitle:res.data.likebooklist,
-        // isToggleOn:res.data.config[0].config.likebook
+        isToggleOn:res.data.write_config[0].write_config.likebook
       })
     })
   }
