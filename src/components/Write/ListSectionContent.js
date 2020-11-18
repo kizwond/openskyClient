@@ -6,6 +6,7 @@ import CategoryMoveModal from './CategoryMoveModal'
 import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
 import { Empty,Switch } from 'antd';
+import { NavLink} from 'react-router-dom';
 
 class ListColumns extends Component {
   constructor(props) {
@@ -96,7 +97,7 @@ class ListContent extends Component {
             <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                             category={this.props.category} 
                                                             changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                            onClick={this.titleChangeHandleClick}/> : <>{info.title}/순서 : {info.seq_in_category}</>}</li>
+                                                            onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} exact>{info.title}/순서 : {info.seq_in_category}</NavLink></>}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
             <li>{info.type}</li>
             <li>{info.owner}</li>
@@ -124,7 +125,7 @@ class ListContent extends Component {
                   <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                                   category={this.props.category} 
                                                                   changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                                  onClick={this.titleChangeHandleClick}/> : <>{info.title}/순서 : {info.seq_in_category}</>}</li>
+                                                                  onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} exact>{info.title}/순서 : {info.seq_in_category}</NavLink></>}</li>
                   <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
                   <li>{info.type}</li>
                   <li>{info.owner}</li>
