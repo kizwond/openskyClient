@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-
+import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,EditOutlined} from '@ant-design/icons';
 
 const columns = [
   {
@@ -35,14 +35,20 @@ const columns = [
   {
     title: '즐겨찾기',
     dataIndex: 'like',
+    render: () => <><StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/></>
+,
   },
   {
     title: '순서이동',
     dataIndex: 'reorder',
+    render: () => <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'like',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_like:this.props.bookInfo.seq_in_like})} style={{fontSize:'14px'}}/>
+    <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'like',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_like:this.props.bookInfo.seq_in_like})} style={{fontSize:'14px'}}/></>
   },
   {
     title: '숨긴책보기',
     dataIndex: 'hide',
+    render: () => <><EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category,seq_in_like:this.props.bookInfo.seq_in_like, category_id:this.props.bookInfo.category_id._id})} style={{fontSize:'14px'}}/></>
+    
   },
 ];
 const data = [
@@ -78,6 +84,7 @@ const LikeSectionContent = () => {
   return (
     <div>
       <Table
+        className='study_table_list'
         rowSelection={{
           type: 'checkbox',
           ...rowSelection,
@@ -85,7 +92,7 @@ const LikeSectionContent = () => {
         columns={columns}
         dataSource={data}
         pagination={false}
-        bordered={true}
+        size='small'
       />
     </div>
   );
