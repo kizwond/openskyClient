@@ -67,7 +67,7 @@ class ListContent extends Component {
     const info = this.props.bookInfo;
     const date = info.time_create.slice(0,10)
     const update_date = info.time_create.slice(0,10)
-    const classes = `like_list_contents`
+    const classes = `like_list_contents hide_or_show_${info.hide_or_show}`
     const renderLike = () => {
       if(info.hide_or_show === true){
           if(info.like === true) {

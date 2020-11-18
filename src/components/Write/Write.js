@@ -43,10 +43,11 @@ class WriteMain extends Component {
   getOnlyShowTitle() {
     axios.get('api/book/get-booklist')
     .then(res => {
-      console.log("first axios :",res)
+      console.log("first axios :",res.data.config[0].config.likebook)
       this.setState({
         category:res.data.categorybooklist,
-        likeTitle:res.data.likebooklist
+        likeTitle:res.data.likebooklist,
+        isToggleOn:res.data.config[0].config.likebook
       })
     })
   }
