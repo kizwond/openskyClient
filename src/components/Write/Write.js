@@ -107,10 +107,13 @@ class WriteMain extends Component {
   }
 
   eyeClickHandler = (value) =>{
-    console.log('hide_or_show : ',value.value)
+    console.log('hide_or_show : ',value)
     axios.post('api/book/change-hide-or-show',{
       book_id : value.bookId,
       hide_or_show: value.value,
+      seq_in_category: value.seq_in_category,
+      seq_in_like: value.seq_in_like,
+      category_id: value.category_id
     }).then(res => {
       this.setState({
         category:res.data.categorybooklist,
