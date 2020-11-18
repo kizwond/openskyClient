@@ -42,6 +42,7 @@ class WriteMain extends Component {
       })
     })
   }
+
   getAllTitle() {
     axios.get('api/book/get-booklist')   
     .then(res => {
@@ -65,24 +66,6 @@ class WriteMain extends Component {
     })
   }
 
-  // hideOrShowToggle = () => {
-  //   if (this.state.hideOrShowClass === false){
-  //     this.getAllTitle()
-  //     this.setState((prevState)=>({
-  //         hideOrShowClass : !prevState.hideOrShowClass
-  //       })
-  //     )
-  //   } else if (this.state.hideOrShowClass === true){
-  //     this.getOnlyShowTitle()
-  //     this.setState((prevState)=>({
-  //         hideOrShowClass : !prevState.hideOrShowClass
-  //       })
-  //     )
-  //   }
-    
-
-  // }
-
   componentDidMount() {
     this.getOnlyShowTitle()
   }
@@ -97,7 +80,7 @@ class WriteMain extends Component {
     console.log("like :",like)
     axios.post('api/book/apply-likebook',{
       book_id : value.bookId,
-      like: like,
+      like: like
     }).then(res => {
       this.setState({
         category:res.data.categorybooklist,
