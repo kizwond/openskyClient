@@ -33,7 +33,7 @@ class CategoryMoveModal extends Component {
         visible: false,
         confirmLoading: false,
       });
-      event({bookId:book_id._id, category:this.state.moveTo, prevCategory:book_id.category_id._id, seq_in_category:book_id.seq_in_category})
+      event({bookId:book_id._id, category:this.state.moveTo, prevCategory:book_id.category_id._id, seq_in_category:book_id.seq_in_category, hide_or_show:book_id.hide_or_show})
     }
   };
 

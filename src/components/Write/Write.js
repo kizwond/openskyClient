@@ -171,11 +171,13 @@ class WriteMain extends Component {
   
 
   bookCategoryMove = (value) => {
+    console.log(value)
     axios.post('api/book/move-book-between-category',{
       book_id : value.bookId,
       prev_category_id : value.prevCategory,
       target_category_id : value.category,
-      seq_in_category: value.seq_in_category
+      seq_in_category: value.seq_in_category,
+      hide_or_show:value.hide_or_show
     }).then(res => { 
         this.setState({
           category:res.data.categorybooklist,

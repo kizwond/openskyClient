@@ -1,73 +1,65 @@
-import React, { useState } from 'react';
-import { Table, Radio, Divider } from 'antd';
+import React from 'react';
+import { Table } from 'antd';
+
+
 const columns = [
   {
     title: '카테고리',
-    dataIndex: 'name',
+    dataIndex: 'category',
     render: (text) => <a>{text}</a>,
   },
   {
     title: '책이름',
-    dataIndex: 'age',
+    dataIndex: 'book_title',
   },
   {
     title: '학습완료율',
-    dataIndex: 'address',
+    dataIndex: 'progress',
   },
   {
     title: '남은 신규카드',
-    dataIndex: 'age',
+    dataIndex: 'remain_new',
   },
   {
     title: '오늘 복습카드',
-    dataIndex: 'address',
+    dataIndex: 'today_review',
   },
   {
     title: '최근학습일',
-    dataIndex: 'address',
+    dataIndex: 'recent_study',
   },
   {
     title: '일일 학습목표',
-    dataIndex: 'address',
+    dataIndex: 'today_goal',
   },
   {
     title: '즐겨찾기',
-    dataIndex: 'address',
+    dataIndex: 'like',
   },
   {
     title: '순서이동',
-    dataIndex: 'address',
+    dataIndex: 'reorder',
   },
   {
     title: '숨긴책보기',
-    dataIndex: 'address',
+    dataIndex: 'hide',
   },
 ];
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    category: '블라블라',
+    book_title : '책이름름',
+    progress:'00%',
+    remain_new:'00장',
+    today_review:'00장',
+    recent_study:'00월/00일/0000년',
+    today_goal:'00장',
+    like:'별모양',
+    reorder: '위/아래',
+    hide: '숨기기눈깔',
   },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
-  },
+  
 ]; // rowSelection object indicates the need for row selection
 
 const rowSelection = {
@@ -82,16 +74,18 @@ const rowSelection = {
 };
 
 const LikeSectionContent = () => {
-  const [selectionType, setSelectionType] = useState('checkbox');
+
   return (
     <div>
       <Table
         rowSelection={{
-          type: selectionType,
+          type: 'checkbox',
           ...rowSelection,
         }}
         columns={columns}
         dataSource={data}
+        pagination={false}
+        bordered={true}
       />
     </div>
   );
