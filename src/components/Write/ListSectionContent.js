@@ -44,7 +44,7 @@ class ListColumns extends Component {
             {this.props.hideOrShowClass === false  ? <span onClick={this.props.hideOrShowToggle} className="hide_or_show_title_btn">OFF</span> : 
                                                      <span onClick={this.props.hideOrShowToggle} className="hide_or_show_title_btn">ON</span>}
         </li> */}
-        <li><Switch size="small" onChange={this.onChange} /></li>
+        <li>숨긴책보기<Switch size="small" onChange={this.onChange} /></li>
         <li>삭제</li>
       </ul> 
     );
