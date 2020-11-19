@@ -97,6 +97,22 @@ export class BookWriting extends Component {
         });
       })
   }
+  addTable =(value) => {
+    console.log(value)
+    axios.post('api/index/create-index',{
+      book_id : this.props.location.book_id,
+      level : value.prevTableLevel,
+      seq : value.prevTableOrder,
+      name : value.value.newTable,
+    }).then(res => {
+      console.log(res.data)
+      const contentsTable = res.data.indexList
+      this.setState({
+        table_of_contents:contentsTable,
+      })
+    })
+  }
+
   addCardType =(value) => {
     console.log(value)
     axios.post('api/edit/add-card-type',{
@@ -117,24 +133,10 @@ export class BookWriting extends Component {
     })
   }
 
-  addTable =(value) => {
-    console.log(value)
-    axios.post('api/edit/add-table',{
-      prevTableId : value.prevTableId,
-      prevTableLevel : value.prevTableLevel,
-      prevTableOrder : value.prevTableOrder,
-      userId : userId,
-      newTable : value.value.newTable,
-    }).then(res => {
-      console.log(res.data)
-      this.setState({
-        table_of_contents:res.data.table_of_contents
-      })
-    })
-  }
+  
   changeTableNameHandler = (value) => {
     console.log(value)
-    axios.post('api/edit/change-table-name',{
+    axios.post('api/index/change-index-name',{
       tableId : value.tableId,
       userId : userId,
       newName : value.value.newName
@@ -148,7 +150,7 @@ export class BookWriting extends Component {
   }
   tableLevelHandler = (value) => {
     console.log(value)
-    axios.post('api/edit/change-table-level',{
+    axios.post('api/index/change-index-level',{
       tableId : value.tableId,
       userId : userId,
       action : value.action,
@@ -163,7 +165,7 @@ export class BookWriting extends Component {
   }
   tableOrderlHandler = (value) => {
     console.log(value)
-    axios.post('api/edit/change-table-order',{
+    axios.post('api/index/change-index-order',{
       tableId : value.tableId,
       bookId: value.bookId,
       userId : userId,
@@ -178,7 +180,7 @@ export class BookWriting extends Component {
     })
   }
   tableDeleteHandler = (value) => {
-    axios.post('api/edit/delete-table',{
+    axios.post('api/index/delete-index',{
       tableId : value.tableId,
       bookId: value.bookId,
       userId : userId,

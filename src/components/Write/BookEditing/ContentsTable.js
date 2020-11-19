@@ -15,7 +15,7 @@ class ContentsTableList extends Component {
   }
 
   onFinish = value => {
-    this.props.addTable({value, prevTableId:this.props.table._id, prevTableLevel:this.props.table.level, prevTableOrder:this.props.table.order})
+    this.props.addTable({value, prevTableLevel:this.props.table.level, prevTableOrder:this.props.table.seq})
     this.newInputVisible()
   };
 
@@ -58,37 +58,37 @@ class ContentsTableList extends Component {
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-          {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.table_name}/ 순서 : {this.props.table.order}</>}
+          {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 2 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.table_name}/ 순서 : {this.props.table.order}</>}
+            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 3 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.table_name}/ 순서 : {this.props.table.order}</>}
+            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 4 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.table_name}/ 순서 : {this.props.table.order}</>}
+            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 5 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.table_name}/ 순서 : {this.props.table.order}</>}
+            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
         </div>
         <div className="mokcha_tools">
           <div><EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/></div>
           <div><StepBackwardOutlined onClick={()=>this.props.tableLevelHandler({action:'minus', tableId:this.props.table._id, presentLevel:this.props.table.level})}/> <StepForwardOutlined onClick={()=>this.props.tableLevelHandler({action:'plus', tableId:this.props.table._id, presentLevel:this.props.table.level})}/></div>
-          <div><CaretUpOutlined onClick={()=>this.props.tableOrderlHandler({action:'up', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.order})}/> <CaretDownOutlined onClick={()=>this.props.tableOrderlHandler({action:'down', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.order})}/></div>
+          <div><CaretUpOutlined onClick={()=>this.props.tableOrderlHandler({action:'up', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/> <CaretDownOutlined onClick={()=>this.props.tableOrderlHandler({action:'down', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/></div>
           <div><DeleteTable table={this.props.table} tableDeleteHandler={this.props.tableDeleteHandler}/></div>
         </div>
       </div>
