@@ -199,7 +199,7 @@ export class BookWriting extends Component {
       index_id : value.tableId,
       book_id : this.props.location.book_id,
       seq:value.seq,
-      level:value.seq,
+      level:value.level,
     }).then(res => {
       console.log(res.data)
       const contentsTable = res.data.indexList
