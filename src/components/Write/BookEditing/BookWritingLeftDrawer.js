@@ -30,13 +30,11 @@ class LeftDrawer extends Component {
     });
   };
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
   handleOk = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -50,7 +48,6 @@ class LeftDrawer extends Component {
       var toggle = <DoubleLeftOutlined />
     }
     let level_all =[];
-    console.log('목차정보 : ',this.props.table_of_contents)
     const contentsTableList = this.props.table_of_contents.map((table, index)=>{
         if(table){
           if(table.level === 1){
@@ -351,7 +348,7 @@ class LeftDrawer extends Component {
               }
             }
           
-          console.log('result:',level_all)
+          // console.log('result:',level_all)
     
         }
       }

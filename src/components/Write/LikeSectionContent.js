@@ -145,8 +145,6 @@ class LikeListContent extends Component {
 
 class LikeSectionContent extends Component {
   render() { 
-    console.log('like page_bookTitle:',this.props.bookTitle)
-    console.log('like page_category:',this.props.category)
     if(this.props.bookTitle.length > 0){
       var bookList = this.props.bookTitle.map((book_title)=>(
         <LikeListContent key={book_title._id} 

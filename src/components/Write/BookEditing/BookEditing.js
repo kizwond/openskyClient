@@ -85,12 +85,10 @@ export class BookWriting extends Component {
   };
 
   componentDidMount() {
-    console.log('first:',this.props.location.book_id)
     axios.post('api/index/get-indexlist',{
       book_id: this.props.location.book_id
     })
       .then(res => {
-        console.log(res.data)
         const contentsTable = res.data.indexList
         this.setState({ 
           table_of_contents:contentsTable,

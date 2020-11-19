@@ -17,7 +17,7 @@ class WriteMain extends Component {
     this.getOnlyShowTitle()
   }
   getOnlyShowTitle() {
-    axios.get('api/write/get-booklist')
+    axios.get('api/book/get-booklist')
     .then(res => {
       console.log(res)
       this.setState({
@@ -26,14 +26,15 @@ class WriteMain extends Component {
     })
   }
   render() { 
+    console.log('start : ',this.state.category)
     return ( 
       <div className="study_page_booklist_container">
           <Layout>
             <Content className="study_page_content_padding">
               <div className="study_page_list_title">즐겨찾기</div>
-              <LikeSectionContent />
+              <LikeSectionContent category={this.state.category}/>
               <div className="study_page_list_title study_page_bottom_title">내 공부방</div>
-              <ListSectionContent />
+              <ListSectionContent category={this.state.category}/>
             </Content>
             <Sider style={{ padding:"10px",borderLeft:"1px solid grey", background:'#f5f5f5'}}>Sider</Sider>
           </Layout>

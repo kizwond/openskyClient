@@ -7,6 +7,7 @@ import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
 import { Empty,Switch } from 'antd';
 import { NavLink} from 'react-router-dom';
+import axios from 'axios'
 
 class ListColumns extends Component {
   constructor(props) {
@@ -70,6 +71,15 @@ class ListContent extends Component {
       editBookTitle: !state.editBookTitle
     }));
   }
+
+  saveBookIdSesstion = (value)=> {
+    console.log(value)
+    axios.post('api/book/start-write',{
+      book_id:value.book_id
+    }).then(res => {
+      console.log(res)
+    })
+  }
   
   render() { 
     const info = this.props.bookInfo;
@@ -97,7 +107,7 @@ class ListContent extends Component {
             <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                             category={this.props.category} 
                                                             changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                            onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} exact>{info.title}/순서 : {info.seq_in_category}</NavLink></>}</li>
+                                                            onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} onClick={()=>this.saveBookIdSesstion({book_id:info._id})} exact>{info.title}/순서 : {info.seq_in_category}</NavLink></>}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
             <li>{info.type}</li>
             <li>{info.owner}</li>
@@ -162,11 +172,9 @@ class CategoryListContainer extends Component {
   }
   
   render() {
-    console.log('category section',this.props.hideOrShowToggleState)
     if(this.props.category.book_ids.length > 0){
       var bookList = this.props.category.book_ids.map((book_title) =>
         {
-          console.log(book_title.hide_or_show)
           if(book_title){
            return <ListContent category={this.props.category} 
                       currentCategory={this.props.categoryName}
@@ -181,7 +189,6 @@ class CategoryListContainer extends Component {
                       onClickHideOrShow={this.props.onClickHideOrShow}
                       hideOrShowToggleState={this.props.hideOrShowToggleState}/>
           } else{
-            console.log('no books')
             return <div>hello</div>
           }
         
