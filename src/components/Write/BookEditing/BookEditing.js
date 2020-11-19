@@ -160,10 +160,14 @@ export class BookWriting extends Component {
     })
     .then(res => {
       console.log(res.data)
-      const contentsTable = res.data.indexList
-      this.setState({
-        table_of_contents:contentsTable,
-      })
+      if(res.data.msg === "이동불가") {
+        alert(res.data.msg)
+      } else {
+        const contentsTable = res.data.indexList
+        this.setState({
+          table_of_contents:contentsTable,
+        })
+      }
     })
   }
   tableOrderlHandler = (value) => {
