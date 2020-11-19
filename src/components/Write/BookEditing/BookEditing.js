@@ -137,57 +137,59 @@ export class BookWriting extends Component {
   changeTableNameHandler = (value) => {
     console.log(value)
     axios.post('api/index/change-index-name',{
-      tableId : value.tableId,
-      userId : userId,
-      newName : value.value.newName
+      book_id : this.props.location.book_id,
+      index_id : value.tableId,
+      name : value.value.newName
     })
     .then(res => {
-      console.log(res.data)
+      console.log('name change : ',res.data)
+      const contentsTable = res.data.indexList
       this.setState({
-        table_of_contents:res.data.table_of_contents
+        table_of_contents:contentsTable,
       })
     })
   }
   tableLevelHandler = (value) => {
     console.log(value)
     axios.post('api/index/change-index-level',{
-      tableId : value.tableId,
-      userId : userId,
+      book_id : this.props.location.book_id,
+      index_id : value.tableId,
       action : value.action,
       presentLevel :value.presentLevel
     })
     .then(res => {
       console.log(res.data)
+      const contentsTable = res.data.indexList
       this.setState({
-        table_of_contents:res.data.table_of_contents
+        table_of_contents:contentsTable,
       })
     })
   }
   tableOrderlHandler = (value) => {
     console.log(value)
     axios.post('api/index/change-index-order',{
-      tableId : value.tableId,
-      bookId: value.bookId,
-      userId : userId,
+      index_id : value.tableId,
+      book_id : this.props.location.book_id,
       action : value.action,
       presentOrder :value.presentOrder
     })
     .then(res => {
       console.log(res.data)
+      const contentsTable = res.data.indexList
       this.setState({
-        table_of_contents:res.data.table_of_contents
+        table_of_contents:contentsTable,
       })
     })
   }
   tableDeleteHandler = (value) => {
     axios.post('api/index/delete-index',{
-      tableId : value.tableId,
-      bookId: value.bookId,
-      userId : userId,
+      index_id : value.tableId,
+      book_id : this.props.location.book_id,
     }).then(res => {
       console.log(res.data)
+      const contentsTable = res.data.indexList
       this.setState({
-        table_of_contents:res.data.table_of_contents
+        table_of_contents:contentsTable,
       })
     })
   }
