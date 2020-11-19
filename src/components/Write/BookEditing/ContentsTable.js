@@ -87,7 +87,7 @@ class ContentsTableList extends Component {
         </div>
         <div className="mokcha_tools">
           <div><EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/></div>
-          <div><StepBackwardOutlined onClick={()=>this.props.tableLevelHandler({action:'minus', tableId:this.props.table._id, presentLevel:this.props.table.level})}/> <StepForwardOutlined onClick={()=>this.props.tableLevelHandler({action:'plus', tableId:this.props.table._id, presentLevel:this.props.table.level})}/></div>
+          <div><StepBackwardOutlined onClick={()=>this.props.tableLevelHandler({action:'left', tableId:this.props.table._id, presentLevel:this.props.table.level,seq:this.props.table.seq})}/> <StepForwardOutlined onClick={()=>this.props.tableLevelHandler({action:'right', tableId:this.props.table._id, presentLevel:this.props.table.level,seq:this.props.table.seq})}/></div>
           <div><CaretUpOutlined onClick={()=>this.props.tableOrderlHandler({action:'up', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/> <CaretDownOutlined onClick={()=>this.props.tableOrderlHandler({action:'down', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/></div>
           <div><DeleteTable table={this.props.table} tableDeleteHandler={this.props.tableDeleteHandler}/></div>
         </div>

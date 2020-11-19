@@ -151,23 +151,12 @@ export class BookWriting extends Component {
   }
   tableLevelHandler = (value) => {
     console.log(value)
-    if(value.action === 'plus'){
-      if(value.presentLevel === 5){
-        return
-      } else {
-        var level = value.presentLevel + 1
-      }
-    } else {
-      if(value.presentLevel === 1){
-        return
-      } else {
-        var level = value.presentLevel - 1
-      }
-    }
     axios.post('api/index/change-index-level',{
       book_id : this.props.location.book_id,
       index_id : value.tableId,
-      level : level
+      level : value.presentLevel,
+      seq: value.seq,
+      action: value.action
     })
     .then(res => {
       console.log(res.data)
