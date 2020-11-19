@@ -50,45 +50,45 @@ class LeftDrawer extends Component {
       var toggle = <DoubleLeftOutlined />
     }
     let level_all =[];
-
+    console.log('목차정보 : ',this.props.table_of_contents)
     const contentsTableList = this.props.table_of_contents.map((table, index)=>{
         if(table){
           if(table.level === 1){
             let level = {
-              title: table.table_name,
-              key: table.order,
+              title: table.name,
+              key: table.seq,
               level: 1,
               icon: <CarryOutOutlined />,
               children: [],}
               level_all.push(level)
           } else if(table.level === 2){
             let level = {
-              title: table.table_name,
-              key: table.order,
+              title: table.name,
+              key: table.seq,
               level: 2,
               icon: <CarryOutOutlined />,
               children: [],}
               level_all.push(level)
           } else if(table.level === 3){
             let level = {
-              title: table.table_name,
-              key: table.order,
+              title: table.name,
+              key: table.seq,
               level: 3,
               icon: <CarryOutOutlined />,
               children: [],}
               level_all.push(level)
           } else if(table.level === 4){
             let level = {
-              title: table.table_name,
-              key: table.order,
+              title: table.name,
+              key: table.seq,
               level: 4,
               icon: <CarryOutOutlined />,
               children: [],}
               level_all.push(level)
           } else if(table.level === 5){
             let level = {
-              title: table.table_name,
-              key: table.order,
+              title: table.name,
+              key: table.seq,
               level: 5,
               icon: <CarryOutOutlined />,
               children: [],}
