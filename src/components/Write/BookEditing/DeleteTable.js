@@ -10,17 +10,16 @@ class DeleteTable extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      table:this.props.table,
      }
   }
   
   deleteThis = (value) => {
-    this.props.tableDeleteHandler({value, bookId:this.props.table.book_id, tableId:this.props.table._id})
+    this.props.tableDeleteHandler({value, bookId:this.props.table.book_id, tableId:this.props.table._id, seq:this.props.table.seq, level:this.props.table.level})
   }
   showPromiseConfirm = (table, event) => {
     console.log(this)
     confirm({
-      title: [`[${this.state.table.table_name}] 목차를 삭제하시겠습니까?`],
+      title: [`[${this.props.table.name}] 목차를 삭제하시겠습니까?`],
       okText: '삭제',
       cancelText: '취소',
       icon: <ExclamationCircleOutlined />,
@@ -34,7 +33,7 @@ class DeleteTable extends Component {
   render() { 
     return ( 
       <Space>
-        <DeleteOutlined onClick={()=>this.showPromiseConfirm(this.state.table, this.deleteThis)} style={{fontSize:'14px'}} />
+        <DeleteOutlined onClick={()=>this.showPromiseConfirm(this.props.table, this.deleteThis)} style={{fontSize:'14px'}} />
       </Space>
     );
   }

@@ -194,9 +194,12 @@ export class BookWriting extends Component {
     })
   }
   tableDeleteHandler = (value) => {
+    console.log('index delete:', value)
     axios.post('api/index/delete-index',{
       index_id : value.tableId,
       book_id : this.props.location.book_id,
+      seq:value.seq,
+      level:value.seq,
     }).then(res => {
       console.log(res.data)
       const contentsTable = res.data.indexList
