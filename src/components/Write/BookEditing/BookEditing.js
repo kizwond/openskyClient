@@ -86,23 +86,16 @@ export class BookWriting extends Component {
 
   componentDidMount() {
     console.log('first:',this.props.location.book_id)
-    // axios.get('api/create/get-book-title',{params: { book_id: this.props.location.book_id }})
-    //   .then(res => {
-    //     const bookTitle = res.data.bookTitle.book_title;
-    //     const bookId = res.data.bookTitle._id;
-    //     const category = res.data.bookTitle.category;
-    //     const userEmail = res.data.bookTitle.user_email;
-    //     const contentsTable = res.data.contentsTable
-    //     const cardType = res.data.cardType
-    //     this.setState({ 
-    //       bookTitle:bookTitle, 
-    //       bookId:bookId, 
-    //       category:category,
-    //       userEmail:userEmail,
-    //       table_of_contents:contentsTable,
-    //       card_type:cardType,
-    //     });
-    //   })
+    axios.post('api/index/get-indexlist',{
+      book_id: this.props.location.book_id
+    })
+      .then(res => {
+        console.log(res.data)
+        const contentsTable = res.data.contentsTable
+        this.setState({ 
+          table_of_contents:contentsTable,
+        });
+      })
   }
   addCardType =(value) => {
     console.log(value)

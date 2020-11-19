@@ -10,7 +10,7 @@ import StudyMain from './Study/StudyMain'
 import Write from './Write/Write'
 import Store from './Store/Store'
 import BookNaming from './Write/BookEditing/BookNaming'
-import BookWriting from './Write/BookEditing/BookWriting'
+// import BookWriting from './Write/BookEditing/BookWriting'
 import BookEditing from './Write/BookEditing/BookEditing'
 
 const { Header, Content, Footer } = Layout;
@@ -33,7 +33,7 @@ function App() {
             <Route exact path="/write" component={Write} />
             <Route exact path="/store" component={Store} />
             <Route exact path="/naming" strict component={BookNaming} />
-            <Route exact path="/writing" strict component={BookWriting} />
+            {/* <Route exact path="/writing" strict component={BookWriting} /> */}
             <Route exact path="/editing" strict component={BookEditing} />
           </Switch>
         </Content>
