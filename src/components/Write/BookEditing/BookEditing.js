@@ -126,7 +126,7 @@ export class BookWriting extends Component {
     }).then(res => {
       console.log(res.data)
       this.setState({
-        card_type:res.data.cardTypes
+        card_type:res.data.cardtypes
       })
     })
   }

@@ -250,7 +250,10 @@ class SelectTemplete extends Component {
     })
   }
   render() {
-    console.log(this.props.cardType)
+    if(this.props.cardType){
+      console.log(this.props.cardType)
+    }
+
     const cardTypeListOption = this.props.cardType.map((card_type)=>(
       <Option key={card_type._id} value={card_type.card_nick}>{card_type.card_nick} - ({card_type.card_type} 카드)</Option>
     ))
