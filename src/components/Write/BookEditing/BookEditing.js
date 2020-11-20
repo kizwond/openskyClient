@@ -85,6 +85,7 @@ export class BookWriting extends Component {
   };
 
   componentDidMount() {
+    console.log('req start!!!!!!!!!!')
     axios.post('api/index/get-indexlist',{
       book_id: this.props.location.book_id
     })

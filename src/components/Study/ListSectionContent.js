@@ -13,12 +13,12 @@ class ListSectionContent extends Component {
       {
         title: '카테고리',
         dataIndex: 'category',
-        render: (text) => <a>{text}</a>,
       },
       {
         title: '책이름',
         dataIndex: 'book_title',
-        width:'100px'
+        width:'100px',
+        render: (text) => <a>{text}</a>,
       },
       {
         title: '학습완료율',
@@ -43,8 +43,13 @@ class ListSectionContent extends Component {
       {
         title: '즐겨찾기',
         dataIndex: 'like',
-        render: () => <><StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/></>
-    ,
+        render: (text, record) => {
+          if(record.like === true){
+              return <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>
+          } else {
+            return <StarOutlined onClick={()=>this.props.onClickLike({value:'false',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
+          }
+        }
       },
       {
         title: '순서이동',
@@ -55,52 +60,17 @@ class ListSectionContent extends Component {
       {
         title: '숨긴책보기',
         dataIndex: 'hide',
-        render: () => <><EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category,seq_in_like:this.props.bookInfo.seq_in_like, category_id:this.props.bookInfo.category_id._id})} style={{fontSize:'14px'}}/></>
-        
+        render: (text, record) => {
+          if(record.hide === true){
+              return <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category,seq_in_like:this.props.bookInfo.seq_in_like, category_id:this.props.bookInfo.category_id._id})} style={{fontSize:'14px'}}/>
+          } else {
+            return <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:true,bookId:this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category,seq_in_like:this.props.bookInfo.seq_in_like, category_id:this.props.bookInfo.category_id._id})} style={{fontSize:'14px'}}/>
+          }
+        }
       },
     ];
 
-    // const data1 = [
-    //   {
-    //     key: '1',
-    //     category: '블라블라',
-    //     book_title : '책이름름책이름름책이름름책이름름책이름름책이름름',
-    //     progress:'00%',
-    //     remain_new:'00장',
-    //     today_review:'00장',
-    //     recent_study:'00월/00일/0000년',
-    //     today_goal:'00장',
-    //     like:'별모양',
-    //     reorder: '위/아래',
-    //     hide: '숨기기눈깔',
-    //   },
-    //   {
-    //     key: '2',
-    //     category: '블라블라',
-    //     book_title : '책이름름책이름름책이름름책이름름책이름름책이름름',
-    //     progress:'00%',
-    //     remain_new:'00장',
-    //     today_review:'00장',
-    //     recent_study:'00월/00일/0000년',
-    //     today_goal:'00장',
-    //     like:'별모양',
-    //     reorder: '위/아래',
-    //     hide: '숨기기눈깔',
-    //   },
-    //   {
-    //     key: '3',
-    //     category: '블라블라',
-    //     book_title : '책이름름책이름름책이름름책이름름책이름름책이름름',
-    //     progress:'00%',
-    //     remain_new:'00장',
-    //     today_review:'00장',
-    //     recent_study:'00월/00일/0000년',
-    //     today_goal:'00장',
-    //     like:'별모양',
-    //     reorder: '위/아래',
-    //     hide: '숨기기눈깔',
-    //   },
-    // ]; 
+
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -110,30 +80,25 @@ class ListSectionContent extends Component {
         name: record.name,
       }),
     };
-    console.log('here : ',this.props.category)
-    // const data = this.props.category.map((book_title) =>
-        
-    //     ({
-    //       key: '1',
-    //       category: '블라블',
-    //       book_title : '책이름름책이름름책이름름책이름름책이름름책이름름',
-    //       progress:'00%',
-    //       remain_new:'00장',
-    //       today_review:'00장',
-    //       recent_study:'00월/00일/0000년',
-    //       today_goal:'00장',
-    //       like:'별모양',
-    //       reorder: '위/아래',
-    //       hide: '숨기기눈깔',
-    //     })
-        
-    //   )
+
     if(this.props.category.length > 0){
-      const predata = this.props.category.map((category) => category.book_ids)
-      console.log('predata : ',predata)
-  
-      var data = predata.map((book) => book)
-      console.log('data : ',data)
+      var plz = []
+      var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
+
+      var data = plz.map(book =>({
+        key: book._id,
+        category: book.category_id.name,
+        book_title : book.title,
+        progress:'00%',
+        remain_new:'00장',
+        today_review:'00장',
+        recent_study:'00월/00일/0000년',
+        today_goal:'00장',
+        like:book.like,
+        reorder: '위/아래',
+        hide: book.hide_or_show,
+      }))
+      
     }
     
 

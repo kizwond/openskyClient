@@ -78,6 +78,7 @@ class ListContent extends Component {
       book_id:value.book_id
     }).then(res => {
       console.log(res)
+      window.location.href ="/editing"
     })
   }
   
@@ -107,7 +108,7 @@ class ListContent extends Component {
             <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
                                                             category={this.props.category} 
                                                             changeBookTitleHandler={this.props.changeBookTitleHandler} 
-                                                            onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} onClick={()=>this.saveBookIdSesstion({book_id:info._id})} exact>{info.title}/순서 : {info.seq_in_category}</NavLink></>}</li>
+                                                            onClick={this.titleChangeHandleClick}/> : <><span onClick={()=>this.saveBookIdSesstion({book_id:info._id})} exact>{info.title}/순서 : {info.seq_in_category}</span></>}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
             <li>{info.type}</li>
             <li>{info.owner}</li>

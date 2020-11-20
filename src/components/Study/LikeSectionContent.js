@@ -6,11 +6,12 @@ const columns = [
   {
     title: '카테고리',
     dataIndex: 'category',
-    render: (text) => <a>{text}</a>,
   },
   {
     title: '책이름',
     dataIndex: 'book_title',
+    width:'100px',
+    render: (text) => <a>{text}</a>,
   },
   {
     title: '학습완료율',
