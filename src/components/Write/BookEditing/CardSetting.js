@@ -197,9 +197,9 @@ class NewTemplete extends Component {
               <div>
                 <Select autoFocus={true} size='small' value={this.state.cardType} style={{ width: 180 }} onChange={this.handleChangeCardType}>
                   <Option value="카드종류를 선택해 주세요">카드종류를 선택해 주세요</Option>
-                  <Option value="1면">1면</Option>
-                  <Option value="2면">2면</Option>
-                  <Option value="3면">3면</Option>
+                  <Option value="face1">1면</Option>
+                  <Option value="face2">2면</Option>
+                  <Option value="face3">3면</Option>
                 </Select>
               </div>
               <div>

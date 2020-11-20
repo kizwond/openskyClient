@@ -114,7 +114,7 @@ export class BookWriting extends Component {
 
   addCardType =(value) => {
     console.log(value)
-    axios.post('api/edit/add-card-type',{
+    axios.post('api/cardtype/create-cardtype',{
       type: value.card_type,
       nick: value.card_nick,
       importance: value.card_star,
