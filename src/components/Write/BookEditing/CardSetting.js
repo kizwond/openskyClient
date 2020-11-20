@@ -73,6 +73,7 @@ class NewTemplete extends Component {
       card2:'',
       card3:'',
       annotation:false,
+      annotationNum:'',
      };
   }
   showModal = () => {
@@ -89,6 +90,7 @@ class NewTemplete extends Component {
     console.log(this.state.card2);
     console.log(this.state.card3);
     console.log(this.state.annotation);
+    console.log(this.state.annotationNum);
     const value = {
                   card_type: this.state.cardType,
                   card_nick: this.state.cardNick,
@@ -97,6 +99,7 @@ class NewTemplete extends Component {
                   face_2: this.state.card2,
                   face_3: this.state.card3,
                   annotation: this.state.annotation,
+                  annotationNum: this.state.annotationNum,
                   }
     this.props.addCardType(value)
     this.setState({
@@ -108,6 +111,7 @@ class NewTemplete extends Component {
       card3:'',
       annotation:false,
       visible: false,
+      annotationNum:'',
     });
   };
 
@@ -122,6 +126,7 @@ class NewTemplete extends Component {
       card3:'',
       annotation:false,
       visible: false,
+      annotationNum:'',
     });
   };
   handleChangeCardType=(value)=> {
@@ -159,6 +164,11 @@ class NewTemplete extends Component {
       annotation: value,
     });
   }
+  handleChangeAnnotationNum=(value)=> {
+    this.setState({
+      annotationNum: value,
+    });
+  }
   render() {
     return (
       <div className='new_templete_button_container'>
@@ -181,6 +191,7 @@ class NewTemplete extends Component {
               <div>2면 - 행 생성 개수</div>
               <div>3면 - 행 생성 개수</div>
               <div>주석 면 생성</div>
+              <div>주석 면 행 생성 개수</div>
             </div>
             <div className="new_card_templete_contents">
               <div>
@@ -211,6 +222,10 @@ class NewTemplete extends Component {
               </div>
               <div>
                 <Switch size='small' checked={this.state.annotation} onChange={this.handleChangeAnnotation} />
+              </div>
+              <div>
+                {this.state.annotation === true ? <InputNumber size='small' style={{ width: 50 }} value={this.state.annotationNum} onChange={this.handleChangeAnnotationNum} min="1" max="5" /> : <InputNumber size='small' style={{ width: 50 }} onChange={this.handleChangeAnnotationNum} min="1" max="5" disabled/> }
+                최대 5행
               </div>
             </div>
           </div>

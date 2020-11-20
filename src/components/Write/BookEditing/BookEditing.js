@@ -115,15 +115,14 @@ export class BookWriting extends Component {
   addCardType =(value) => {
     console.log(value)
     axios.post('api/edit/add-card-type',{
-      book_id: this.state.bookId,
-      card_type: value.card_type,
-      card_nick: value.card_nick,
-      card_star: value.card_star,
-      face_1: value.face_1,
-      face_2: value.face_2,
-      face_3: value.face_3,
-      user_id: userId,
+      type: value.card_type,
+      nick: value.card_nick,
+      importance: value.card_star,
+      face1: value.face_1,
+      face2: value.face_2,
+      face3: value.face_3,
       annotation: value.annotation,
+      annot: 3,
     }).then(res => {
       console.log(res.data)
       this.setState({
@@ -136,7 +135,6 @@ export class BookWriting extends Component {
   changeTableNameHandler = (value) => {
     console.log(value)
     axios.post('api/index/change-index-name',{
-      book_id : this.props.location.book_id,
       index_id : value.tableId,
       name : value.value.newName
     })
@@ -148,6 +146,7 @@ export class BookWriting extends Component {
       })
     })
   }
+
   tableLevelHandler = (value) => {
     console.log(value)
     axios.post('api/index/change-index-level',{
