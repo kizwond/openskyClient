@@ -255,7 +255,7 @@ class SelectTemplete extends Component {
     }
 
     const cardTypeListOption = this.props.cardType.map((card_type)=>(
-      <Option key={card_type._id} value={card_type.card_nick}>{card_type.card_nick} - ({card_type.card_type} 카드)</Option>
+      <Option key={card_type._id} value={card_type._id}>{card_type.nick} - ({card_type.type} 카드)</Option>
     ))
     const cardFaceListOption = this.props.cardType.map((card_type)=>{
       if(card_type.card_nick === this.state.card_selected){

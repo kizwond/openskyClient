@@ -83,18 +83,29 @@ export class BookWriting extends Component {
       visible: false,
     });
   };
-
-  componentDidMount() {
+  getIndexList = () => {
     console.log('req start!!!!!!!!!!')
     axios.post('api/index/get-indexlist',{
       book_id: this.props.location.book_id
     })
       .then(res => {
-        const contentsTable = res.data.indexList
         this.setState({ 
-          table_of_contents:contentsTable,
+          table_of_contents:res.data.indexList,
         });
       })
+  }
+  getCardTypeList = () => {
+    axios.get('api/cardtype/get-cardtypelist')
+      .then(res => {
+        console.log('cardtypelist:',res)
+        this.setState({ 
+          card_type:res.data.cardtypes
+        });
+      })
+  }
+  componentDidMount() {
+    this.getIndexList()
+    this.getCardTypeList()
   }
   addTable =(value) => {
     console.log(value)
