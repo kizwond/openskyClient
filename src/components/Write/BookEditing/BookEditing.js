@@ -260,11 +260,11 @@ export class BookWriting extends Component {
   addCardHandler = () => {
     console.log(this.state.card_selected)
     const contentsList = this.state.card_type.map((content)=>{
-          if(content.card_nick === this.state.card_selected){
-              const cardType = content.card_type
+          if(content.nick === this.state.card_selected){
+              const cardType = content.type
               console.log(cardType)
-              if (cardType === '1면') {
-                  const faceLength_1 = content.face_1
+              if (cardType === 'face1') {
+                  const faceLength_1 = content.num_column.face1
                   const face_array = []
                   for (var i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
@@ -274,9 +274,9 @@ export class BookWriting extends Component {
                     current_card: {'1':faceLength_1},
                   })
                   return face_array
-              } else if (cardType === '2면') {
-                  const faceLength_1 = content.face_1
-                  const faceLength_2 = content.face_2
+              } else if (cardType === 'face2') {
+                  const faceLength_1 = content.num_column.face1
+                  const faceLength_2 = content.num_column.face2
                   const face_array = []
                   for (var i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
@@ -289,10 +289,10 @@ export class BookWriting extends Component {
                     current_card: {1:faceLength_1,2:faceLength_2},
                   })
                   return face_array
-              } else if (cardType === '3면') {
-                  const faceLength_1 = content.face_1
-                  const faceLength_2 = content.face_2
-                  const faceLength_3 = content.face_3
+              } else if (cardType === 'face3') {
+                  const faceLength_1 = content.num_column.face1
+                  const faceLength_2 = content.num_column.face2
+                  const faceLength_3 = content.num_column.face3
                   const face_array = []
                   for (var i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
@@ -518,7 +518,7 @@ export class BookWriting extends Component {
     }
     if(this.state.card_type){
       var optionList = this.state.card_type.map((card_type)=>(
-          <Option value={card_type.card_nick}>{card_type.card_nick}</Option>
+          <Option value={card_type.nick}>{card_type.nick}</Option>
       ))
     }
     return (

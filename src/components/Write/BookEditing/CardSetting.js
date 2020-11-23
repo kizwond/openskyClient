@@ -213,11 +213,11 @@ class NewTemplete extends Component {
                 최대 5행
               </div>
               <div>
-                {this.state.cardType === '2면' || this.state.cardType ==='3면'? <InputNumber size='small' style={{ width: 50 }} value={this.state.card2} onChange={this.handleChangeNum2} min="1" max="5" /> : <InputNumber size='small' style={{ width: 50 }} onChange={this.handleChangeNum2} min="1" max="5" disabled/> }
+                {this.state.cardType === 'face2' || this.state.cardType ==='face3'? <InputNumber size='small' style={{ width: 50 }} value={this.state.card2} onChange={this.handleChangeNum2} min="1" max="5" /> : <InputNumber size='small' style={{ width: 50 }} onChange={this.handleChangeNum2} min="1" max="5" disabled/> }
                 최대 5행
               </div>
               <div>
-                {this.state.cardType === '3면' ? <InputNumber size='small' style={{ width: 50 }} value={this.state.card3} onChange={this.handleChangeNum3} min="1" max="5" /> : <InputNumber size='small' style={{ width: 50 }} onChange={this.handleChangeNum3} min="1" max="5" disabled/> }
+                {this.state.cardType === 'face3' ? <InputNumber size='small' style={{ width: 50 }} value={this.state.card3} onChange={this.handleChangeNum3} min="1" max="5" /> : <InputNumber size='small' style={{ width: 50 }} onChange={this.handleChangeNum3} min="1" max="5" disabled/> }
                 최대 5행
               </div>
               <div>
