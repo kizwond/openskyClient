@@ -60,6 +60,7 @@ export class BookWriting extends Component {
        card_selected:'',
        arrayForEditor:[],
        current_card:{},
+       card_selected_detailsetting:'',
     }
   }
 
@@ -470,7 +471,12 @@ export class BookWriting extends Component {
   }
 
 
-
+  onCardChangeHandler = (value) => {
+    console.log('onCardChangeHandler : ',value)
+    this.setState({
+      card_selected_detailsetting:value
+    })
+  }
 
   render() {
     if (this.state.hide_show_toggle === false){
@@ -581,7 +587,7 @@ export class BookWriting extends Component {
           </div>
         </div>
         <div className="right_side_container" style={{marginRight:toggle}}>
-          <SettingTabs cardType={this.state.card_type} addCardType={this.addCardType} toggle={this.state.hide_show_toggle} onClick={this.handleClick}/>
+          <SettingTabs card_selected={this.state.card_selected_detailsetting} onCardChangeHandler={this.onCardChangeHandler} cardType={this.state.card_type} addCardType={this.addCardType} toggle={this.state.hide_show_toggle} onClick={this.handleClick}/>
         </div>
       </div>
       </>

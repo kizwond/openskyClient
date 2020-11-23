@@ -26,27 +26,27 @@ class CardSetting extends Component {
         <NewTemplete addCardType={this.props.addCardType}/>
         <Collapse defaultActiveKey={['1','2','3','4','5','6','7']} >
           <Panel header="템플릿 선택" key="1" className="data_collapse_panel"> 
-            <SelectTemplete cardType={this.props.cardType} />
+            <SelectTemplete card_selected={this.props.card_selected} cardType={this.props.cardType} onCardChangeHandler={this.props.onCardChangeHandler} />
           </Panel>
           <Panel header="레이아웃" key="2" className="data_collapse_panel">
-            <LayoutSetting/>
+            <LayoutSetting card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 배경색" key="3" className="data_collapse_panel">
-            <CardBackgroundColor/>
+            <CardBackgroundColor  card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 테두리 바깥쪽 여백" key="4" className="data_collapse_panel">
-            <CardMargin/>
+            <CardMargin card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 테두리 안쪽 여백" key="5" className="data_collapse_panel_numbering">
-            <CardPadding/>
+            <CardPadding  card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 테두리" key="6" className="data_collapse_panel_page_top">
             <Switch size="small" className="page_top_toggle" />
-            <CardBorder/>
+            <CardBorder  card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="폰트 일괄 변경" key="7" className="data_collapse_panel_page_bottom">
             <Switch size="small" className="page_bottom_toggle" />
-            <FontChange/>
+            <FontChange  card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
         </Collapse>
         <Affix offsetBottom={0}>
@@ -258,7 +258,7 @@ class SelectTemplete extends Component {
       <Option key={card_type._id} value={card_type._id}>{card_type.nick} - ({card_type.type} 카드)</Option>
     ))
     const cardFaceListOption = this.props.cardType.map((card_type)=>{
-      if(card_type.card_nick === this.state.card_selected){
+      if(card_type.card_nick === this.props.card_selected){
         if(card_type.card_type === '1면'){
           return <><Option key={1} value='1면'>1면</Option></>
         } else if(card_type.card_type === '2면'){
@@ -274,7 +274,7 @@ class SelectTemplete extends Component {
           <div className='select_page_size_div'>
               <div>카드</div>
               <div>
-                <Select defaultValue="카드선택" size='small' onChange={this.onCardChangeHandler} style={{ width: 195 }}>
+                <Select defaultValue="카드선택" size='small' onChange={this.props.onCardChangeHandler} style={{ width: 195 }}>
                   <Option value="카드선택">카드선택</Option>
                   {cardTypeListOption}
                 </Select>
@@ -308,16 +308,24 @@ class LayoutSetting extends Component {
     super(props);
     this.state = {  };
   }
+  // card_selected={this.props.card_selected} cardType={this.props.cardType} 
   render() {
+    const direction = []
+    const layoutSettingValue = this.props.cardType.map((value)=>{
+        if(value._id === this.props.card_selected){
+          direction.push(value.direction)
+        }
+    })
+    console.log(direction[0])
     return (
       <>
         <div className="layout_container">
           <div className='select_mode_container'>
             <div>방향</div>
             <div>
-              <Select size='small' style={{ width: 195 }}>
-                <Option value="좌우">좌우</Option>
-                <Option value="상하">상하</Option>
+              <Select size='small' value={direction[0]} style={{ width: 195 }}>
+                <Option value="left_right">좌우</Option>
+                <Option value="up_down">상하</Option>
               </Select>
             </div>
           </div>
@@ -354,6 +362,7 @@ class CardBackgroundColor extends Component {
     this.state = {  };
   }
   render() {
+
     return (
       <>
         <div className="select_card_bg_color_container">
@@ -375,18 +384,39 @@ class CardMargin extends Component {
     this.state = {  };
   }
   render() {
+    const margin = []
+    const layoutSettingValue = this.props.cardType.map((value)=>{
+        if(value._id === this.props.card_selected){
+          console.log(value.outer_margin)
+          margin.push(value.outer_margin)
+        }
+    })
+
+    if(margin.length > 0){
+      var top = margin[0].top
+      var bottom = margin[0].bottom
+      var left = margin[0].left
+      var right = margin[0].right
+    } else {
+      var top = ''
+      var bottom = ''
+      var left = ''
+      var right = ''
+    }
+    
+
     return (
       <>
         <div className="select_card_margin">
-            <div className="card_margin_top"><Input size='small' style={{ width: 70,fontSize:10 }} prefix='상' suffix='px' type="number"/></div>
+            <div className="card_margin_top"><Input size='small' value={top} style={{ width: 70,fontSize:10 }} prefix='상' suffix='px' type="number"/></div>
             <div className="card_margin_mid_container">
-              <div><Input size='small' style={{ width: 70,fontSize:10 }} prefix='좌' suffix='px' type="number"/></div>
+              <div><Input size='small' style={{ width: 70,fontSize:10 }} value={left} prefix='좌' suffix='px' type="number"/></div>
               <div className="">
                 <img src="img/cardmargin.png" width="100" alt="cardmargin_img"/>
               </div>
-              <div><Input size='small' style={{ width: 70,fontSize:10 }} prefix='우' suffix='px' type="number"/></div>
+              <div><Input size='small' style={{ width: 70,fontSize:10 }} value={right} prefix='우' suffix='px' type="number"/></div>
             </div>
-            <div className="card_margin_bottom"><Input size='small' style={{ width: 70,fontSize:10 }} prefix='하' suffix='px' type="number"/></div>
+            <div className="card_margin_bottom"><Input size='small' style={{ width: 70,fontSize:10 }} value={bottom} prefix='하' suffix='px' type="number"/></div>
         </div>
       </>
     );
@@ -398,18 +428,37 @@ class CardPadding extends Component {
     this.state = {  };
   }
   render() {
+    const padding = []
+    const layoutSettingValue = this.props.cardType.map((value)=>{
+        if(value._id === this.props.card_selected){
+          console.log(value.inner_padding)
+          padding.push(value.inner_padding)
+        }
+    })
+
+    if(padding.length > 0){
+      var top = padding[0].top
+      var bottom = padding[0].bottom
+      var left = padding[0].left
+      var right = padding[0].right
+    } else {
+      var top = ''
+      var bottom = ''
+      var left = ''
+      var right = ''
+    }
     return (
       <>
         <div className="select_card_margin">
-            <div className="card_margin_top"><Input size='small' style={{ width: 70,fontSize:10 }} prefix='상' suffix='px' type="number"/></div>
+            <div className="card_margin_top"><Input size='small' style={{ width: 70,fontSize:10 }} value={top} prefix='상' suffix='px' type="number"/></div>
             <div className="card_margin_mid_container">
-              <div><Input size='small' style={{ width: 70,fontSize:10 }} prefix='좌' suffix='px' type="number"/></div>
+              <div><Input size='small' style={{ width: 70,fontSize:10 }} value={left} prefix='좌' suffix='px' type="number"/></div>
               <div className="">
                 <img src="img/cardpadding.png" width="100" alt="cardpadding_img"/>
               </div>
-              <div><Input size='small' style={{ width: 70,fontSize:10 }} prefix='우' suffix='px' type="number"/></div>
+              <div><Input size='small' style={{ width: 70,fontSize:10 }} value={right} prefix='우' suffix='px' type="number"/></div>
             </div>
-            <div className="card_margin_bottom"><Input size='small' style={{ width: 70,fontSize:10 }} prefix='하' suffix='px' type="number"/></div>
+            <div className="card_margin_bottom"><Input size='small' style={{ width: 70,fontSize:10 }} value={bottom} prefix='하' suffix='px' type="number"/></div>
         </div>
       </>
     );
