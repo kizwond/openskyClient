@@ -45,7 +45,7 @@ export class EditorTry extends Component {
     const editorList = this.props.arrayForEditor.map((item,index)=>{
       return (
                 <>
-                  <label className="control-label">{item}{index+1}</label>
+                  <label className="control-label">{item}</label>
                   <FroalaEditorComponent
                     tag='textarea'
                     config={config}

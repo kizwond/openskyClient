@@ -60,7 +60,9 @@ export class BookWriting extends Component {
        card_selected:'',
        arrayForEditor:[],
        current_card:{},
+       current_card_type:'',
        card_selected_detailsetting:'',
+       index_id:'',
     }
   }
 
@@ -261,9 +263,28 @@ export class BookWriting extends Component {
     console.log(this.state.card_selected)
     const contentsList = this.state.card_type.map((content)=>{
           if(content.nick === this.state.card_selected){
+            console.log(content)
               const cardType = content.type
+              const annotation = content.annotation
               console.log(cardType)
               if (cardType === 'face1') {
+                if(annotation === true){
+                  const faceLength_1 = content.num_column.face1
+                  const annotLength = content.num_column.annot
+                  const face_array = []
+                  for (var i = 1; i < faceLength_1+1; i++) {
+                    face_array.push('1면'+i+'행')
+                  }
+                  for (var i = 1; i < annotLength+1; i++) {
+                    face_array.push('주석'+i+'행')
+                  }
+                  console.log(face_array)
+                  this.setState({
+                    current_card: {'face1':faceLength_1,'annot':annotLength},
+                    current_card_type:content._id
+                  })
+                  return face_array
+                } else {
                   const faceLength_1 = content.num_column.face1
                   const face_array = []
                   for (var i = 1; i < faceLength_1+1; i++) {
@@ -271,10 +292,34 @@ export class BookWriting extends Component {
                   }
                   console.log(face_array)
                   this.setState({
-                    current_card: {'1':faceLength_1},
+                    current_card: {'face1':faceLength_1},
+                    current_card_type:content._id
                   })
                   return face_array
+                }
+                  
               } else if (cardType === 'face2') {
+                if(annotation === true){
+                  const faceLength_1 = content.num_column.face1
+                  const faceLength_2 = content.num_column.face2
+                  const annotLength = content.num_column.annot
+                  const face_array = []
+                  for (var i = 1; i < faceLength_1+1; i++) {
+                    face_array.push('1면'+i+'행')
+                  }
+                  for (var i = 1; i < faceLength_2+1; i++) {
+                    face_array.push('2면'+i+'행')
+                  }
+                  for (var i = 1; i < annotLength+1; i++) {
+                    face_array.push('주석'+i+'행')
+                  }
+                  console.log(face_array)
+                  this.setState({
+                    current_card: {'face1':faceLength_1,'face2':faceLength_2,'annot':annotLength},
+                    current_card_type:content._id
+                  })
+                  return face_array
+                }else {
                   const faceLength_1 = content.num_column.face1
                   const faceLength_2 = content.num_column.face2
                   const face_array = []
@@ -286,10 +331,38 @@ export class BookWriting extends Component {
                   }
                   console.log(face_array)
                   this.setState({
-                    current_card: {1:faceLength_1,2:faceLength_2},
+                    current_card: {'face1':faceLength_1,'face2':faceLength_2},
+                    current_card_type:content._id
                   })
                   return face_array
+                }
+                  
               } else if (cardType === 'face3') {
+                if(annotation === true){
+                  const faceLength_1 = content.num_column.face1
+                  const faceLength_2 = content.num_column.face2
+                  const faceLength_3 = content.num_column.face3
+                  const annotLength = content.num_column.annot
+                  const face_array = []
+                  for (var i = 1; i < faceLength_1+1; i++) {
+                    face_array.push('1면'+i+'행')
+                  }
+                  for (var i = 1; i < faceLength_2+1; i++) {
+                    face_array.push('2면'+i+'행')
+                  }
+                  for (var i = 1; i < faceLength_3+1; i++) {
+                    face_array.push('3면'+i+'행')
+                  }
+                  for (var i = 1; i < annotLength+1; i++) {
+                    face_array.push('주석'+i+'행')
+                  }
+                  console.log(face_array)
+                  this.setState({
+                    current_card: {'face1':faceLength_1,'face2':faceLength_2,'face3':faceLength_3,'annot':annotLength},
+                    current_card_type:content._id
+                  })
+                  return face_array
+                }else {
                   const faceLength_1 = content.num_column.face1
                   const faceLength_2 = content.num_column.face2
                   const faceLength_3 = content.num_column.face3
@@ -304,7 +377,13 @@ export class BookWriting extends Component {
                     face_array.push('3면'+i+'행')
                   }
                   console.log(face_array)
+                  this.setState({
+                    current_card: {'face1':faceLength_1,'face2':faceLength_2,'face3':faceLength_3},
+                    current_card_type:content._id
+                  })
                   return face_array
+                }
+                  
             }
           }
       }
@@ -320,26 +399,127 @@ export class BookWriting extends Component {
       })
   }
   handleSubmit = () => {
-    axios.post('api/create/add-contents', {
-      editor1: this.state.editor1,
-      editor2: this.state.editor2,
-      editor3: this.state.editor3,
-      editor4: this.state.editor4,
-      editor5: this.state.editor5,
-      editor6: this.state.editor6,
-      editor7: this.state.editor7,
-      editor8: this.state.editor8,
-      editor9: this.state.editor9,
-      editor10: this.state.editor10,
-      editor11: this.state.editor11,
-      editor12: this.state.editor12,
-      editor13: this.state.editor13,
-      editor14: this.state.editor14,
-      editor15: this.state.editor15,
-      userId: userId,
-      bookTitle: this.state.bookTitle,
-      userEmail: this.state.userEmail,
-      category: this.state.category,
+    // this.state.current_card
+    const current = this.state.current_card
+    if(current){
+      var face1 = current.face1
+      if(current.face2){
+        var face2 = current.face2
+      }
+      if(current.face3){
+        var face3 = current.face3
+      }
+      if(current.annot){
+        var annot = current.annot
+      }
+      console.log(face1, face2, face3, annot)
+    }
+    const first_face =[];
+    const second_face = [];
+    const third_face = [];
+    const annotation = [];
+    if (face1 && !face2 && !face3 && !annot){
+      for (var i = 1; i < face1+1; i++) {
+        first_face.push(this.state['editor'+i])
+      }
+    }
+    if (face1 && annot && !face3 && !face2){
+      for (var i = 1; i < face1+1; i++) {
+        first_face.push(this.state['editor'+i])
+      }
+      if(annot){
+        for (var i = face1+1; i < face1+annot+1; i++) {
+          annotation.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    if (face1 && face2 && !face3 && !annot){
+      for (var i = 1; i < face1+1; i++) {
+        first_face.push(this.state['editor'+i])
+      }
+      if(face2){
+        for (var i = face1+1; i < face1+face2+1; i++) {
+          second_face.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    if (face1 && face2 && !face3 &&annot){
+      for (var i = 1; i < face1+1; i++) {
+        first_face.push(this.state['editor'+i])
+      }
+      if(face2){
+        for (var i = face1+1; i < face1+face2+1; i++) {
+          second_face.push(this.state['editor'+i])
+        }
+        if(annot){
+          for (var i = face1+face2+1; i < face1+face2+annot+1; i++) {
+            annotation.push(this.state['editor'+i])
+          }
+        }
+      }
+    }
+
+    if (face1 && face2 && face3 && !annot){
+      for (var i = 1; i < face1+1; i++) {
+        first_face.push(this.state['editor'+i])
+      }
+      if(face2){
+        for (var i = face1+1; i < face1+face2+1; i++) {
+          second_face.push(this.state['editor'+i])
+        }
+      }
+      if(face3){
+        for (var i = face1+face2+1; i < face1+face2+face3+1; i++) {
+          third_face.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    if (face1 && face2 && face3 && annot){
+      for (var i = 1; i < face1+1; i++) {
+        first_face.push(this.state['editor'+i])
+      }
+      if(face2){
+        for (var i = face1+1; i < face1+face2+1; i++) {
+          second_face.push(this.state['editor'+i])
+        }
+      }
+      if(face3){
+        for (var i = face1+face2+1; i < face1+face2+face3+1; i++) {
+          third_face.push(this.state['editor'+i])
+        }
+      }
+      if(annot){
+        for (var i = face1+face2+face3+1; i < face1+face2+face3+annot+1; i++) {
+          annotation.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    axios.post('api/card/create-card', {
+      cardtype_id:this.state.current_card_type,
+      index_id:this.state.index_id,
+      first_face : first_face,
+      second_face : second_face,
+      third_face : third_face,
+      annotation : annotation,
+      // editor1: this.state.editor1,
+      // editor2: this.state.editor2,
+      // editor3: this.state.editor3,
+      // editor4: this.state.editor4,
+      // editor5: this.state.editor5,
+      // editor6: this.state.editor6,
+      // editor7: this.state.editor7,
+      // editor8: this.state.editor8,
+      // editor9: this.state.editor9,
+      // editor10: this.state.editor10,
+      // editor11: this.state.editor11,
+      // editor12: this.state.editor12,
+      // editor13: this.state.editor13,
+      // editor14: this.state.editor14,
+      // editor15: this.state.editor15,
     })
     .then(res => {
       console.log(res.data)
@@ -477,6 +657,12 @@ export class BookWriting extends Component {
       card_selected_detailsetting:value
     })
   }
+  onSelect = (selectedKeys, info) => {
+    console.log('selected', selectedKeys, info);
+    this.setState({
+      index_id:info.node.index_id
+    })
+  };
 
   render() {
     if (this.state.hide_show_toggle === false){
@@ -532,7 +718,8 @@ export class BookWriting extends Component {
                     changeTableNameHandler={this.changeTableNameHandler} 
                     table_of_contents={this.state.table_of_contents} 
                     toggle={this.state.left_drawer_toggle} 
-                    onClick={this.leftDrawerHandleClick}/>
+                    onClick={this.leftDrawerHandleClick}
+                    onSelect={this.onSelect}/>
         </div>
         <div className="editor_container" style={{marginRight:main}}>
           <div className="editor_container_templete"></div>

@@ -53,6 +53,7 @@ class LeftDrawer extends Component {
           if(table.level === 1){
             let level = {
               title: table.name,
+              index_id:table._id,
               key: table.seq,
               level: 1,
               icon: <CarryOutOutlined />,
@@ -61,6 +62,7 @@ class LeftDrawer extends Component {
           } else if(table.level === 2){
             let level = {
               title: table.name,
+              index_id:table._id,
               key: table.seq,
               level: 2,
               icon: <CarryOutOutlined />,
@@ -69,6 +71,7 @@ class LeftDrawer extends Component {
           } else if(table.level === 3){
             let level = {
               title: table.name,
+              index_id:table._id,
               key: table.seq,
               level: 3,
               icon: <CarryOutOutlined />,
@@ -77,6 +80,7 @@ class LeftDrawer extends Component {
           } else if(table.level === 4){
             let level = {
               title: table.name,
+              index_id:table._id,
               key: table.seq,
               level: 4,
               icon: <CarryOutOutlined />,
@@ -85,6 +89,7 @@ class LeftDrawer extends Component {
           } else if(table.level === 5){
             let level = {
               title: table.name,
+              index_id:table._id,
               key: table.seq,
               level: 5,
               icon: <CarryOutOutlined />,
@@ -363,6 +368,9 @@ class LeftDrawer extends Component {
     
     const onSelect = (selectedKeys, info) => {
       console.log('selected', selectedKeys, info);
+      this.setState({
+        index_id:info.node.index_id
+      })
     };
     return (
         <Tabs defaultActiveKey={this.state.order_key} className="left_drawer" onChange={this.handleChange} type="card" size='small' tabPosition={mode} >
@@ -376,7 +384,7 @@ class LeftDrawer extends Component {
                 showLine={true}
                 showIcon={true}
                 defaultExpandAll={true}
-                onSelect={onSelect}
+                onSelect={this.props.onSelect}
                 treeData={treeData}
               />
             </div>
