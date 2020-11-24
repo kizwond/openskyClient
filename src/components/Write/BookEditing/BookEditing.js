@@ -63,6 +63,7 @@ export class BookWriting extends Component {
        current_card_type:'',
        card_selected_detailsetting:'',
        index_id:'',
+       file:'',
     }
   }
 
@@ -671,7 +672,17 @@ export class BookWriting extends Component {
         });
       })
   };
+  uplodeFile = event =>{
+    console.log(this.state.file)
+    const data = new FormData();
+    data.append("file", this.state.file)
 
+    axios.post('api/card/file-upload', data)
+      .then(res => {alert(res.data); this.setState({
+        file:''
+      })})
+      .catch(err => console.log(err))
+  }
   render() {
     if (this.state.hide_show_toggle === false){
       var toggle = '-308px' 
@@ -741,6 +752,16 @@ export class BookWriting extends Component {
                 {optionList}
               </Select>
               <Button size='small' onClick={this.addCardHandler}>카드추가</Button>
+              <form action="#">
+                <input type="file" name="import_file" onChange={(event)=>{
+                  const file = event.target.files[0];
+                  this.setState({
+                    file:file
+                  })
+                }}/>
+              </form>
+              <Button size='small' onClick={this.uplodeFile}>파일업로드</Button>
+              
             </div>
           </div>
           <div className="editor_panel">
