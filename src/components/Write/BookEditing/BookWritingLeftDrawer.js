@@ -366,12 +366,7 @@ class LeftDrawer extends Component {
       var treeData = level_all
     }
     
-    const onSelect = (selectedKeys, info) => {
-      console.log('selected', selectedKeys, info);
-      this.setState({
-        index_id:info.node.index_id
-      })
-    };
+
     return (
         <Tabs defaultActiveKey={this.state.order_key} className="left_drawer" onChange={this.handleChange} type="card" size='small' tabPosition={mode} >
           <TabPane tab={toggle} key="none">

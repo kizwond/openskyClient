@@ -524,7 +524,7 @@ export class BookWriting extends Component {
     .then(res => {
       console.log(res.data)
       this.setState({
-        contents:res.data.contents,
+        contents:res.data.cardlist,
         editor1: '',
         editor2: '',
         editor3: '',
@@ -662,6 +662,14 @@ export class BookWriting extends Component {
     this.setState({
       index_id:info.node.index_id
     })
+    axios.post('api/card/get-cardlist',{
+      index_id: info.node.index_id
+    })
+      .then(res => {
+        this.setState({ 
+          contents:res.data.cardlist,
+        });
+      })
   };
 
   render() {
@@ -684,21 +692,11 @@ export class BookWriting extends Component {
       console.log(this.state.contents)
       var contentsList = this.state.contents.map((content)=>(
         <>
-          <div><FroalaEditorView model={content.editor1}/></div>
-          <div><FroalaEditorView model={content.editor2}/></div>
-          <div><FroalaEditorView model={content.editor3}/></div>
-          <div><FroalaEditorView model={content.editor4}/></div>
-          <div><FroalaEditorView model={content.editor5}/></div>
-          <div><FroalaEditorView model={content.editor6}/></div>
-          <div><FroalaEditorView model={content.editor7}/></div>
-          <div><FroalaEditorView model={content.editor8}/></div>
-          <div><FroalaEditorView model={content.editor9}/></div>
-          <div><FroalaEditorView model={content.editor10}/></div>
-          <div><FroalaEditorView model={content.editor11}/></div>
-          <div><FroalaEditorView model={content.editor12}/></div>
-          <div><FroalaEditorView model={content.editor13}/></div>
-          <div><FroalaEditorView model={content.editor14}/></div>
-          <div><FroalaEditorView model={content.editor15}/></div>
+          <div>1면 : <FroalaEditorView model={content.content_id.first_face}/></div>
+          <div>2면 : <FroalaEditorView model={content.content_id.second_face}/></div>
+          <div>3면 : <FroalaEditorView model={content.content_id.third_face}/></div>
+          <div>주석 : <FroalaEditorView model={content.content_id.annotation}/></div>
+          <hr/>
         </>
       ))
     }
