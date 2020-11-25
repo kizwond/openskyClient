@@ -776,17 +776,38 @@ export class BookWriting extends Component {
           console.log(content)
           console.log(content[0].face1)
           if(content[0].type === 'face1' && content[0].annotation_on === true){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div>{content[0].face1}</div><div>{content[0].annotation_contents}</div></div>
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div>{content[0].face1}</div>
+                      <div>{content[0].annotation_contents}</div>
+                    </div>
           } else if(content[0].type === 'face1' && content[0].annotation_on === false){
-            return <div style={{marginBottom:'5px'}}><div>{content[0].face1}</div></div>
+            return <div style={{marginBottom:'5px'}}>
+                      <div>{content[0].face1}</div>
+                    </div>
           } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "left_right"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div>{content[0].face1}</div><div>{content[0].face2}</div><div>{content[0].annotation_contents}</div></div>
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div>{content[0].face1}</div>
+                      <div>{content[0].face2}</div>
+                      <div>{content[0].annotation_contents}</div>
+                    </div>
           } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "left_right"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div>{content[0].face1}</div><div>{content[0].face2}</div></div>
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div>{content[0].face1}</div>
+                      <div>{content[0].face2}</div>
+                    </div>
           } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "up_down"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}><div>{content[0].face1}</div><div>{content[0].face2}</div></div><div>{content[0].annotation_contents}</div></div>
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
+                        <div>{content[0].face1}</div>
+                        <div>{content[0].face2}</div>
+                      </div>
+                      <div>{content[0].annotation_contents}</div>
+                    </div>
           } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "up_down"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}><div>{content[0].face1}</div><div>{content[0].face2}</div></div>
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
+                      <div>{content[0].face1}</div>
+                      <div>{content[0].face2}</div>
+                    </div>
           }
       })
     }
