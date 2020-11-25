@@ -677,7 +677,7 @@ export class BookWriting extends Component {
     const data = new FormData();
     data.append("file", this.state.file)
 
-    axios.post('api/card/file-upload', data)
+    axios.post('api/card/create-card-by-excel', data)
       .then(res => {alert(res.data); this.setState({
         file:''
       })})
