@@ -701,21 +701,96 @@ export class BookWriting extends Component {
     }
     if(this.state.contents){
       console.log(this.state.contents)
-      var contentsList = this.state.contents.map((content)=>(
-        <>
-          <div>1면 : <FroalaEditorView model={content.content_id.first_face}/></div>
-          <div>2면 : <FroalaEditorView model={content.content_id.second_face}/></div>
-          <div>3면 : <FroalaEditorView model={content.content_id.third_face}/></div>
-          <div>주석 : <FroalaEditorView model={content.content_id.annotation}/></div>
-          <hr/>
-        </>
-      ))
+      var contentsList = this.state.contents.map((content)=>{
+        console.log(content)
+        const face1_column_num = content.cardtype_id.num_column.face1;
+        const face2_column_num = content.cardtype_id.num_column.face2;
+        const annot_column_num = content.cardtype_id.num_column.annot;
+        const direction = content.cardtype_id.direction;
+        const annotation_on = content.cardtype_id.annotation;
+
+        if (content.cardtype_id.type === "face1"){
+          if(annotation_on === true){
+            const face1 = []
+            for(var i = 0; i <face1_column_num; i++){
+              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+            }
+            const annotation_contents = [];
+            for(var i = 0; i <annot_column_num; i++){
+              annotation_contents.push(<FroalaEditorView model={content.content_id.annotation[i]}/>)
+            }
+            const total = []
+            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'annotation_on':annotation_on})
+            return total
+          } else {
+            const face1 = []
+            for(var i = 0; i <face1_column_num; i++){
+              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+            }
+            const total=[]
+            total.push({'face1':face1,'type':content.cardtype_id.type,'annotation_on':annotation_on})
+            return total
+          }
+        } else if(content.cardtype_id.type === "face2"){
+          if(annotation_on === true){
+            const face1 = []
+            for(var i = 0; i <face1_column_num; i++){
+              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+            }
+            const face2 = []
+            for(var i = 0; i <face2_column_num; i++){
+              face2.push(<FroalaEditorView model={content.content_id.second_face[i]}/>) 
+            }
+            const annotation_contents = [];
+            for(var i = 0; i <annot_column_num; i++){
+              annotation_contents.push(<FroalaEditorView model={content.content_id.annotation[i]}/>)
+            }
+            const total = []
+            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'annotation_on':annotation_on,'direction':direction})
+            return total
+          } else {
+            const face1 = []
+            for(var i = 0; i <face1_column_num; i++){
+              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+            }
+            const face2 = []
+            for(var i = 0; i <face2_column_num; i++){
+              face2.push(<FroalaEditorView model={content.content_id.second_face[i]}/>) 
+            }
+            const total = []
+            total.push({'face1':face1,'face2':face2,'type':content.cardtype_id.type,'annotation_on':annotation_on,'direction':direction})
+            return total
+          }
+        }
+
+      })
     }
     if(this.state.card_type){
       var optionList = this.state.card_type.map((card_type)=>(
           <Option value={card_type.nick}>{card_type.nick}</Option>
       ))
     }
+    if(contentsList.length>0){
+      console.log('hello',contentsList)
+      var list = contentsList.map((content)=>{
+          console.log(content)
+          console.log(content[0].face1)
+          if(content[0].type === 'face1' && content[0].annotation_on === true){
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div>{content[0].face1}</div><div>{content[0].annotation_contents}</div></div>
+          } else if(content[0].type === 'face1' && content[0].annotation_on === false){
+            return <div style={{marginBottom:'5px'}}><div>{content[0].face1}</div></div>
+          } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "left_right"){
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div>{content[0].face1}</div><div>{content[0].face2}</div><div>{content[0].annotation_contents}</div></div>
+          } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "left_right"){
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div>{content[0].face1}</div><div>{content[0].face2}</div></div>
+          } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "up_down"){
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}><div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}><div>{content[0].face1}</div><div>{content[0].face2}</div></div><div>{content[0].annotation_contents}</div></div>
+          } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "up_down"){
+            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}><div>{content[0].face1}</div><div>{content[0].face2}</div></div>
+          }
+      })
+    }
+
     return (
       <>
       <div className="book_writing_container">
@@ -765,7 +840,8 @@ export class BookWriting extends Component {
             </div>
           </div>
           <div className="editor_panel">
-            {contentsList}
+            {/* 카드 뿌려지는 영역 */}
+            {list ? list : ''}
             <div id="toolbarContainer"></div>
             
             <div className="a4">
