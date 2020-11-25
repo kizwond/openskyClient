@@ -137,7 +137,7 @@ export class BookWriting extends Component {
       face2: value.face_2,
       face3: value.face_3,
       annotation: value.annotation,
-      annot: 3,
+      annot: value.annotationNum,
     }).then(res => {
       console.log(res.data)
       this.setState({
