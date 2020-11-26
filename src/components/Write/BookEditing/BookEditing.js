@@ -20,6 +20,7 @@ import FroalaEditorComponent from 'react-froala-wysiwyg';
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import BookRelocate from './BookRelocate'
+import FroalaEditor from 'react-froala-wysiwyg';
 
 
 
@@ -523,7 +524,7 @@ export class BookWriting extends Component {
       // editor15: this.state.editor15,
     })
     .then(res => {
-      console.log(res.data)
+      console.log('after submit:', res.data)
       this.setState({
         contents:res.data.cardlist,
         editor1: '',
@@ -678,11 +679,19 @@ export class BookWriting extends Component {
     data.append("file", this.state.file)
 
     axios.post('api/card/create-card-by-excel', data)
-      .then(res => {alert(res.data); this.setState({
+      .then(res => {alert(res.data.msg); this.setState({
         file:''
       })})
       .catch(err => console.log(err))
   }
+  hello = ()=>{
+    console.log('click hello')
+    new FroalaEditor('div.test',{
+      initOnClick: true
+    })
+    console.log('done')
+  }
+  
   render() {
     if (this.state.hide_show_toggle === false){
       var toggle = '-308px' 
@@ -713,11 +722,11 @@ export class BookWriting extends Component {
           if(annotation_on === true){
             const face1 = []
             for(var i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const annotation_contents = [];
             for(var i = 0; i <annot_column_num; i++){
-              annotation_contents.push(<FroalaEditorView model={content.content_id.annotation[i]}/>)
+              annotation_contents.push(<FroalaEditorView model={content.content_of_annot[i]}/>)
             }
             const total = []
             total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'annotation_on':annotation_on})
@@ -725,7 +734,7 @@ export class BookWriting extends Component {
           } else {
             const face1 = []
             for(var i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const total=[]
             total.push({'face1':face1,'type':content.cardtype_id.type,'annotation_on':annotation_on})
@@ -735,15 +744,15 @@ export class BookWriting extends Component {
           if(annotation_on === true){
             const face1 = []
             for(var i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const face2 = []
             for(var i = 0; i <face2_column_num; i++){
-              face2.push(<FroalaEditorView model={content.content_id.second_face[i]}/>) 
+              face2.push(<FroalaEditorView model={content.content_of_second_face[i]}/>) 
             }
             const annotation_contents = [];
             for(var i = 0; i <annot_column_num; i++){
-              annotation_contents.push(<FroalaEditorView model={content.content_id.annotation[i]}/>)
+              annotation_contents.push(<FroalaEditorView model={content.content_of_annot[i]}/>)
             }
             const total = []
             total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'annotation_on':annotation_on,'direction':direction})
@@ -751,11 +760,11 @@ export class BookWriting extends Component {
           } else {
             const face1 = []
             for(var i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_id.first_face[i]}/>) 
+              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const face2 = []
             for(var i = 0; i <face2_column_num; i++){
-              face2.push(<FroalaEditorView model={content.content_id.second_face[i]}/>) 
+              face2.push(<FroalaEditorView model={content.content_of_second_face[i]}/>) 
             }
             const total = []
             total.push({'face1':face1,'face2':face2,'type':content.cardtype_id.type,'annotation_on':annotation_on,'direction':direction})
@@ -776,38 +785,56 @@ export class BookWriting extends Component {
           console.log(content)
           console.log(content[0].face1)
           if(content[0].type === 'face1' && content[0].annotation_on === true){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+            return <>
+                    <div className="test" style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
+                    <Button size="small" onClick={this.hello} style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
           } else if(content[0].type === 'face1' && content[0].annotation_on === false){
-            return <div style={{marginBottom:'5px'}}>
+            return <>
+                    <div style={{marginBottom:'5px'}}>
                       <div>{content[0].face1}</div>
                     </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
           } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "left_right"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+            return <>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].face2}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
           } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "left_right"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+            return <>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].face2}</div>
                     </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
           } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "up_down"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+            return <>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
                         <div>{content[0].face1}</div>
                         <div>{content[0].face2}</div>
                       </div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
           } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "up_down"){
-            return <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
+            return <>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].face2}</div>
                     </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
           }
       })
     }
