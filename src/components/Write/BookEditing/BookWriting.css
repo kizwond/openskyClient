@@ -655,3 +655,8 @@ input[type="color"]{
   margin-right:5px;
   height:14px;
 }
+
+.fr-box .fr-wrapper .fr-view p{
+  font-size: 40px;
+  color: red;
+}

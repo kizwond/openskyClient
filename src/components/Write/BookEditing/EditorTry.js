@@ -40,7 +40,7 @@ export class EditorTry extends Component {
                        'align', 'formatOL', 'formatUL', 'outdent', 'indent',
                        'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 
                        'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
-                       'help', 'html', 'undo', 'redo']
+                       'help', 'html', 'undo', 'redo'],
     }
     const editorList = this.props.arrayForEditor.map((item,index)=>{
       return (
