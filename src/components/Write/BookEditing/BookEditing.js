@@ -677,19 +677,13 @@ export class BookWriting extends Component {
     console.log(this.state.file)
     const data = new FormData();
     data.append("file", this.state.file)
+    data.append("index_id", this.state.index_id)
 
     axios.post('api/card/create-card-by-excel', data)
       .then(res => {alert(res.data.msg); this.setState({
         file:''
       })})
       .catch(err => console.log(err))
-  }
-  hello = ()=>{
-    console.log('click hello')
-    new FroalaEditor('div.test',{
-      initOnClick: true
-    })
-    console.log('done')
   }
   
   render() {
@@ -790,7 +784,7 @@ export class BookWriting extends Component {
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" onClick={this.hello} style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
           } else if(content[0].type === 'face1' && content[0].annotation_on === false){
             return <>
