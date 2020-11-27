@@ -33,6 +33,13 @@ class WriteMain extends Component {
       selected_book:value
     })
   }
+  sessionSaveBookIds = () => {
+    axios.post('api/study/get-index',{
+      book_ids: this.state.selected_book
+    }).then(res => {
+      window.location.href ="/choose-index"
+    })
+  }
   render() { 
     if(this.state.selected_book){
       console.log('value chosen : ', this.state.selected_book)
@@ -51,7 +58,7 @@ class WriteMain extends Component {
               <NavLink to={{
                 pathname:"/choose-index",
                 selectedBook:{value:this.state.selected_book}
-              }} exact><Button size="large" style={{width:'100px'}}>다음</Button></NavLink>
+              }} exact><Button size="large" style={{width:'100px'}} onClick={this.sessionSaveBookIds}>다음</Button></NavLink>
             </Sider>
           </Layout>
       </div>
