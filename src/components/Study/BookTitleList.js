@@ -15,7 +15,7 @@ class BookTitleList extends Component {
         {book.index[0].name}
       </TabPane>)
     return (
-        <Tabs tabPosition="left">
+        <Tabs className="study_next_page_tabs" tabPosition="left">
           {bookList}
         </Tabs>
     );
