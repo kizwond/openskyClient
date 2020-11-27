@@ -2,3 +2,32 @@
   writing-mode: horizontal-tb;
   vertical-align: middle;
 }
+
+.study_next_page_tabs .ant-tabs-nav-wrap{
+  width:250px;
+}
+.ant-tree, .ant-tree-show-line .ant-tree-switcher{
+  background-color: #dfecf6;
+}
+
+.study_next_page_tabs > .ant-tabs-nav .ant-tabs-tab{
+  margin: 0;
+  padding: 8px 24px;
+  font-size:12px;
+  text-align: center;
+  background: white;
+}
+
+
+.study_next_page_tabs > .ant-tabs-nav .ant-tabs-tab-active{
+  background:#dfecf6;
+}
+.ant-tabs-ink-bar{
+  background:transparent
+}
+.study_next_page_tabs > .ant-tabs-nav .ant-tabs-tab:nth-child(odd):not(.ant-tabs-tab-active){
+  margin: 0;
+  padding: 8px 24px;
+  text-align: center;
+  background:#fbfbfb;
+}

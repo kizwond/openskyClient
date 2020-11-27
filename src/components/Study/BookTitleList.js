@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Radio, Space } from 'antd';
 import "./BookTitleList.css"
+import IndexTree from "./IndexTree"
 
 const { TabPane } = Tabs;
 
@@ -12,10 +13,10 @@ class BookTitleList extends Component {
   render() {
     const bookList = this.props.books.map((book)=> 
       <TabPane tab={book.book.title} key={book.book._id}>
-        {book.index[0].name}
+        <IndexTree book={book.index}/>
       </TabPane>)
     return (
-        <Tabs className="study_next_page_tabs" tabPosition="left">
+        <Tabs style={{height:"96%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">
           {bookList}
         </Tabs>
     );
