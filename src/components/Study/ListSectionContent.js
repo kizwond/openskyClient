@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { Table } from 'antd';
-import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,EditOutlined} from '@ant-design/icons';
+import { Table, Button } from 'antd';
+import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
 
 
 class ListSectionContent extends Component {
   constructor(props) {
     super(props);
-    this.state = {  };
+    this.state = { };
   }
   render() {
     const columns = [
@@ -17,20 +17,18 @@ class ListSectionContent extends Component {
       {
         title: '책이름',
         dataIndex: 'book_title',
-        width:'100px',
-        render: (text) => <a>{text}</a>,
       },
       {
         title: '학습완료율',
         dataIndex: 'progress',
       },
       {
-        title: '남은 신규카드',
+        title: '카드총합(미학습/복습/완료/보류/졸업)',
         dataIndex: 'remain_new',
       },
       {
-        title: '오늘 복습카드',
-        dataIndex: 'today_review',
+        title: '일일학습목표',
+        dataIndex: 'today_goal',
       },
       {
         title: '최근학습일',
@@ -68,12 +66,49 @@ class ListSectionContent extends Component {
           }
         }
       },
+      {
+        title: '학습정보 상세보기',
+        dataIndex: 'key',
+        render: (text, record) => {
+          if(record){
+              return <Button size="small" style={{fontSize:"10px"}} >상세보기</Button>
+          } 
+        }
+      },
+      {
+        title: '학습설정',
+        dataIndex: 'key',
+        render: (text, record) => {
+          if(record){
+              return <Button size="small" style={{fontSize:"10px"}} >학습설정</Button>
+          } 
+        }
+      },
+      {
+        title: '임시책 생성',
+        dataIndex: 'key',
+        render: (text, record) => {
+          if(record){
+              return <CopyOutlined />
+          } 
+        }
+      },
+      {
+        title: '책삭제',
+        dataIndex: 'key',
+        render: (text, record) => {
+          if(record){
+              return <DeleteOutlined />
+          } 
+        }
+      },
     ];
 
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        this.props.selectBook(selectedRowKeys)
       },
       getCheckboxProps: (record) => ({
         disabled: record.name === 'Disabled User',
@@ -81,7 +116,8 @@ class ListSectionContent extends Component {
       }),
     };
 
-    if(this.props.category.length > 0){
+
+    if(this.props.category){
       var plz = []
       var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
 
@@ -92,8 +128,8 @@ class ListSectionContent extends Component {
         progress:'00%',
         remain_new:'00장',
         today_review:'00장',
-        recent_study:'00월/00일/0000년',
         today_goal:'00장',
+        recent_study:'00월/00일/0000년',
         like:book.like,
         reorder: '위/아래',
         hide: book.hide_or_show,
@@ -101,6 +137,9 @@ class ListSectionContent extends Component {
       
     }
     
+    if(this.state.selected_book) {
+      console.log('state value:',this.state.selected_book)
+    }
 
     return (
       <div>
