@@ -9,6 +9,7 @@ class ChooseIndex extends Component {
     super(props);
     this.state = { 
       books:[],
+      book_and_index_ids:[]
      }
   }
 
@@ -26,13 +27,25 @@ class ChooseIndex extends Component {
       })
     })
   }
-
+  startStudy = () => {
+    console.log("start!!!!!!")
+  }
+  onSelect = (selectedKeys, info) => {
+    console.log('selected', selectedKeys, info);
+    const index_ids = info.selectedNodes.map(item => item.index_id)
+    this.setState({
+      book_and_index_ids:[...this.state.book_and_index_ids, index_ids]
+    })
+  };
   render() {
 
     // console.log('log props:', this.props.location.selectedBook.value)
     if(this.state.books){
       console.log('length:',this.state.books.length)
       var num_books = this.state.books.length
+    }
+    if(this.state.book_and_index_ids){
+      console.log("selected :", this.state.book_and_index_ids)
     }
     
     const msg = `책 ${num_books}권에 목차 00개를 선택하셨습니다. 선택된 영역에서 필터링 한 결과, 신규카드 00개와 / 복습카드 00개가 있습니다.`
@@ -41,7 +54,7 @@ class ChooseIndex extends Component {
         <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={12}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
-            <BookTitleList books={this.state.books}/>
+            <BookTitleList onSelect={this.onSelect} books={this.state.books}/>
           </Col>
           <Col className="gutter-row"  style={{height:"100%", backgroundColor:"#b1c6ec", marginLeft:"5px"}} span={6}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>필터링</div>
@@ -88,7 +101,7 @@ class ChooseIndex extends Component {
               </div>
               
             </div>
-            <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
+            <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
           </Col>
         </Row>
       </div>

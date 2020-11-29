@@ -8,9 +8,7 @@ class IndexTree extends Component {
     this.state = {  };
   }
   render() {
-    const onSelect = (selectedKeys, info) => {
-      console.log('selected', selectedKeys, info);
-    };
+    const onSelect = this.props.onSelect
   
     const onCheck = (checkedKeys, info) => {
       console.log('onCheck', checkedKeys, info);
