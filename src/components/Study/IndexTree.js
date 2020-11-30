@@ -22,6 +22,7 @@ class IndexTree extends Component {
             let level = {
               title: table.name,
               index_id:table._id,
+              book_id:this.props.book_id,
               key: table.seq,
               level: 1,
               icon: <CarryOutOutlined />,
@@ -31,6 +32,7 @@ class IndexTree extends Component {
             let level = {
               title: table.name,
               index_id:table._id,
+              book_id:this.props.book_id,
               key: table.seq,
               level: 2,
               icon: <CarryOutOutlined />,
@@ -40,6 +42,7 @@ class IndexTree extends Component {
             let level = {
               title: table.name,
               index_id:table._id,
+              book_id:this.props.book_id,
               key: table.seq,
               level: 3,
               icon: <CarryOutOutlined />,
@@ -49,6 +52,7 @@ class IndexTree extends Component {
             let level = {
               title: table.name,
               index_id:table._id,
+              book_id:this.props.book_id,
               key: table.seq,
               level: 4,
               icon: <CarryOutOutlined />,
@@ -58,6 +62,7 @@ class IndexTree extends Component {
             let level = {
               title: table.name,
               index_id:table._id,
+              book_id:this.props.book_id,
               key: table.seq,
               level: 5,
               icon: <CarryOutOutlined />,
@@ -172,7 +177,6 @@ class IndexTree extends Component {
           }
         }
 
-        console.log('result:',level_all)
         //level_4 exist
       } else if(level_4_exist === true){
         let temp_data_3 = []

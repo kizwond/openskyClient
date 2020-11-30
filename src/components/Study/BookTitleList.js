@@ -11,9 +11,10 @@ class BookTitleList extends Component {
     this.state = {  };
   }
   render() {
+    console.log('from :', this.props.books)
     const bookList = this.props.books.map((book)=> 
       <TabPane tab={book.book.title} key={book.book._id}>
-        <IndexTree onSelect={this.props.onSelect} book={book.index}/>
+        <IndexTree onSelect={this.props.onSelect} book_id={book.book._id} book={book.index}/>
       </TabPane>)
     return (
         <Tabs style={{height:"96%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">

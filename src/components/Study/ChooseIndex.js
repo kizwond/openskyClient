@@ -10,7 +10,8 @@ class ChooseIndex extends Component {
     this.state = { 
       books:[],
       book_and_index_ids:[],
-      num_of_cards:0
+      num_of_cards:0,
+      selected_index_num : 0
      }
   }
 
@@ -40,14 +41,32 @@ class ChooseIndex extends Component {
   // };
 
   onSelect = (selectedKeys, info) => {
-    const index_id = info.selectedNodes[0].index_id
-    console.log(index_id)
+    console.log(info)
+    if(info.selected === true){
+      var index_id = info.selectedNodes[0].index_id
+      var book_id = info.selectedNodes[0].book_id
+      var status = true
+      this.setState( prevState =>({
+        selected_index_num : prevState.selected_index_num + 1})
+      )
+    } else {
+      var index_id = info.node.index_id
+      var book_id = info.node.book_id
+      var status = false
+      this.setState( prevState =>({
+        selected_index_num : prevState.selected_index_num - 1})
+      )
+    }
+    
+    console.log(index_id, book_id, status)
     axios.post('api/study/click-index',{
-      index_id: index_id
+      index_id: index_id,
+      book_id: book_id,
+      status: status
     }).then(res=>{
       console.log(res)
       this.setState( prevState =>({
-        num_of_cards : prevState + res.data.num_of_cards})
+        num_of_cards : prevState.num_of_cards + res.data.num_of_cards})
       )
     })
   }
@@ -62,8 +81,11 @@ class ChooseIndex extends Component {
     if(this.state.book_and_index_ids){
       console.log("selected :", this.state.book_and_index_ids)
     }
+    if(this.state.selected_index_num){
+      console.log(this.state.selected_index_num)
+    }
     
-    const msg = `책 ${num_books}권에 목차 00개를 선택하셨습니다. 선택된 영역에서 필터링 한 결과, 신규카드 00개와 / 복습카드 00개가 있습니다.`
+    const msg = `책 ${num_books}권에 목차 ${this.state.selected_index_num}개를 선택하셨습니다. 선택된 영역에서 필터링 한 결과, 신규카드 00개와 / 복습카드 00개가 있습니다.`
     return (
       <div style={{fontSize:"12px",width:"90%", margin:"auto", height:"80vh"}}>
         <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
