@@ -10,7 +10,9 @@ class ChooseIndex extends Component {
     this.state = { 
       books:[],
       book_and_index_ids:[],
-      num_of_cards:0,
+      num_new:0,
+      num_need_study:0,
+      num_total:0,
       selected_index_num : 0,
       mode: "read",
       order:"normal"
@@ -68,7 +70,10 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res)
       this.setState( prevState =>({
-        num_of_cards : prevState.num_of_cards + res.data.num_of_cards})
+        num_new : prevState.num_of_cards + res.data.num_cards,
+        num_need_study : prevState.num_need_study + res.data.num_need_study,
+        num_total : prevState.num_need_study + res.data.num_total
+        })
       )
     })
   }
@@ -120,7 +125,12 @@ class ChooseIndex extends Component {
             </div>
           </Col>
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
-            <div style={{fontSize:"12px",border:"1px dashed lightgrey", background:"#dfecf6", height:"100px", lineHeight:"30px"}}>책 <span style={{fontWeight:"700", color:"blue"}}>{num_books}</span>권에 목차 <span style={{fontWeight:"700", color:"blue"}}>{this.state.selected_index_num}</span>개를 선택하셨습니다.<br/> 선택된 영역에서 필터링 한 결과,<br/> 신규카드 00개와 / 복습카드 00개가 있습니다.</div>
+            <div style={{fontSize:"12px",border:"1px dashed lightgrey", background:"#dfecf6", height:"100px", lineHeight:"30px"}}>책 
+              <span style={{fontWeight:"700", color:"blue"}}>{num_books}</span>권에 목차 
+              <span style={{fontWeight:"700", color:"blue"}}>{this.state.selected_index_num}</span>
+              개를 선택하셨습니다.<br/> 선택된 영역에서 필터링 한 결과,<br/> 신규카드 
+              <span style={{fontWeight:"700", color:"blue"}}>{this.state.num_new}</span>개와 / 복습카드 
+              <span style={{fontWeight:"700", color:"blue"}}>{this.state.num_need_study}</span>개가 있습니다.</div>
             <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>보기 및 학습량 설정</div>
             <div style={{fontSize:"11px",height:"60%", textAlign:"left", padding:"10px", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
  
