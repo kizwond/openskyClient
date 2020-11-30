@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios"
-import { Row, Col, Divider,Alert,Button } from 'antd';
+import { Radio,Row, Col, Divider,Alert,Button } from 'antd';
 import BookTitleList from './BookTitleList'
 
 
@@ -11,7 +11,9 @@ class ChooseIndex extends Component {
       books:[],
       book_and_index_ids:[],
       num_of_cards:0,
-      selected_index_num : 0
+      selected_index_num : 0,
+      mode: "read",
+      order:"normal"
      }
   }
 
@@ -71,6 +73,19 @@ class ChooseIndex extends Component {
     })
   }
 
+  onChangeMode = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      mode: e.target.value,
+    });
+  };
+
+  onChangeOrder = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      order: e.target.value,
+    });
+  };
   render() {
 
     // console.log('log props:', this.props.location.selectedBook.value)
@@ -85,7 +100,12 @@ class ChooseIndex extends Component {
       console.log(this.state.selected_index_num)
     }
     
-    const msg = `책 ${num_books}권에 목차 ${this.state.selected_index_num}개를 선택하셨습니다. 선택된 영역에서 필터링 한 결과, 신규카드 00개와 / 복습카드 00개가 있습니다.`
+    const radioStyle = {
+      display: 'block',
+      height: '20px',
+      fontSize:'12px',
+      marginTop:'5px'
+    };
     return (
       <div style={{fontSize:"12px",width:"90%", margin:"auto", height:"80vh"}}>
         <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
@@ -100,34 +120,42 @@ class ChooseIndex extends Component {
             </div>
           </Col>
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
-            <div><Alert message={msg} type="success" style={{backgroundColor:"#d0eaff", fontSize:"14px",border:"1px dashed #c1c1c1"}} /></div>
+            <div style={{fontSize:"12px",border:"1px dashed lightgrey", background:"#dfecf6", height:"100px", lineHeight:"30px"}}>책 <span style={{fontWeight:"700", color:"blue"}}>{num_books}</span>권에 목차 <span style={{fontWeight:"700", color:"blue"}}>{this.state.selected_index_num}</span>개를 선택하셨습니다.<br/> 선택된 영역에서 필터링 한 결과,<br/> 신규카드 00개와 / 복습카드 00개가 있습니다.</div>
             <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>보기 및 학습량 설정</div>
             <div style={{fontSize:"11px",height:"60%", textAlign:"left", padding:"10px", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
-              <div>
-                <div>보기모드 선택</div>
+ 
                 <div>
-                  <ul>
-                    <li>책보기 모드</li>
-                    <li>플래쉬카드 모드</li>
-                    <li>시험보기 모드</li>
-                  </ul>
+                  <div>보기모드 선택</div>
+                  <Radio.Group onChange={this.onChangeMode} value={this.state.mode}>
+                    <Radio style={radioStyle} value="read">
+                      책보기 모드
+                    </Radio>
+                    <Radio style={radioStyle} value="flip">
+                      플래쉬카드 모드
+                    </Radio>
+                    <Radio style={radioStyle} value="exam">
+                      시험보기 모드
+                    </Radio>
+                  </Radio.Group>
                 </div>
-              </div>
-
-              <div>
-                <div>카드순서 선택</div>
+                
                 <div>
-                  <ul>
-                    <li>기본(순서대로)</li>
-                    <li>복습시점 빠른 순</li>
-                    <li>랜덤</li>
-                  </ul>
+                  <div>카드순서 선택</div>
+                  <Radio.Group onChange={this.onChangeOrder} value={this.state.order}>
+                    <Radio style={radioStyle} value="normal">
+                      기본(순서대로)
+                    </Radio>
+                    <Radio style={radioStyle} value="review">
+                      복습시점 빠른 순
+                    </Radio>
+                    <Radio style={radioStyle} value="random">
+                      랜덤
+                    </Radio>
+                  </Radio.Group>
                 </div>
-              </div>
 
-              <div>
-                <div>학습량 설정</div>
                 <div>
+                  <div>학습량 설정</div>
                   <ul>
                     <li>신규카드</li>
                     <li>복습카드</li>
@@ -135,7 +163,6 @@ class ChooseIndex extends Component {
                     <li>완료카드</li>
                   </ul>
                 </div>
-              </div>
               
             </div>
             <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
