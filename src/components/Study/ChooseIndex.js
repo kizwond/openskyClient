@@ -45,8 +45,8 @@ class ChooseIndex extends Component {
   onSelect = (selectedKeys, info) => {
     console.log(info)
     if(info.selected === true){
-      var index_id = info.selectedNodes[0].index_id
-      var book_id = info.selectedNodes[0].book_id
+      var index_id = info.node.index_id
+      var book_id = info.node.book_id
       var status = true
       this.setState( prevState =>({
         selected_index_num : prevState.selected_index_num + 1})
