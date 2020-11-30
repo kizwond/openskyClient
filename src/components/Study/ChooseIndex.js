@@ -9,14 +9,15 @@ class ChooseIndex extends Component {
     super(props);
     this.state = { 
       books:[],
-      book_and_index_ids:[]
+      book_and_index_ids:[],
+      num_of_cards:0
      }
   }
 
   componentDidMount() {
-    this.setState({
-      books:[]
-    })
+    // this.setState({
+    //   books:[]
+    // })
     this.getOnlyShowTitle()
   }
   getOnlyShowTitle() {
@@ -30,13 +31,27 @@ class ChooseIndex extends Component {
   startStudy = () => {
     console.log("start!!!!!!")
   }
+  // onSelect = (selectedKeys, info) => {
+  //   console.log('selected', selectedKeys, info);
+  //   const index_ids = info.selectedNodes.map(item => item.index_id)
+  //   this.setState({
+  //     book_and_index_ids:[...this.state.book_and_index_ids, index_ids]
+  //   })
+  // };
+
   onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
-    const index_ids = info.selectedNodes.map(item => item.index_id)
-    this.setState({
-      book_and_index_ids:[...this.state.book_and_index_ids, index_ids]
+    const index_id = info.selectedNodes[0].index_id
+    console.log(index_id)
+    axios.post('api/study/click-index',{
+      index_id: index_id
+    }).then(res=>{
+      console.log(res)
+      this.setState( prevState =>({
+        num_of_cards : prevState + res.data.num_of_cards})
+      )
     })
-  };
+  }
+
   render() {
 
     // console.log('log props:', this.props.location.selectedBook.value)
