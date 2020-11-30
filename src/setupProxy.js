@@ -6,7 +6,12 @@ module.exports = function (app) {
         createProxyMiddleware({
             target: 'http://localhost:5000',
             changeOrigin: true,
-            withCredentials:true
+            withCredentials:true,
+            headers:{
+                Accept:"application/json",
+                "Content-Type":"application/json",
+                Cache:"no-cache"
+            }
         })
     );
 };

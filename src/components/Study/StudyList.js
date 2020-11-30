@@ -34,9 +34,10 @@ class WriteMain extends Component {
     })
   }
   sessionSaveBookIds = () => {
-    axios.post('api/study/get-index',{
+    axios.post('api/study/save-booklist-in-session',{
       book_ids: this.state.selected_book
     }).then(res => {
+      console.log("before href:",res)
       window.location.href ="/choose-index"
     })
   }
