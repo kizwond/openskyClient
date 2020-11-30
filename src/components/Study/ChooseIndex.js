@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios"
-import { Radio,Row, Col, Divider,Alert,Button } from 'antd';
+import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
 import BookTitleList from './BookTitleList'
 
 
@@ -91,6 +91,46 @@ class ChooseIndex extends Component {
       order: e.target.value,
     });
   };
+
+  onClickUp = (value) => {
+    console.log(value)
+    // axios.post('api/study/click-up',{
+    //   book_id: value,
+    //   status: 'up'
+    // }).then(res=>{
+    //   console.log(res)
+    //   this.setState( {
+    //     books:res.data.book_and_index_list
+    //     }
+    //   )
+    // })
+  }
+  onClickDown = (value) => {
+    console.log(value)
+    // axios.post('api/study/click-down',{
+    //   book_id: value,
+    //   status: 'down'
+    // }).then(res=>{
+    //   console.log(res)
+    //   this.setState( {
+    //     books:res.data.book_and_index_list
+    //     }
+    //   )
+    // })
+  }
+
+  onChangeNew = (checked) => {
+    console.log(`switch to ${checked}`);
+  }
+  onChangeReview = (checked) => {
+    console.log(`switch to ${checked}`);
+  }
+  onChangeHold = (checked) => {
+    console.log(`switch to ${checked}`);
+  }
+  onChangeCompleted = (checked) => {
+    console.log(`switch to ${checked}`);
+  }
   render() {
 
     // console.log('log props:', this.props.location.selectedBook.value)
@@ -116,7 +156,7 @@ class ChooseIndex extends Component {
         <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={12}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
-            <BookTitleList onSelect={this.onSelect} books={this.state.books}/>
+            <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
           </Col>
           <Col className="gutter-row"  style={{height:"100%", backgroundColor:"#b1c6ec", marginLeft:"5px"}} span={6}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>필터링</div>
@@ -167,10 +207,10 @@ class ChooseIndex extends Component {
                 <div>
                   <div>학습량 설정</div>
                   <ul>
-                    <li>신규카드</li>
-                    <li>복습카드</li>
-                    <li>보류카드</li>
-                    <li>완료카드</li>
+                    <li>신규카드<Switch size="small" defaultChecked onChange={this.onChangeNew} /> <input type="number" /></li>
+                    <li>복습카드<Switch size="small" defaultChecked onChange={this.onChangeReview} /><input type="number" /></li>
+                    <li>보류카드<Switch size="small" onChange={this.onChangeHold} /></li>
+                    <li>완료카드<Switch size="small" onChange={this.onChangeCompleted} /></li>
                   </ul>
                 </div>
               
