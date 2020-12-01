@@ -23,9 +23,9 @@ class ChooseIndex extends Component {
     // this.setState({
     //   books:[]
     // })
-    this.getOnlyShowTitle()
+    this.getIndex()
   }
-  getOnlyShowTitle() {
+  getIndex() {
     axios.post('api/study/get-index').then(res => {
       console.log(res.data)
       this.setState({
@@ -94,29 +94,29 @@ class ChooseIndex extends Component {
 
   onClickUp = (value) => {
     console.log(value)
-    // axios.post('api/study/click-up',{
-    //   book_id: value,
-    //   status: 'up'
-    // }).then(res=>{
-    //   console.log(res)
-    //   this.setState( {
-    //     books:res.data.book_and_index_list
-    //     }
-    //   )
-    // })
+    axios.post('api/study/click-up',{
+      book_id: value,
+      status: 'up'
+    }).then(res=>{
+      console.log(res)
+      this.setState( {
+        books:res.data.book_and_index_list
+        }
+      )
+    })
   }
   onClickDown = (value) => {
     console.log(value)
-    // axios.post('api/study/click-down',{
-    //   book_id: value,
-    //   status: 'down'
-    // }).then(res=>{
-    //   console.log(res)
-    //   this.setState( {
-    //     books:res.data.book_and_index_list
-    //     }
-    //   )
-    // })
+    axios.post('api/study/click-down',{
+      book_id: value,
+      status: 'down'
+    }).then(res=>{
+      console.log(res)
+      this.setState( {
+        books:res.data.book_and_index_list
+        }
+      )
+    })
   }
 
   onChangeNew = (checked) => {
@@ -207,8 +207,8 @@ class ChooseIndex extends Component {
                 <div>
                   <div>학습량 설정</div>
                   <ul>
-                    <li>신규카드<Switch size="small" defaultChecked onChange={this.onChangeNew} /> <input type="number" /></li>
-                    <li>복습카드<Switch size="small" defaultChecked onChange={this.onChangeReview} /><input type="number" /></li>
+                    <li>신규카드<Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Input style={{width:"70px"}} size="small" type="number" /></li>
+                    <li>복습카드<Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Input style={{width:"70px"}} size="small" type="number" /></li>
                     <li>보류카드<Switch size="small" onChange={this.onChangeHold} /></li>
                     <li>완료카드<Switch size="small" onChange={this.onChangeCompleted} /></li>
                   </ul>
