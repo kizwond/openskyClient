@@ -348,7 +348,7 @@ class IndexTree extends Component {
         onSelect={onSelect}
         onCheck={onCheck}
         treeData={treeData}
-        style={{width:"400px", height:"77vh", marginTop:"10px"}}
+        style={{width:"400px", height:"77vh"}}
       />
     );
   }
