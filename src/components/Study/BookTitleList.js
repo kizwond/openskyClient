@@ -24,6 +24,12 @@ class BookTitleList extends Component {
           </Space>
         </span>
         } key={book.book._id}>
+          <div style={{fontSize:"10px",background:"#dfecf6",padding:"0 5px 0 10px",display:"flex", flexDirection:"row",alignItems:"center", justifyContent:"space-between"}}>
+            <span style={{textAlign:"left",width:"220px"}}>목차</span>
+            <span style={{textAlign:"center",width:"55px"}}>학습완료율</span>
+            <span>필터된<br/>신규카드</span>
+            <span>필터된<br/>복습카드</span>
+          </div>
         <IndexTree onSelect={this.props.onSelect} book_id={book.book._id} book={book.index}/>
       </TabPane>
       )
