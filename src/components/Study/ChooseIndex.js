@@ -15,7 +15,9 @@ class ChooseIndex extends Component {
       num_total:0,
       selected_index_num : 0,
       mode: "read",
-      order:"normal"
+      order:"normal",
+      reviewDetail:"all",
+      reviewDetailDetail:"now"
      }
   }
 
@@ -118,7 +120,7 @@ class ChooseIndex extends Component {
       )
     })
   }
-
+  
   onChangeNew = (checked) => {
     console.log(`switch to ${checked}`);
   }
@@ -131,6 +133,21 @@ class ChooseIndex extends Component {
   onChangeCompleted = (checked) => {
     console.log(`switch to ${checked}`);
   }
+  onChangeReviewDetail = (checked) => {
+    console.log(`switch to ${checked}`);
+    console.log(checked.target.value)
+    this.setState({
+      reviewDetail:checked.target.value
+    })
+  }
+  onChangeReviewDetailDetail = (checked) => {
+    console.log(`switch to ${checked}`);
+    console.log(checked.target.value)
+    this.setState({
+      reviewDetailDetail:checked.target.value
+    })
+  }
+  
   render() {
 
     // console.log('log props:', this.props.location.selectedBook.value)
@@ -145,12 +162,32 @@ class ChooseIndex extends Component {
       console.log(this.state.selected_index_num)
     }
     
-    const radioStyle = {
+    var radioStyle1 = {
       display: 'block',
       height: '20px',
       fontSize:'12px',
       marginTop:'5px'
     };
+    var radioStyle2 = {
+      display: 'block',
+      height: '230px',
+      fontSize:'12px',
+      marginTop:'5px'
+    };
+    if(this.state.order === "normal"){
+      var radioStyleNormal = radioStyle2
+      var radioStyleReview = radioStyle1
+      var radioStyleRandom = radioStyle1
+    } else if(this.state.order === "review"){
+      var radioStyleNormal = radioStyle1
+      var radioStyleReview = radioStyle2
+      var radioStyleRandom = radioStyle1
+    } else if(this.state.order === "random"){
+      var radioStyleNormal = radioStyle1
+      var radioStyleReview = radioStyle1
+      var radioStyleRandom = radioStyle2
+    }
+    
     return (
       <div style={{fontSize:"12px",width:"90%", margin:"auto", height:"80vh"}}>
         <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
@@ -172,13 +209,13 @@ class ChooseIndex extends Component {
                 <div>
                   <div>보기모드 선택</div>
                   <Radio.Group onChange={this.onChangeMode} value={this.state.mode}>
-                    <Radio style={radioStyle} value="read">
+                    <Radio style={radioStyle1} value="read">
                       책보기 모드
                     </Radio>
-                    <Radio style={radioStyle} value="flip">
+                    <Radio style={radioStyle1} value="flip">
                       플래쉬카드 모드
                     </Radio>
-                    <Radio style={radioStyle} value="exam">
+                    <Radio style={radioStyle1} value="exam">
                       시험보기 모드
                     </Radio>
                   </Radio.Group>
@@ -187,27 +224,87 @@ class ChooseIndex extends Component {
                 <div>
                   <div>카드순서 선택</div>
                   <Radio.Group onChange={this.onChangeOrder} value={this.state.order}>
-                    <Radio style={radioStyle} value="normal">
-                      기본(순서대로)
+                    <Radio style={radioStyleNormal} value="normal">
+                      원래 순서로
+                      {this.state.order === "normal" ? 
+                      <div style={{marginLeft:"20px"}}>
+                        <ul>
+                          <li><span>신규카드(00)</span><Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
+                          <li><span>기 학습카드</span><Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
+                          <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
+                            <Radio style={radioStyle1} value="all">모든카드</Radio>
+                            <Radio style={radioStyle1} value="review">
+                              복습 시점 도래카드
+                              {this.state.reviewDetail === "review" ? 
+                                <div style={{marginLeft:"20px"}}>
+                                    <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
+                                      <Radio style={radioStyle1} value="now">현시각기준</Radio>
+                                      <Radio style={radioStyle1} value="today">금일기준</Radio>
+                                    </Radio.Group>
+                                </div> : null}
+                            </Radio>
+                          </Radio.Group>
+                          <li><span>보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
+                          <li><span>완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
+                        </ul>
+                      </div> : null}
                     </Radio>
-                    <Radio style={radioStyle} value="review">
-                      복습시점 빠른 순
+                    
+                    <Radio style={radioStyleReview} value="review">
+                      복습시점 빠른 순서로
+                      {this.state.order === "review" ? 
+                      <div style={{marginLeft:"20px"}}>
+                        <ul>
+                          <li><span>신규카드(00)</span><Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
+                          <li><span>기 학습카드</span><Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
+                          <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
+                            <Radio style={radioStyle1} value="all">모든카드</Radio>
+                            <Radio style={radioStyle1} value="review">
+                              복습 시점 도래카드
+                              {this.state.reviewDetail === "review" ? 
+                                <div style={{marginLeft:"20px"}}>
+                                    <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
+                                      <Radio style={radioStyle1} value="now">현시각기준</Radio>
+                                      <Radio style={radioStyle1} value="today">금일기준</Radio>
+                                    </Radio.Group>
+                                </div> : null}
+                            </Radio>
+                          </Radio.Group>
+                          <li><span>보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
+                          <li><span>완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
+                        </ul>
+                      </div> : null}
                     </Radio>
-                    <Radio style={radioStyle} value="random">
-                      랜덤
+
+                    <Radio style={radioStyleRandom} value="random">
+                      랜덤하게
+                      {this.state.order === "random" ? 
+                      <div style={{marginLeft:"20px"}}>
+                        <ul>
+                          <li><span>신규카드(00)</span><Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
+                          <li><span>기 학습카드</span><Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
+                          <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
+                            <Radio style={radioStyle1} value="all">모든카드</Radio>
+                            <Radio style={radioStyle1} value="review">
+                              복습 시점 도래카드
+                              {this.state.reviewDetail === "review" ? 
+                                <div style={{marginLeft:"20px"}}>
+                                    <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
+                                      <Radio style={radioStyle1} value="now">현시각기준</Radio>
+                                      <Radio style={radioStyle1} value="today">금일기준</Radio>
+                                    </Radio.Group>
+                                </div> : null}
+                            </Radio>
+                          </Radio.Group>
+                          <li><span>보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
+                          <li><span>완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
+                        </ul>
+                      </div> : null}
                     </Radio>
                   </Radio.Group>
                 </div>
 
-                <div>
-                  <div>학습량 설정</div>
-                  <ul>
-                    <li>신규카드<Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Input style={{width:"70px"}} size="small" type="number" /></li>
-                    <li>복습카드<Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Input style={{width:"70px"}} size="small" type="number" /></li>
-                    <li>보류카드<Switch size="small" onChange={this.onChangeHold} /></li>
-                    <li>완료카드<Switch size="small" onChange={this.onChangeCompleted} /></li>
-                  </ul>
-                </div>
+                
               
             </div>
             <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
