@@ -18,7 +18,7 @@ class BookTitleList extends Component {
       <TabPane tab={
         <span>
           <Space>
-          {book.book.title}/{book.book.title}
+          {book.book.title}
           <ArrowUpOutlined onClick={()=>this.props.onClickUp(book.book._id)}/>
           <ArrowDownOutlined onClick={()=>this.props.onClickDown(book.book._id)}/>
           </Space>
