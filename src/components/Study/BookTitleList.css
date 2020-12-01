@@ -6,9 +6,7 @@
 .study_next_page_tabs .ant-tabs-nav-wrap{
   width:250px;
 }
-.ant-tree, .ant-tree-show-line .ant-tree-switcher{
-  background-color: #dfecf6;
-}
+
 
 .study_next_page_tabs > .ant-tabs-nav .ant-tabs-tab{
   margin: 0;

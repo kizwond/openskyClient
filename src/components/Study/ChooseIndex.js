@@ -154,15 +154,10 @@ class ChooseIndex extends Component {
     return (
       <div style={{fontSize:"12px",width:"90%", margin:"auto", height:"80vh"}}>
         <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
-          <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={12}>
+          <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={18}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
             <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
-          </Col>
-          <Col className="gutter-row"  style={{height:"100%", backgroundColor:"#b1c6ec", marginLeft:"5px"}} span={6}>
-            <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>필터링</div>
-            <div style={{height:"77vh", paddingRight:"10px", backgroundColor:"#b1c6ec"}}>
-              <div style={{height:"100%", backgroundColor:"#dfecf6"}}>설정들</div>
-            </div>
+            <div style={{marginTop:"-40px",float: "right", marginRight: "10px"}}><Button>필터설정</Button></div>
           </Col>
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <div style={{fontSize:"12px",border:"1px dashed lightgrey", background:"#dfecf6", height:"100px", lineHeight:"30px"}}>책 
