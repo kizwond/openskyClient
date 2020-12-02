@@ -34,7 +34,7 @@ class WriteMain extends Component {
     })
   }
   // sessionSaveBookIds = () => {
-  //   axios.post('api/study/save-booklist-in-session',{
+  //   axios.post('api/study/save-booklist',{
   //     book_ids: this.state.selected_book
   //   }).then(res => {
   //     console.log("before href:",res)
@@ -42,9 +42,17 @@ class WriteMain extends Component {
   //   })
   // }
   sessionSaveBookIds = () => {
-    sessionStorage.setItem('book_ids',JSON.stringify(this.state.selected_book));
-    console.log('sessionStorage:',sessionStorage.getItem("book_ids"))
-    window.location.href ="/choose-index"
+    axios.post('api/study/save-booklist',{
+      book_ids: this.state.selected_book
+    }).then(res => {
+      console.log('herererer : ',res.data.session_id)
+      sessionStorage.setItem('session_id',res.data.session_id);
+      window.location.href ="/choose-index"
+    })
+
+    // sessionStorage.setItem('book_ids',JSON.stringify(this.state.selected_book));
+    // console.log('sessionStorage:',sessionStorage.getItem("book_ids"))
+    // window.location.href ="/choose-index"
   }
   render() { 
     if(this.state.selected_book){

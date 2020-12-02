@@ -3,6 +3,7 @@ import axios from "axios"
 import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
 import BookTitleList from './BookTitleList'
 import StudyMode from './StudyMode'
+import StudyFiltering from './StudyFiltering';
 
 class ChooseIndex extends Component {
   constructor(props) {
@@ -21,9 +22,25 @@ class ChooseIndex extends Component {
       reviewToggle:true,
       newToggle:true,
       newCardNum:0,
-      reviewCardNum:0
+      reviewCardNum:0,
+      visible: false,
      }
   }
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = () => {
+    console.log("ok clicked")
+    this.setState({ visible: false });
+  };
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
 
   componentDidMount() {
     this.getIndex()
@@ -31,13 +48,13 @@ class ChooseIndex extends Component {
   getIndex() {
     console.log("start")
     console.log()
-    const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    const value = sessionStorage.getItem("session_id")
     axios.post('api/study/get-index',{
-      book_ids: value
+      session_id: value
     }).then(res => {
-      console.log(res.data)
+      console.log('데이타:', res.data)
       this.setState({
-        books:res.data.book_and_index_list
+        books:res.data.bookNindex_list
       })
     })
   }
@@ -126,7 +143,7 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res)
       this.setState( {
-        books:res.data.book_and_index_list
+        books:res.data.bookNindex_list
         }
       )
     })
@@ -139,7 +156,7 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res)
       this.setState( {
-        books:res.data.book_and_index_list
+        books:res.data.bookNindex_list
         }
       )
     })
@@ -231,7 +248,8 @@ class ChooseIndex extends Component {
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={18}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
             <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
-            <div style={{marginTop:"-40px",float: "right", marginRight: "10px"}}><Button>필터설정</Button></div>
+            <div style={{marginTop:"-40px",float: "right", marginRight: "10px"}}><Button onClick={this.showModal}>필터설정</Button>
+            <StudyFiltering visible={this.state.visible} handleOk={this.handleOk} handleCancel={this.handleCancel}/></div>
           </Col>
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <div style={{fontSize:"12px",border:"1px dashed lightgrey", background:"#dfecf6", height:"100px", lineHeight:"30px"}}>책 
