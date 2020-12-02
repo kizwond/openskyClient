@@ -42,10 +42,12 @@ class WriteMain extends Component {
   //   })
   // }
   sessionSaveBookIds = () => {
+    sessionStorage.removeItem("session_id")
+    console.log('before:--------------------------------',sessionStorage.getItem("session_id"))
     axios.post('api/study/save-booklist',{
       book_ids: this.state.selected_book
     }).then(res => {
-      console.log('herererer : ',res.data.session_id)
+      console.log('herererer ----------------------------------- : ',res.data.session_id)
       sessionStorage.setItem('session_id',res.data.session_id);
       window.location.href ="/choose-index"
     })

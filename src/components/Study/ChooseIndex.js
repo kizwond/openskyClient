@@ -47,7 +47,8 @@ class ChooseIndex extends Component {
   }
   getIndex() {
     console.log("start")
-    console.log()
+    
+    console.log('--------------------------------------------------',sessionStorage.getItem("session_id"))
     const value = sessionStorage.getItem("session_id")
     axios.post('api/study/get-index',{
       session_id: value
