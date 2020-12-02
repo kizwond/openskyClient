@@ -33,13 +33,18 @@ class WriteMain extends Component {
       selected_book:value
     })
   }
+  // sessionSaveBookIds = () => {
+  //   axios.post('api/study/save-booklist-in-session',{
+  //     book_ids: this.state.selected_book
+  //   }).then(res => {
+  //     console.log("before href:",res)
+  //     window.location.href ="/choose-index"
+  //   })
+  // }
   sessionSaveBookIds = () => {
-    axios.post('api/study/save-booklist-in-session',{
-      book_ids: this.state.selected_book
-    }).then(res => {
-      console.log("before href:",res)
-      window.location.href ="/choose-index"
-    })
+    sessionStorage.setItem('book_ids',JSON.stringify(this.state.selected_book));
+    console.log('sessionStorage:',sessionStorage.getItem("book_ids"))
+    window.location.href ="/choose-index"
   }
   render() { 
     if(this.state.selected_book){

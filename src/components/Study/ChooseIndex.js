@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
 import BookTitleList from './BookTitleList'
-
+import StudyMode from './StudyMode'
 
 class ChooseIndex extends Component {
   constructor(props) {
@@ -26,13 +26,15 @@ class ChooseIndex extends Component {
   }
 
   componentDidMount() {
-    // this.setState({
-    //   books:[]
-    // })
     this.getIndex()
   }
   getIndex() {
-    axios.post('api/study/get-index').then(res => {
+    console.log("start")
+    console.log()
+    const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    axios.post('api/study/get-index',{
+      book_ids: value
+    }).then(res => {
       console.log(res.data)
       this.setState({
         books:res.data.book_and_index_list
@@ -262,82 +264,61 @@ class ChooseIndex extends Component {
                     <Radio style={radioStyleNormal} value="normal">
                       원래 순서로
                       {this.state.order === "normal" ? 
-                      <div style={{marginLeft:"20px"}}>
-                        <ul>
-                          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.onChangeNew} checked={this.state.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeNewCardNum} value={this.state.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-                          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.onChangeReview} checked={this.state.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeReviewCardNum} value={this.state.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-                          {this.state.reviewToggle === true ? 
-                            <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
-                              <Radio style={radioStyle3} value="all">모든카드</Radio>
-                              <Radio style={radioStyle3} value="review">
-                                복습 시점 도래카드
-                                {this.state.reviewDetail === "review" ? 
-                                  <div style={{marginLeft:"20px"}}>
-                                      <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
-                                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                                        <Radio style={radioStyle1} value="today">금일기준</Radio>
-                                      </Radio.Group>
-                                  </div> : null}
-                              </Radio>
-                            </Radio.Group> : null}
-                          <li><span>- 보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
-                          <li><span>- 완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
-                        </ul>
-                      </div> : null}
+                      <StudyMode onChangeNew={this.onChangeNew}
+                                 newToggle={this.state.newToggle}
+                                 onChangeNewCardNum={this.onChangeNewCardNum}
+                                 newCardNum={this.state.newCardNum}
+                                 onChangeReview={this.onChangeReview}
+                                 reviewToggle={this.state.reviewToggle}
+                                 onChangeReviewCardNum={this.onChangeReviewCardNum}
+                                 reviewCardNum={this.state.reviewCardNum}
+                                 onChangeReviewDetail={this.onChangeReviewDetail}
+                                 reviewDetail={this.state.reviewDetail}
+                                 onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
+                                 reviewDetailDetail={this.state.reviewDetailDetail}
+                                 onChangeHold={this.onChangeHold}
+                                 onChangeCompleted={this.onChangeCompleted}                  
+                      /> : null}
                     </Radio>
                     
                     <Radio style={radioStyleReview} value="review">
                       복습시점 빠른 순서로
                       {this.state.order === "review" ? 
-                      <div style={{marginLeft:"20px"}}>
-                        <ul>
-                          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.onChangeNew} checked={this.state.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeNewCardNum} value={this.state.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-                          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.onChangeReview} checked={this.state.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeReviewCardNum} value={this.state.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-                          {this.state.reviewToggle === true ? 
-                            <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
-                              <Radio style={radioStyle3} value="all">모든카드</Radio>
-                              <Radio style={radioStyle3} value="review">
-                                복습 시점 도래카드
-                                {this.state.reviewDetail === "review" ? 
-                                  <div style={{marginLeft:"20px"}}>
-                                      <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
-                                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                                        <Radio style={radioStyle1} value="today">금일기준</Radio>
-                                      </Radio.Group>
-                                  </div> : null}
-                              </Radio>
-                            </Radio.Group> : null}
-                          <li><span>- 보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
-                          <li><span>- 완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
-                        </ul>
-                      </div> : null}
+                      <StudyMode onChangeNew={this.onChangeNew}
+                                newToggle={this.state.newToggle}
+                                onChangeNewCardNum={this.onChangeNewCardNum}
+                                newCardNum={this.state.newCardNum}
+                                onChangeReview={this.onChangeReview}
+                                reviewToggle={this.state.reviewToggle}
+                                onChangeReviewCardNum={this.onChangeReviewCardNum}
+                                reviewCardNum={this.state.reviewCardNum}
+                                onChangeReviewDetail={this.onChangeReviewDetail}
+                                reviewDetail={this.state.reviewDetail}
+                                onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
+                                reviewDetailDetail={this.state.reviewDetailDetail}
+                                onChangeHold={this.onChangeHold}
+                                onChangeCompleted={this.onChangeCompleted}                  
+                      /> : null}
                     </Radio>
 
                     <Radio style={radioStyleRandom} value="random">
                       랜덤하게
                       {this.state.order === "random" ? 
-                      <div style={{marginLeft:"20px"}}>
-                        <ul>
-                          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.onChangeNew} checked={this.state.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeNewCardNum} value={this.state.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-                          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.onChangeReview} checked={this.state.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeReviewCardNum} value={this.state.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-                          {this.state.reviewToggle === true ? 
-                            <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
-                              <Radio style={radioStyle3} value="all">모든카드</Radio>
-                              <Radio style={radioStyle3} value="review">
-                                복습 시점 도래카드
-                                {this.state.reviewDetail === "review" ? 
-                                  <div style={{marginLeft:"20px"}}>
-                                      <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
-                                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                                        <Radio style={radioStyle1} value="today">금일기준</Radio>
-                                      </Radio.Group>
-                                  </div> : null}
-                              </Radio>
-                            </Radio.Group> : null}
-                          <li><span>- 보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
-                          <li><span>- 완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
-                        </ul>
-                      </div> : null}
+                      <StudyMode onChangeNew={this.onChangeNew}
+                                newToggle={this.state.newToggle}
+                                onChangeNewCardNum={this.onChangeNewCardNum}
+                                newCardNum={this.state.newCardNum}
+                                onChangeReview={this.onChangeReview}
+                                reviewToggle={this.state.reviewToggle}
+                                onChangeReviewCardNum={this.onChangeReviewCardNum}
+                                reviewCardNum={this.state.reviewCardNum}
+                                onChangeReviewDetail={this.onChangeReviewDetail}
+                                reviewDetail={this.state.reviewDetail}
+                                onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
+                                reviewDetailDetail={this.state.reviewDetailDetail}
+                                onChangeHold={this.onChangeHold}
+                                onChangeCompleted={this.onChangeCompleted}                  
+                      /> : null}
                     </Radio>
                   </Radio.Group>
                 </div>
