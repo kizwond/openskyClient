@@ -18,19 +18,19 @@ class BookTitleList extends Component {
       <TabPane tab={
         <span>
           <Space>
-          {book.book.title}
-          <ArrowUpOutlined onClick={()=>this.props.onClickUp(book.book._id)}/>
-          <ArrowDownOutlined onClick={()=>this.props.onClickDown(book.book._id)}/>
+          {book.title}
+          <ArrowUpOutlined onClick={()=>this.props.onClickUp(book.book_id)}/>
+          <ArrowDownOutlined onClick={()=>this.props.onClickDown(book.book_id)}/>
           </Space>
         </span>
-        } key={book.book._id}>
+        } key={book.book_id}>
           <div style={{fontSize:"10px",background:"#dfecf6",padding:"0 5px 0 10px",display:"flex", flexDirection:"row",alignItems:"center", justifyContent:"space-between"}}>
             <span style={{textAlign:"left",width:"77%"}}>목차</span>
             <span style={{textAlign:"center",width:"80px"}}>학습완료율</span>
             <span style={{width:"60px"}}>필터된<br/>신규카드</span>
             <span style={{width:"60px"}}>필터된<br/>복습카드</span>
           </div>
-        <IndexTree onSelect={this.props.onSelect} book_id={book.book._id} book={book.index}/>
+        <IndexTree onSelect={this.props.onSelect} book_id={book.book_id} book={book.index_ids}/>
       </TabPane>
       )
     return (
