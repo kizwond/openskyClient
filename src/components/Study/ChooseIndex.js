@@ -17,7 +17,11 @@ class ChooseIndex extends Component {
       mode: "read",
       order:"normal",
       reviewDetail:"all",
-      reviewDetailDetail:"now"
+      reviewDetailDetail:"now",
+      reviewToggle:true,
+      newToggle:true,
+      newCardNum:0,
+      reviewCardNum:0
      }
   }
 
@@ -37,6 +41,12 @@ class ChooseIndex extends Component {
   }
   startStudy = () => {
     console.log("start!!!!!!")
+    console.log("mode:", this.state.mode)
+    console.log("card-order:", this.state.order)
+    console.log("new-card-num:", this.state.newCardNum)
+    console.log("review-card-num:", this.state.reviewCardNum)
+    console.log("review-detail:", this.state.reviewDetail)
+    console.log("review-detail-child:", this.state.reviewDetailDetail)
   }
   // onSelect = (selectedKeys, info) => {
   //   console.log('selected', selectedKeys, info);
@@ -45,7 +55,19 @@ class ChooseIndex extends Component {
   //     book_and_index_ids:[...this.state.book_and_index_ids, index_ids]
   //   })
   // };
-
+  
+  onChangeNewCardNum = (e) =>{
+    console.log(e.target.value)
+    this.setState({
+      newCardNum : e.target.value
+    })
+  }
+  onChangeReviewCardNum = (e) =>{
+    console.log(e.target.value)
+    this.setState({
+      reviewCardNum : e.target.value
+    })
+  }
   onSelect = (selectedKeys, info) => {
     console.log(info)
     if(info.selected === true){
@@ -123,9 +145,15 @@ class ChooseIndex extends Component {
   
   onChangeNew = (checked) => {
     console.log(`switch to ${checked}`);
+    this.setState({
+      newToggle:checked
+    })
   }
   onChangeReview = (checked) => {
     console.log(`switch to ${checked}`);
+    this.setState({
+      reviewToggle:checked
+    })
   }
   onChangeHold = (checked) => {
     console.log(`switch to ${checked}`);
@@ -164,15 +192,22 @@ class ChooseIndex extends Component {
     
     var radioStyle1 = {
       display: 'block',
-      height: '20px',
+      // height: '20px',
       fontSize:'12px',
       marginTop:'5px'
     };
     var radioStyle2 = {
       display: 'block',
-      height: '230px',
+      // height: '230px',
       fontSize:'12px',
       marginTop:'5px'
+    };
+    var radioStyle3 = {
+      display: 'block',
+      // height: '20px',
+      fontSize:'12px',
+      marginTop:'5px',
+      marginLeft:'20px'
     };
     if(this.state.order === "normal"){
       var radioStyleNormal = radioStyle2
@@ -229,23 +264,24 @@ class ChooseIndex extends Component {
                       {this.state.order === "normal" ? 
                       <div style={{marginLeft:"20px"}}>
                         <ul>
-                          <li><span>신규카드(00)</span><Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
-                          <li><span>기 학습카드</span><Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
-                          <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
-                            <Radio style={radioStyle1} value="all">모든카드</Radio>
-                            <Radio style={radioStyle1} value="review">
-                              복습 시점 도래카드
-                              {this.state.reviewDetail === "review" ? 
-                                <div style={{marginLeft:"20px"}}>
-                                    <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
-                                      <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                                      <Radio style={radioStyle1} value="today">금일기준</Radio>
-                                    </Radio.Group>
-                                </div> : null}
-                            </Radio>
-                          </Radio.Group>
-                          <li><span>보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
-                          <li><span>완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
+                          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.onChangeNew} checked={this.state.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeNewCardNum} value={this.state.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+                          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.onChangeReview} checked={this.state.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeReviewCardNum} value={this.state.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+                          {this.state.reviewToggle === true ? 
+                            <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
+                              <Radio style={radioStyle3} value="all">모든카드</Radio>
+                              <Radio style={radioStyle3} value="review">
+                                복습 시점 도래카드
+                                {this.state.reviewDetail === "review" ? 
+                                  <div style={{marginLeft:"20px"}}>
+                                      <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
+                                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
+                                        <Radio style={radioStyle1} value="today">금일기준</Radio>
+                                      </Radio.Group>
+                                  </div> : null}
+                              </Radio>
+                            </Radio.Group> : null}
+                          <li><span>- 보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
+                          <li><span>- 완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
                         </ul>
                       </div> : null}
                     </Radio>
@@ -255,23 +291,24 @@ class ChooseIndex extends Component {
                       {this.state.order === "review" ? 
                       <div style={{marginLeft:"20px"}}>
                         <ul>
-                          <li><span>신규카드(00)</span><Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
-                          <li><span>기 학습카드</span><Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
-                          <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
-                            <Radio style={radioStyle1} value="all">모든카드</Radio>
-                            <Radio style={radioStyle1} value="review">
-                              복습 시점 도래카드
-                              {this.state.reviewDetail === "review" ? 
-                                <div style={{marginLeft:"20px"}}>
-                                    <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
-                                      <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                                      <Radio style={radioStyle1} value="today">금일기준</Radio>
-                                    </Radio.Group>
-                                </div> : null}
-                            </Radio>
-                          </Radio.Group>
-                          <li><span>보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
-                          <li><span>완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
+                          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.onChangeNew} checked={this.state.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeNewCardNum} value={this.state.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+                          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.onChangeReview} checked={this.state.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeReviewCardNum} value={this.state.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+                          {this.state.reviewToggle === true ? 
+                            <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
+                              <Radio style={radioStyle3} value="all">모든카드</Radio>
+                              <Radio style={radioStyle3} value="review">
+                                복습 시점 도래카드
+                                {this.state.reviewDetail === "review" ? 
+                                  <div style={{marginLeft:"20px"}}>
+                                      <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
+                                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
+                                        <Radio style={radioStyle1} value="today">금일기준</Radio>
+                                      </Radio.Group>
+                                  </div> : null}
+                              </Radio>
+                            </Radio.Group> : null}
+                          <li><span>- 보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
+                          <li><span>- 완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
                         </ul>
                       </div> : null}
                     </Radio>
@@ -281,23 +318,24 @@ class ChooseIndex extends Component {
                       {this.state.order === "random" ? 
                       <div style={{marginLeft:"20px"}}>
                         <ul>
-                          <li><span>신규카드(00)</span><Switch size="small" defaultChecked onChange={this.onChangeNew} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
-                          <li><span>기 학습카드</span><Switch size="small" defaultChecked onChange={this.onChangeReview} /> <Button size="small">All</Button><Input style={{width:"70px"}} size="small" type="number" />장</li>
-                          <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
-                            <Radio style={radioStyle1} value="all">모든카드</Radio>
-                            <Radio style={radioStyle1} value="review">
-                              복습 시점 도래카드
-                              {this.state.reviewDetail === "review" ? 
-                                <div style={{marginLeft:"20px"}}>
-                                    <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
-                                      <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                                      <Radio style={radioStyle1} value="today">금일기준</Radio>
-                                    </Radio.Group>
-                                </div> : null}
-                            </Radio>
-                          </Radio.Group>
-                          <li><span>보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
-                          <li><span>완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
+                          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.onChangeNew} checked={this.state.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeNewCardNum} value={this.state.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+                          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.onChangeReview} checked={this.state.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.onChangeReviewCardNum} value={this.state.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+                          {this.state.reviewToggle === true ? 
+                            <Radio.Group onChange={this.onChangeReviewDetail} value={this.state.reviewDetail}>
+                              <Radio style={radioStyle3} value="all">모든카드</Radio>
+                              <Radio style={radioStyle3} value="review">
+                                복습 시점 도래카드
+                                {this.state.reviewDetail === "review" ? 
+                                  <div style={{marginLeft:"20px"}}>
+                                      <Radio.Group onChange={this.onChangeReviewDetailDetail} value={this.state.reviewDetailDetail}>
+                                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
+                                        <Radio style={radioStyle1} value="today">금일기준</Radio>
+                                      </Radio.Group>
+                                  </div> : null}
+                              </Radio>
+                            </Radio.Group> : null}
+                          <li><span>- 보류카드</span><Switch size="small" onChange={this.onChangeHold} /></li>
+                          <li><span>- 완료카드</span><Switch size="small" onChange={this.onChangeCompleted} /></li>
                         </ul>
                       </div> : null}
                     </Radio>
