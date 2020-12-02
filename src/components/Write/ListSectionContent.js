@@ -85,8 +85,8 @@ class ListContent extends Component {
   render() { 
     const info = this.props.bookInfo;
     const toggleProps = this.props.hideOrShowToggleState;
-    const date = info.time_create.slice(0,10)
-    const update_date = info.time_create.slice(0,10)
+    const date = info.time_created.slice(0,10)
+    const update_date = info.time_created.slice(0,10)
     const classes = `like_list_contents`
     const renderLike = () => {
       if(info.hide_or_show === true){
