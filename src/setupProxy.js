@@ -4,14 +4,7 @@ module.exports = function (app) {
     app.use(
         '/api',
         createProxyMiddleware({
-            target: 'http://localhost:5000',
-            changeOrigin: true,
-            withCredentials:true,
-            headers:{
-                Accept:"application/json",
-                "Content-Type":"application/json",
-                Cache:"no-cache"
-            }
+            target: 'http://localhost:5000'
         })
     );
 };
