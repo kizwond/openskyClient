@@ -105,11 +105,12 @@ class ChooseIndex extends Component {
         selected_index_num : prevState.selected_index_num - 1})
       )
     }
-    
+    const session_id = sessionStorage.getItem("session_id")
     console.log(index_id, book_id, status)
     axios.post('api/study/click-index',{
       index_id: index_id,
       book_id: book_id,
+      session_id:session_id,
       status: status
     }).then(res=>{
       console.log(res)
@@ -138,8 +139,10 @@ class ChooseIndex extends Component {
 
   onClickUp = (value) => {
     console.log(value)
+    const session_id = sessionStorage.getItem("session_id")
     axios.post('api/study/click-up',{
       book_id: value,
+      session_id: session_id,
       status: 'up'
     }).then(res=>{
       console.log(res)
@@ -151,8 +154,10 @@ class ChooseIndex extends Component {
   }
   onClickDown = (value) => {
     console.log(value)
+    const session_id = sessionStorage.getItem("session_id")
     axios.post('api/study/click-down',{
       book_id: value,
+      session_id: session_id,
       status: 'down'
     }).then(res=>{
       console.log(res)
