@@ -43,18 +43,13 @@ class WriteMain extends Component {
   // }
   sessionSaveBookIds = () => {
     sessionStorage.removeItem("session_id")
-    console.log('before:--------------------------------',sessionStorage.getItem("session_id"))
     axios.post('api/study/save-booklist',{
       book_ids: this.state.selected_book
     }).then(res => {
-      console.log('herererer ----------------------------------- : ',res.data.session_id)
       sessionStorage.setItem('session_id',res.data.session_id);
       window.location.href ="/choose-index"
     })
-
-    // sessionStorage.setItem('book_ids',JSON.stringify(this.state.selected_book));
-    // console.log('sessionStorage:',sessionStorage.getItem("book_ids"))
-    // window.location.href ="/choose-index"
+    
   }
   render() { 
     if(this.state.selected_book){
@@ -71,10 +66,7 @@ class WriteMain extends Component {
             </Content>
             <Sider style={{ padding:"10px",borderLeft:"1px solid grey", background:'#f5f5f5'}}>
               <Button size="small" style={{fontSize:'10px'}}>플래그설정</Button> <Button size="small" style={{fontSize:'10px'}}>즐겨찾기 설정</Button>
-              <NavLink to={{
-                pathname:"/choose-index",
-                selectedBook:{value:this.state.selected_book}
-              }} exact><Button size="large" style={{width:'100px'}} onClick={this.sessionSaveBookIds}>다음</Button></NavLink>
+              <Button size="large" style={{width:'100px'}} onClick={this.sessionSaveBookIds}>다음</Button>
             </Sider>
           </Layout>
       </div>

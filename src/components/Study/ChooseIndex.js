@@ -43,11 +43,7 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
-    this.getIndex()
-  }
-  getIndex() {
     console.log("start")
-    
     console.log('--------------------------------------------------',sessionStorage.getItem("session_id"))
     const value = sessionStorage.getItem("session_id")
     axios.post('api/study/get-index',{
@@ -59,6 +55,7 @@ class ChooseIndex extends Component {
       })
     })
   }
+
   startStudy = () => {
     console.log("start!!!!!!")
     console.log("mode:", this.state.mode)
@@ -205,12 +202,10 @@ class ChooseIndex extends Component {
 
     // console.log('log props:', this.props.location.selectedBook.value)
     if(this.state.books){
-      console.log('length:',this.state.books.length)
+      // console.log('length:',this.state.books.length)
       var num_books = this.state.books.length
     }
-    if(this.state.book_and_index_ids){
-      console.log("selected :", this.state.book_and_index_ids)
-    }
+
     if(this.state.selected_index_num){
       console.log(this.state.selected_index_num)
     }
