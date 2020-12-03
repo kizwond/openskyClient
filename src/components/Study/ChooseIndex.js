@@ -105,9 +105,9 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res)
       this.setState( {
-        num_new : res.data.num_card.num_new,
-        num_need_study : res.data.num_card.num_need_study,
-        num_total : res.data.num_card.num_total
+        num_new : res.data.num_total_cards.yet,
+        num_need_study : res.data.num_total_cards.re,
+        num_total : res.data.num_total_cards.total
         }
       )
     })
