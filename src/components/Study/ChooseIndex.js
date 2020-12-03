@@ -24,6 +24,8 @@ class ChooseIndex extends Component {
       newCardNum:0,
       reviewCardNum:0,
       visible: false,
+      hold:false,
+      completed:false,
      }
   }
 
@@ -43,8 +45,6 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
-    console.log("start")
-    console.log('--------------------------------------------------',sessionStorage.getItem("session_id"))
     const value = sessionStorage.getItem("session_id")
     axios.post('api/study/get-index',{
       session_id: value
@@ -65,13 +65,6 @@ class ChooseIndex extends Component {
     console.log("review-detail:", this.state.reviewDetail)
     console.log("review-detail-child:", this.state.reviewDetailDetail)
   }
-  // onSelect = (selectedKeys, info) => {
-  //   console.log('selected', selectedKeys, info);
-  //   const index_ids = info.selectedNodes.map(item => item.index_id)
-  //   this.setState({
-  //     book_and_index_ids:[...this.state.book_and_index_ids, index_ids]
-  //   })
-  // };
   
   onChangeNewCardNum = (e) =>{
     console.log(e.target.value)
@@ -179,9 +172,15 @@ class ChooseIndex extends Component {
   }
   onChangeHold = (checked) => {
     console.log(`switch to ${checked}`);
+    this.setState({
+      hold:checked
+    })
   }
   onChangeCompleted = (checked) => {
     console.log(`switch to ${checked}`);
+    this.setState({
+      completed:checked
+    })
   }
   onChangeReviewDetail = (checked) => {
     console.log(`switch to ${checked}`);
@@ -197,12 +196,15 @@ class ChooseIndex extends Component {
       reviewDetailDetail:checked.target.value
     })
   }
-  
+  onChangeHoldCardNum = (e) => {
+    console.log(e)
+  }
+  onChangeCompletedCardNum = (e) => {
+    console.log(e)
+  }
   render() {
 
-    // console.log('log props:', this.props.location.selectedBook.value)
     if(this.state.books){
-      // console.log('length:',this.state.books.length)
       var num_books = this.state.books.length
     }
 
@@ -296,7 +298,11 @@ class ChooseIndex extends Component {
                                  onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
                                  reviewDetailDetail={this.state.reviewDetailDetail}
                                  onChangeHold={this.onChangeHold}
-                                 onChangeCompleted={this.onChangeCompleted}                  
+                                 hold={this.state.hold}
+                                 completed={this.state.completed}
+                                 onChangeCompleted={this.onChangeCompleted}
+                                 onChangeHoldCardNum={this.onChangeHoldCardNum}
+                                 onChangeCompletedCardNum={this.onChangeCompletedCardNum}            
                       /> : null}
                     </Radio>
                     
@@ -316,7 +322,11 @@ class ChooseIndex extends Component {
                                 onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
                                 reviewDetailDetail={this.state.reviewDetailDetail}
                                 onChangeHold={this.onChangeHold}
-                                onChangeCompleted={this.onChangeCompleted}                  
+                                hold={this.state.hold}
+                                completed={this.state.completed}
+                                onChangeCompleted={this.onChangeCompleted}    
+                                onChangeHoldCardNum={this.onChangeHoldCardNum}
+                                onChangeCompletedCardNum={this.onChangeCompletedCardNum}              
                       /> : null}
                     </Radio>
 
@@ -336,7 +346,11 @@ class ChooseIndex extends Component {
                                 onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
                                 reviewDetailDetail={this.state.reviewDetailDetail}
                                 onChangeHold={this.onChangeHold}
-                                onChangeCompleted={this.onChangeCompleted}                  
+                                hold={this.state.hold}
+                                completed={this.state.completed}
+                                onChangeCompleted={this.onChangeCompleted}
+                                onChangeHoldCardNum={this.onChangeHoldCardNum}
+                                onChangeCompletedCardNum={this.onChangeCompletedCardNum}                  
                       /> : null}
                     </Radio>
                   </Radio.Group>

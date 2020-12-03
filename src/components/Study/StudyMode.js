@@ -26,24 +26,27 @@ class StudyMode extends Component {
     return (
       <div style={{marginLeft:"20px"}}>
         <ul>
-          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.props.onChangeNew} checked={this.props.newToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeNewCardNum} value={this.props.newCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
-          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.props.onChangeReview} checked={this.props.reviewToggle}/> <Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeReviewCardNum} value={this.props.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</li>
+          <li><span>- 신규카드(00)</span><Switch size="small" onChange={this.props.onChangeNew} checked={this.props.newToggle}/> 
+            {this.props.newToggle === true ? <><Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeNewCardNum} value={this.props.newCardNum} style={{width:"70px"}} size="small" type="number" />장</>: null} 
+          </li>
+          <li><span>- 기 학습카드</span><Switch size="small" onChange={this.props.onChangeReview} checked={this.props.reviewToggle}/> 
+          </li>
           {this.props.reviewToggle === true ? 
             <Radio.Group onChange={this.props.onChangeReviewDetail} value={this.props.reviewDetail}>
-              <Radio style={radioStyle3} value="all">모든카드</Radio>
+              <Radio style={radioStyle3} value="all">모든카드 {this.props.reviewDetail === "all" ? <><Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeReviewCardNum} value={this.props.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</>: null} </Radio>
               <Radio style={radioStyle3} value="review">
-                복습 시점 도래카드
+                복습 시점 도래카드  
                 {this.props.reviewDetail === "review" ? 
                   <div style={{marginLeft:"20px"}}>
                       <Radio.Group onChange={this.props.onChangeReviewDetailDetail} value={this.props.reviewDetailDetail}>
-                        <Radio style={radioStyle1} value="now">현시각기준</Radio>
-                        <Radio style={radioStyle1} value="today">금일기준</Radio>
+                        <Radio style={radioStyle1} value="now">현시각기준 {this.props.reviewDetailDetail === "now" ? <><Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeReviewCardNum} value={this.props.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</>: null}</Radio>
+                        <Radio style={radioStyle1} value="today">금일기준 {this.props.reviewDetailDetail === "today" ? <><Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeReviewCardNum} value={this.props.reviewCardNum} style={{width:"70px"}} size="small" type="number" />장</>: null}</Radio>
                       </Radio.Group>
                   </div> : null}
               </Radio>
             </Radio.Group> : null}
-          <li><span>- 보류카드</span><Switch size="small" onChange={this.props.onChangeHold} /></li>
-          <li><span>- 완료카드</span><Switch size="small" onChange={this.props.onChangeCompleted} /></li>
+          <li><span>- 보류카드</span><Switch size="small" onChange={this.props.onChangeHold} checked={this.props.hold}/>{this.props.hold === true ? <><Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeHoldCardNum} value={this.props.holdCardNum} style={{width:"70px"}} size="small" type="number" />장</>: null}</li>
+          <li><span>- 완료카드</span><Switch size="small" onChange={this.props.onChangeCompleted} checked={this.props.completed}/>{this.props.completed === true ? <><Button size="small" style={{fontSize:"10px"}}>All</Button><Input onChange={this.props.onChangeCompletedCardNum} value={this.props.completedCardNum} style={{width:"70px"}} size="small" type="number" />장</>: null}</li>
         </ul>
       </div>
     );
