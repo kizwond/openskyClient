@@ -279,7 +279,7 @@ class ChooseIndex extends Component {
                   </Radio.Group>
                 </div>
                 
-                <div>
+                <div style={{height:"300px"}}>
                   <div>카드순서 선택</div>
                   <Radio.Group onChange={this.onChangeOrder} value={this.state.order}>
                     <Radio style={radioStyleNormal} value="normal">
