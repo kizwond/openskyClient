@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink} from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Dropdown, Space } from 'antd';
+import { Layout, Menu, Dropdown, Space } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import './Study.css'
-import StudyList from './StudyList'
 
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;
@@ -13,6 +12,9 @@ class StudyFlip extends Component {
   constructor(props) {
     super(props);
     this.state = {  };
+  }
+  componentDidMount(){
+    document.getElementById("nav_bar").classList.add('nav_bar_hidden');
   }
   onMenuClick = () => {
     document.getElementById("nav_bar").classList.remove('nav_bar_hidden');

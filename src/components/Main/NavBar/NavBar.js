@@ -68,9 +68,7 @@ class NavBar extends React.Component {
       visible: false,
     });
   };
-  onStudyClick = () => {
-    document.getElementById("nav_bar").classList.add('nav_bar_hidden');
-  }
+  
   
 
   render(){
@@ -86,7 +84,7 @@ class NavBar extends React.Component {
                 <NavLink to="/" exact>메인</NavLink>
               </Menu.Item>
               <Menu.Item key="study" icon={<ReadOutlined />}>
-                <NavLink to="/study" exact onClick={this.onStudyClick}>학습</NavLink>
+                <NavLink to="/study" exact >학습</NavLink>
               </Menu.Item>
               <Menu.Item key="write" icon={<FormOutlined />}>
                 <NavLink to="/write" exact>만들기</NavLink>

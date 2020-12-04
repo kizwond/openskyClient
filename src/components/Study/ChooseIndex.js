@@ -4,6 +4,7 @@ import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
 import BookTitleList from './BookTitleList'
 import StudyMode from './StudyMode'
 import StudyFiltering from './StudyFiltering';
+import { ItalicOutlined } from '@ant-design/icons';
 
 class ChooseIndex extends Component {
   constructor(props) {
@@ -26,6 +27,8 @@ class ChooseIndex extends Component {
       visible: false,
       hold:false,
       completed:false,
+      holdCardNum:0,
+      completedCardNum:0,
      }
   }
 
@@ -57,13 +60,63 @@ class ChooseIndex extends Component {
   }
 
   startStudy = () => {
-    console.log("start!!!!!!")
-    console.log("mode:", this.state.mode)
-    console.log("card-order:", this.state.order)
-    console.log("new-card-num:", this.state.newCardNum)
-    console.log("review-card-num:", this.state.reviewCardNum)
-    console.log("review-detail:", this.state.reviewDetail)
-    console.log("review-detail-child:", this.state.reviewDetailDetail)
+    const value = sessionStorage.getItem("session_id")
+    if(this.state.reviewDetail === "all"){
+      var reviewMode = "all"
+    } else if(this.state.reviewDetail === "review"){
+      if(this.state.reviewDetailDetail === "now"){
+        var reviewMode = "now"
+      } else {
+        var reviewMode = "today"
+      }
+    }
+    if(this.state.order === "normal"){
+      var order_by = "sort_by_index"
+    } else if(this.state.order === "review"){
+      var order_by = "sort_by_restudytime"
+    } else if(this.state.order === "random"){
+      var order_by = "random"
+    }
+    if(this.state.newToggle === true){
+      var newToggle = "on"
+    } else {
+      var newToggle = "off"
+    }
+    if(this.state.reviewToggle === true){
+      var reviewToggle = "on"
+    } else {
+      var reviewToggle = "off"
+    }
+    if(this.state.hold === true){
+      var hold = "on"
+    } else {
+      var hold = "off"
+    }
+    if(this.state.completed === true){
+      var completed = "on"
+    } else {
+      var completed = "off"
+    }
+
+    console.log("session_id : ", value)
+    console.log("study_mode : ", this.state.mode)
+    console.log("card_order : ", order_by)
+    console.log("re_card_collect_criteria : ", reviewMode)
+    console.log("on_off : ", {yet: newToggle, re:reviewToggle, hold:hold, completed:completed})
+    console.log("num_cards : ", {yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum})
+
+    // axios.post('api/study/start-study',{
+    //   session_id: value,
+    //   study_mode:this.state.mode, 
+    //   card_order: order_by,
+    //   re_card_collect_criteria: reviewMode,
+    //   on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
+    //   num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
+    // }).then(res => {
+    //   console.log('데이타:', res.data)
+    // })
+    
+    window.location.href="/start-study"
   }
   
   onChangeNewCardNum = (e) =>{
@@ -197,10 +250,14 @@ class ChooseIndex extends Component {
     })
   }
   onChangeHoldCardNum = (e) => {
-    console.log(e)
+    this.setState({
+      holdCardNum:e.target.value
+    })
   }
   onChangeCompletedCardNum = (e) => {
-    console.log(e)
+    this.setState({
+      completedCardNum:e.target.value
+    })
   }
   render() {
 

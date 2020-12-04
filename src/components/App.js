@@ -13,7 +13,7 @@ import BookNaming from './Write/BookEditing/BookNaming'
 // import BookWriting from './Write/BookEditing/BookWriting'
 import BookEditing from './Write/BookEditing/BookEditing'
 import ChooseIndex from './Study/ChooseIndex'
-
+import StudyFlip from './Study/StudyFlip'
 const { Header, Content, Footer } = Layout;
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
             {/* <Route exact path="/writing" strict component={BookWriting} /> */}
             <Route exact path="/editing" component={BookEditing} />
             <Route exact path="/choose-index" component={ChooseIndex} />
+            <Route exact path="/start-study" component={StudyFlip} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center',display:'block' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>
