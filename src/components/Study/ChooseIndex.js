@@ -105,16 +105,16 @@ class ChooseIndex extends Component {
     console.log("on_off : ", {yet: newToggle, re:reviewToggle, hold:hold, completed:completed})
     console.log("num_cards : ", {yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum})
 
-    // axios.post('api/study/start-study',{
-    //   session_id: value,
-    //   study_mode:this.state.mode, 
-    //   card_order: order_by,
-    //   re_card_collect_criteria: reviewMode,
-    //   on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
-    //   num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
-    // }).then(res => {
-    //   console.log('데이타:', res.data)
-    // })
+    axios.post('api/study/start-study',{
+      session_id: value,
+      study_mode:this.state.mode, 
+      card_order: order_by,
+      re_card_collect_criteria: reviewMode,
+      on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
+      num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
+    }).then(res => {
+      console.log('데이타:', res.data)
+    })
     
     window.location.href="/start-study"
   }
