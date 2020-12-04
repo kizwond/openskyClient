@@ -4,6 +4,7 @@ import { Layout, Menu, Dropdown, Space } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import './Study.css'
+import FlipMode from './FlipMode';
 
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;
@@ -74,7 +75,7 @@ class StudyFlip extends Component {
     return (
       <div className="study_page_container">
         <Layout className="layout">
-          <Header style={{background:'white', paddingLeft:10}}>
+          <Header style={{background:'white', paddingLeft:10, borderBottom:"1px solid #d3d3d3"}}>
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
               <Dropdown overlay={menu_0} >
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -106,7 +107,7 @@ class StudyFlip extends Component {
             </div>
           </Header>
           <Content style={{ padding: '10px' }}>
-            <div>content</div>
+            <FlipMode/>
           </Content>
         </Layout>
       </div>
