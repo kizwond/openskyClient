@@ -112,6 +112,7 @@ class ChooseIndex extends Component {
       re_card_collect_criteria: reviewMode,
       on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
       num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
+      num_request_cards:2
     }).then(res => {
       console.log('데이타:', res.data)
     })
