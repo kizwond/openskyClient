@@ -46,6 +46,7 @@ class FlipMode extends Component {
       justifyContent:"space-between",
       width:"1440px",
       margin:"auto",
+      marginTop:"10px"
     }
     return (
       <div style={style_study_layout_container} className="study_layout_container">
@@ -67,9 +68,19 @@ class FlipMode extends Component {
           </div>
         </div>
         <div style={style_study_layout_bottom} className="study_layout_middle">
-          <div>플래그 영역</div>
-          <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>contents영역</div>
-          <div>side 영역</div>
+          <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px", textAlign:"right"}}>플래그 영역</div>
+          <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
+            <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}>판때기</div>
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#d9d9d9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
+              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>모르겠음</Button>
+              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>거의모름</Button>
+              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>애매함</Button>
+              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
+              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>알겠음</Button>
+              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>패스</Button>
+            </div>
+          </div>
+          <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px"}}>side 영역</div>
         </div>
       </div>
     );
