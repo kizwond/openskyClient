@@ -115,9 +115,10 @@ class ChooseIndex extends Component {
       num_request_cards:2
     }).then(res => {
       console.log('데이타:', res.data)
+      // window.location.href="/start-study"
     })
     
-    window.location.href="/start-study"
+    
   }
   
   onChangeNewCardNum = (e) =>{

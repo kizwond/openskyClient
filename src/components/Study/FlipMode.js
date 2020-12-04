@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import { Avatar, Image, Button, Progress } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Image, Button, Progress,  Menu, Dropdown } from 'antd';
+import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import ProgressBar from "./progressBar";
 
 class FlipMode extends Component {
@@ -48,6 +48,20 @@ class FlipMode extends Component {
       margin:"auto",
       marginTop:"10px"
     }
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">
+          단기
+        </Menu.Item>
+        <Menu.Item key="1">
+          장기
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="3">
+          졸업
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <div style={style_study_layout_container} className="study_layout_container">
         <div style={style_study_layout_top} className="study_layout_top">
@@ -71,13 +85,17 @@ class FlipMode extends Component {
           <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px", textAlign:"right"}}>플래그 영역</div>
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
             <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}>판때기</div>
-            <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#d9d9d9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>모르겠음</Button>
-              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>거의모름</Button>
-              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>애매함</Button>
-              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
-              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>알겠음</Button>
-              <Button size="large" style={{borderRadius:"7px", width:"120px"}}>패스</Button>
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>모르겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의모름</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>애매함</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>알겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
+                <Dropdown overlay={menu} trigger={['click']}>
+                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></a>
+                </Dropdown>
+              </Button>
             </div>
           </div>
           <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px"}}>side 영역</div>
