@@ -47,7 +47,7 @@ class StudySettingModal extends Component {
             <li style={{display:"flex", flexDirection:"column"}}>
               이전 경험치 획득 후 .... 블라블라
               <div>알겠음 한방에<Input size="small" style={{width:"80px"}}type="number"/></div>
-              <div>할겠음 2방에<Input size="small" style={{width:"80px"}}type="number"/></div>
+              <div>알겠음 2방에<Input size="small" style={{width:"80px"}}type="number"/></div>
               <div>알겠음 3방에<Input size="small" style={{width:"80px"}}type="number"/></div>
               <div>알겠음 4방이상<Input size="small" style={{width:"80px"}}type="number"/></div>
             </li>
@@ -152,7 +152,7 @@ class StudySettingModal extends Component {
             </li>
             <li>
               <div>레벨업 및 다음 복습까지 대기 기간 설정</div>
-              <table style={{border:"1px solid grey"}}>
+              <table>
                 <tr>
                     <td>레벨</td><td>레벨업 경험치</td><td>복습대기</td>           
                 </tr>
