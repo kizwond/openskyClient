@@ -15,9 +15,9 @@ class FlipMode extends Component {
   }
   // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
   componentDidMount(){
-    const study_setting = JSON.parse(sessionStorage.getItem('study_setting'))
+    const session_id = sessionStorage.getItem('session_id')
     axios.post('api/study/get-studying-cards',{
-      session_id: study_setting.session_id,
+      session_id: session_id,
       current_seq:0,
       num_request_cards:2
     }).then(res => {
