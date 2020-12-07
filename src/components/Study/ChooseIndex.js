@@ -49,7 +49,7 @@ class ChooseIndex extends Component {
 
   componentDidMount() {
     const value = sessionStorage.getItem("session_id")
-    axios.post('api/study/get-index',{
+    axios.post('api/studysetup/get-index',{
       session_id: value
     }).then(res => {
       console.log('데이타:', res.data)
@@ -115,7 +115,7 @@ class ChooseIndex extends Component {
     //   num_request_cards:2
     // }
 
-    axios.post('api/study/start-study',{
+    axios.post('api/studysetup/start-study',{
       session_id: value,
       study_mode:this.state.mode, 
       card_order: order_by,
@@ -162,7 +162,7 @@ class ChooseIndex extends Component {
     }
     const session_id = sessionStorage.getItem("session_id")
     console.log(index_id, book_id, status)
-    axios.post('api/study/click-index',{
+    axios.post('api/studysetup/click-index',{
       index_id: index_id,
       book_id: book_id,
       session_id:session_id,
@@ -195,7 +195,7 @@ class ChooseIndex extends Component {
   onClickUp = (value) => {
     console.log(value)
     const session_id = sessionStorage.getItem("session_id")
-    axios.post('api/study/click-up',{
+    axios.post('api/studysetup/click-up',{
       book_id: value,
       session_id: session_id,
       status: 'up'
@@ -210,7 +210,7 @@ class ChooseIndex extends Component {
   onClickDown = (value) => {
     console.log(value)
     const session_id = sessionStorage.getItem("session_id")
-    axios.post('api/study/click-down',{
+    axios.post('api/studysetup/click-down',{
       book_id: value,
       session_id: session_id,
       status: 'down'

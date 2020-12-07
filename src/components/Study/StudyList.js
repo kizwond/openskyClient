@@ -34,7 +34,7 @@ class WriteMain extends Component {
     })
   }
   // sessionSaveBookIds = () => {
-  //   axios.post('api/study/save-booklist',{
+  //   axios.post('api/studysetup/save-booklist',{
   //     book_ids: this.state.selected_book
   //   }).then(res => {
   //     console.log("before href:",res)
@@ -43,7 +43,7 @@ class WriteMain extends Component {
   // }
   sessionSaveBookIds = () => {
     sessionStorage.removeItem("session_id")
-    axios.post('api/study/save-booklist',{
+    axios.post('api/studysetup/save-booklist',{
       book_ids: this.state.selected_book
     }).then(res => {
       sessionStorage.setItem('session_id',res.data.session_id);

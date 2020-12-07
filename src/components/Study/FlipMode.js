@@ -16,7 +16,7 @@ class FlipMode extends Component {
   // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
   componentDidMount(){
     const session_id = sessionStorage.getItem('session_id')
-    axios.post('api/study/get-studying-cards',{
+    axios.post('api/studysetup/get-studying-cards',{
       session_id: session_id,
       current_seq:0,
       num_request_cards:2
@@ -28,8 +28,13 @@ class FlipMode extends Component {
     })
   }
 
-  onClickNotKnow = ()=>{
+  onClickNotKnow = (id)=>{
     console.log("don't know")
+    console.log(id)
+    const list = this.state.contents.filter(item => item._id._id !== id);
+    this.setState({
+      contents:list
+    })
   }
 
   render() {
@@ -90,6 +95,7 @@ class FlipMode extends Component {
       var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => item)
       var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => item)
       var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => item)
+      var id_of_content = this.state.contents[0]._id._id
     }
     
     
@@ -117,7 +123,7 @@ class FlipMode extends Component {
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
             <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}><FroalaEditorView model={first_face_data}/><FroalaEditorView model={second_face_data}/><FroalaEditorView model={annotation_data}/></div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={this.onClickNotKnow}>모르겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickNotKnow(id_of_content)}>모르겠음</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의모름</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>애매함</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
