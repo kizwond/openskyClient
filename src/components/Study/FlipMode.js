@@ -3,12 +3,35 @@ import React, { Component } from 'react';
 import { Avatar, Image, Button, Progress,  Menu, Dropdown } from 'antd';
 import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import ProgressBar from "./progressBar";
+import axios from 'axios'
+import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 class FlipMode extends Component {
   constructor(props) {
     super(props);
-    this.state = {  };
+    this.state = { 
+      contents:[]
+     };
   }
+  // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
+  componentDidMount(){
+    const study_setting = JSON.parse(sessionStorage.getItem('study_setting'))
+    axios.post('api/study/get-studying-cards',{
+      session_id: study_setting.session_id,
+      current_seq:0,
+      num_request_cards:2
+    }).then(res => {
+      console.log('데이타:', res.data)
+      this.setState({
+        contents:res.data.cards_to_send.cardlist_working
+      })
+    })
+  }
+
+  onClickNotKnow = ()=>{
+    console.log("don't know")
+  }
+
   render() {
     const style_study_layout_container ={
       display:"flex",
@@ -62,6 +85,14 @@ class FlipMode extends Component {
         </Menu.Item>
       </Menu>
     );
+    if(this.state.contents.length > 0){
+      console.log("data stored : ",this.state.contents)
+      var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => item)
+      var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => item)
+      var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => item)
+    }
+    
+    
     return (
       <div style={style_study_layout_container} className="study_layout_container">
         <div style={style_study_layout_top} className="study_layout_top">
@@ -84,9 +115,9 @@ class FlipMode extends Component {
         <div style={style_study_layout_bottom} className="study_layout_middle">
           <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px", textAlign:"right"}}>플래그 영역</div>
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
-            <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}>판때기</div>
+            <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}><FroalaEditorView model={first_face_data}/><FroalaEditorView model={second_face_data}/><FroalaEditorView model={annotation_data}/></div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>모르겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={this.onClickNotKnow}>모르겠음</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의모름</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>애매함</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
