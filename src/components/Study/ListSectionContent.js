@@ -1,13 +1,34 @@
 import React, {Component} from 'react';
 import { Table, Button } from 'antd';
 import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
-
+import StudySettingModal from './StudySettingModal'
 
 class ListSectionContent extends Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = { 
+      visible:false
+    };
   }
+
+  showModal = () => {
+    this.setState({
+      visible:true
+    });
+  };
+
+  handleOk = () => {
+    this.setState({
+      visible:false
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible:false
+    });
+  };
+
   render() {
     const columns = [
       {
@@ -80,7 +101,8 @@ class ListSectionContent extends Component {
         dataIndex: 'key',
         render: (text, record) => {
           if(record){
-              return <Button size="small" style={{fontSize:"10px"}} >학습설정</Button>
+          return <><Button size="small" onClick={this.showModal} style={{fontSize:"10px"}} >학습설정</Button>
+              <StudySettingModal showModal={this.showModal} handleOk={this.handleOk} info={record} isModalVisible={this.state.visible} handleCancel={this.handleCancel}/></>
           } 
         }
       },
