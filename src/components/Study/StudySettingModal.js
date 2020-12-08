@@ -34,7 +34,102 @@ class StudySettingModal extends Component {
         range: '${label} must be between ${min} and ${max}',
       },
     };
-
+    console.log('hello there?:', this.props.studySetting)
+    if(this.props.studySetting){
+      var setting = this.props.studySetting
+      var exp_setting_data = setting.exp_setting
+      var difficulty_setting_data = setting.difficulty_setting
+      var lev_setting_data = setting.lev_setting
+      var initialValues = {
+        book_id:this.props.info.book_id,
+        exp_setting: {
+            one_time: exp_setting_data.one_time,
+            two_times:exp_setting_data.two_times,
+            three_times:exp_setting_data.three_times,
+            four_times:exp_setting_data.four_times,
+            five_times:exp_setting_data.five_times,
+        },
+        difficulty_setting: {
+          lev_1: {
+            time_unit:difficulty_setting_data.lev_1.time_unit,
+            nick:difficulty_setting_data.lev_1.nick,
+            hot_key:difficulty_setting_data.lev_1.hot_key,
+            interval:difficulty_setting_data.lev_1.interval,
+            on_off:difficulty_setting_data.lev_1.on_off,
+          },
+          lev_2: {
+            time_unit:difficulty_setting_data.lev_2.time_unit,
+            nick:difficulty_setting_data.lev_2.nick,
+            hot_key:difficulty_setting_data.lev_2.hot_key,
+            interval:difficulty_setting_data.lev_2.interval,
+            on_off:difficulty_setting_data.lev_2.on_off,
+          },
+          lev_3: {
+            time_unit:difficulty_setting_data.lev_3.time_unit,
+            nick:difficulty_setting_data.lev_3.nick,
+            hot_key:difficulty_setting_data.lev_3.hot_key,
+            interval:difficulty_setting_data.lev_3.interval,
+            on_off:difficulty_setting_data.lev_3.on_off,
+          },
+          lev_4: {
+            time_unit:difficulty_setting_data.lev_4.time_unit,
+            nick:difficulty_setting_data.lev_4.nick,
+            hot_key:difficulty_setting_data.lev_4.hot_key,
+            interval:difficulty_setting_data.lev_4.interval,
+            on_off:difficulty_setting_data.lev_4.on_off,
+          },
+          lev_5: {
+            nick:difficulty_setting_data.lev_5.nick,
+            hot_key:difficulty_setting_data.lev_5.hot_key,
+          }
+        },
+        lev_setting: {
+          lev_1: {
+            time_unit:lev_setting_data.lev_1.time_unit,
+            interval:lev_setting_data.lev_1.interval,
+          },
+          lev_2: {
+            time_unit:lev_setting_data.lev_2.time_unit,
+            interval:lev_setting_data.lev_2.interval,
+          },
+          lev_3: {
+            time_unit:lev_setting_data.lev_3.time_unit,
+            interval:lev_setting_data.lev_3.interval,
+          },
+          lev_4: {
+            time_unit:lev_setting_data.lev_4.time_unit,
+            interval:lev_setting_data.lev_4.interval,
+          },
+          lev_5: {
+            time_unit:lev_setting_data.lev_5.time_unit,
+            interval:lev_setting_data.lev_5.interval,
+          },
+          lev_6: {
+            time_unit:lev_setting_data.lev_6.time_unit,
+            interval:lev_setting_data.lev_6.interval,
+          },
+          lev_7: {
+            time_unit:lev_setting_data.lev_7.time_unit,
+            interval:lev_setting_data.lev_7.interval,
+          },
+          lev_8: {
+            time_unit:lev_setting_data.lev_8.time_unit,
+            interval:lev_setting_data.lev_8.interval,
+          },
+          lev_9: {
+            time_unit:lev_setting_data.lev_9.time_unit,
+            interval:lev_setting_data.lev_9.interval,
+          },
+          lev_10: {
+            time_unit:lev_setting_data.lev_10.time_unit,
+            interval:lev_setting_data.lev_10.interval,
+          }
+        },
+      }
+    } else {
+      var initialValues = null
+    }
+    
     return (
       <>
       <Modal
@@ -47,91 +142,7 @@ class StudySettingModal extends Component {
       >
 
         <div className="study_setting_container" style={{width:"800px"}}>
-        <Form initialValues={{
-                book_id:this.props.info.book_id,
-                exp_setting: {
-                    one_time:2000,
-                    two_times:1000,
-                    three_times:500,
-                    four_times:0,
-                    five_times:-500,
-                },
-                difficulty_setting: {
-                  lev_1: {
-                    time_unit:"min",
-                    nick:"모르겠음",
-                    hot_key:"a",
-                    interval:3,
-                  },
-                  lev_2: {
-                    on_off:true,
-                    time_unit:"min",
-                    nick:"거의모르겠음",
-                    hot_key:"a",
-                    interval:5,
-                  },
-                  lev_3: {
-                    on_off:true,
-                    time_unit:"min",
-                    nick:"애매함",
-                    hot_key:"a",
-                    interval:7,
-                  },
-                  lev_4: {
-                    on_off:true,
-                    time_unit:"min",
-                    nick:"거의알겠음",
-                    hot_key:"a",
-                    interval:9,
-                  },
-                  lev_5: {
-                    nick:"알겠음",
-                    hot_key:"a",
-                  }
-                },
-                lev_setting: {
-                  lev_1: {
-                    time_unit:"day",
-                    interval:1,
-                  },
-                  lev_2: {
-                    time_unit:"day",
-                    interval:3,
-                  },
-                  lev_3: {
-                    time_unit:"day",
-                    interval:5,
-                  },
-                  lev_4: {
-                    time_unit:"day",
-                    interval:7,
-                  },
-                  lev_5: {
-                    time_unit:"day",
-                    interval:9,
-                  },
-                  lev_6: {
-                    time_unit:"day",
-                    interval:10,
-                  },
-                  lev_7: {
-                    time_unit:"day",
-                    interval:20,
-                  },
-                  lev_8: {
-                    time_unit:"day",
-                    interval:30,
-                  },
-                  lev_9: {
-                    time_unit:"day",
-                    interval:60,
-                  },
-                  lev_10: {
-                    time_unit:"day",
-                    interval:100,
-                  }
-                },
-              }} 
+        <Form initialValues={initialValues} 
               name="nest-messages" 
               onFinish={this.props.onFinish} 
               validateMessages={validateMessages}>

@@ -8,7 +8,8 @@ class ListSectionContent extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      visible:false
+      visible:false,
+      study_configuration:[]
     };
   }
 
@@ -42,7 +43,10 @@ class ListSectionContent extends Component {
     axios.post('api/studysetup/get-study-configuration',{
       book_id: value
     }).then(res => {
-      console.log(res.data)
+      console.log(res.data.study_configuration)
+      this.setState({
+        study_configuration:res.data.study_configuration
+      })
       this.showModal()
     })
   }
@@ -119,7 +123,7 @@ class ListSectionContent extends Component {
         render: (text, record) => {
           if(record){
           return <><Button size="small" onClick={()=>this.getStudySetting(record.book_id)}   style={{fontSize:"10px"}} >학습설정</Button>
-              <StudySettingModal showModal={this.showModal} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible} handleCancel={this.handleCancel}/></>
+              <StudySettingModal showModal={this.showModal} studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible} handleCancel={this.handleCancel}/></>
           } 
         }
       },
@@ -157,6 +161,7 @@ class ListSectionContent extends Component {
 
 
     if(this.props.category){
+      console.log("here?")
       var plz = []
       var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
 
@@ -174,6 +179,7 @@ class ListSectionContent extends Component {
         reorder: '위/아래',
         hide: book.hide_or_show,
       }))
+      console.log(data)
       
     }
     
