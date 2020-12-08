@@ -9,6 +9,7 @@ class ListSectionContent extends Component {
     super(props);
     this.state = { 
       visible:false,
+      
       study_configuration:[]
     };
   }

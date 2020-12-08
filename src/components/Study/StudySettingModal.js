@@ -140,8 +140,7 @@ class StudySettingModal extends Component {
       <Modal
         title={title}
         width={800}
-        visible={turn_on}
-        // visible={this.props.isModalVisible}
+        visible={this.props.isModalVisible}
         onOk={this.props.handleOk}
         onCancel={this.props.handleCancel}
         footer={null}
