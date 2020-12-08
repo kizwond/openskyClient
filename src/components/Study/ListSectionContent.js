@@ -9,15 +9,15 @@ class ListSectionContent extends Component {
     super(props);
     this.state = { 
       visible:false,
-      
+      visible_array:[{book_id:'', visible:false}],
       study_configuration:[]
     };
   }
 
   showModal = () => {
-    this.setState({
-      visible:true
-    });
+    this.setState(prevState=>({
+      visible_array:{...prevState.visible_array, visible:true}
+    }));
   };
 
   handleOk = () => {
@@ -27,9 +27,9 @@ class ListSectionContent extends Component {
   };
 
   handleCancel = () => {
-    this.setState({
-      visible:false
-    });
+    this.setState(prevState=>({
+      visible_array:{...prevState.visible_array, visible:false}
+    }));
   };
   onFinish = values => {
     console.log(values);
@@ -48,10 +48,15 @@ class ListSectionContent extends Component {
       this.setState({
         study_configuration:res.data.study_configuration
       })
+      this.setState({
+        visible_array:{book_id:res.data.study_configuration.book_id, visible:true}
+      })
       this.showModal()
     })
   }
+  
   render() {
+    console.log('state : ',this.state.visible_array)
     console.log('really?', this.props.category)
     const columns = [
       {
@@ -125,7 +130,7 @@ class ListSectionContent extends Component {
         render: (text, record) => {
           if(record){
           return <><Button size="small" onClick={()=>this.getStudySetting(record.book_id)}   style={{fontSize:"10px"}} >학습설정</Button>
-              <StudySettingModal showModal={this.showModal} studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible} handleCancel={this.handleCancel}/></>
+              <StudySettingModal showModal={this.showModal} studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible_array} handleCancel={this.handleCancel}/></>
           } 
         }
       },
