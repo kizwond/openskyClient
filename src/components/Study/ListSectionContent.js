@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Table, Button } from 'antd';
 import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
 import StudySettingModal from './StudySettingModal'
+import axios from 'axios'
 
 class ListSectionContent extends Component {
   constructor(props) {
@@ -28,7 +29,23 @@ class ListSectionContent extends Component {
       visible:false
     });
   };
-
+  onFinish = values => {
+    console.log(values);
+    axios.post('api/studysetup/set-study-configuration',{
+      settings: values
+    }).then(res => {
+      console.log(res.data)
+    })
+  };
+  getStudySetting = (value) =>{
+    console.log(value)
+    axios.post('api/studysetup/get-study-configuration',{
+      book_id: value
+    }).then(res => {
+      console.log(res.data)
+      this.showModal()
+    })
+  }
   render() {
     const columns = [
       {
@@ -101,8 +118,8 @@ class ListSectionContent extends Component {
         dataIndex: 'key',
         render: (text, record) => {
           if(record){
-          return <><Button size="small" onClick={this.showModal} style={{fontSize:"10px"}} >학습설정</Button>
-              <StudySettingModal showModal={this.showModal} handleOk={this.handleOk} info={record} isModalVisible={this.state.visible} handleCancel={this.handleCancel}/></>
+          return <><Button size="small" onClick={()=>this.getStudySetting(record.book_id)}   style={{fontSize:"10px"}} >학습설정</Button>
+              <StudySettingModal showModal={this.showModal} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible} handleCancel={this.handleCancel}/></>
           } 
         }
       },
@@ -145,6 +162,7 @@ class ListSectionContent extends Component {
 
       var data = plz.map(book =>({
         key: book._id,
+        book_id: book._id,
         category: book.category_id.name,
         book_title : book.title,
         progress:'00%',
