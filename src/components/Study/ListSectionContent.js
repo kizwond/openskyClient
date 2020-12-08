@@ -21,9 +21,9 @@ class ListSectionContent extends Component {
   };
 
   handleOk = () => {
-    this.setState({
-      visible:false
-    });
+    this.setState(prevState=>({
+      visible_array:{...prevState.visible_array, visible:false}
+    }));
   };
 
   handleCancel = () => {
@@ -34,7 +34,10 @@ class ListSectionContent extends Component {
   onFinish = values => {
     console.log(values);
     axios.post('api/studysetup/set-study-configuration',{
-      settings: values
+      book_id: values.book_id,
+      difficulty_setting:values.difficulty_setting,
+      exp_setting:values.exp_setting,
+      lev_setting:values.lev_setting,
     }).then(res => {
       console.log(res.data)
     })
@@ -130,7 +133,7 @@ class ListSectionContent extends Component {
         render: (text, record) => {
           if(record){
           return <><Button size="small" onClick={()=>this.getStudySetting(record.book_id)}   style={{fontSize:"10px"}} >학습설정</Button>
-              <StudySettingModal showModal={this.showModal} studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible_array} handleCancel={this.handleCancel}/></>
+              <StudySettingModal studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible_array} handleCancel={this.handleCancel}/></>
           } 
         }
       },
