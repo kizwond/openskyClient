@@ -132,13 +132,16 @@ class StudySettingModal extends Component {
       var initialValues = null
       var name = this.props.info.book_id
     }
-    
+    if(this.props.info.book_id === this.props.studySetting.book_id){
+      var turn_on = 'visible'
+    }
     return (
       <>
       <Modal
         title={title}
         width={800}
-        visible={this.props.isModalVisible}
+        visible={turn_on}
+        // visible={this.props.isModalVisible}
         onOk={this.props.handleOk}
         onCancel={this.props.handleCancel}
         footer={null}
