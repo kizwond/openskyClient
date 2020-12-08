@@ -51,6 +51,7 @@ class ListSectionContent extends Component {
     })
   }
   render() {
+    console.log('really?', this.props.category)
     const columns = [
       {
         title: '카테고리',

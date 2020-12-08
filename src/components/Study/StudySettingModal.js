@@ -35,7 +35,7 @@ class StudySettingModal extends Component {
       },
     };
     console.log('hello there?:', this.props.studySetting)
-    if(this.props.studySetting){
+    if(this.props.studySetting.book_id){
       var setting = this.props.studySetting
       var exp_setting_data = setting.exp_setting
       var difficulty_setting_data = setting.difficulty_setting
@@ -126,8 +126,11 @@ class StudySettingModal extends Component {
           }
         },
       }
+      var name = this.props.info.book_id
     } else {
+      console.log("initialvaue : null")
       var initialValues = null
+      var name = this.props.info.book_id
     }
     
     return (
@@ -143,7 +146,7 @@ class StudySettingModal extends Component {
 
         <div className="study_setting_container" style={{width:"800px"}}>
         <Form initialValues={initialValues} 
-              name="nest-messages" 
+              name={name} 
               onFinish={this.props.onFinish} 
               validateMessages={validateMessages}>
             <ul>
