@@ -5,6 +5,9 @@ import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import ProgressBar from "./progressBar";
 import axios from 'axios'
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
+import Timer from './Timer'
+import TimerTotal from './TimerTotal'
+
 const session_id = sessionStorage.getItem('session_id')
 
 
@@ -12,9 +15,59 @@ class FlipMode extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      contents:[]
+      contents:[],
+      time: 0,
+      isOn: false,
+      start: 0,
+      time_total:0,
+      isOn_total:false,
+      start_total:0
      };
   }
+
+  startTimer = () => {
+    this.setState({
+      isOn: true,
+      time: this.state.time,
+      start: Date.now() - this.state.time
+    })
+    this.timer = setInterval(() => this.setState({
+      time: Date.now() - this.state.start
+    }), 1);
+  }
+
+
+  startTimerTotal = () => {
+    this.setState({
+      isOn_total: true,
+      time_total: this.state.time_total,
+      start_total: Date.now() - this.state.time_total
+    })
+    this.timer_total = setInterval(() => this.setState({
+      time_total: Date.now() - this.state.start_total
+    }), 1);
+  }
+  stopTimerTotal = () => {
+    this.setState({isOn: false})
+    clearInterval(this.timer)
+    this.setState({isOn_total: false})
+    clearInterval(this.timer_total)  
+  }
+
+  startTimerResume = () => {
+    this.startTimer()
+    this.startTimerTotal()
+  }
+
+  resetTimer = () => {
+    console.log('----------reset timer-------------')
+    this.setState({time: 0, isOn:true, start:0})
+    clearInterval(this.timer)
+    this.startTimer()
+    console.log(this.state.time)
+    console.log('----------reset timer-------------')
+  }
+
   // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
   componentDidMount(){
     const current_seq = sessionStorage.getItem("current_seq")
@@ -31,18 +84,22 @@ class FlipMode extends Component {
     })
   }
 
-  onClickNotKnow = (id)=>{
+  onClickNotKnow = (id, book_id)=>{
+    this.resetTimer()
+    
     const current_seq = sessionStorage.getItem("current_seq")
     const next_seq = Number(current_seq)+1
     sessionStorage.setItem('current_seq',next_seq);
     const req_seq = Number(sessionStorage.getItem("current_seq"))
-
-    //모르겠음 클릭
+    let now = new Date();
+    // 모르겠음 클릭
     axios.post('api/study-flip/click-difficulty',{
       session_id: session_id,
       difficulty: 'lev_1',
       current_seq:Number(current_seq),
-      card_id:id
+      study_hour:this.state.time,
+      card_id:id,
+      book_id:book_id
     }).then(res => {
         console.log('데이타:', res.data)
     })
@@ -74,7 +131,7 @@ class FlipMode extends Component {
     
     console.log('here : ',this.state.contents)
     
-
+    
   }
 
   render() {
@@ -106,6 +163,7 @@ class FlipMode extends Component {
       borderRadius:"10px",
       backgroundColor:"white",
       padding:5,
+      paddingBottom:0,
       fontSize:"12px"
     }
     const style_study_layout_bottom ={
@@ -131,16 +189,13 @@ class FlipMode extends Component {
       </Menu>
     );
     if(this.state.contents.length > 0){
-      console.log("data stored : ",this.state.contents)
       var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => item)
       var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => item)
       var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => item)
       var id_of_content = this.state.contents[0]._id._id
-    } else {
-      console.log('dont have any contents')
-      
-    }
-    
+      var book_id = this.state.contents[0].book_id
+    } 
+
     
     return (
       <div style={style_study_layout_container} className="study_layout_container">
@@ -156,9 +211,18 @@ class FlipMode extends Component {
             <li><Button style={{height:"45px", borderRadius:"10px"}}>학습카드추가</Button></li>
           </ul>
           <div style={style_study_layout_top_right} className="study_layout_top_right">
-            <div>현재카드</div>
-            <div>총경과시간</div>
-            <div><Button type="primary" danger style={{ borderRadius:"10px"}}>일시정지</Button></div>
+            <Timer 
+                  startTimer={this.startTimer} 
+                  startTimerTotal={this.startTimerTotal} 
+                  stopTimerTotal={this.stopTimerTotal}
+                  startTimerResume={this.startTimerResume}
+                  time={this.state.time}
+                  isOn={this.state.isOn}
+                  start={this.state.start}
+                  time_total={this.state.time_total}
+                  isOn_total={this.state.isOn_total}
+                  start_total={this.state.start_total}
+            />
           </div>
         </div>
         <div style={style_study_layout_bottom} className="study_layout_middle">
@@ -166,7 +230,7 @@ class FlipMode extends Component {
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
             <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}><FroalaEditorView model={first_face_data}/><FroalaEditorView model={second_face_data}/><FroalaEditorView model={annotation_data}/></div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickNotKnow(id_of_content)}>모르겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickNotKnow(id_of_content,book_id)}>모르겠음</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의모름</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>애매함</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
