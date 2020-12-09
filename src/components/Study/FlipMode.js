@@ -21,6 +21,7 @@ class FlipMode extends Component {
       time_total:0,
       isOn_total:false,
       start_total:0,
+      page_toggle:false
      };
   }
 
@@ -134,7 +135,13 @@ class FlipMode extends Component {
     console.log('here : ',this.state.contents)
     
   }
-
+  onClickPage = () => {
+    console.log('page clicked to flip')
+      this.setState(prevState => ({
+        page_toggle: !prevState.page_toggle
+      })
+    )
+  }
   render() {
     const style_study_layout_container ={
       display:"flex",
@@ -229,15 +236,13 @@ class FlipMode extends Component {
         <div style={style_study_layout_bottom} className="study_layout_middle">
           <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px", textAlign:"right"}}>플래그 영역</div>
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
-            <div style={{ height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0", display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}}>
+            <div onClick={this.onClickPage} style={{ height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0", display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}}>
               <div style={{position:"relative", height:"50%", width:"100%", border:"1px dashed lightgrey", borderRadius:"5px"}}>
                 <div style={{position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>{first_face_data}</div>
               </div>
               <div style={{position:"relative", height:"50%", width:"100%", border:"1px dashed lightgrey", borderRadius:"5px"}}>
-                <div style={{position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>{second_face_data}</div>
+                <div style={{position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>{this.state.page_toggle? second_face_data : null}</div>
               </div>
-              
-            
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_1", id_of_content,book_id)}>모르겠음</Button>
