@@ -131,7 +131,9 @@ class FlipMode extends Component {
       this.stopTimerTotal()
       this.resetTimer()
     })
-    
+    this.setState({
+      page_toggle:false
+    })
     console.log('here : ',this.state.contents)
     
   }
