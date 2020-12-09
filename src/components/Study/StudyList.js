@@ -47,6 +47,7 @@ class WriteMain extends Component {
       book_ids: this.state.selected_book
     }).then(res => {
       sessionStorage.setItem('session_id',res.data.session_id);
+      sessionStorage.setItem('current_seq','0');
       window.location.href ="/choose-index"
     })
     

@@ -5,6 +5,8 @@ import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import ProgressBar from "./progressBar";
 import axios from 'axios'
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
+const session_id = sessionStorage.getItem('session_id')
+
 
 class FlipMode extends Component {
   constructor(props) {
@@ -15,11 +17,12 @@ class FlipMode extends Component {
   }
   // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
   componentDidMount(){
-    const session_id = sessionStorage.getItem('session_id')
+    const current_seq = sessionStorage.getItem("current_seq")
+    // const session_id = sessionStorage.getItem('session_id')
     axios.post('api/studysetup/get-studying-cards',{
       session_id: session_id,
-      current_seq:0,
-      num_request_cards:2
+      current_seq:Number(current_seq),
+      num_request_cards:4
     }).then(res => {
       console.log('데이타:', res.data)
       this.setState({
@@ -29,12 +32,49 @@ class FlipMode extends Component {
   }
 
   onClickNotKnow = (id)=>{
+    const current_seq = sessionStorage.getItem("current_seq")
+    const next_seq = Number(current_seq)+1
+    sessionStorage.setItem('current_seq',next_seq);
+    const req_seq = Number(sessionStorage.getItem("current_seq"))
+
+    //모르겠음 클릭
+    axios.post('api/study-flip/click-difficulty',{
+      session_id: session_id,
+      difficulty: 'lev_1',
+      current_seq:Number(current_seq),
+      card_id:id
+    }).then(res => {
+        console.log('데이타:', res.data)
+    })
+
+
+    if(this.state.contents.length === 1){
+      console.log('below',this.state.contents)
+      axios.post('api/studysetup/get-studying-cards',{
+        session_id: session_id,
+        current_seq:req_seq,
+        num_request_cards:4
+      }).then(res => {
+          console.log('데이타:', res.data)
+          const contents = this.state.contents.concat(res.data.cards_to_send.cardlist_working)
+          this.setState({
+            contents:contents
+          })
+      })
+    } else if(this.state.contents.length === 0){
+      alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
+      window.location.href="/study"
+    }
     console.log("don't know")
     console.log(id)
     const list = this.state.contents.filter(item => item._id._id !== id);
     this.setState({
       contents:list
     })
+    
+    console.log('here : ',this.state.contents)
+    
+
   }
 
   render() {
@@ -96,6 +136,9 @@ class FlipMode extends Component {
       var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => item)
       var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => item)
       var id_of_content = this.state.contents[0]._id._id
+    } else {
+      console.log('dont have any contents')
+      
     }
     
     
