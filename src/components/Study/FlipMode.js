@@ -17,15 +17,15 @@ class FlipMode extends Component {
     this.state = { 
       contents:[],
       time: 0,
-      isOn: false,
       start: 0,
       time_total:0,
       isOn_total:false,
-      start_total:0
+      start_total:0,
      };
   }
 
   startTimer = () => {
+    console.log('starttimer')
     this.setState({
       isOn: true,
       time: this.state.time,
@@ -48,10 +48,14 @@ class FlipMode extends Component {
     }), 1);
   }
   stopTimerTotal = () => {
-    this.setState({isOn: false})
-    clearInterval(this.timer)
-    this.setState({isOn_total: false})
+    console.log('stop timer')
+    console.log(this)
+    this.setState({isOn_total: false}, function(){
+      console.log(this)
+      
+    })
     clearInterval(this.timer_total)  
+    clearInterval(this.timer)
   }
 
   startTimerResume = () => {
@@ -60,12 +64,10 @@ class FlipMode extends Component {
   }
 
   resetTimer = () => {
-    console.log('----------reset timer-------------')
-    this.setState({time: 0, isOn:true, start:0})
-    clearInterval(this.timer)
-    this.startTimer()
-    console.log(this.state.time)
-    console.log('----------reset timer-------------')
+    this.setState({time: 0, start:0}, function(){
+      this.startTimer()
+      this.startTimerTotal()
+    })
   }
 
   // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
@@ -85,14 +87,11 @@ class FlipMode extends Component {
   }
 
   onClickDifficulty = (lev, id, book_id)=>{
-    this.resetTimer()
-    
     const current_seq = sessionStorage.getItem("current_seq")
     const next_seq = Number(current_seq)+1
     sessionStorage.setItem('current_seq',next_seq);
     const req_seq = Number(sessionStorage.getItem("current_seq"))
-    let now = new Date();
-    // 모르겠음 클릭
+
     axios.post('api/study-flip/click-difficulty',{
       session_id: session_id,
       difficulty: lev,
@@ -127,10 +126,12 @@ class FlipMode extends Component {
     const list = this.state.contents.filter(item => item._id._id !== id);
     this.setState({
       contents:list
+    }, function(){
+      this.stopTimerTotal()
+      this.resetTimer()
     })
     
     console.log('here : ',this.state.contents)
-    
     
   }
 
@@ -189,14 +190,14 @@ class FlipMode extends Component {
       </Menu>
     );
     if(this.state.contents.length > 0){
-      var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => item)
-      var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => item)
-      var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => item)
+      var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => <FroalaEditorView model={item}/>)
+      var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => <FroalaEditorView model={item}/>)
+      var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
       var id_of_content = this.state.contents[0]._id._id
       var book_id = this.state.contents[0].book_id
+      
     } 
 
-    
     return (
       <div style={style_study_layout_container} className="study_layout_container">
         <div style={style_study_layout_top} className="study_layout_top">
@@ -228,7 +229,16 @@ class FlipMode extends Component {
         <div style={style_study_layout_bottom} className="study_layout_middle">
           <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px", textAlign:"right"}}>플래그 영역</div>
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
-            <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}><FroalaEditorView model={first_face_data}/><FroalaEditorView model={second_face_data}/><FroalaEditorView model={annotation_data}/></div>
+            <div style={{ height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0", display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}}>
+              <div style={{position:"relative", height:"50%", width:"100%", border:"1px dashed lightgrey", borderRadius:"5px"}}>
+                <div style={{position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>{first_face_data}</div>
+              </div>
+              <div style={{position:"relative", height:"50%", width:"100%", border:"1px dashed lightgrey", borderRadius:"5px"}}>
+                <div style={{position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>{second_face_data}</div>
+              </div>
+              
+            
+            </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_1", id_of_content,book_id)}>모르겠음</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_2", id_of_content,book_id)}>거의모름</Button>
