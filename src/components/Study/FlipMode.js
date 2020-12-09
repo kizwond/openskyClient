@@ -84,7 +84,7 @@ class FlipMode extends Component {
     })
   }
 
-  onClickNotKnow = (id, book_id)=>{
+  onClickDifficulty = (lev, id, book_id)=>{
     this.resetTimer()
     
     const current_seq = sessionStorage.getItem("current_seq")
@@ -95,7 +95,7 @@ class FlipMode extends Component {
     // 모르겠음 클릭
     axios.post('api/study-flip/click-difficulty',{
       session_id: session_id,
-      difficulty: 'lev_1',
+      difficulty: lev,
       current_seq:Number(current_seq),
       study_hour:this.state.time,
       card_id:id,
@@ -230,11 +230,11 @@ class FlipMode extends Component {
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
             <div style={{height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0"}}><FroalaEditorView model={first_face_data}/><FroalaEditorView model={second_face_data}/><FroalaEditorView model={annotation_data}/></div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickNotKnow(id_of_content,book_id)}>모르겠음</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의모름</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>애매함</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>거의알겠음</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}}>알겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_1", id_of_content,book_id)}>모르겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_2", id_of_content,book_id)}>거의모름</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_3", id_of_content,book_id)}>애매함</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_4", id_of_content,book_id)}>거의알겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>알겠음</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></a>
