@@ -116,6 +116,7 @@ class WriteMain extends Component {
       seq_in_like : value.seq_in_like,
       category_id : value.category_id,
     }).then(res => {
+      console.log(res.data)
       this.setState({
         category:res.data.categorybooklist,
         likeTitle:res.data.likebooklist

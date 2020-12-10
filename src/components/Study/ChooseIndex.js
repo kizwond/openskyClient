@@ -54,7 +54,7 @@ class ChooseIndex extends Component {
     }).then(res => {
       console.log('데이타:', res.data)
       this.setState({
-        books:res.data.bookNindex_list
+        books:res.data.booksnindexes
       })
     })
   }
@@ -202,7 +202,7 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res)
       this.setState( {
-        books:res.data.bookNindex_list
+        books:res.data.booksnindexes
         }
       )
     })
@@ -217,7 +217,7 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res)
       this.setState( {
-        books:res.data.bookNindex_list
+        books:res.data.booksnindexes
         }
       )
     })
