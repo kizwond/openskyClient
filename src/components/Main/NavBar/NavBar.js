@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Menu, Row, Col, Modal, Button  } from 'antd';
 import './Navbar.css';
 import { NavLink} from 'react-router-dom';
-import { HomeOutlined, ReadOutlined, FormOutlined, ShopOutlined,ShoppingCartOutlined,SolutionOutlined,UserOutlined,UserAddOutlined } from '@ant-design/icons';
+import { HomeOutlined, ReadOutlined, FormOutlined, ShopOutlined,ShoppingCartOutlined,SolutionOutlined,UserOutlined,UserAddOutlined,ApiOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import Login from '../../Account/Login'
 
@@ -88,6 +88,9 @@ class NavBar extends React.Component {
               </Menu.Item>
               <Menu.Item key="write" icon={<FormOutlined />}>
                 <NavLink to="/write" exact>만들기</NavLink>
+              </Menu.Item>
+              <Menu.Item key="mentoring" icon={<ApiOutlined />}>
+                <NavLink to="/mentoring" exact>멘토링</NavLink>
               </Menu.Item>
               <Menu.Item key="book_store" icon={<ShopOutlined />}>
                 <NavLink to="/store" exact>서점</NavLink>
