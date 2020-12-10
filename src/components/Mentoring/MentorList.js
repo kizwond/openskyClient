@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table,Avatar,Progress } from 'antd';
 import { ApiOutlined,UserOutlined} from '@ant-design/icons';
-import Chart from './Chart'
 
 const columns = [
   {
@@ -33,7 +32,6 @@ const columns = [
     title: '최근100회 학습시간 그래프',
     dataIndex: 'graph',
     align: 'right',
-    // render: (text) => <Chart/>,
   },
   {
     title: '일일평균 학습횟수',
@@ -105,7 +103,6 @@ const MentorList = () => {
 
   return (
     <div style={{maxHeight:"150px", overflow:"auto"}}>
-      // <div>
       <Table
         className='study_table_list'
         columns={columns}
