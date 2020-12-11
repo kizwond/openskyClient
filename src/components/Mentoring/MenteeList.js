@@ -1,218 +1,115 @@
-import React, {Component} from 'react';
-import { Table, Button } from 'antd';
-import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
-import StudySettingModal from './StudySettingModal'
-import axios from 'axios'
+import React from 'react';
+import { Table, Badge, Menu, Dropdown, Space,Avatar,Progress, Button } from 'antd';
+import { DownOutlined,UserOutlined,ApiOutlined } from '@ant-design/icons';
+import { Chart } from 'react-charts'
 
-class MenteeList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      visible:false,
-      visible_array:[{book_id:'', visible:false}],
-      study_configuration:[]
-    };
-  }
+function MyChart() {
+  const data = React.useMemo(
+    () => [
+      {
+        label: 'Series 1',
+        
+        data: [{ x: 1, y: 10 }, { x: 2, y: 30 }, { x: 3, y: 20 },{ x: 4, y: 10 }, { x: 5, y: 70 }, { x: 6, y: 40 },{ x: 7, y: 90 }, { x: 8, y: 60 }, { x: 9, y: 20 },{ x: 10, y: 60 }, { x: 11, y: 40 }, { x: 12, y: 90 },{ x: 13, y: 10 }, { x: 14, y: 60 }, { x: 15, y: 70 },{ x: 16, y: 10 }, { x: 17, y: 60 }, { x: 18, y: 70 },{ x: 19, y: 10 }, { x: 20, y: 60 }, { x: 21, y: 70 }]
+      }
+    ],
+    []
+  )
 
-  showModal = () => {
-    this.setState(prevState=>({
-      visible_array:{...prevState.visible_array, visible:true}
-    }));
-  };
+  const axes = React.useMemo(
+    () => [
+      { primary: true, type: 'linear', position: 'bottom', showTicks:false },
+      { type: 'linear', position: 'left', showTicks:false, outerPadding:0,tickPadding:0,innerPadding:0 }
+    ],
+    []
+  )
 
-  handleOk = () => {
-    this.setState(prevState=>({
-      visible_array:{...prevState.visible_array, visible:false}
-    }));
-  };
+  return (
+    <div
+      style={{
+        width: '150px',
+        height: '30px'
+      }}
+    >
+      <Chart data={data} axes={axes}  />
+    </div>
+  )
+}
 
-  handleCancel = () => {
-    this.setState(prevState=>({
-      visible_array:{...prevState.visible_array, visible:false}
-    }));
-  };
-  onFinish = values => {
-    console.log(values);
-    axios.post('api/studysetup/set-study-configuration',{
-      book_id: values.book_id,
-      difficulty_setting:values.difficulty_setting,
-      exp_setting:values.exp_setting,
-      lev_setting:values.lev_setting,
-    }).then(res => {
-      console.log(res.data)
-    })
-  };
-  getStudySetting = (value) =>{
-    console.log(value)
-    axios.post('api/studysetup/get-study-configuration',{
-      book_id: value
-    }).then(res => {
-      console.log(res.data.study_configuration)
-      this.setState({
-        study_configuration:res.data.study_configuration
-      })
-      this.setState({
-        visible_array:{book_id:res.data.study_configuration.book_id, visible:true}
-      })
-      this.showModal()
-    })
-  }
-  
-  render() {
-    console.log('state : ',this.state.visible_array)
-    console.log('really?', this.props.category)
+const menu = (
+  <Menu>
+    <Menu.Item>Action 1</Menu.Item>
+    <Menu.Item>Action 2</Menu.Item>
+  </Menu>
+);
+
+function MenteeList() {
+  const expandedRowRender = () => {
     const columns = [
-      {
-        title: '카테고리',
-        dataIndex: 'category',
-      },
-      {
-        title: '책이름',
-        dataIndex: 'book_title',
-      },
-      {
-        title: '학습완료율',
-        dataIndex: 'progress',
-      },
-      {
-        title: '카드총합(미학습/복습/완료/보류/졸업)',
-        dataIndex: 'remain_new',
-      },
-      {
-        title: '일일학습목표',
-        dataIndex: 'today_goal',
-      },
-      {
-        title: '최근학습일',
-        dataIndex: 'recent_study',
-      },
-      {
-        title: '일일 학습목표',
-        dataIndex: 'today_goal',
-      },
-      {
-        title: '즐겨찾기',
-        dataIndex: 'like',
-        render: (text, record) => {
-          if(record.like === true){
-              return <StarTwoTone onClick={()=>this.props.onClickLike({value:'true',bookId:this.props.bookInfo._id})} twoToneColor="#52c41a" style={{fontSize:'14px'}}/>
-          } else {
-            return <StarOutlined onClick={()=>this.props.onClickLike({value:'false',bookId:this.props.bookInfo._id})} style={{fontSize:'14px'}}/>
-          }
-        }
-      },
-      {
-        title: '순서이동',
-        dataIndex: 'reorder',
-        render: () => <><ArrowUpOutlined onClick={()=>this.props.listOrderHandler({action: 'up', from:'like',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_like:this.props.bookInfo.seq_in_like})} style={{fontSize:'14px'}}/>
-        <ArrowDownOutlined onClick={()=>this.props.listOrderHandler({action: 'down', from:'like',category_id: this.props.bookInfo.category_id._id, bookId: this.props.bookInfo._id, seq_in_like:this.props.bookInfo.seq_in_like})} style={{fontSize:'14px'}}/></>
-      },
-      {
-        title: '숨긴책보기',
-        dataIndex: 'hide',
-        render: (text, record) => {
-          if(record.hide === true){
-              return <EyeOutlined onClick={()=>this.props.onClickHideOrShow({value:false,bookId:this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category,seq_in_like:this.props.bookInfo.seq_in_like, category_id:this.props.bookInfo.category_id._id})} style={{fontSize:'14px'}}/>
-          } else {
-            return <EyeInvisibleOutlined onClick={()=>this.props.onClickHideOrShow({value:true,bookId:this.props.bookInfo._id, seq_in_category:this.props.bookInfo.seq_in_category,seq_in_like:this.props.bookInfo.seq_in_like, category_id:this.props.bookInfo.category_id._id})} style={{fontSize:'14px'}}/>
-          }
-        }
-      },
-      {
-        title: '학습정보 상세보기',
-        dataIndex: 'key',
-        render: (text, record) => {
-          if(record){
-              return <Button size="small" style={{fontSize:"10px"}} >상세보기</Button>
-          } 
-        }
-      },
-      {
-        title: '학습설정',
-        dataIndex: 'key',
-        render: (text, record) => {
-          if(record){
-          return <><Button size="small" onClick={()=>this.getStudySetting(record.book_id)}   style={{fontSize:"10px"}} >학습설정</Button>
-              <StudySettingModal studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible_array} handleCancel={this.handleCancel}/></>
-          } 
-        }
-      },
-      {
-        title: '임시책 생성',
-        dataIndex: 'key',
-        render: (text, record) => {
-          if(record){
-              return <CopyOutlined />
-          } 
-        }
-      },
-      {
-        title: '책삭제',
-        dataIndex: 'key',
-        render: (text, record) => {
-          if(record){
-              return <DeleteOutlined />
-          } 
-        }
-      },
+      {  render: () => <div style={{width:"68px"}}></div>},
+      { dataIndex: 'name',width:"100px", render: (text) => <a><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</a>, },
+      { dataIndex: 'progress',width:"85px",render: (text) => <Progress size="large" style={{fontSize:"10px"}} percent={text} showInfo={false}/>, },
+      { dataIndex: 'average_lev', width:'85px',align: 'right', },
+      { dataIndex: 'recent_study', align: 'right', },
+      { dataIndex: 'graph',align: 'right', render: (text) => <div style={{width:"150px", float:"right",marginBottom:"-20px"}}><MyChart /></div>, },
+      { dataIndex: 'average_daily', align: 'right', },
+      { dataIndex: 'completed', align: 'right', },
+      { dataIndex: 'card_total', align: 'right', },
+      { dataIndex: 'card_added', align: 'right', },
+      { dataIndex: 'detail', align: 'right', render: (text) => <Button size="small" style={{fontSize:'11px'}}>상세보기</Button>  },
     ];
 
-
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        this.props.selectBook(selectedRowKeys)
-      },
-      getCheckboxProps: (record) => ({
-        disabled: record.name === 'Disabled User',
-        name: record.name,
-      }),
-    };
-
-
-    if(this.props.category){
-      console.log("here?")
-      var plz = []
-      var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
-
-      var data = plz.map(book =>({
-        key: book._id,
-        book_id: book._id,
-        category: book.category_id.name,
-        book_title : book.title,
-        progress:'00%',
-        remain_new:'00장',
-        today_review:'00장',
-        today_goal:'00장',
-        recent_study:'00월/00일/0000년',
-        like:book.like,
-        reorder: '위/아래',
-        hide: book.hide_or_show,
-      }))
-      console.log(data)
-      
+    const data = [];
+    for (let i = 0; i < 3; ++i) {
+      data.push({
+        key: i,
+        date: '2014-12-24 23:12:00',
+        name: '윤아무개',
+        progress:'30',
+        average_lev:'00 Lev.',
+        graph:'그래프',
+        recent_study:'2020-10-30',
+        completed:'00장',
+        average_daily:'00회',
+        card_total: '480(00/00/00/00)',
+        card_added:'50장'
+      });
     }
-    
-    if(this.state.selected_book) {
-      console.log('state value:',this.state.selected_book)
-    }
+    return <Table columns={columns} dataSource={data} pagination={false} />;
+  };
 
-    return (
-      <div>
-        <Table
-          className='study_table_list'
-          rowSelection={{
-            type: 'checkbox',
-            ...rowSelection,
-          }}
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          size='small'
-        />
-      </div>
-    );
+  const columns = [
+    { title: '책', width:'150px', dataIndex: 'name'},
+    { title: '맨티', width:'100px', dataIndex: 'mentee_total'},
+    { title: '학습완료율', width:'85px',dataIndex: 'progress',render: (text) => <Progress size="large" style={{fontSize:"10px"}} percent={text} showInfo={false}/>,},
+    { title: '평균레벨', align: 'right'},
+    { title: '최근학습일', align: 'right'},
+    { title: '최근100회 학습시간 그래프', align: 'right'},
+    { title: '일일평균 학습횟수', align: 'right'},
+    { title: '일일평균 완료카드수', align: 'right'},
+    { title: '카드총합(미학습/복습/완료/보류/졸업)', align: 'right'},
+    { title: '추가한카드수', align: 'right'},
+    { title: '학습정보 상세보기', align: 'right', render: (text) => <Button size="small" style={{fontSize:'11px'}}>상세보기</Button>},
+  ];
+
+  const data = [];
+  for (let i = 0; i < 3; ++i) {
+    data.push({
+      key: i,
+      name: '수능영어독해',
+      mentee_total:'10명',
+      progress:'30',
+    });
   }
+
+  return (
+    <Table
+      className='study_table_list'
+      columns={columns}
+      expandable={{ expandedRowRender }}
+      dataSource={data}
+      size="small"
+    />
+  );
 }
 
 export default MenteeList;

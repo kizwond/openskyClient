@@ -1,16 +1,50 @@
 import React from 'react';
 import { Table,Avatar,Progress } from 'antd';
 import { ApiOutlined,UserOutlined} from '@ant-design/icons';
+import { Chart } from 'react-charts'
+
+function MyChart() {
+  const data = React.useMemo(
+    () => [
+      {
+        label: 'Series 1',
+        
+        data: [{ x: 1, y: 10 }, { x: 2, y: 30 }, { x: 3, y: 20 },{ x: 4, y: 10 }, { x: 5, y: 70 }, { x: 6, y: 40 },{ x: 7, y: 90 }, { x: 8, y: 60 }, { x: 9, y: 20 },{ x: 10, y: 60 }, { x: 11, y: 40 }, { x: 12, y: 90 },{ x: 13, y: 10 }, { x: 14, y: 60 }, { x: 15, y: 70 },{ x: 16, y: 10 }, { x: 17, y: 60 }, { x: 18, y: 70 },{ x: 19, y: 10 }, { x: 20, y: 60 }, { x: 21, y: 70 }]
+      }
+    ],
+    []
+  )
+
+  const axes = React.useMemo(
+    () => [
+      { primary: true, type: 'linear', position: 'bottom', showTicks:false },
+      { type: 'linear', position: 'left', showTicks:false, outerPadding:0,tickPadding:0,innerPadding:0 }
+    ],
+    []
+  )
+
+  return (
+    <div
+      style={{
+        width: '150px',
+        height: '30px'
+      }}
+    >
+      <Chart data={data} axes={axes}  />
+    </div>
+  )
+}
 
 const columns = [
   {
     title: '책',
+    width:'150px',
     dataIndex: 'category',
   },
   {
     title: '멘토',
     dataIndex: 'book_title',
-    width:'150px',
+    width:'100px',
     render: (text) => <a><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</a>,
   },
   {
@@ -32,6 +66,7 @@ const columns = [
     title: '최근100회 학습시간 그래프',
     dataIndex: 'graph',
     align: 'right',
+    render: (text) => <div style={{width:"150px", float:"right",marginBottom:"-20px"}}><MyChart /></div>,
   },
   {
     title: '일일평균 학습횟수',
@@ -53,9 +88,9 @@ const columns = [
     dataIndex: 'hide',
     align: 'right',
     render: () => <><ApiOutlined style={{fontSize:'14px'}}/></>
-    
   },
 ];
+
 const data = [
   {
     key: '1',
@@ -68,7 +103,6 @@ const data = [
     completed:'00장',
     average_daily:'00회',
     card_total: '480(00/00/00/00)',
-    hide: '숨기기눈깔',
   },
   {
     key: '2',
@@ -81,7 +115,6 @@ const data = [
     completed:'00장',
     average_daily:'00회',
     card_total: '480(00/00/00/00)',
-    hide: '숨기기눈깔',
   },
   {
     key: '3',
@@ -94,7 +127,6 @@ const data = [
     completed:'00장',
     average_daily:'00회',
     card_total: '480(00/00/00/00)',
-    hide: '숨기기눈깔',
   },
   
 ]; 
@@ -102,7 +134,8 @@ const data = [
 const MentorList = () => {
 
   return (
-    <div style={{maxHeight:"150px", overflow:"auto"}}>
+    // style={{maxHeight:"150px", overflow:"auto"}}
+    <div >
       <Table
         className='study_table_list'
         columns={columns}

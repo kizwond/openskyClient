@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import MenteeList from "./MenteeList"
 import MentorList from "./MentorList"
-import { Layout,Button,Badge } from 'antd';
+import { Layout,Button,Badge,Select } from 'antd';
 import "./StudyList.css"
 import {UserSwitchOutlined,UsergroupAddOutlined} from '@ant-design/icons';
 
 const { Content } = Layout;
-
+const { Option } = Select;
 class MentoringMain extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +56,21 @@ class MentoringMain extends Component {
               <div className="study_page_list_title"><Badge count={5} size="small"><Button size="small" style={{fontSize:"11px", width:"100px"}}><UserSwitchOutlined /> 멘토링 요청</Button></Badge></div>
               <MentorList/>
               <div className="study_page_list_title study_page_bottom_title"><Badge count={5} size="small"><Button size="small" style={{fontSize:"11px", width:"100px"}}><UsergroupAddOutlined /> 멘토링 수락</Button></Badge></div>
-              <MenteeList selectBook={this.selectBook} category={this.state.category}/>
+              <div style={{padding:5, backgroundColor:"white" }}>
+                <div style={{display:"flex", justifyContent:"space-between", marginBottom:"5px"}}>
+                  <div>
+                    <Select style={{width:"100px", fontSize:"11px"}} defaultValue="재수종합1반" size="small">
+                      <Option value="jack">재수종합1반</Option>
+                      <Option value="lucy">재수종합2반</Option>
+                    </Select>
+                  </div>
+                  <div>
+                    <Button size="small" style={{fontSize:"11px", width:"100px", marginRight:"5px"}}>학습정보 내려받기</Button>
+                    <Button size="small" style={{fontSize:"11px", width:"100px"}}>멘토링 관리</Button>
+                  </div>
+                </div>
+                <MenteeList/>
+              </div>
             </Content>
           </Layout>
       </div>
