@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
-import { Table, Tag, Space,Button,Avatar,Popover,Input,Checkbox } from 'antd';
-import { SearchOutlined,UserOutlined} from '@ant-design/icons';
+import { Table, Tag, Space,Button,Avatar,Popover,Input,Checkbox,Modal } from 'antd';
+import { SearchOutlined,ExclamationCircleOutlined} from '@ant-design/icons';
 const { TextArea } = Input;
+const { confirm } = Modal;
+
+function showConfirm() {
+  confirm({
+    title: 'Do you Want to delete these items?',
+    icon: <ExclamationCircleOutlined />,
+    content: 'Some descriptions',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+}
+
 
 class MentoringAsk extends Component {
   constructor(props) {

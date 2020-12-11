@@ -1,6 +1,24 @@
 import React, { Component } from 'react';
-import { Table, Tag, Space,Button,Avatar } from 'antd';
-import { ApiOutlined,UserOutlined} from '@ant-design/icons';
+import { Table, Modal, Space,Button,Avatar } from 'antd';
+import { ExclamationCircleOutlined,UserOutlined} from '@ant-design/icons';
+const { confirm } = Modal;
+
+function showConfirm() {
+  confirm({
+    title: '해당 요청을 취소하시겠습니까?',
+    icon: <ExclamationCircleOutlined />,
+    content: 'Some descriptions',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+    okText: '예',
+    cancelText: '아니요',
+  });
+}
+
 
 const columns = [
   {
@@ -19,7 +37,7 @@ const columns = [
   },
   {
     render: (text, record) => (
-      <Button size="small" style={{fontSize:"11px"}}>요청취소</Button>
+      <Button size="small" onClick={showConfirm} style={{fontSize:"11px"}}>요청취소</Button>
     ),
   },
 ];
