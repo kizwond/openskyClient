@@ -1,32 +1,18 @@
 import React, { Component } from 'react';
 import { Table, Tag, Space,Button,Avatar,Popover,Input,Checkbox,Modal } from 'antd';
 import { SearchOutlined,ExclamationCircleOutlined} from '@ant-design/icons';
-const { TextArea } = Input;
-const { confirm } = Modal;
+import axios from 'axios'
 
-function showConfirm() {
-  confirm({
-    title: 'Do you Want to delete these items?',
-    icon: <ExclamationCircleOutlined />,
-    content: 'Some descriptions',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-}
+const { TextArea } = Input;
 
 
 class MentoringAsk extends Component {
   constructor(props) {
     super(props);
-    this.state = {  };
+    this.state = { 
+     };
   }
-  onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-  }
+
   render() {
     const content = (
       <div style={{fontSize:"11px"}}>
@@ -34,17 +20,17 @@ class MentoringAsk extends Component {
         <ul>
           <li>아이디 : kizwond</li> 
           <li>이름 : 윤아무개</li> 
-          <li>책이름 : 한국사 요약</li> 
+          <li>책이름 : {this.props.book_info.book_title}</li> 
         </ul>
         <h3 style={{fontWeight:700}}>멘토정보</h3>
         <ul>
-          <li>아이디 : <Input size="small" style={{width:"80px"}}></Input><Button size="small"><SearchOutlined /></Button></li> 
-          <li>소속(정보) : 신논현역 오픈스카이 입시학원 원장</li> 
-          <li>요청 메세지 : <TextArea rows={4} /></li> 
+          <li>아이디 : <Input size="small" onChange={this.props.inputMentorId} value={this.props.mentor_id} style={{width:"80px"}}></Input><Button size="small" onClick={this.props.searchMentor}><SearchOutlined /></Button></li> 
+          <li>소속(정보) :{this.props.mentor_info ? <span>{this.props.mentor_info.name}/{this.props.mentor_info.nickname}</span> : null} </li> 
+          <li>요청 메세지 : <TextArea rows={4} onChange={this.props.msgToSend} value={this.props.msg_to_mentor}/></li> 
         </ul>
         <h3>멘토링 요청시, 멘토에게 ID, 이름, 해당 책 학습이력 정보등을 공유합니다.</h3>
-        <h3>이에 동의하십니까?<Checkbox onChange={this.onChange}></Checkbox>네, 동의합니다.</h3>
-        <div><Space><Button size="small" style={{width:"100px", fontSize:"11px"}}>멘토링 요청하기</Button><Button size="small" style={{width:"100px", fontSize:"11px"}}>취소</Button></Space></div>
+        <h3>이에 동의하십니까?<Checkbox onChange={this.props.onChangeAgree}></Checkbox>네, 동의합니다.</h3>
+        <div><Space><Button size="small" onClick={this.props.sendRequestMentoring} style={{width:"100px", fontSize:"11px"}}>멘토링 요청하기</Button><Button size="small" style={{width:"100px", fontSize:"11px"}}>취소</Button></Space></div>
       </div>
     );
 
@@ -66,16 +52,24 @@ class MentoringAsk extends Component {
       },
       {
         render: (text, record) => (
-          <Popover content={content} placement="bottomLeft" trigger="click"><Button size="small" style={{fontSize:"11px"}}>요청하기</Button></Popover>
+          <Popover content={content} book_info={record} placement="bottomLeft" trigger="click"><Button size="small" onClick={() => this.props.saveBookInfo(record)} style={{fontSize:"11px"}}>요청하기</Button></Popover>
         ),
       },
     ];
-    const data = [
-      {
-        key: '1',
-        book_title:"한국사 요약",
-      }
-    ];
+
+    if(this.props.category.length > 0){
+      console.log("here?")
+      var plz = []
+      var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
+
+      var data = plz.map(book =>({
+        key: book._id,
+        book_id: book._id,
+        book_title : book.title,
+      }))
+      console.log(data)
+    }
+
     return (
       <div >
       <Table

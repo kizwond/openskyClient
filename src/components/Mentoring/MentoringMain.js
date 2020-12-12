@@ -7,6 +7,7 @@ import "./StudyList.css"
 import {UserSwitchOutlined,UsergroupAddOutlined} from '@ant-design/icons';
 import MentoringWaiting from './MentoringWaiting'
 import MentoringAsk from './MentoringAsk'
+import MentoringPending from './MentoringPending'
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -14,80 +15,184 @@ class MentoringMain extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      category : [],
-      selected_book:[],
-      isModalVisible:false
+      isRequestModalVisible:false,
+      isAcceptModalVisible:false,
+      my_study_result:[],
+      mentee_study_result:[],
+      category:[],
+      mentor_id:'',
+      mentor_info:'',
+      msg_to_mentor:'',
+      agree:false,
+      book_info:[],
+      mentoring_req:[],
+      mentoring_pending:[]
      }
   }
+  
   componentDidMount() {
-    this.getOnlyShowTitle()
+    this.getMentoringList()
+    
+    axios.post('api/mentoring/enter-mentoring-req')
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          category:res.data.category,
+          mentoring_req:res.data.mentoring_req,
+        })
+      })
+    this.getPendingList()
+    
   }
-  getOnlyShowTitle() {
-    axios.get('api/book/get-booklist')
+  getMentoringList() {
+    axios.post('api/mentoring/get-mentoringlist')
     .then(res => {
-      console.log(res)
+      console.log(res.data)
       this.setState({
-        category:res.data.categorybooklist
+        my_study_result:res.data.my_study_result,
+        mentee_study_result:res.data.mentee_study_result
       })
     })
   }
-  selectBook = (value)=> {
-    this.setState({
-      selected_book:value
-    })
-  }
 
-  sessionSaveBookIds = () => {
-    sessionStorage.removeItem("session_id")
-    axios.post('api/studysetup/save-booklist',{
-      book_ids: this.state.selected_book
-    }).then(res => {
-      sessionStorage.setItem('session_id',res.data.session_id);
-      sessionStorage.setItem('current_seq','0');
-      window.location.href ="/choose-index"
+  getPendingList() {
+    axios.post('api/mentoring/enter-mentoring-req_management')
+    .then(res => {
+      console.log('pending:',res.data)
+      this.setState({
+        mentoring_pending:res.data.mentoring_req,
+      })
     })
   }
-  showModal = () => {
+  updatePendingList = (data) => {
     this.setState({
-      isModalVisible:true
+      mentoring_pending:data,
+    })
+  }
+  showRequestModal = () => {
+    this.setState({
+      isRequestModalVisible:true
     })
   };
 
   handleOk = () => {
     this.setState({
-      isModalVisible:false
+      isRequestModalVisible:false
     })
   };
 
   handleCancel = () => {
     this.setState({
-      isModalVisible:false
+      isRequestModalVisible:false
     })
   };
 
+
+  showAcceptModal = () => {
+    this.setState({
+      isAcceptModalVisible:true
+    })
+  };
+  acceptHandleOk = () => {
+    this.setState({
+      isAcceptModalVisible:false
+    })
+  };
+
+  acceptHandleCancel = () => {
+    this.setState({
+      isAcceptModalVisible:false
+    })
+  };
+
+
+  onChangeAgree = (e) => {
+    console.log(`checked = ${e.target.checked}`);
+    this.setState({
+      agree:e.target.checked
+    })
+  }
+  searchMentor = () => {
+    axios.post('api/mentoring/get-user-info',{
+      user_id: this.state.mentor_id
+    }).then(res => {
+      console.log(res.data)
+      this.setState({
+        mentor_info:res.data.user,
+      })
+    })
+  }
+  inputMentorId = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      mentor_id: e.target.value
+    })
+  }
+  msgToSend = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      msg_to_mentor: e.target.value
+    })
+  }
+  saveBookInfo = (record) => {
+    this.setState({
+      book_info : record
+    })
+  }
+  sendRequestMentoring = () => {
+    axios.post('api/mentoring/request-mentoring',{
+      mentor_id: this.state.mentor_id,
+      book_id :this.state.book_info.book_id,
+      title: this.state.book_info.book_title,
+      msg : this.state.msg_to_mentor,
+    }).then(res => {
+      console.log(res.data)
+      this.setState({
+        category:res.data.category,
+        mentoring_req:res.data.mentoring_req,
+      })
+    })
+  }
   render() { 
-    if(this.state.selected_book){
-      console.log('value chosen : ', this.state.selected_book)
-    }
     return ( 
       <div className="study_page_booklist_container">
           <Layout>
             <Content className="study_page_content_padding">
-              <div className="study_page_list_title"><Badge count={5} size="small"><Button size="small" onClick={this.showModal} style={{fontSize:"11px", width:"100px"}}><UserSwitchOutlined /> 멘토링 요청</Button></Badge>
+              <div className="study_page_list_title"><Button size="small" onClick={this.showRequestModal} style={{fontSize:"11px", width:"100px"}}><UserSwitchOutlined /> 멘토링 요청</Button>
                 <Modal
                   title="멘토링 요청"
-                  visible={this.state.isModalVisible}
+                  visible={this.state.isRequestModalVisible}
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                 >
                   <span style={{fontSize:"11px"}}>요청한 멘토링</span>
-                  <MentoringWaiting/>
+                  <MentoringWaiting mentoring_req={this.state.mentoring_req} />
                   <span style={{fontSize:"11px"}}>멘토링 요청하기</span>
-                  <MentoringAsk/>
+                  <MentoringAsk onChangeAgree={this.onChangeAgree}
+                                searchMentor={this.searchMentor}
+                                inputMentorId={this.inputMentorId}
+                                msgToSend={this.msgToSend}
+                                saveBookInfo={this.saveBookInfo}
+                                sendRequestMentoring={this.sendRequestMentoring}
+                                book_info={this.state.book_info}
+                                mentor_id={this.state.mentor_id}
+                                category={this.state.category}
+                                mentor_info={this.state.mentor_info}
+                                />
                 </Modal>
               </div>
               <MentorList/>
-              <div className="study_page_list_title study_page_bottom_title"><Badge count={5} size="small"><Button size="small" style={{fontSize:"11px", width:"100px"}}><UsergroupAddOutlined /> 멘토링 수락</Button></Badge></div>
+              <div className="study_page_list_title study_page_bottom_title"><Badge count={this.state.mentoring_pending.length} size="small"><Button size="small" onClick={this.showAcceptModal} style={{fontSize:"11px", width:"100px"}}><UsergroupAddOutlined /> 멘토링 수락</Button></Badge></div>
+              <Modal
+                  title="멘토링 수락"
+                  visible={this.state.isAcceptModalVisible}
+                  onOk={this.acceptHandleOk}
+                  onCancel={this.acceptHandleCancel}
+                >
+                  <span style={{fontSize:"11px"}}> 멘토링 수락</span>
+                  <MentoringPending mentoring_pending={this.state.mentoring_pending} updatePendingList={this.updatePendingList} />
+                  
+                </Modal>
               <div style={{padding:5, backgroundColor:"white" }}>
                 <div style={{display:"flex", justifyContent:"space-between", marginBottom:"5px"}}>
                   <div>

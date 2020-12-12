@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Table, Modal, Space,Button,Avatar } from 'antd';
-import { ExclamationCircleOutlined,UserOutlined} from '@ant-design/icons';
-const { confirm } = Modal;
+import { LinkOutlined,UserOutlined} from '@ant-design/icons';
+import axios from 'axios'
 
+const { confirm } = Modal;
 
 class MentoringWaiting extends Component {
   constructor(props) {
@@ -10,13 +11,20 @@ class MentoringWaiting extends Component {
     this.state = {  }
   }
   render() { 
-    function showConfirm() {
+    function showConfirm(id, event) {
       confirm({
-        title: '해당 요청을 취소하시겠습니까?',
-        icon: <ExclamationCircleOutlined />,
+        title: '해당 요청을 수락하시겠습니까?',
+        icon:<LinkOutlined />,
         content: 'Some descriptions',
         onOk() {
           console.log('OK');
+          axios.post('api/mentoring/accept-mentoring-req',{
+              mentoring_id: id
+          })
+          .then(res => {
+            console.log(res.data)
+            event(res.data.new_mentoring_req)
+          })
         },
         onCancel() {
           console.log('Cancel');
@@ -26,14 +34,16 @@ class MentoringWaiting extends Component {
       });
     }
 
-    if(this.props.mentoring_req.length > 0){
+    if(this.props.mentoring_pending.length > 0){
       console.log("here?")
     
-      var data = this.props.mentoring_req.map(book =>({
+      var data = this.props.mentoring_pending.map(book =>({
         key: book._id,
+        mentoring_id: book._id,
         name: book.mentor_id,
         book_title : book.title,
-        ask_data: book.time_created
+        ask_data: book.time_created,
+        msg:book.msg
       }))
       console.log(data)
     }
@@ -47,6 +57,7 @@ class MentoringWaiting extends Component {
       {
         title: '요청상대',
         dataIndex: 'name',
+        width:"100px",
         render: (text) => <><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</>
       },
       {
@@ -54,8 +65,12 @@ class MentoringWaiting extends Component {
         dataIndex: 'ask_data',
       },
       {
+        title: '메세지',
+        dataIndex: 'msg',
+      },
+      {
         render: (text, record) => (
-          <Button size="small" onClick={showConfirm} style={{fontSize:"11px"}}>요청취소</Button>
+          <Button size="small" onClick={() => showConfirm(record.mentoring_id, this.props.updatePendingList)} style={{fontSize:"11px"}}>요청수락</Button>
         ),
       },
     ];
