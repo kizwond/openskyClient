@@ -181,7 +181,7 @@ class MentoringMain extends Component {
                                 />
                 </Modal>
               </div>
-              <MentorList/>
+              <MentorList my_study_result={this.state.my_study_result}/>
               <div className="study_page_list_title study_page_bottom_title"><Badge count={this.state.mentoring_pending.length} size="small"><Button size="small" onClick={this.showAcceptModal} style={{fontSize:"11px", width:"100px"}}><UsergroupAddOutlined /> 멘토링 수락</Button></Badge></div>
               <Modal
                   title="멘토링 수락"
