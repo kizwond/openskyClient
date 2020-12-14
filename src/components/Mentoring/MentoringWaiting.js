@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Table, Modal, Space,Button,Avatar } from 'antd';
-import { ExclamationCircleOutlined,UserOutlined} from '@ant-design/icons';
-const { confirm } = Modal;
+import { ExclamationCircleOutlined,UserOutlined,LinkOutlined} from '@ant-design/icons';
+import axios from 'axios'
 
+const { confirm } = Modal;
 
 class MentoringWaiting extends Component {
   constructor(props) {
@@ -10,13 +11,36 @@ class MentoringWaiting extends Component {
     this.state = {  }
   }
   render() { 
-    function showConfirm() {
+    // function showConfirm() {
+    //   confirm({
+    //     title: '해당 요청을 취소하시겠습니까?',
+    //     icon: <ExclamationCircleOutlined />,
+    //     content: 'Some descriptions',
+    //     onOk() {
+    //       console.log('OK');
+    //     },
+    //     onCancel() {
+    //       console.log('Cancel');
+    //     },
+    //     okText: '예',
+    //     cancelText: '아니요',
+    //   });
+    // }
+
+    function showConfirm(id, event) {
       confirm({
         title: '해당 요청을 취소하시겠습니까?',
-        icon: <ExclamationCircleOutlined />,
+        icon:<LinkOutlined />,
         content: 'Some descriptions',
         onOk() {
           console.log('OK');
+          axios.post('api/mentoring/cancel-mentoring-req',{
+            mentoring_req_id: id
+          })
+          .then(res => {
+            console.log(res.data)
+            event(res.data.mentoring_req)
+          })
         },
         onCancel() {
           console.log('Cancel');
@@ -55,7 +79,7 @@ class MentoringWaiting extends Component {
       },
       {
         render: (text, record) => (
-          <Button size="small" onClick={showConfirm} style={{fontSize:"11px"}}>요청취소</Button>
+          <Button size="small" onClick={() => showConfirm(record.mentoring_id, this.props.updateRequestList)} style={{fontSize:"11px"}}>거절</Button>
         ),
       },
     ];

@@ -69,6 +69,11 @@ class MentoringMain extends Component {
       mentoring_pending:data,
     })
   }
+  updateRequestList = (data) => {
+    this.setState({
+      mentoring_req:data,
+    })
+  }
   showRequestModal = () => {
     this.setState({
       isRequestModalVisible:true
@@ -166,7 +171,7 @@ class MentoringMain extends Component {
                   onCancel={this.handleCancel}
                 >
                   <span style={{fontSize:"11px"}}>요청한 멘토링</span>
-                  <MentoringWaiting mentoring_req={this.state.mentoring_req} />
+                  <MentoringWaiting updateRequestList={this.updateRequestList} mentoring_req={this.state.mentoring_req} />
                   <span style={{fontSize:"11px"}}>멘토링 요청하기</span>
                   <MentoringAsk onChangeAgree={this.onChangeAgree}
                                 searchMentor={this.searchMentor}
