@@ -5,6 +5,7 @@ import BookTitleList from './BookTitleList'
 import StudyMode from './StudyMode'
 import StudyFiltering from './StudyFiltering';
 import { ItalicOutlined } from '@ant-design/icons';
+import SelectedIndexCardCount from './SelectedIndexCardCount'
 
 class ChooseIndex extends Component {
   constructor(props) {
@@ -320,21 +321,15 @@ class ChooseIndex extends Component {
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={18}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
             <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
-            <div style={{marginTop:"-40px",float: "right", marginRight: "10px"}}><Button onClick={this.showModal}>필터설정</Button>
-            <StudyFiltering visible={this.state.visible} handleOk={this.handleOk} handleCancel={this.handleCancel}/></div>
+            <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
+            <div><SelectedIndexCardCount /></div>
+            
           </Col>
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
-            <div style={{fontSize:"12px",border:"1px dashed lightgrey", background:"#dfecf6", height:"100px", lineHeight:"30px"}}>책 
-              <span style={{fontWeight:"700", color:"blue"}}>{num_books}</span>권에 목차 
-              <span style={{fontWeight:"700", color:"blue"}}>{this.state.selected_index_num}</span>
-              개를 선택하셨습니다.<br/> 선택된 영역에서 필터링 한 결과,<br/> 신규카드 
-              <span style={{fontWeight:"700", color:"blue"}}>{this.state.num_new}</span>개와 / 복습카드 
-              <span style={{fontWeight:"700", color:"blue"}}>{this.state.num_need_study}</span>개가 있습니다.</div>
-            <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>보기 및 학습량 설정</div>
-            <div style={{fontSize:"11px",height:"60%", textAlign:"left", padding:"10px", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
+            <div style={{fontSize:"11px",height:"60%", textAlign:"left", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
  
                 <div>
-                  <div>보기모드 선택</div>
+                  <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>보기모드 및 카드타입 선택</div>
                   <Radio.Group onChange={this.onChangeMode} value={this.state.mode}>
                     <Radio style={radioStyle1} value="read">
                       책보기 모드
@@ -349,7 +344,7 @@ class ChooseIndex extends Component {
                 </div>
                 
                 <div style={{height:"300px"}}>
-                  <div>카드순서 선택</div>
+                  <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>카드순서 선택 및 학습량 설정</div>
                   <Radio.Group onChange={this.onChangeOrder} value={this.state.order}>
                     <Radio style={radioStyleNormal} value="normal">
                       원래 순서로
@@ -428,6 +423,8 @@ class ChooseIndex extends Component {
                 
               
             </div>
+            <div style={{}}><Button onClick={this.showModal}>고급 필터 사용하기</Button>
+            <StudyFiltering visible={this.state.visible} handleOk={this.handleOk} handleCancel={this.handleCancel}/></div>
             <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
           </Col>
         </Row>

@@ -29,3 +29,8 @@
   text-align: center;
   background:#fbfbfb;
 }
+
+
+.ant-table.ant-table-small .ant-table-thead > tr > th{
+  vertical-align: middle;
+}

@@ -4,6 +4,7 @@ import "./BookTitleList.css"
 import IndexTree from "./IndexTree"
 import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
 import axios from 'axios';
+import SelectedIndexCardCount from './SelectedIndexCardCount'
 const { TabPane } = Tabs;
 
 class BookTitleList extends Component {
@@ -30,11 +31,12 @@ class BookTitleList extends Component {
             <span style={{width:"60px"}}>필터된<br/>신규카드</span>
             <span style={{width:"60px"}}>필터된<br/>복습카드</span>
           </div>
+          <div><SelectedIndexCardCount /></div>
         <IndexTree onSelect={this.props.onSelect} book_id={book.book_id} book={book.index_ids}/>
       </TabPane>
       )
     return (
-        <Tabs style={{height:"96%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">
+        <Tabs style={{height:"80%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">
           {bookList}
         </Tabs>
     );
