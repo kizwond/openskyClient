@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Tag, Space } from 'antd';
 
-class SelectedIndexCardCount extends Component {
+class SelectedIndexTotal extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -9,12 +9,12 @@ class SelectedIndexCardCount extends Component {
     render() { 
         const columns = [
             {
-              title: '영역',
+              title: '선택된 책 권수',
               dataIndex: 'selection',
               align :'center',
             },
             {
-              title: '목차',
+              title: '선택된 목차 수',
               dataIndex: 'indexSelected',
               align :'center',
             },
@@ -65,8 +65,8 @@ class SelectedIndexCardCount extends Component {
           const data = [
             {
               key: '1',
-              selection:'현재책',
-              indexSelected:'목차 총 100개',
+              selection:'00권의 책이 선택됨',
+              indexSelected:'00개의 목차가 선택됨',
               completedRatio: '31%',
               yet:10,
               ing:20,
@@ -78,8 +78,21 @@ class SelectedIndexCardCount extends Component {
             },
             {
               key: '2',
-              selection:'현재책에서 선택영역',
-              indexSelected:'목차 8개 선택함',
+              selection:'읽기카드',
+              indexSelected:'',
+              completedRatio: '31%',
+              yet:10,
+              ing:20,
+              ingTotal:100,
+              ingByNow:40,
+              ingByToday:40,
+              completed:0,
+              suspend:0,
+            },
+            {
+              key: '3',
+              selection:'뒤집기카드',
+              indexSelected:'',
               completedRatio: '31%',
               yet:10,
               ing:20,
@@ -102,4 +115,4 @@ class SelectedIndexCardCount extends Component {
     }
 }
 
-export default SelectedIndexCardCount;
+export default SelectedIndexTotal;

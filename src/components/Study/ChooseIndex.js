@@ -4,8 +4,9 @@ import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
 import BookTitleList from './BookTitleList'
 import StudyMode from './StudyMode'
 import StudyFiltering from './StudyFiltering';
-import { ItalicOutlined } from '@ant-design/icons';
+import { RedoOutlined, FileOutlined } from '@ant-design/icons';
 import SelectedIndexCardCount from './SelectedIndexCardCount'
+import SelectedIndexTotal from './SelectedIndexTotal'
 
 class ChooseIndex extends Component {
   constructor(props) {
@@ -321,12 +322,14 @@ class ChooseIndex extends Component {
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={18}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
             <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
-            <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
-            <div><SelectedIndexCardCount /></div>
+            <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
+              <div style={{color:"white", height:"26px", lineHeight:"26px", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
+              <SelectedIndexTotal />
+            </div>
             
           </Col>
-          <Col className="gutter-row" style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
-            <div style={{fontSize:"11px",height:"60%", textAlign:"left", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
+          <Col className="gutter-row" style={{height:"103.7%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
+            <div style={{fontSize:"11px",textAlign:"left", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
  
                 <div>
                   <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>보기모드 및 카드타입 선택</div>
@@ -335,96 +338,119 @@ class ChooseIndex extends Component {
                       책보기 모드
                     </Radio>
                     <Radio style={radioStyle1} value="flip">
-                      플래쉬카드 모드
+                      카드 뒤집기 모드
+                      <div style={{marginLeft:"20px"}}><FileOutlined /> 읽기카드 <Switch size="small" onChange={this.props.onChangeNew} checked={this.props.newToggle}/></div>
+                      <div style={{marginLeft:"20px"}}><RedoOutlined /> 뒤집기카드 <Switch size="small" onChange={this.props.onChangeNew} checked={this.props.newToggle}/></div>
                     </Radio>
                     <Radio style={radioStyle1} value="exam">
                       시험보기 모드
+                      <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"20px"}}>※ 시험보기 모드에서는 뒤집기 카드만 출제 가능합니다.</div>
                     </Radio>
                   </Radio.Group>
                 </div>
                 
-                <div style={{height:"300px"}}>
+                <div style={{height:"413px"}}>
                   <div style={{backgroundColor:"#69d316", width:"100%", height:"40px", color:"white", lineHeight:"40px", fontWeight:"700", textAlign:"left", paddingLeft:"20px"}}>카드순서 선택 및 학습량 설정</div>
                   <Radio.Group onChange={this.onChangeOrder} value={this.state.order}>
                     <Radio style={radioStyleNormal} value="normal">
-                      원래 순서로
+                      기본(순서대로)
+                      
                       {this.state.order === "normal" ? 
-                      <StudyMode onChangeNew={this.onChangeNew}
-                                 newToggle={this.state.newToggle}
-                                 onChangeNewCardNum={this.onChangeNewCardNum}
-                                 newCardNum={this.state.newCardNum}
-                                 onChangeReview={this.onChangeReview}
-                                 reviewToggle={this.state.reviewToggle}
-                                 onChangeReviewCardNum={this.onChangeReviewCardNum}
-                                 reviewCardNum={this.state.reviewCardNum}
-                                 onChangeReviewDetail={this.onChangeReviewDetail}
-                                 reviewDetail={this.state.reviewDetail}
-                                 onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
-                                 reviewDetailDetail={this.state.reviewDetailDetail}
-                                 onChangeHold={this.onChangeHold}
-                                 hold={this.state.hold}
-                                 completed={this.state.completed}
-                                 onChangeCompleted={this.onChangeCompleted}
-                                 onChangeHoldCardNum={this.onChangeHoldCardNum}
-                                 onChangeCompletedCardNum={this.onChangeCompletedCardNum}            
-                      /> : null}
+                      <>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"20px"}}>※ 원래 순서대로 표시됩니다. 목차 기능을 사용할 수 있습니다.</div>
+                        <StudyMode onChangeNew={this.onChangeNew}
+                                  newToggle={this.state.newToggle}
+                                  onChangeNewCardNum={this.onChangeNewCardNum}
+                                  newCardNum={this.state.newCardNum}
+                                  onChangeReview={this.onChangeReview}
+                                  reviewToggle={this.state.reviewToggle}
+                                  onChangeReviewCardNum={this.onChangeReviewCardNum}
+                                  reviewCardNum={this.state.reviewCardNum}
+                                  onChangeReviewDetail={this.onChangeReviewDetail}
+                                  reviewDetail={this.state.reviewDetail}
+                                  onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
+                                  reviewDetailDetail={this.state.reviewDetailDetail}
+                                  onChangeHold={this.onChangeHold}
+                                  hold={this.state.hold}
+                                  completed={this.state.completed}
+                                  onChangeCompleted={this.onChangeCompleted}
+                                  onChangeHoldCardNum={this.onChangeHoldCardNum}
+                                  onChangeCompletedCardNum={this.onChangeCompletedCardNum}            
+                        /> 
+                      </>: null}
                     </Radio>
                     
                     <Radio style={radioStyleReview} value="review">
                       복습시점 빠른 순서로
+                      
                       {this.state.order === "review" ? 
-                      <StudyMode onChangeNew={this.onChangeNew}
-                                newToggle={this.state.newToggle}
-                                onChangeNewCardNum={this.onChangeNewCardNum}
-                                newCardNum={this.state.newCardNum}
-                                onChangeReview={this.onChangeReview}
-                                reviewToggle={this.state.reviewToggle}
-                                onChangeReviewCardNum={this.onChangeReviewCardNum}
-                                reviewCardNum={this.state.reviewCardNum}
-                                onChangeReviewDetail={this.onChangeReviewDetail}
-                                reviewDetail={this.state.reviewDetail}
-                                onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
-                                reviewDetailDetail={this.state.reviewDetailDetail}
-                                onChangeHold={this.onChangeHold}
-                                hold={this.state.hold}
-                                completed={this.state.completed}
-                                onChangeCompleted={this.onChangeCompleted}    
-                                onChangeHoldCardNum={this.onChangeHoldCardNum}
-                                onChangeCompletedCardNum={this.onChangeCompletedCardNum}              
-                      /> : null}
+                      <>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"20px"}}>※ 복습 시점이 빠른카드 순으로 표시됩니다.</div>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"30px"}}>복습시점이 없는 카드(미학습카드, 완료카드, 보류카드)는</div>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"30px"}}>기학습카드 뒤로 배치됩니다.</div>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"20px"}}>※ 목차 기능이 비활성화 됩니다.</div>
+                        <StudyMode onChangeNew={this.onChangeNew}
+                                  newToggle={this.state.newToggle}
+                                  onChangeNewCardNum={this.onChangeNewCardNum}
+                                  newCardNum={this.state.newCardNum}
+                                  onChangeReview={this.onChangeReview}
+                                  reviewToggle={this.state.reviewToggle}
+                                  onChangeReviewCardNum={this.onChangeReviewCardNum}
+                                  reviewCardNum={this.state.reviewCardNum}
+                                  onChangeReviewDetail={this.onChangeReviewDetail}
+                                  reviewDetail={this.state.reviewDetail}
+                                  onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
+                                  reviewDetailDetail={this.state.reviewDetailDetail}
+                                  onChangeHold={this.onChangeHold}
+                                  hold={this.state.hold}
+                                  completed={this.state.completed}
+                                  onChangeCompleted={this.onChangeCompleted}    
+                                  onChangeHoldCardNum={this.onChangeHoldCardNum}
+                                  onChangeCompletedCardNum={this.onChangeCompletedCardNum}              
+                        />
+                      </> : null}
                     </Radio>
 
                     <Radio style={radioStyleRandom} value="random">
                       랜덤하게
+                      
                       {this.state.order === "random" ? 
-                      <StudyMode onChangeNew={this.onChangeNew}
-                                newToggle={this.state.newToggle}
-                                onChangeNewCardNum={this.onChangeNewCardNum}
-                                newCardNum={this.state.newCardNum}
-                                onChangeReview={this.onChangeReview}
-                                reviewToggle={this.state.reviewToggle}
-                                onChangeReviewCardNum={this.onChangeReviewCardNum}
-                                reviewCardNum={this.state.reviewCardNum}
-                                onChangeReviewDetail={this.onChangeReviewDetail}
-                                reviewDetail={this.state.reviewDetail}
-                                onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
-                                reviewDetailDetail={this.state.reviewDetailDetail}
-                                onChangeHold={this.onChangeHold}
-                                hold={this.state.hold}
-                                completed={this.state.completed}
-                                onChangeCompleted={this.onChangeCompleted}
-                                onChangeHoldCardNum={this.onChangeHoldCardNum}
-                                onChangeCompletedCardNum={this.onChangeCompletedCardNum}                  
-                      /> : null}
+                      <>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"20px"}}>※ 카드의 종류 및 상태와 상관없이 모든 카드의 순서를 섞습니다.</div>
+                        <div style={{fontStyle:"italic", fontSize:"10px", marginLeft:"20px"}}>※ 목차 기능이 비활성화 됩니다.</div>
+                        <StudyMode onChangeNew={this.onChangeNew}
+                                  newToggle={this.state.newToggle}
+                                  onChangeNewCardNum={this.onChangeNewCardNum}
+                                  newCardNum={this.state.newCardNum}
+                                  onChangeReview={this.onChangeReview}
+                                  reviewToggle={this.state.reviewToggle}
+                                  onChangeReviewCardNum={this.onChangeReviewCardNum}
+                                  reviewCardNum={this.state.reviewCardNum}
+                                  onChangeReviewDetail={this.onChangeReviewDetail}
+                                  reviewDetail={this.state.reviewDetail}
+                                  onChangeReviewDetailDetail={this.onChangeReviewDetailDetail}
+                                  reviewDetailDetail={this.state.reviewDetailDetail}
+                                  onChangeHold={this.onChangeHold}
+                                  hold={this.state.hold}
+                                  completed={this.state.completed}
+                                  onChangeCompleted={this.onChangeCompleted}
+                                  onChangeHoldCardNum={this.onChangeHoldCardNum}
+                                  onChangeCompletedCardNum={this.onChangeCompletedCardNum}                  
+                        /> 
+                      </>: null}
                     </Radio>
                   </Radio.Group>
                 </div>
 
                 
+              <div>
+                <Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급 필터 사용하기</Button>
+                <StudyFiltering visible={this.state.visible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+              </div>
+
               
             </div>
-            <div style={{}}><Button onClick={this.showModal}>고급 필터 사용하기</Button>
-            <StudyFiltering visible={this.state.visible} handleOk={this.handleOk} handleCancel={this.handleCancel}/></div>
+            
             <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
           </Col>
         </Row>
