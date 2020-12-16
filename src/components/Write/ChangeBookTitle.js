@@ -1,11 +1,30 @@
 import React from 'react';
 import { Form, Input, Button, Space } from 'antd';
-
+import axios from 'axios'
 const ChangeBookTitle = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = value => {
-    props.changeBookTitleHandler({value, bookId:props.bookTitle._id})
+    console.log(value, props)
+    // props.changeBookTitleHandler({value, bookId:props.bookTitle._id})
+    axios.post('api/book/change-book-title',{
+      book_id : props.bookTitle._id,
+      name : value.newName
+    })
+    .then(res => {
+      if(res.data.error === "동일한 이름의 책이 이미 존재합니다."){
+        this.setState({
+          message:res.data.error
+        })
+        alert(this.state.message)
+      } else {
+
+        console.log(res.data)
+        props.updateState({value1: res.data.categorybooklist, value2: res.data.likebooklist})
+      }
+    })
+  
+   
     props.onClick()
   };
   return (

@@ -31,11 +31,6 @@ class WriteMain extends Component {
       })
     })
   }
-  // hideOrShowToggleLike = () => {
-  //   this.setState(state => ({
-  //     hide_or_show_like: !state.hide_or_show_like
-  //   }));
-  // }
 
   onClickToggle = () => {
     axios.post('api/book/change-like-config',{
@@ -47,17 +42,6 @@ class WriteMain extends Component {
     })
   }
 
-  // getAllTitle() {
-  //   axios.get('api/book/get-booklist')   
-  //   .then(res => {
-  //     this.setState({
-  //       bookTitle:res.data.bookTitle,
-  //       likeTitle:res.data.likeTitle,
-  //       category:res.data.category,
-  //       isToggleOn:res.data.LikeToggle
-  //     })
-  //   })
-  // }
   getOnlyShowTitle() {
     axios.get('api/book/get-booklist')
     .then(res => {
@@ -141,6 +125,13 @@ class WriteMain extends Component {
           likeTitle:res.data.likebooklist
         })
       }
+    })
+  }
+
+  updateState = (data) => {
+    this.setState({
+      category:data.value1,
+      likeTitle:data.value2
     })
   }
 
@@ -263,11 +254,14 @@ class WriteMain extends Component {
   }
 
   render() { 
+    console.log('cycle', this.state.category)
+    console.log('cycle2', this.state.likeTitle)
     return ( 
       <div className="write_container">
         <div style={{fontSize:"13px", fontWeight:"700"}}>즐겨찾기</div>
         <br/>
-        {this.state.isToggleOn ? <LikeSectionContent category={this.state.category} 
+        {this.state.isToggleOn ? <LikeSectionContent updateState={this.updateState}
+                                                     category={this.state.category} 
                                                      bookCategoryMove={this.bookCategoryMove} 
                                                      onClickLike={this.saveLikeChange} 
                                                      hideOrShowClass={this.state.hideOrShowClass} 
