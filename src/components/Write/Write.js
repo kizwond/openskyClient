@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './Write.module.css'
+import './Write.css'
 import LikeSectionContent from './LikeSectionContent'
 import ListSectionContent from './ListSectionContent'
 import {NavLink} from 'react-router-dom'
@@ -66,7 +66,7 @@ class WriteMain extends Component {
 
     return ( 
       <div className="write_container">
-        <div className={styles.test}>즐겨찾기</div>
+        <div className='test'>즐겨찾기</div>
         <br/>
         {this.state.isToggleOn ? <LikeSectionContent updateState={this.updateState}
                                                      category={this.state.category} 
