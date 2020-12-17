@@ -10,31 +10,7 @@
 .write_container .make_new_book{
   margin-bottom:10px;
 }
-.book_list_columns,
-.book_list_contents_and_data{
-  display:flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-.book_list_columns div,
-.book_list_contents_and_data div{
-  width:60px;
-  text-align: right;
-}
-.book_list_columns div:nth-child(1),
-.book_list_contents_and_data div:nth-child(1){
-  width:20px;
-  text-align: left;
-}
-.book_list_columns div:nth-child(2),
-.book_list_contents_and_data div:nth-child(2){
-  width:200px;
-  text-align: left;
-}
-.book_list_columns div select{
-  width:200px;
-}
+
 .test{
   font-size:13px; 
   font-Weight:700;

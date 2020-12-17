@@ -12,9 +12,7 @@ import axios from 'axios'
 class ListColumns extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      
-     }
+    this.state = {}
   }
   onChange = (checked) => {
     this.hideOrShowToggle(checked)
@@ -33,7 +31,8 @@ class ListColumns extends Component {
     return ( 
       <ul className="like_list_columns">
         <li>카테고리 <CategorySettingModal updateState={this.props.updateState}
-                                         category={this.props.category}/></li>
+                                           category={this.props.category}/>
+        </li>
         <li>책이름</li>
         <li>책이름<br/>변경</li>
         <li>구분</li>
