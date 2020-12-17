@@ -22,25 +22,6 @@ class WriteMain extends Component {
       hide_or_show_like :false
      }
   }
-  hideOrShowToggle = () => {
-    axios.post('api/book/change-hide-config',{
-      hide_toggle : !this.state.hide_or_show
-    }).then(res => {
-      this.setState({
-        hide_or_show:res.data.write_config[0].write_config.hide_or_show
-      })
-    })
-  }
-
-  onClickToggle = () => {
-    axios.post('api/book/change-like-config',{
-      like_toggle : !this.state.isToggleOn
-    }).then(res => {
-      this.setState({
-        isToggleOn:res.data.write_config[0].write_config.likebook
-      })
-    })
-  }
 
   componentDidMount() {
     this.getOnlyShowTitle()
@@ -65,6 +46,21 @@ class WriteMain extends Component {
       likeTitle:data.value2
     })
   }
+  updateHideOrShowState = (data) => {
+    this.setState({
+      hide_or_show:data.hide_or_show
+    })
+  }
+
+  onClickToggle = () => {
+    axios.post('api/book/change-like-config',{
+      like_toggle : !this.state.isToggleOn
+    }).then(res => {
+      this.setState({
+        isToggleOn:res.data.write_config[0].write_config.likebook
+      })
+    })
+  }
 
   render() { 
 
@@ -74,15 +70,8 @@ class WriteMain extends Component {
         <br/>
         {this.state.isToggleOn ? <LikeSectionContent updateState={this.updateState}
                                                      category={this.state.category} 
-                                                      
-                                                     
-                                                     hideOrShowClass={this.state.hideOrShowClass} 
-                                                     hideOrShowToggle={this.hideOrShowToggle} 
-
-                                                      
                                                      bookTitle={this.state.likeTitle}
-                                                     hideOrShowToggleStateLike={this.state.hide_or_show_like}
-                                                     hideOrShowToggleHandeler={this.hideOrShowToggleLike}/> : ''}
+                                                     hideOrShowToggleStateLike={this.state.hide_or_show_like}/> : ''}
         
         <div style={{textAlign:"center", marginTop:"-20px"}}>
         {this.state.isToggleOn ? <UpCircleTwoTone twoToneColor="#bfbfbf" onClick={this.onClickToggle} style={{fontSize:'25px'}}/> 
@@ -96,14 +85,8 @@ class WriteMain extends Component {
         <div className="book_list_container_in_write">
           <ListSectionContent updateState={this.updateState}
                               category={this.state.category} 
-                               
-                              
-                              hideOrShowClass={this.state.hideOrShowClass} 
-                              hideOrShowToggle={this.hideOrShowToggle} 
-
-                               
+                              updateHideOrShowState={this.updateHideOrShowState} 
                               hideOrShowToggleState={this.state.hide_or_show}
-                              hideOrShowToggleHandeler={this.hideOrShowToggle}
                               />
         </div>
       </div>

@@ -90,10 +90,9 @@ export class BookWriting extends Component {
   };
   getIndexList = () => {
     console.log('req start!!!!!!!!!!')
-    axios.post('api/index/get-indexlist',{
-      book_id: this.props.location.book_id
-    })
+    axios.post('api/index/get-indexlist')
       .then(res => {
+        console.log('where is? :', res.data)
         this.setState({ 
           table_of_contents:res.data.indexList,
         });

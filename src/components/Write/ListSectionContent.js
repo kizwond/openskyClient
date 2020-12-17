@@ -17,12 +17,19 @@ class ListColumns extends Component {
      }
   }
   onChange = (checked) => {
-    console.log(`switch to ${checked}`);
-    this.props.hideOrShowToggle()
+    this.hideOrShowToggle(checked)
   }
 
+  hideOrShowToggle = (checked) => {
+    axios.post('api/book/change-hide-config',{
+      hide_toggle : checked
+    }).then(res => {
+      this.props.updateHideOrShowState({hide_or_show:res.data.write_config[0].write_config.hide_or_show})
+    })
+  }
   
   render() { 
+    console.log('checked:',this.props.hideOrShowToggleState)
     return ( 
       <ul className="like_list_columns">
         <li>카테고리 <CategorySettingModal updateState={this.props.updateState}
@@ -39,11 +46,7 @@ class ListColumns extends Component {
         <li>카테고리<br/>이동</li>
         <li>즐겨찾기</li>
         <li>순서이동</li>
-        {/* <li>목록에서<br/>감추기 
-            {this.props.hideOrShowClass === false  ? <span onClick={this.props.hideOrShowToggle} className="hide_or_show_title_btn">OFF</span> : 
-                                                     <span onClick={this.props.hideOrShowToggle} className="hide_or_show_title_btn">ON</span>}
-        </li> */}
-        <li>숨긴책보기<Switch size="small" onChange={this.onChange} /></li>
+        <li>숨긴책보기{this.props.hideOrShowToggleState === false ? <><Switch size="small" onChange={this.onChange} />{this.props.hideOrShowToggleState}</> : <><Switch size="small" defaultChecked onChange={this.onChange} />{this.props.hideOrShowToggleState}</>}</li>
         <li>삭제</li>
       </ul> 
     );
@@ -69,7 +72,7 @@ class ListContent extends Component {
     }));
   }
 
-  saveBookIdSesstion = (value)=> {
+  saveBookIdSession = (value)=> {
     console.log(value)
     axios.post('api/book/start-write',{
       book_id:value.book_id
@@ -139,7 +142,6 @@ class ListContent extends Component {
     const toggleProps = this.props.hideOrShowToggleState;
     const date = info.time_created.slice(0,10)
     const update_date = info.time_created.slice(0,10)
-    const classes = `like_list_contents`
     const renderLike = () => {
       if(info.hide_or_show === true){
           if(info.like === true) {
@@ -154,14 +156,13 @@ class ListContent extends Component {
     return ( 
       <>
       {toggleProps === true ?
-        <div className={classes}>
+        <div className='like_list_contents'>
           <ul>
             <li>{this.props.currentCategory}</li>
             <li>{this.state.editBookTitle ? <ChangeBookTitle updateState={this.props.updateState}
                                                             bookTitle={info} 
                                                             category={this.props.category} 
-                                                             
-                                                            onClick={this.titleChangeHandleClick}/> : <><span onClick={()=>this.saveBookIdSesstion({book_id:info._id})} exact>{info.title}/순서 : {info.seq_in_category}</span></>}</li>
+                                                            onClick={this.titleChangeHandleClick}/> : <><span onClick={()=>this.saveBookIdSession({book_id:info._id})} >{info.title}/순서 : {info.seq_in_category}</span></>}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
             <li>{info.type}</li>
             <li>{info.owner}</li>
@@ -183,13 +184,13 @@ class ListContent extends Component {
           </ul>
         </div> : 
         <>{info.hide_or_show === true  ? 
-            <div className={classes}>
+            <div className='like_list_contents'>
                 <ul>
                   <li>{this.props.currentCategory}</li>
-                  <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
-                                                                  category={this.props.category} 
-                                                                   
-                                                                  onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} exact>{info.title}/순서 : {info.seq_in_category}</NavLink></>}</li>
+                  <li>{this.state.editBookTitle ? <ChangeBookTitle updateState={this.props.updateState}
+                                                                   bookTitle={info} 
+                                                                   category={this.props.category} 
+                                                                   onClick={this.titleChangeHandleClick}/> : <><span onClick={()=>this.saveBookIdSession({book_id:info._id})} >{info.title}/순서 : {info.seq_in_category}</span></>}</li>
                   <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
                   <li>{info.type}</li>
                   <li>{info.owner}</li>
@@ -235,13 +236,7 @@ class CategoryListContainer extends Component {
                       currentCategory={this.props.categoryName}
                       key={book_title._id} 
                       categoryTotal={this.props.categoryTotal}
-                      
                       bookInfo={book_title} 
-                      
-                       
-                       
-                       
-          
                       hideOrShowToggleState={this.props.hideOrShowToggleState}/>
           } else{
             return <div>hello</div>
@@ -277,12 +272,6 @@ class ListSectionContent extends Component {
                               categoryName={category.name} 
                               category={category} 
                               categoryTotal={this.props.category}
-                              
-                              
-                               
-                               
-                               
-                  
                               hideOrShowToggleState={this.props.hideOrShowToggleState}/>
       ))
     } else {
@@ -293,14 +282,10 @@ class ListSectionContent extends Component {
       <div className="like_list_container">
         <ListColumns 
                     updateState={this.props.updateState}
-
-
+                    updateHideOrShowState={this.props.updateHideOrShowState}
+                    hideOrShowToggleState={this.props.hideOrShowToggleState}
                     changeCategoryHandler={this.props.changeCategoryHandler} 
-                    
-                    category={this.props.category} 
-                    hideOrShowClass={this.props.hideOrShowClass} 
-                    hideOrShowToggle={this.props.hideOrShowToggleHandeler}
-                     />
+                    category={this.props.category}/>
         {categoryList}
       </div>
      );

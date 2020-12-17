@@ -14,10 +14,7 @@ class LikeListColumns extends Component {
     this.state = { 
      }
   }
-  onChange = (checked) => {
-    console.log(`switch to ${checked}`);
-    this.props.hideOrShowToggle()
-  }
+
   render() { 
     return ( 
       <ul className="like_list_columns">
@@ -59,6 +56,17 @@ class LikeListContent extends Component {
       editBookTitle: !state.editBookTitle
     }));
   }
+
+  saveBookIdSession = (value)=> {
+    console.log(value)
+    axios.post('api/book/start-write',{
+      book_id:value.book_id
+    }).then(res => {
+      console.log(res)
+      window.location.href ="/editing"
+    })
+  }
+
   eyeClickHandler = (value) =>{
     console.log('hide_or_show : ',value)
     axios.post('api/book/change-hide-or-show',{
@@ -118,8 +126,7 @@ class LikeListContent extends Component {
     const toggleProps = this.props.hideOrShowToggleState;
     const date = info.time_created.slice(0,10)
     const update_date = info.time_created.slice(0,10)
-    const classes = `like_list_contents`
-    // const classes = `like_list_contents hide_or_show_${info.hide_or_show}`
+
     const renderLike = () => {
       if(info.hide_or_show === true){
           if(info.like === true) {
@@ -139,16 +146,14 @@ class LikeListContent extends Component {
         {toggleProps === true ? 
           <>
           {info.like === true ? 
-            <div className={classes}>
+            <div className='like_list_contents'>
             <ul>
               <li>{info.category_id.name}</li>
               <li>
                 {this.state.editBookTitle ? <ChangeBookTitle updateState={this.props.updateState}
                                                              bookTitle={info} 
-                                                              
                                                              onClick={this.titleChangeHandleClick}/> : 
-                                            <><NavLink to={{pathname:"/editing", book_id:info._id}} exact>{info.title}/순서 : {info.seq_in_like}</NavLink>
-                                              </>}
+                                            <><span onClick={()=>this.saveBookIdSession({book_id:info._id})} >{info.title}/순서 : {info.seq_in_like}</span></>}
               </li>
               <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
               <li>{info.type}</li>
@@ -172,13 +177,16 @@ class LikeListContent extends Component {
         </> 
           : <>
           {info.like === true  & info.hide_or_show === true? 
-            <div className={classes}>
+            <div className='like_list_contents'>
             <ul>
               <li>{info.category_id.name}</li>
-              <li>{this.state.editBookTitle ? <ChangeBookTitle bookTitle={info} 
-                                                               updateState={this.props.updateState}
-                                                                 
-                                                                onClick={this.titleChangeHandleClick}/> : <><NavLink to={{pathname:"/editing", book_id:info._id}} exact>{info.title}/순서 : {info.seq_in_like}</NavLink></>}</li>
+              <li>
+                {this.state.editBookTitle ? 
+                    <ChangeBookTitle bookTitle={info} 
+                      updateState={this.props.updateState}
+                      onClick={this.titleChangeHandleClick}/> : 
+                      <><span onClick={()=>this.saveBookIdSession({book_id:info._id})} >{info.title}/순서 : {info.seq_in_like}</span></>}
+              </li>
               <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
               <li>{info.type}</li>
               <li>{info.owner}</li>
@@ -213,15 +221,8 @@ class LikeSectionContent extends Component {
       var bookList = this.props.bookTitle.map((book_title)=>(
         <LikeListContent key={book_title._id} 
                         updateState={this.props.updateState}
-                        category={this.props.category} 
-                        
-                        bookInfo={book_title} 
-                        
-                         
-                         
-                        
-                        
-                        hideOrShowToggleState={this.props.hideOrShowToggleStateLike}/>
+                        category={this.props.category}
+                        bookInfo={book_title}/>
       ))
     } else {
       var bookList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -230,9 +231,7 @@ class LikeSectionContent extends Component {
     
     return ( 
       <div className="like_list_container">
-        <LikeListColumns hideOrShowClass={this.props.hideOrShowClass}
-                        hideOrShowToggle={this.props.hideOrShowToggleHandeler}
-                        />
+        <LikeListColumns />
         <div className="like_list_container_div">
           {bookList}
         </div>
