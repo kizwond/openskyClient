@@ -16,6 +16,7 @@ class WriteMain extends Component {
      }
   }
   componentDidMount() {
+    sessionStorage.removeItem("book_ids")
     this.getOnlyShowTitle()
   }
   getOnlyShowTitle() {
@@ -27,9 +28,15 @@ class WriteMain extends Component {
       })
     })
   }
+  renameKey ( obj, oldKey, newKey ) {
+    obj[newKey] = obj[oldKey];
+    delete obj[oldKey];
+  }
   selectBook = (value)=> {
+    const json = value.book_info
+    json.forEach( obj => this.renameKey( obj, 'book_title', 'title' ) );
     this.setState({
-      selected_book:value
+      selected_book:json
     })
   }
   // sessionSaveBookIds = () => {
@@ -41,14 +48,19 @@ class WriteMain extends Component {
   //   })
   // }
   sessionSaveBookIds = () => {
-    sessionStorage.removeItem("session_id")
-    axios.post('api/studysetup/save-booklist',{
-      book_ids: this.state.selected_book
-    }).then(res => {
-      sessionStorage.setItem('session_id',res.data.session_id);
-      sessionStorage.setItem('current_seq','0');
-      window.location.href ="/choose-index"
-    })
+
+    sessionStorage.setItem("book_ids", JSON.stringify(this.state.selected_book));
+    sessionStorage.setItem('current_seq','0');
+    window.location.href ="/choose-index"
+
+    // sessionStorage.removeItem("session_id")
+    // axios.post('api/studysetup/save-booklist',{
+    //   book_ids: this.state.selected_book
+    // }).then(res => {
+    //   sessionStorage.setItem('session_id',res.data.session_id);
+    //   sessionStorage.setItem('current_seq','0');
+    //   window.location.href ="/choose-index"
+    // })
     
   }
   render() { 

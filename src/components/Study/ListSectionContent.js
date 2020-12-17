@@ -161,7 +161,7 @@ class ListSectionContent extends Component {
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        this.props.selectBook(selectedRowKeys)
+        this.props.selectBook({book_id: selectedRowKeys,book_info:selectedRows})
       },
       getCheckboxProps: (record) => ({
         disabled: record.name === 'Disabled User',

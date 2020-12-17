@@ -49,13 +49,15 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
-    const value = sessionStorage.getItem("session_id")
+    // const value = sessionStorage.getItem("session_id")
+    const value = JSON.parse(sessionStorage.getItem("book_ids"))
+
     axios.post('api/studysetup/get-index',{
-      session_id: value
+      selected_books: value[0]
     }).then(res => {
       console.log('데이타:', res.data)
       this.setState({
-        books:res.data.booksnindexes
+        books:[res.data.single_book_info]
       })
     })
   }

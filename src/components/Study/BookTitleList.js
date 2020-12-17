@@ -26,7 +26,7 @@ class BookTitleList extends Component {
         </span>
         } key={book.book_id}>
           <div style={{padding:'10px', fontSize:"11px", backgroundColor:"#5c89cf", borderBottom:"10px solid #b1c6ec"}}><SelectedIndexCardCount /></div>
-        <IndexTree onSelect={this.props.onSelect} book_id={book.book_id} book={book.index_ids}/>
+        <IndexTree onSelect={this.props.onSelect} book_id={book.book_id} book={book.index_info}/>
       </TabPane>
       )
     return (
