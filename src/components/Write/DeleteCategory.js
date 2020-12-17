@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Modal, Space, Select } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { DeleteOutlined,WarningTwoTone } from '@ant-design/icons';
+import axios from 'axios'
+
 const { confirm } = Modal;
 const { Option } = Select;
 
@@ -27,8 +29,21 @@ class DeleteCategory extends Component {
     })
   }
   deleteThis = (value) => {
-    this.props.categoryDeleteHandler({value, moveTo:this.state.moveTo})
+    this.categoryDeleteHandler({value, moveTo:this.state.moveTo})
   }
+
+  categoryDeleteHandler = (value) => {
+    if(value.moveTo === ""){
+      value.moveTo = 'none'
+    }
+    axios.post('api/book/delete-category',{
+      category_id : value.value.categoryId,
+      target_category : value.moveTo,
+    }).then(res => {
+      this.props.updateState({value1: res.data.categorybooklist, value2: res.data.likebooklist})
+    })
+  }
+
   showPromiseConfirm = (category_id, event, handleChangeInside) => {
     console.log(this)
     if(this.props.categoryTotal.length >= 0) {

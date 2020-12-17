@@ -1,16 +1,28 @@
 import React, { Component } from 'react'
-
 import { Modal, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { DeleteOutlined,WarningTwoTone } from '@ant-design/icons';
-const { confirm } = Modal;
+import axios from 'axios'
 
+const { confirm } = Modal;
 
 class DeleteBook extends Component {
   constructor(props) {
     super(props);
     this.state = { 
      }
+  }
+
+  bookDeleteHandler = (value) => {
+    axios.post('api/book/delete-book',{
+      book_id : value.book_id,
+      seq_in_category : value.seq_in_category,
+      seq_in_like : value.seq_in_like,
+      category_id : value.category_id,
+    }).then(res => {
+      console.log(res.data)
+      this.props.updateState({value1: res.data.categorybooklist, value2: res.data.likebooklist})
+    })
   }
 
   showPromiseConfirm = (book, event) => {
@@ -27,7 +39,7 @@ class DeleteBook extends Component {
   render() { 
     return ( 
       <Space>
-        <DeleteOutlined onClick={()=>this.showPromiseConfirm(this.props.bookTitle, this.props.bookDeleteHandler)} style={{fontSize:'14px'}} />
+        <DeleteOutlined onClick={()=>this.showPromiseConfirm(this.props.bookTitle, this.bookDeleteHandler)} style={{fontSize:'14px'}} />
       </Space>
     );
   }

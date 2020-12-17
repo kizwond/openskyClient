@@ -1,10 +1,11 @@
 import React from 'react';
 import { Form, Input, Button, Space } from 'antd';
+import axios from 'axios'
 
 const ChangeCategory = (props) => {
   const [form] = Form.useForm();
   const onFinish = value => {
-    props.changeCategoryHandler({value, categoryId:props.category._id})
+    changeCategoryHandler({value, categoryId:props.category._id})
     props.inputAreaVisible()
   };
   const cancel = () => {
@@ -13,7 +14,22 @@ const ChangeCategory = (props) => {
     console.log('cancel clicked!!!')
     console.log(props.vi)
   }
-
+  const changeCategoryHandler = (value) => {
+    axios.post('api/book/change-category-name',{
+      category_id : value.categoryId,
+      name : value.value.newName
+    })
+    .then(res => {
+      if(res.data.error === "동일한 카테고리명이 존재합니다."){
+        this.setState({
+          message:res.data.error
+        })
+        alert(this.state.message)
+      } else {
+        props.updateState({value1: res.data.categorybooklist, value2: res.data.likebooklist})
+      }
+    })
+  }
   return (
     <>
       <Form

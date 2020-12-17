@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import './CategoryMoveModal.css'
 import { Modal, Select,Button } from 'antd';
+import axios from 'axios'
+
 const { Option } = Select;
-
-
-
 
 class CategoryMoveModal extends Component {
   constructor(props) {
@@ -36,6 +35,19 @@ class CategoryMoveModal extends Component {
       event({bookId:book_id._id, category:this.state.moveTo, prevCategory:book_id.category_id._id, seq_in_category:book_id.seq_in_category, hide_or_show:book_id.hide_or_show})
     }
   };
+
+  bookCategoryMove = (value) => {
+    console.log(value)
+    axios.post('api/book/move-book-between-category',{
+      book_id : value.bookId,
+      prev_category_id : value.prevCategory,
+      target_category_id : value.category,
+      seq_in_category: value.seq_in_category,
+      hide_or_show:value.hide_or_show
+    }).then(res => { 
+      this.props.updateState({value1: res.data.categorybooklist, value2: res.data.likebooklist})
+    })
+  }
 
   handleCancel = () => {
     console.log('Clicked cancel button');
@@ -82,7 +94,7 @@ class CategoryMoveModal extends Component {
           </Select>
             <span> 카테고리로 </span>
             <span>  
-              <Button size="small" key="submit" type="primary" loading={confirmLoading} onClick={()=>this.handleOk(this.props.bookTitle, this.props.bookCategoryMove)}>
+              <Button size="small" key="submit" type="primary" loading={confirmLoading} onClick={()=>this.handleOk(this.props.bookTitle, this.bookCategoryMove)}>
               이동
               </Button>
             </span>
