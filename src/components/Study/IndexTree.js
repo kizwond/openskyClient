@@ -19,16 +19,21 @@ class IndexTree extends Component {
     console.log('index : ',this.props.book)
     let level_all =[];
     const contentsTableList = this.props.book.map((table, index)=>{
+      console.log('try this : ',table)
         if(table){
           if(table.level === 1){
             let level = {
               title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"160px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"80px"}}><Progress size="large" style={{fontSize:"10px"}} percent={30} /></span> 
-                          <span style={{width:"60px"}}>13</span> 
-                          <span style={{width:"60px"}}>27</span>
+                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                          <span style={{width:"70px"}}>{table.yet}</span> 
+                          <span style={{width:"100px"}}>{table.ing.total}</span>
+                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                          <span style={{width:"35px"}}>{table.completed}</span>
+                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
                         </div></>),
-              index_id:table._id,
+              index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
               level: 1,
@@ -38,12 +43,16 @@ class IndexTree extends Component {
           } else if(table.level === 2){
             let level = {
               title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"160px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"80px"}}><Progress size="large" style={{fontSize:"10px"}} percent={30} /></span> 
-                          <span style={{width:"60px"}}>13</span> 
-                          <span style={{width:"60px"}}>27</span>
+                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                          <span style={{width:"70px"}}>{table.yet}</span> 
+                          <span style={{width:"100px"}}>{table.ing.total}</span>
+                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                          <span style={{width:"35px"}}>{table.completed}</span>
+                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
                         </div></>),
-              index_id:table._id,
+              index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
               level: 2,
@@ -53,12 +62,16 @@ class IndexTree extends Component {
           } else if(table.level === 3){
             let level = {
               title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"160px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"80px"}}><Progress size="large" style={{fontSize:"10px"}} percent={30} /></span> 
-                          <span style={{width:"60px"}}>13</span> 
-                          <span style={{width:"60px"}}>27</span>
+                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                          <span style={{width:"70px"}}>{table.yet}</span> 
+                          <span style={{width:"100px"}}>{table.ing.total}</span>
+                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                          <span style={{width:"35px"}}>{table.completed}</span>
+                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
                         </div></>),
-              index_id:table._id,
+              index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
               level: 3,
@@ -68,12 +81,16 @@ class IndexTree extends Component {
           } else if(table.level === 4){
             let level = {
               title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"160px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"80px"}}><Progress size="large" style={{fontSize:"10px"}} percent={30} /></span> 
-                          <span style={{width:"60px"}}>13</span> 
-                          <span style={{width:"60px"}}>27</span>
+                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                          <span style={{width:"70px"}}>{table.yet}</span> 
+                          <span style={{width:"100px"}}>{table.ing.total}</span>
+                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                          <span style={{width:"35px"}}>{table.completed}</span>
+                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
                         </div></>),
-              index_id:table._id,
+              index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
               level: 4,
@@ -83,12 +100,16 @@ class IndexTree extends Component {
           } else if(table.level === 5){
             let level = {
               title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"160px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"80px"}}><Progress size="large" style={{fontSize:"10px"}} percent={30} /></span> 
-                          <span style={{width:"60px"}}>13</span> 
-                          <span style={{width:"60px"}}>27</span>
+                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                          <span style={{width:"70px"}}>{table.yet}</span> 
+                          <span style={{width:"100px"}}>{table.ing.total}</span>
+                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                          <span style={{width:"35px"}}>{table.completed}</span>
+                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
                         </div></>),
-              index_id:table._id,
+              index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
               level: 5,

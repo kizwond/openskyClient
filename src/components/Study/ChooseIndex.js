@@ -64,14 +64,6 @@ class ChooseIndex extends Component {
     return null
     })
     console.log(requestArray)
-    // axios.post('api/studysetup/get-index',{
-    //   selected_books: value[0]
-    // }).then(res => {
-    //   console.log('데이타:', res.data)
-    //   this.setState({
-    //     books:[res.data.single_book_info]
-    //   })
-    // })
   }
 
   startStudy = () => {
