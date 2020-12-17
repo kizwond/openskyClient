@@ -38,6 +38,7 @@ export class EditorTry extends Component {
                        'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
                        'help', 'html', 'undo', 'redo'],
     }
+    console.log('this.props.arrayForEditor', this.props.arrayForEditor)
     const editorList = this.props.arrayForEditor.map((item,index)=>{
       return (
                 <>

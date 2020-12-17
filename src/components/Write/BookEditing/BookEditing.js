@@ -260,7 +260,7 @@ export class BookWriting extends Component {
   addCardHandler = () => {
     const contentsList = this.state.card_type.map((content)=>{
           if(content.nick === this.state.card_selected){
-            console.log(content)
+            console.log('here', content)
               const cardType = content.type
               const annotation = content.annotation
               console.log(cardType)
@@ -383,7 +383,7 @@ export class BookWriting extends Component {
                   
             }
           }
-        return null
+        
       }
     )
     var filtered = contentsList.filter(function(x) {
@@ -397,7 +397,7 @@ export class BookWriting extends Component {
       })
   }
   handleSubmit = () => {
-    // this.state.current_card
+    console.log('111:',this.state.current_card)
     const current = this.state.current_card
     if(current){
       var face1 = current.face1
@@ -495,7 +495,11 @@ export class BookWriting extends Component {
         }
       }
     }
-
+    
+    console.log("here?")
+    console.log(this.state.contents)
+    const seq_in_index = this.state.contents[0].seq_in_index 
+    console.log('seq_in_index',seq_in_index)
     axios.post('api/card/create-card', {
       cardtype_id:this.state.current_card_type,
       index_id:this.state.index_id,
@@ -503,21 +507,7 @@ export class BookWriting extends Component {
       second_face : second_face,
       third_face : third_face,
       annotation : annotation,
-      // editor1: this.state.editor1,
-      // editor2: this.state.editor2,
-      // editor3: this.state.editor3,
-      // editor4: this.state.editor4,
-      // editor5: this.state.editor5,
-      // editor6: this.state.editor6,
-      // editor7: this.state.editor7,
-      // editor8: this.state.editor8,
-      // editor9: this.state.editor9,
-      // editor10: this.state.editor10,
-      // editor11: this.state.editor11,
-      // editor12: this.state.editor12,
-      // editor13: this.state.editor13,
-      // editor14: this.state.editor14,
-      // editor15: this.state.editor15,
+      seq_in_index: seq_in_index
     })
     .then(res => {
       console.log('after submit:', res.data)
@@ -664,6 +654,7 @@ export class BookWriting extends Component {
       index_id: info.node.index_id
     })
       .then(res => {
+        console.log('what', res.data)
         this.setState({ 
           contents:res.data.cardlist,
         });
@@ -699,7 +690,7 @@ export class BookWriting extends Component {
       console.log(this.state.current_card)
     }
     if(this.state.contents){
-      console.log(this.state.contents)
+      console.log('original data:',this.state.contents)
       var contentsList = this.state.contents.map((content)=>{
         console.log(content)
         const face1_column_num = content.cardtype_id.num_column.face1;
@@ -733,7 +724,8 @@ export class BookWriting extends Component {
         } else if(content.cardtype_id.type === "face2"){
           if(annotation_on === true){
             const face1 = []
-            for( i = 0; i <face1_column_num; i++){
+            for( var i = 0; i <face1_column_num; i++){
+              console.log('i', i)
               face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const face2 = []
@@ -761,7 +753,7 @@ export class BookWriting extends Component {
             return total
           }
         }
-      return null
+
       })
     }
     if(this.state.card_type){
@@ -769,7 +761,8 @@ export class BookWriting extends Component {
           <Option value={card_type.nick}>{card_type.nick}</Option>
       ))
     }
-    if(contentsList.length>0){
+    console.log(contentsList)
+    if(contentsList){
       console.log('hello',contentsList)
       var list = contentsList.map((content)=>{
           console.log(content)
@@ -826,7 +819,7 @@ export class BookWriting extends Component {
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
           }
-        return null
+
       })
     }
 
