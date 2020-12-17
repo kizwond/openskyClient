@@ -16,16 +16,15 @@ import 'froala-editor/js/languages/ko'
 import 'froala-editor//css/themes/gray.min.css'
 
 
-import FroalaEditorComponent from 'react-froala-wysiwyg';
+// import FroalaEditorComponent from 'react-froala-wysiwyg';
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import BookRelocate from './BookRelocate'
-import FroalaEditor from 'react-froala-wysiwyg';
+// import FroalaEditor from 'react-froala-wysiwyg';
 
 
 
 const { Option } = Select;
-var userId = localStorage.getItem('userId')
 
 export class BookWriting extends Component {
   constructor(props) {
@@ -92,7 +91,6 @@ export class BookWriting extends Component {
     console.log('req start!!!!!!!!!!')
     axios.post('api/index/get-indexlist')
       .then(res => {
-        console.log('where is? :', res.data)
         this.setState({ 
           table_of_contents:res.data.indexList,
         });
@@ -101,7 +99,6 @@ export class BookWriting extends Component {
   getCardTypeList = () => {
     axios.get('api/cardtype/get-cardtypelist')
       .then(res => {
-        console.log('cardtypelist:',res)
         this.setState({ 
           card_type:res.data.cardtypes
         });
@@ -261,7 +258,6 @@ export class BookWriting extends Component {
     }
   }
   addCardHandler = () => {
-    console.log(this.state.card_selected)
     const contentsList = this.state.card_type.map((content)=>{
           if(content.nick === this.state.card_selected){
             console.log(content)
@@ -276,7 +272,7 @@ export class BookWriting extends Component {
                   for (var i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
-                  for (var i = 1; i < annotLength+1; i++) {
+                  for ( i = 1; i < annotLength+1; i++) {
                     face_array.push('주석'+i+'행')
                   }
                   console.log(face_array)
@@ -288,7 +284,7 @@ export class BookWriting extends Component {
                 } else {
                   const faceLength_1 = content.num_column.face1
                   const face_array = []
-                  for (var i = 1; i < faceLength_1+1; i++) {
+                  for ( i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
                   console.log(face_array)
@@ -305,13 +301,13 @@ export class BookWriting extends Component {
                   const faceLength_2 = content.num_column.face2
                   const annotLength = content.num_column.annot
                   const face_array = []
-                  for (var i = 1; i < faceLength_1+1; i++) {
+                  for ( i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
-                  for (var i = 1; i < faceLength_2+1; i++) {
+                  for ( i = 1; i < faceLength_2+1; i++) {
                     face_array.push('2면'+i+'행')
                   }
-                  for (var i = 1; i < annotLength+1; i++) {
+                  for ( i = 1; i < annotLength+1; i++) {
                     face_array.push('주석'+i+'행')
                   }
                   console.log(face_array)
@@ -324,10 +320,10 @@ export class BookWriting extends Component {
                   const faceLength_1 = content.num_column.face1
                   const faceLength_2 = content.num_column.face2
                   const face_array = []
-                  for (var i = 1; i < faceLength_1+1; i++) {
+                  for ( i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
-                  for (var i = 1; i < faceLength_2+1; i++) {
+                  for ( i = 1; i < faceLength_2+1; i++) {
                     face_array.push('2면'+i+'행')
                   }
                   console.log(face_array)
@@ -345,16 +341,16 @@ export class BookWriting extends Component {
                   const faceLength_3 = content.num_column.face3
                   const annotLength = content.num_column.annot
                   const face_array = []
-                  for (var i = 1; i < faceLength_1+1; i++) {
+                  for ( i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
-                  for (var i = 1; i < faceLength_2+1; i++) {
+                  for ( i = 1; i < faceLength_2+1; i++) {
                     face_array.push('2면'+i+'행')
                   }
-                  for (var i = 1; i < faceLength_3+1; i++) {
+                  for ( i = 1; i < faceLength_3+1; i++) {
                     face_array.push('3면'+i+'행')
                   }
-                  for (var i = 1; i < annotLength+1; i++) {
+                  for ( i = 1; i < annotLength+1; i++) {
                     face_array.push('주석'+i+'행')
                   }
                   console.log(face_array)
@@ -368,13 +364,13 @@ export class BookWriting extends Component {
                   const faceLength_2 = content.num_column.face2
                   const faceLength_3 = content.num_column.face3
                   const face_array = []
-                  for (var i = 1; i < faceLength_1+1; i++) {
+                  for ( i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
-                  for (var i = 1; i < faceLength_2+1; i++) {
+                  for ( i = 1; i < faceLength_2+1; i++) {
                     face_array.push('2면'+i+'행')
                   }
-                  for (var i = 1; i < faceLength_3+1; i++) {
+                  for ( i = 1; i < faceLength_3+1; i++) {
                     face_array.push('3면'+i+'행')
                   }
                   console.log(face_array)
@@ -387,6 +383,7 @@ export class BookWriting extends Component {
                   
             }
           }
+        return null
       }
     )
     var filtered = contentsList.filter(function(x) {
@@ -425,37 +422,37 @@ export class BookWriting extends Component {
       }
     }
     if (face1 && annot && !face3 && !face2){
-      for (var i = 1; i < face1+1; i++) {
+      for ( i = 1; i < face1+1; i++) {
         first_face.push(this.state['editor'+i])
       }
       if(annot){
-        for (var i = face1+1; i < face1+annot+1; i++) {
+        for ( i = face1+1; i < face1+annot+1; i++) {
           annotation.push(this.state['editor'+i])
         }
       }
     }
 
     if (face1 && face2 && !face3 && !annot){
-      for (var i = 1; i < face1+1; i++) {
+      for ( i = 1; i < face1+1; i++) {
         first_face.push(this.state['editor'+i])
       }
       if(face2){
-        for (var i = face1+1; i < face1+face2+1; i++) {
+        for ( i = face1+1; i < face1+face2+1; i++) {
           second_face.push(this.state['editor'+i])
         }
       }
     }
 
     if (face1 && face2 && !face3 &&annot){
-      for (var i = 1; i < face1+1; i++) {
+      for ( i = 1; i < face1+1; i++) {
         first_face.push(this.state['editor'+i])
       }
       if(face2){
-        for (var i = face1+1; i < face1+face2+1; i++) {
+        for ( i = face1+1; i < face1+face2+1; i++) {
           second_face.push(this.state['editor'+i])
         }
         if(annot){
-          for (var i = face1+face2+1; i < face1+face2+annot+1; i++) {
+          for ( i = face1+face2+1; i < face1+face2+annot+1; i++) {
             annotation.push(this.state['editor'+i])
           }
         }
@@ -463,37 +460,37 @@ export class BookWriting extends Component {
     }
 
     if (face1 && face2 && face3 && !annot){
-      for (var i = 1; i < face1+1; i++) {
+      for ( i = 1; i < face1+1; i++) {
         first_face.push(this.state['editor'+i])
       }
       if(face2){
-        for (var i = face1+1; i < face1+face2+1; i++) {
+        for ( i = face1+1; i < face1+face2+1; i++) {
           second_face.push(this.state['editor'+i])
         }
       }
       if(face3){
-        for (var i = face1+face2+1; i < face1+face2+face3+1; i++) {
+        for ( i = face1+face2+1; i < face1+face2+face3+1; i++) {
           third_face.push(this.state['editor'+i])
         }
       }
     }
 
     if (face1 && face2 && face3 && annot){
-      for (var i = 1; i < face1+1; i++) {
+      for ( i = 1; i < face1+1; i++) {
         first_face.push(this.state['editor'+i])
       }
       if(face2){
-        for (var i = face1+1; i < face1+face2+1; i++) {
+        for ( i = face1+1; i < face1+face2+1; i++) {
           second_face.push(this.state['editor'+i])
         }
       }
       if(face3){
-        for (var i = face1+face2+1; i < face1+face2+face3+1; i++) {
+        for ( i = face1+face2+1; i < face1+face2+face3+1; i++) {
           third_face.push(this.state['editor'+i])
         }
       }
       if(annot){
-        for (var i = face1+face2+face3+1; i < face1+face2+face3+annot+1; i++) {
+        for ( i = face1+face2+face3+1; i < face1+face2+face3+annot+1; i++) {
           annotation.push(this.state['editor'+i])
         }
       }
@@ -690,13 +687,13 @@ export class BookWriting extends Component {
       var toggle = '-308px' 
       var main = '0px'
     } else {
-      var toggle = '0px' 
-      var main = '-308px'
+      toggle = '0px' 
+      main = '-308px'
     }
     if (this.state.left_drawer_toggle === false){
       var toggleLeft = '-31px' 
     } else {
-      var toggleLeft = '0px' 
+      toggleLeft = '0px' 
     }
     if(this.state.current_card){
       console.log(this.state.current_card)
@@ -718,7 +715,7 @@ export class BookWriting extends Component {
               face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const annotation_contents = [];
-            for(var i = 0; i <annot_column_num; i++){
+            for( i = 0; i <annot_column_num; i++){
               annotation_contents.push(<FroalaEditorView model={content.content_of_annot[i]}/>)
             }
             const total = []
@@ -726,7 +723,7 @@ export class BookWriting extends Component {
             return total
           } else {
             const face1 = []
-            for(var i = 0; i <face1_column_num; i++){
+            for( i = 0; i <face1_column_num; i++){
               face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const total=[]
@@ -736,15 +733,15 @@ export class BookWriting extends Component {
         } else if(content.cardtype_id.type === "face2"){
           if(annotation_on === true){
             const face1 = []
-            for(var i = 0; i <face1_column_num; i++){
+            for( i = 0; i <face1_column_num; i++){
               face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const face2 = []
-            for(var i = 0; i <face2_column_num; i++){
+            for( i = 0; i <face2_column_num; i++){
               face2.push(<FroalaEditorView model={content.content_of_second_face[i]}/>) 
             }
             const annotation_contents = [];
-            for(var i = 0; i <annot_column_num; i++){
+            for( i = 0; i <annot_column_num; i++){
               annotation_contents.push(<FroalaEditorView model={content.content_of_annot[i]}/>)
             }
             const total = []
@@ -752,11 +749,11 @@ export class BookWriting extends Component {
             return total
           } else {
             const face1 = []
-            for(var i = 0; i <face1_column_num; i++){
+            for( i = 0; i <face1_column_num; i++){
               face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
             const face2 = []
-            for(var i = 0; i <face2_column_num; i++){
+            for( i = 0; i <face2_column_num; i++){
               face2.push(<FroalaEditorView model={content.content_of_second_face[i]}/>) 
             }
             const total = []
@@ -764,7 +761,7 @@ export class BookWriting extends Component {
             return total
           }
         }
-
+      return null
       })
     }
     if(this.state.card_type){
@@ -829,6 +826,7 @@ export class BookWriting extends Component {
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
           }
+        return null
       })
     }
 

@@ -1,12 +1,10 @@
 import React from 'react';
-import { Layout, Menu, Row, Col, Modal, Button  } from 'antd';
+import { Menu, Row, Col, Modal  } from 'antd';
 import './Navbar.css';
 import { NavLink} from 'react-router-dom';
 import { HomeOutlined, ReadOutlined, FormOutlined, ShopOutlined,ShoppingCartOutlined,SolutionOutlined,UserOutlined,UserAddOutlined,ApiOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import Login from '../../Account/Login'
-
-const { Header } = Layout;
 
 class NavBar extends React.Component {
   constructor(props) {

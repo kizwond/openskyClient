@@ -136,7 +136,7 @@ class CategoryModal extends Component {
                       category={category}/>
       ))
     } else {
-      var categoryList = 'none'
+      categoryList = 'none'
     }
     
     

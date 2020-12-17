@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
-import { Affix, Button, Collapse, Switch, Modal, Select, Input, InputNumber, Upload, message } from 'antd';
-import { SettingOutlined, DoubleRightOutlined,BoldOutlined,ItalicOutlined,UnderlineOutlined,UploadOutlined  } from '@ant-design/icons';
+import { SettingOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import PageSetting from './PageSetting'
 import CardSetting from './CardSetting'
 import FaceSetting from './FaceSetting'
 import RowSetting from './RowSetting'
 const { TabPane } = Tabs;
-const { Panel } = Collapse;
-const { Option } = Select;
+
 
 class SettingTabs extends Component {
   constructor(props) {
@@ -31,7 +29,7 @@ class SettingTabs extends Component {
     if(this.props.toggle === false) {
       var toggle = <SettingOutlined />
     } else {
-      var toggle = <DoubleRightOutlined />
+      toggle = <DoubleRightOutlined />
     }
     return (
         <Tabs defaultActiveKey={this.state.key} onChange={this.handleChange} type="card" size='small' tabPosition={mode} >

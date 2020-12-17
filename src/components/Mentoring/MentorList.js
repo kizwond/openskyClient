@@ -50,7 +50,7 @@ class MentorList extends Component {
         title: '멘토',
         dataIndex: 'name',
         width:'100px',
-        render: (text) => <a><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</a>,
+        render: (text) => <><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</>,
       },
       {
         title: '학습완료율',

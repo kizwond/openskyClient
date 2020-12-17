@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import { Transfer, Switch } from 'antd';
+import { Transfer } from 'antd';
 
 const mockData = [];
 for (let i = 0; i < 20; i++) {

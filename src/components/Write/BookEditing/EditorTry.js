@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
@@ -11,9 +10,6 @@ import 'froala-editor//css/themes/gray.min.css'
 
 
 import FroalaEditorComponent from 'react-froala-wysiwyg';
-import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
-// import { string } from 'yup'
-var userId = localStorage.getItem('userId')
 
 export class EditorTry extends Component {
   constructor(props) {

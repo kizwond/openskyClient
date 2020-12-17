@@ -5,7 +5,6 @@ import CategoryMoveModal from './CategoryMoveModal'
 import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
 import { Empty } from 'antd';
-import { NavLink} from 'react-router-dom';
 import axios from 'axios'
 
 class LikeListColumns extends Component {
@@ -225,7 +224,7 @@ class LikeSectionContent extends Component {
                         bookInfo={book_title}/>
       ))
     } else {
-      var bookList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      bookList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
     }
     
     

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table, Badge, Menu, Dropdown, Space,Avatar,Progress, Button } from 'antd';
-import { DownOutlined,UserOutlined,ApiOutlined } from '@ant-design/icons';
+import { Table, Avatar,Progress, Button } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { Chart } from 'react-charts'
 
 function MyChart() {
@@ -35,18 +35,11 @@ function MyChart() {
   )
 }
 
-const menu = (
-  <Menu>
-    <Menu.Item>Action 1</Menu.Item>
-    <Menu.Item>Action 2</Menu.Item>
-  </Menu>
-);
-
 function MenteeList() {
   const expandedRowRender = () => {
     const columns = [
       {  render: () => <div style={{width:"68px"}}></div>},
-      { dataIndex: 'name',width:"100px", render: (text) => <a><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</a>, },
+      { dataIndex: 'name',width:"100px", render: (text) => <><Avatar size={15} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /> {text}</>, },
       { dataIndex: 'progress',width:"85px",render: (text) => <Progress size="large" style={{fontSize:"10px"}} percent={text} showInfo={false}/>, },
       { dataIndex: 'average_lev', width:'85px',align: 'right', },
       { dataIndex: 'recent_study', align: 'right', },

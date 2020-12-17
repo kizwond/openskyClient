@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Tag, Space } from 'antd';
+import { Table} from 'antd';
 
 class SelectedIndexCardCount extends Component {
     constructor(props) {

@@ -1,12 +1,11 @@
 
 import React, { Component } from 'react';
-import { Avatar, Image, Button, Progress,  Menu, Dropdown } from 'antd';
+import { Avatar, Button,  Menu, Dropdown } from 'antd';
 import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import ProgressBar from "./progressBar";
 import axios from 'axios'
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 import Timer from './Timer'
-import TimerTotal from './TimerTotal'
 
 const session_id = sessionStorage.getItem('session_id')
 
@@ -204,7 +203,7 @@ class FlipMode extends Component {
     if(this.state.contents.length > 0){
       var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => <FroalaEditorView model={item}/>)
       var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => <FroalaEditorView model={item}/>)
-      var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
+      // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
       var id_of_content = this.state.contents[0]._id._id
       var book_id = this.state.contents[0].book_id
       
@@ -257,7 +256,7 @@ class FlipMode extends Component {
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>알겠음</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></a>
+                  <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
                 </Dropdown>
               </Button>
             </div>

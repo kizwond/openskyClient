@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
+import { Radio,Button,Switch,Input } from 'antd';
 
 class StudyMode extends Component {
   constructor(props) {

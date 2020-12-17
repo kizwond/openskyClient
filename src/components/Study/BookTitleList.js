@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Space, Tabs, Radio } from 'antd';
+import { Space, Tabs } from 'antd';
 import "./BookTitleList.css"
 import IndexTree from "./IndexTree"
 import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
-import axios from 'axios';
 import SelectedIndexCardCount from './SelectedIndexCardCount'
 
 const { TabPane } = Tabs;

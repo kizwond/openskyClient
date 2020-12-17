@@ -174,7 +174,7 @@ class ListSectionContent extends Component {
       console.log("here?")
       var plz = []
       var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
-
+      console.log(categoryArray)
       var data = plz.map(book =>({
         key: book._id,
         book_id: book._id,

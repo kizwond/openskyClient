@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import { Modal, Space, Select } from 'antd';
+import { Modal, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { DeleteOutlined,WarningTwoTone } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 const { confirm } = Modal;
-const { Option } = Select;
+
 
 class DeleteTable extends Component {
   constructor(props) {

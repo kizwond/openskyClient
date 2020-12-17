@@ -4,38 +4,19 @@ import { BookOutlined } from '@ant-design/icons';
 import './BookNaming.css'
 import axios from 'axios'
 
-const userId = localStorage.getItem('userId')
-
 const { Option } = Select;
 const HorizontalLoginForm = () => {
   
   const [form] = Form.useForm();
   const [, forceUpdate] = useState(); // To disable submit button at the beginning.
-  const [ user, setUser ] = useState();
   const [ message, setMessage ] = useState();
 
   useEffect(() => {
     forceUpdate({});
   }, []);
 
-  useEffect(() => {
-    setUser({user:userId});
-  }, []);
-
-  // getAllTitle() {
-  //   axios.get('api/create/get-all-title',{params: { userId: userId }})
-  //   .then(res => {
-  //     console.log(res)
-  //     this.setState({
-  //       bookTitle:res.data.bookTitle,
-  //       likeTitle:res.data.likeTitle,
-  //       category:res.data.category
-  //     })
-  //   })
-  // }
-
   const [data, setData] = useState({});
-  const [query, setQuery] = useState("react");
+
 
   useEffect(() => {
     let completed = false; 
@@ -49,7 +30,7 @@ const HorizontalLoginForm = () => {
     return () => {
       completed = true;
     };
-  }, [query]); 
+  }, []); 
 
   const handleSubmit = (values) => {
     var url = '/api/book/create-book';

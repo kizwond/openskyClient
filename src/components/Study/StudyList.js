@@ -4,7 +4,6 @@ import ListSectionContent from "./ListSectionContent"
 import LikeSectionContent from "./LikeSectionContent"
 import { Layout,Button } from 'antd';
 import "./StudyList.css"
-import { NavLink} from 'react-router-dom';
 
 const { Sider, Content } = Layout;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,EditOutlined} from '@ant-design/icons';
+import { StarTwoTone,EyeOutlined,ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
 
 const columns = [
   {
@@ -11,7 +11,7 @@ const columns = [
     title: '책이름',
     dataIndex: 'book_title',
     width:'100px',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <>{text}</>,
   },
   {
     title: '학습완료율',

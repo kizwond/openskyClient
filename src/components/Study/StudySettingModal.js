@@ -25,13 +25,13 @@ class StudySettingModal extends Component {
       fontSize:"12px"
     }
     const validateMessages = {
-      required: '${label} is required!',
+      required: ' is required!',
       types: {
-        email: '${label} is not a valid email!',
-        number: '${label} is not a valid number!',
+        email: ' is not a valid email!',
+        number: ' is not a valid number!',
       },
       number: {
-        range: '${label} must be between ${min} and ${max}',
+        range: ' must be between and ',
       },
     };
     console.log('hello there?:', this.props.studySetting)
@@ -129,8 +129,8 @@ class StudySettingModal extends Component {
       var name = this.props.info.book_id
     } else {
       console.log("initialvaue : null")
-      var initialValues = null
-      var name = this.props.info.book_id
+      initialValues = null
+      name = this.props.info.book_id
     }
     if(this.props.info.book_id === this.props.studySetting.book_id){
       var turn_on = this.props.isModalVisible.visible

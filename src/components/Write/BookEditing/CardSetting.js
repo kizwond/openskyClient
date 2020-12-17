@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Tabs } from 'antd';
-import { Affix, Button, Collapse, Switch, Modal, Select, Input, InputNumber, Upload, message } from 'antd';
-import { SettingOutlined, DoubleRightOutlined,BoldOutlined,ItalicOutlined,UnderlineOutlined,UploadOutlined,AlignCenterOutlined,AlignLeftOutlined,AlignRightOutlined  } from '@ant-design/icons';
-const { TabPane } = Tabs;
+import { Affix, Button, Collapse, Switch, Modal, Select, Input, InputNumber } from 'antd';
+import { BoldOutlined,ItalicOutlined,UnderlineOutlined,AlignCenterOutlined,AlignLeftOutlined,AlignRightOutlined } from '@ant-design/icons';
+
 const { Panel } = Collapse;
 const { Option } = Select;
 
@@ -32,21 +31,21 @@ class CardSetting extends Component {
             <LayoutSetting card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 배경색" key="3" className="data_collapse_panel">
-            <CardBackgroundColor  card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            <CardBackgroundColor card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 테두리 바깥쪽 여백" key="4" className="data_collapse_panel">
             <CardMargin card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 테두리 안쪽 여백" key="5" className="data_collapse_panel_numbering">
-            <CardPadding  card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            <CardPadding card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="카드 테두리" key="6" className="data_collapse_panel_page_top">
             <Switch size="small" className="page_top_toggle" />
-            <CardBorder  card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            <CardBorder card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
           <Panel header="폰트 일괄 변경" key="7" className="data_collapse_panel_page_bottom">
             <Switch size="small" className="page_bottom_toggle" />
-            <FontChange  card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            <FontChange card_selected={this.props.card_selected} cardType={this.props.cardType} />
           </Panel>
         </Collapse>
         <Affix offsetBottom={0}>
@@ -267,6 +266,7 @@ class SelectTemplete extends Component {
           return <><Option key={1} value='1면'>1면</Option><Option key={2} value='2면'>2면</Option><Option key={3} value='3면'>3면</Option></>
         }
       }
+      return null
     })
     return (
       <>
@@ -315,7 +315,9 @@ class LayoutSetting extends Component {
         if(value._id === this.props.card_selected){
           direction.push(value.direction)
         }
+        return null
     })
+    console.log(layoutSettingValue)
     console.log(direction[0])
     return (
       <>
@@ -390,7 +392,9 @@ class CardMargin extends Component {
           console.log(value.outer_margin)
           margin.push(value.outer_margin)
         }
+        return null
     })
+    console.log(layoutSettingValue)
 
     if(margin.length > 0){
       var top = margin[0].top
@@ -398,10 +402,10 @@ class CardMargin extends Component {
       var left = margin[0].left
       var right = margin[0].right
     } else {
-      var top = ''
-      var bottom = ''
-      var left = ''
-      var right = ''
+      top = ''
+      bottom = ''
+      left = ''
+      right = ''
     }
     
 
@@ -434,18 +438,19 @@ class CardPadding extends Component {
           console.log(value.inner_padding)
           padding.push(value.inner_padding)
         }
+        return null
     })
-
+    console.log(layoutSettingValue)
     if(padding.length > 0){
       var top = padding[0].top
       var bottom = padding[0].bottom
       var left = padding[0].left
       var right = padding[0].right
     } else {
-      var top = ''
-      var bottom = ''
-      var left = ''
-      var right = ''
+      top = ''
+      bottom = ''
+      left = ''
+      right = ''
     }
     return (
       <>
@@ -470,23 +475,23 @@ class CardBorder extends Component {
     this.state = {  };
   }
   render() {
-    const props = {
-      name: 'file',
-      action: '',
-      headers: {
-        authorization: 'authorization-text',
-      },
-      onChange(info) {
-        if (info.file.status !== 'uploading') {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-          message.error(`${info.file.name} file upload failed.`);
-        }
-      },
-    };
+    // const props = {
+    //   name: 'file',
+    //   action: '',
+    //   headers: {
+    //     authorization: 'authorization-text',
+    //   },
+    //   onChange(info) {
+    //     if (info.file.status !== 'uploading') {
+    //       console.log(info.file, info.fileList);
+    //     }
+    //     if (info.file.status === 'done') {
+    //       message.success(`${info.file.name} file uploaded successfully`);
+    //     } else if (info.file.status === 'error') {
+    //       message.error(`${info.file.name} file upload failed.`);
+    //     }
+    //   },
+    // };
     return (
       <>
         <div className="card_border_container">

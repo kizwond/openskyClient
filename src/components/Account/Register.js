@@ -2,23 +2,19 @@ import axios from 'axios'
 import React, { useState } from 'react';
 import {
   Form,
-  Select,
   Input,
-  Tooltip,
-  Checkbox,
   Button,
   Modal
 } from 'antd';
 import Login from './Login'
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import './Register.css'
 
 const RegistrationForm = (props) => {
-  const [msg, setMsg] = useState("중복된 아이디가 있습니다.");
+  const msg = "중복된 아이디가 있습니다."
   const [visible, setVisible] = useState(false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [form] = Form.useForm();
-  const { Option } = Select;
+
   const onFinish = (values) => {
     console.log(values)
     axios.post('api/user/register', {
@@ -42,17 +38,6 @@ const RegistrationForm = (props) => {
     });
     
   };
-  // const prefixSelector = (
-  //   <Form.Item name="prefix" noStyle>
-  //     <Select
-  //       style={{
-  //         width: 70,
-  //       }}
-  //     >
-  //       <Option value="82">+82</Option>
-  //     </Select>
-  //   </Form.Item>
-  // );
 
   const showModal = () => {
     setVisible({
@@ -138,89 +123,6 @@ const RegistrationForm = (props) => {
         >
           <Input.Password />
         </Form.Item>
-{/* 
-        <Form.Item
-          name="name"
-          label="이름"
-          rules={[
-            {
-              required: true,
-              message: '필수 정보입니다.',
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
-          label="이메일"
-          rules={[
-            {
-              type: 'email',
-              message: '올바른 이메일 주소를 입력하여 주세요.',
-            },
-            {
-              required: true,
-              message: '필수 정보입니다.',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="nickname"
-          label={
-            <span>
-              닉네임&nbsp;
-              <Tooltip title="책 작성시 저자정보에 노출되는 정보입니다.">
-                <QuestionCircleOutlined />
-              </Tooltip>
-            </span>
-          }
-          rules={[
-            {
-              required: true,
-              message: '사용하실 별칭을 입력하여 주세요.',
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="phone"
-          label="Phone Number"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your phone number!',
-            },
-          ]}
-        >
-          <Input
-            addonBefore={prefixSelector}
-            style={{
-              width: '100%',
-            }}
-          />
-        </Form.Item>
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[
-            {
-              validator: (_, value) =>
-                value ? Promise.resolve() : Promise.reject('이용약관에 동의하여 주세요.'),
-            },
-          ]}
-        >
-          <Checkbox>
-            CogBook <a href="/">이용약관</a> 동의
-          </Checkbox>
-        </Form.Item> */}
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Register

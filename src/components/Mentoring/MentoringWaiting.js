@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Modal, Space,Button,Avatar } from 'antd';
-import { ExclamationCircleOutlined,UserOutlined,LinkOutlined} from '@ant-design/icons';
+import { Table, Modal,Button,Avatar } from 'antd';
+import { UserOutlined,LinkOutlined} from '@ant-design/icons';
 import axios from 'axios'
 
 const { confirm } = Modal;
@@ -11,22 +11,6 @@ class MentoringWaiting extends Component {
     this.state = {  }
   }
   render() { 
-    // function showConfirm() {
-    //   confirm({
-    //     title: '해당 요청을 취소하시겠습니까?',
-    //     icon: <ExclamationCircleOutlined />,
-    //     content: 'Some descriptions',
-    //     onOk() {
-    //       console.log('OK');
-    //     },
-    //     onCancel() {
-    //       console.log('Cancel');
-    //     },
-    //     okText: '예',
-    //     cancelText: '아니요',
-    //   });
-    // }
-
     function showConfirm(id, event) {
       confirm({
         title: '해당 요청을 취소하시겠습니까?',

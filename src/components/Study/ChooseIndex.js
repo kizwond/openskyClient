@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from "axios"
-import { Radio,Row, Col, Divider,Alert,Button,Switch,Input } from 'antd';
+import { Radio,Row, Col,Button,Switch } from 'antd';
 import BookTitleList from './BookTitleList'
 import StudyMode from './StudyMode'
 import StudyFiltering from './StudyFiltering';
 import { RedoOutlined, FileOutlined } from '@ant-design/icons';
-import SelectedIndexCardCount from './SelectedIndexCardCount'
 import SelectedIndexTotal from './SelectedIndexTotal'
 
 class ChooseIndex extends Component {
@@ -67,37 +66,37 @@ class ChooseIndex extends Component {
       var reviewMode = "all"
     } else if(this.state.reviewDetail === "review"){
       if(this.state.reviewDetailDetail === "now"){
-        var reviewMode = "now"
+        reviewMode = "now"
       } else {
-        var reviewMode = "today"
+        reviewMode = "today"
       }
     }
     if(this.state.order === "normal"){
       var order_by = "sort_by_index"
     } else if(this.state.order === "review"){
-      var order_by = "sort_by_restudytime"
+      order_by = "sort_by_restudytime"
     } else if(this.state.order === "random"){
-      var order_by = "random"
+      order_by = "random"
     }
     if(this.state.newToggle === true){
       var newToggle = "on"
     } else {
-      var newToggle = "off"
+      newToggle = "off"
     }
     if(this.state.reviewToggle === true){
       var reviewToggle = "on"
     } else {
-      var reviewToggle = "off"
+      reviewToggle = "off"
     }
     if(this.state.hold === true){
       var hold = "on"
     } else {
-      var hold = "off"
+      hold = "off"
     }
     if(this.state.completed === true){
       var completed = "on"
     } else {
-      var completed = "off"
+      completed = "off"
     }
 
     console.log("session_id : ", value)
@@ -155,9 +154,9 @@ class ChooseIndex extends Component {
         selected_index_num : prevState.selected_index_num + 1})
       )
     } else {
-      var index_id = info.node.index_id
-      var book_id = info.node.book_id
-      var status = false
+      index_id = info.node.index_id
+      book_id = info.node.book_id
+      status = false
       this.setState( prevState =>({
         selected_index_num : prevState.selected_index_num - 1})
       )
@@ -274,46 +273,30 @@ class ChooseIndex extends Component {
     })
   }
   render() {
-
-    if(this.state.books){
-      var num_books = this.state.books.length
-    }
-
-    if(this.state.selected_index_num){
-      console.log(this.state.selected_index_num)
-    }
     
     var radioStyle1 = {
       display: 'block',
-      // height: '20px',
       fontSize:'12px',
       marginTop:'5px'
     };
     var radioStyle2 = {
       display: 'block',
-      // height: '230px',
       fontSize:'12px',
       marginTop:'5px'
     };
-    var radioStyle3 = {
-      display: 'block',
-      // height: '20px',
-      fontSize:'12px',
-      marginTop:'5px',
-      marginLeft:'20px'
-    };
+
     if(this.state.order === "normal"){
       var radioStyleNormal = radioStyle2
       var radioStyleReview = radioStyle1
       var radioStyleRandom = radioStyle1
     } else if(this.state.order === "review"){
-      var radioStyleNormal = radioStyle1
-      var radioStyleReview = radioStyle2
-      var radioStyleRandom = radioStyle1
+      radioStyleNormal = radioStyle1
+      radioStyleReview = radioStyle2
+      radioStyleRandom = radioStyle1
     } else if(this.state.order === "random"){
-      var radioStyleNormal = radioStyle1
-      var radioStyleReview = radioStyle1
-      var radioStyleRandom = radioStyle2
+      radioStyleNormal = radioStyle1
+      radioStyleReview = radioStyle1
+      radioStyleRandom = radioStyle2
     }
     
     return (

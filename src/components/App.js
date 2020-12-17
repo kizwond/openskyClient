@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense} from 'react';
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./Main/NavBar/NavBar";
 import { Layout, Affix } from 'antd';

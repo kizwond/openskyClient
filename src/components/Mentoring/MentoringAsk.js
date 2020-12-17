@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Tag, Space,Button,Avatar,Popover,Input,Checkbox,Modal } from 'antd';
-import { SearchOutlined,ExclamationCircleOutlined} from '@ant-design/icons';
-import axios from 'axios'
+import { Table,  Space,Button,Popover,Input,Checkbox } from 'antd';
+import { SearchOutlined} from '@ant-design/icons';
 
 const { TextArea } = Input;
 
@@ -61,7 +60,7 @@ class MentoringAsk extends Component {
       console.log("here?")
       var plz = []
       var categoryArray = this.props.category.map(book => book.book_ids.map((item)=> plz.push(item)))
-
+      console.log(categoryArray)
       var data = plz.map(book =>({
         key: book._id,
         book_id: book._id,

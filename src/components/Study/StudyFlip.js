@@ -78,24 +78,24 @@ class StudyFlip extends Component {
           <Header style={{background:'white', paddingLeft:10, borderBottom:"1px solid #d3d3d3"}}>
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
               <Dropdown overlay={menu_0} >
-                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                <a href="/" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 <AppstoreOutlined style={{marginRight:'100px'}}/>
                 </a>
               </Dropdown>
               <div style={{display:'flex', width:'90%', flexDirection:'row', justifyContent:'space-between'}}>
                 <Space size='large'>
                   <Dropdown overlay={menu_1} >
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    <a href="/" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       보기
                     </a>
                   </Dropdown>
                   <Dropdown overlay={menu_2} >
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    <a href="/" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       서식
                     </a>
                   </Dropdown>
                   <Dropdown overlay={menu_3} >
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    <a href="/" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       학습
                     </a>
                   </Dropdown>

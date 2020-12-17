@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Tabs } from 'antd';
-import { Affix, Button, Collapse, Switch, Modal, Select, Input, InputNumber, Upload, message } from 'antd';
-import { SettingOutlined, DoubleRightOutlined,BoldOutlined,ItalicOutlined,UnderlineOutlined,UploadOutlined  } from '@ant-design/icons';
-const { TabPane } = Tabs;
+import { Affix, Button, Collapse, Switch, Modal, Select, Input, Upload, message } from 'antd';
+import { BoldOutlined,ItalicOutlined,UnderlineOutlined,UploadOutlined  } from '@ant-design/icons';
+
 const { Panel } = Collapse;
 const { Option } = Select;
 

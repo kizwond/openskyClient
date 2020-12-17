@@ -6,7 +6,7 @@ import CategoryMoveModal from './CategoryMoveModal'
 import DeleteBook from './DeleteBookModal'
 import ChangeBookTitle from './ChangeBookTitle'
 import { Empty,Switch } from 'antd';
-import { NavLink} from 'react-router-dom';
+
 import axios from 'axios'
 
 class ListColumns extends Component {
@@ -245,7 +245,7 @@ class CategoryListContainer extends Component {
         }
       )
     } else {
-      var bookList = this.props.category.name
+      bookList = this.props.category.name
     }
     
     return (
@@ -275,7 +275,7 @@ class ListSectionContent extends Component {
                               hideOrShowToggleState={this.props.hideOrShowToggleState}/>
       ))
     } else {
-      var categoryList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      categoryList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
     }
     
     return ( 
