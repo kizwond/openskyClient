@@ -20,6 +20,7 @@ import 'froala-editor//css/themes/gray.min.css'
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import BookRelocate from './BookRelocate'
+import NewCardTemplete from './NewCardTemplete';
 // import FroalaEditor from 'react-froala-wysiwyg';
 
 
@@ -724,7 +725,7 @@ export class BookWriting extends Component {
         } else if(content.cardtype_id.type === "face2"){
           if(annotation_on === true){
             const face1 = []
-            for( var i = 0; i <face1_column_num; i++){
+            for( i = 0; i <face1_column_num; i++){
               console.log('i', i)
               face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
             }
@@ -842,8 +843,9 @@ export class BookWriting extends Component {
         </div>
         <div className="editor_container_templete_position_absolute">
           <div className="editor_top_menu">
-            <div>
-              <Button size='small' onClick={this.showModal}>카드 이동/삭제</Button><span className="book_title">책 제목 : {this.state.bookTitle}</span>
+            <div style={{display:'flex', alignItems:'center'}}>
+              <NewCardTemplete addCardType={this.addCardType}/>
+              <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button><span className="book_title">책 제목 : {this.state.bookTitle}</span>
               <Modal
                 title="카드 이동 및 삭제"
                 visible={this.state.visible}
@@ -901,7 +903,7 @@ export class BookWriting extends Component {
           </div>
         </div>
         <div className="right_side_container" style={{marginRight:toggle}}>
-          <SettingTabs card_selected={this.state.card_selected_detailsetting} onCardChangeHandler={this.onCardChangeHandler} cardType={this.state.card_type} addCardType={this.addCardType} toggle={this.state.hide_show_toggle} onClick={this.handleClick}/>
+          <SettingTabs card_selected={this.state.card_selected_detailsetting} onCardChangeHandler={this.onCardChangeHandler} cardType={this.state.card_type} toggle={this.state.hide_show_toggle} onClick={this.handleClick}/>
         </div>
       </div>
       </>

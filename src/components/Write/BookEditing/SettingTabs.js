@@ -54,4 +54,4 @@ class SettingTabs extends Component {
 }
 
 
-export default SettingTabs
+export default SettingTabs;
