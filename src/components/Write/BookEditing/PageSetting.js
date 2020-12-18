@@ -22,7 +22,6 @@ class PageSetting extends Component {
    
     return (
       <div className="page_setting_container">
-        <NewPageTemplete addCardType={this.props.addCardType}/>
         <Collapse defaultActiveKey={['1','2','3','4','5','6','7']} >
           <Panel header="페이지 크기" key="1" className="data_collapse_panel"> 
             <PageSize/>
@@ -61,49 +60,6 @@ class PageSetting extends Component {
   }
 }
 
-class NewPageTemplete extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      visible:false,
-     };
-  }
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  handleOk = e => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  handleCancel = e => {
-    this.setState({
-      visible: false,
-    });
-  };
-  render() {
-    return (
-      <div className='new_templete_button_container'>
-        <Button size={'small'} onClick={this.showModal} >새 페이지 템플릿 추가</Button>
-        <Modal
-          title="새 페이지 템플릿"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          okText='만들기'
-          cancelText='취소'
-          maskClosable={false}
-        >
-          <div>페이지설정</div>
-        </Modal>
-      </div>
-    );
-  }
-}
 
 
 class PageSize extends Component {

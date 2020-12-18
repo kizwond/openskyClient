@@ -4,7 +4,7 @@ import axios from 'axios'
 const { Option } = Select;
 
 
-class NewCardTemplete extends Component {
+class NewPageTemplete extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -132,9 +132,9 @@ class NewCardTemplete extends Component {
   render() {
     return (
       <>
-        <Button size={'small'} style={{fontSize:"11px"}} onClick={this.showModal} >새 카드 템플릿 추가</Button>
+        <Button size={'small'} style={{fontSize:"11px"}} onClick={this.showModal} >새 페이지 템플릿 추가</Button>
         <Modal
-          title="새카드 템플릿"
+          title="새 페이지 템플릿"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
@@ -195,4 +195,4 @@ class NewCardTemplete extends Component {
   }
 }
 
-export default NewCardTemplete;
+export default NewPageTemplete;

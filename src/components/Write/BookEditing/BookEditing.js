@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import LeftDrawer from './BookWritingLeftDrawer'
 import './BookWriting.css'
-import {Button, Select,Modal } from 'antd';
+import {Button, Select,Modal,Space } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
 
@@ -21,6 +21,7 @@ import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import BookRelocate from './BookRelocate'
 import NewCardTemplete from './NewCardTemplete';
+import NewPageTemplete from './NewPageTemplete';
 // import FroalaEditor from 'react-froala-wysiwyg';
 
 
@@ -124,9 +125,6 @@ export class BookWriting extends Component {
       card_type:value
     })
   }
-
-  
-  
 
   handleClick = (key) => {
     if(key === '1' ){
@@ -737,7 +735,7 @@ export class BookWriting extends Component {
 
       })
     }
-
+    console.log(this.state.table_of_contents)
     return (
       <>
       <div className="book_writing_container">
@@ -754,8 +752,11 @@ export class BookWriting extends Component {
         <div className="editor_container_templete_position_absolute">
           <div className="editor_top_menu">
             <div style={{display:'flex', alignItems:'center'}}>
-              <NewCardTemplete updateCardTypeState={this.updateCardTypeState} />
-              <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button><span className="book_title">책 제목 : {this.state.bookTitle}</span>
+              <Space>
+                <NewPageTemplete updateCardTypeState={this.updateCardTypeState} />
+                <NewCardTemplete updateCardTypeState={this.updateCardTypeState} />
+                <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button>
+              </Space>
               <Modal
                 title="카드 이동 및 삭제"
                 visible={this.state.visible}
