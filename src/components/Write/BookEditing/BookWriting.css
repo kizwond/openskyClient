@@ -213,27 +213,7 @@ footer{
   height:22px;
   margin-top:1px;
 }
-/* 새카드 템플릿 모달 */
-.new_card_templete_container{
-  display: flex;
-  flex-direction: row;
-  height:200px;
-  justify-content: space-evenly;
-  align-items: center;
-  font-size:13px;
-}
-.new_card_templete_columns{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height:200px;
-}
-.new_card_templete_contents{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height:200px;
-}
+
 
 /* 페이지 템플릿 선택 */
 .select_page_templete_container{
