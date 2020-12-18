@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Affix, Button, Collapse, Switch, Modal, Select, Input, Upload, message } from 'antd';
+import { Affix, Button, Collapse, Switch, Select, Input, Upload, message } from 'antd';
 import { BoldOutlined,ItalicOutlined,UnderlineOutlined,UploadOutlined  } from '@ant-design/icons';
 
 const { Panel } = Collapse;
