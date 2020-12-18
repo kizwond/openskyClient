@@ -109,6 +109,7 @@ export class BookWriting extends Component {
     this.getIndexList()
     this.getCardTypeList()
   }
+  
   addTable =(value) => {
     console.log(value)
     axios.post('api/index/create-index',{
@@ -125,22 +126,10 @@ export class BookWriting extends Component {
     })
   }
 
-  addCardType =(value) => {
-    console.log(value)
-    axios.post('api/cardtype/create-cardtype',{
-      type: value.card_type,
-      nick: value.card_nick,
-      importance: value.card_star,
-      face1: value.face_1,
-      face2: value.face_2,
-      face3: value.face_3,
-      annotation: value.annotation,
-      annot: value.annotationNum,
-    }).then(res => {
-      console.log(res.data)
-      this.setState({
-        card_type:res.data.cardtypes
-      })
+  updateCardTypeState = (value) => {
+    console.log('cardtype update state', value)
+    this.setState({
+      card_type:value
     })
   }
 
@@ -844,7 +833,7 @@ export class BookWriting extends Component {
         <div className="editor_container_templete_position_absolute">
           <div className="editor_top_menu">
             <div style={{display:'flex', alignItems:'center'}}>
-              <NewCardTemplete addCardType={this.addCardType}/>
+              <NewCardTemplete updateCardTypeState={this.updateCardTypeState} />
               <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button><span className="book_title">책 제목 : {this.state.bookTitle}</span>
               <Modal
                 title="카드 이동 및 삭제"

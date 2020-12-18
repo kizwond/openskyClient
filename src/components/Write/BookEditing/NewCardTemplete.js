@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Switch, Modal, Select, Input, InputNumber } from 'antd';
-
+import axios from 'axios'
 const { Option } = Select;
 
 
@@ -44,7 +44,7 @@ class NewCardTemplete extends Component {
                   annotation: this.state.annotation,
                   annotationNum: this.state.annotationNum,
                   }
-    this.props.addCardType(value)
+    this.addCardType(value)
     this.setState({
       cardType:'카드종류를 선택해 주세요',
       cardNick:'',
@@ -57,6 +57,23 @@ class NewCardTemplete extends Component {
       annotationNum:'',
     });
   };
+
+  addCardType =(value) => {
+    console.log(value)
+    axios.post('api/cardtype/create-cardtype',{
+      type: value.card_type,
+      nick: value.card_nick,
+      importance: value.card_star,
+      face1: value.face_1,
+      face2: value.face_2,
+      face3: value.face_3,
+      annotation: value.annotation,
+      annot: value.annotationNum,
+    }).then(res => {
+      console.log(res.data)
+      this.props.updateCardTypeState(res.data.cardtypes)
+    })
+  }
 
   handleCancel = e => {
     console.log(e);
