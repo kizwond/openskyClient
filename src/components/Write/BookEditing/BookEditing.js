@@ -68,6 +68,28 @@ export class BookWriting extends Component {
     }
   }
 
+  componentDidMount() {
+    this.getIndexList()
+    this.getCardTypeList()
+  }
+
+  getIndexList = () => {
+    console.log('req start!!!!!!!!!!')
+    axios.post('api/index/get-indexlist')
+      .then(res => {
+        this.setState({ 
+          table_of_contents:res.data.indexList,
+        });
+      })
+  }
+  getCardTypeList = () => {
+    axios.get('api/cardtype/get-cardtypelist')
+      .then(res => {
+        this.setState({ 
+          card_type:res.data.cardtypes
+        });
+      })
+  }
 
   showModal = () => {
     this.setState({
@@ -88,41 +110,11 @@ export class BookWriting extends Component {
       visible: false,
     });
   };
-  getIndexList = () => {
-    console.log('req start!!!!!!!!!!')
-    axios.post('api/index/get-indexlist')
-      .then(res => {
-        this.setState({ 
-          table_of_contents:res.data.indexList,
-        });
-      })
-  }
-  getCardTypeList = () => {
-    axios.get('api/cardtype/get-cardtypelist')
-      .then(res => {
-        this.setState({ 
-          card_type:res.data.cardtypes
-        });
-      })
-  }
-  componentDidMount() {
-    this.getIndexList()
-    this.getCardTypeList()
-  }
-  
-  addTable =(value) => {
-    console.log(value)
-    axios.post('api/index/create-index',{
-      book_id : this.props.location.book_id,
-      level : value.prevTableLevel,
-      seq : value.prevTableOrder,
-      name : value.value.newTable,
-    }).then(res => {
-      console.log(res.data)
-      const contentsTable = res.data.indexList
-      this.setState({
-        table_of_contents:contentsTable,
-      })
+
+  updateContentsTable = (value) => {
+    console.log('updateContentsTable :', value)
+    this.setState({
+      table_of_contents:value
     })
   }
 
@@ -134,73 +126,8 @@ export class BookWriting extends Component {
   }
 
   
-  changeTableNameHandler = (value) => {
-    console.log(value)
-    axios.post('api/index/change-index-name',{
-      index_id : value.tableId,
-      name : value.value.newName
-    })
-    .then(res => {
-      console.log('name change : ',res.data)
-      const contentsTable = res.data.indexList
-      this.setState({
-        table_of_contents:contentsTable,
-      })
-    })
-  }
+  
 
-  tableLevelHandler = (value) => {
-    console.log(value)
-    axios.post('api/index/change-index-level',{
-      book_id : this.props.location.book_id,
-      index_id : value.tableId,
-      level : value.presentLevel,
-      seq: value.seq,
-      action: value.action
-    })
-    .then(res => {
-      console.log(res.data)
-      if(res.data.msg === "이동불가") {
-        alert(res.data.msg)
-      } else {
-        const contentsTable = res.data.indexList
-        this.setState({
-          table_of_contents:contentsTable,
-        })
-      }
-    })
-  }
-  tableOrderlHandler = (value) => {
-    console.log(value)
-    axios.post('api/index/change-index-order',{
-      index_id : value.tableId,
-      book_id : this.props.location.book_id,
-      action : value.action,
-      seq :value.presentOrder
-    })
-    .then(res => {
-      console.log(res.data)
-      const contentsTable = res.data.indexList
-      this.setState({
-        table_of_contents:contentsTable,
-      })
-    })
-  }
-  tableDeleteHandler = (value) => {
-    console.log('index delete:', value)
-    axios.post('api/index/delete-index',{
-      index_id : value.tableId,
-      book_id : this.props.location.book_id,
-      seq:value.seq,
-      level:value.level,
-    }).then(res => {
-      console.log(res.data)
-      const contentsTable = res.data.indexList
-      this.setState({
-        table_of_contents:contentsTable,
-      })
-    })
-  }
   handleClick = (key) => {
     if(key === '1' ){
       this.setState({
@@ -676,9 +603,7 @@ export class BookWriting extends Component {
     } else {
       toggleLeft = '0px' 
     }
-    if(this.state.current_card){
-      console.log(this.state.current_card)
-    }
+
     if(this.state.contents){
       console.log('original data:',this.state.contents)
       var contentsList = this.state.contents.map((content)=>{
@@ -817,11 +742,7 @@ export class BookWriting extends Component {
       <>
       <div className="book_writing_container">
         <div className="left_side_container" style={{marginLeft:toggleLeft}}>
-        <LeftDrawer addTable={this.addTable} 
-                    tableDeleteHandler={this.tableDeleteHandler} 
-                    tableOrderlHandler={this.tableOrderlHandler} 
-                    tableLevelHandler={this.tableLevelHandler} 
-                    changeTableNameHandler={this.changeTableNameHandler} 
+        <LeftDrawer updateContentsTable={this.updateContentsTable} 
                     table_of_contents={this.state.table_of_contents} 
                     toggle={this.state.left_drawer_toggle} 
                     onClick={this.leftDrawerHandleClick}

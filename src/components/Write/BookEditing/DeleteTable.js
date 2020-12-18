@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-
 import { Modal, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { DeleteOutlined } from '@ant-design/icons';
-const { confirm } = Modal;
+import axios from 'axios'
 
+const { confirm } = Modal;
 
 class DeleteTable extends Component {
   constructor(props) {
@@ -12,9 +12,22 @@ class DeleteTable extends Component {
     this.state = { 
      }
   }
-  
-  deleteThis = (value) => {
-    this.props.tableDeleteHandler({value, bookId:this.props.table.book_id, tableId:this.props.table._id, seq:this.props.table.seq, level:this.props.table.level})
+
+  tableDeleteHandler = (value) => {
+    console.log('index delete:', value)
+    axios.post('api/index/delete-index',{
+      index_id : value.tableId,
+      book_id : value.bookId,
+      seq:value.seq,
+      level:value.level,
+    }).then(res => {
+      console.log(res.data)
+      this.props.updateContentsTable(res.data.indexList)
+    })
+  }
+
+  deleteThis = () => {
+    this.tableDeleteHandler({ bookId:this.props.table.book_id, tableId:this.props.table._id, seq:this.props.table.seq, level:this.props.table.level})
   }
   showPromiseConfirm = (table, event) => {
     console.log(this)
@@ -25,7 +38,7 @@ class DeleteTable extends Component {
       icon: <ExclamationCircleOutlined />,
       content: [],
       onOk() {  
-        event({tableId:table._id})
+        event()
       },
       onCancel() { },
     });

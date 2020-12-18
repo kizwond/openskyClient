@@ -1,11 +1,12 @@
 import React from 'react';
 import { Form, Input, Button, Space } from 'antd';
+import axios from 'axios'
 
 const ChangeCategory = (props) => {
   const [form] = Form.useForm();
   const onFinish = value => {
     console.log(value)
-    props.changeTableNameHandler({value, tableId:props.table._id})
+    changeTableNameHandler({value, tableId:props.table._id})
     props.inputAreaVisible()
   };
   const cancel = () => {
@@ -13,6 +14,18 @@ const ChangeCategory = (props) => {
     console.log(props.inputAreaVisible)
     console.log('cancel clicked!!!')
     console.log(props.vi)
+  }
+
+  const changeTableNameHandler = (value) => {
+    console.log(value)
+    axios.post('api/index/change-index-name',{
+      index_id : value.tableId,
+      name : value.value.newName
+    })
+    .then(res => {
+      console.log(res.data)
+      props.updateContentsTable(res.data.indexList)
+    })
   }
 
   return (

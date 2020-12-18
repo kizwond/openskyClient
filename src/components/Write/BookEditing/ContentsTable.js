@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, Popover,Form, Input, Button, Space } from 'antd';
-import { PlusCircleOutlined,CaretDownOutlined,CaretUpOutlined,SettingOutlined,EditOutlined,StepBackwardOutlined,StepForwardOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined,SettingOutlined,EditOutlined,StepBackwardOutlined,StepForwardOutlined } from '@ant-design/icons';
 import './ContentsTable.css'
 import ContentsTableChangeName from './ContentsTableChangeName'
 import DeleteTable from './DeleteTable'
+import axios from 'axios'
 
 class ContentsTableList extends Component {
   constructor(props) {
@@ -15,9 +16,57 @@ class ContentsTableList extends Component {
   }
 
   onFinish = value => {
-    this.props.addTable({value, prevTableLevel:this.props.table.level, prevTableOrder:this.props.table.seq})
+    console.log(this.props)
+    this.addTable({value, prevTableLevel:this.props.table.level, prevTableOrder:this.props.table.seq})
     this.newInputVisible()
   };
+
+  addTable =(value) => {
+    console.log(value)
+    axios.post('api/index/create-index',{
+      book_id : this.props.table.book_id,
+      level : value.prevTableLevel,
+      seq : value.prevTableOrder,
+      name : value.value.newTable,
+    }).then(res => {
+      console.log(res.data)
+      this.props.updateContentsTable(res.data.indexList)
+    })
+  }
+
+  tableLevelHandler = (value) => {
+    console.log(value)
+    axios.post('api/index/change-index-level',{
+      book_id : this.props.table.book_id,
+      index_id : value.tableId,
+      level : value.presentLevel,
+      seq: value.seq,
+      action: value.action
+    })
+    .then(res => {
+      console.log(res.data)
+      if(res.data.msg === "이동불가") {
+        alert(res.data.msg)
+      } else {
+        console.log(res.data)
+        this.props.updateContentsTable(res.data.indexList)
+      }
+    })
+  }
+
+  // tableOrderlHandler = (value) => {
+  //   console.log(value)
+  //   axios.post('api/index/change-index-order',{
+  //     index_id : value.tableId,
+  //     book_id : this.props.table.book_id,
+  //     action : value.action,
+  //     seq :value.presentOrder
+  //   })
+  //   .then(res => {
+  //     console.log(res.data)
+  //     this.props.updateContentsTable(res.data.indexList)
+  //   })
+  // }
 
   inputAreaVisible = () =>{
     this.setState(state => ({
@@ -58,38 +107,38 @@ class ContentsTableList extends Component {
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-          {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
+          {this.state.inputArea ? <ContentsTableChangeName updateContentsTable={this.props.updateContentsTable} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 2 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
+            {this.state.inputArea ? <ContentsTableChangeName updateContentsTable={this.props.updateContentsTable} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 3 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
+            {this.state.inputArea ? <ContentsTableChangeName updateContentsTable={this.props.updateContentsTable} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 4 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
+            {this.state.inputArea ? <ContentsTableChangeName updateContentsTable={this.props.updateContentsTable} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
           {this.props.table.level === 5 ? <div>
           <Popover placement="rightTop" title={text} visible={this.state.newInput} content={content} trigger="click">
             <PlusCircleOutlined onClick={this.newInputVisible} style={{fontSize:'14px'}} /> 
           </Popover>
-            {this.state.inputArea ? <ContentsTableChangeName changeTableNameHandler={this.props.changeTableNameHandler} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
+            {this.state.inputArea ? <ContentsTableChangeName updateContentsTable={this.props.updateContentsTable} table={this.props.table} vi={this.state.inputArea} inputAreaVisible={this.inputAreaVisible} /> : <> {this.props.table.name}/ 순서 : {this.props.table.seq}</>}
           </div> : <div></div>}
         </div>
         <div className="mokcha_tools">
           <div><EditOutlined onClick={this.inputAreaVisible} style={{fontSize:'14px'}}/></div>
-          <div><StepBackwardOutlined onClick={()=>this.props.tableLevelHandler({action:'left', tableId:this.props.table._id, presentLevel:this.props.table.level,seq:this.props.table.seq})}/> <StepForwardOutlined onClick={()=>this.props.tableLevelHandler({action:'right', tableId:this.props.table._id, presentLevel:this.props.table.level,seq:this.props.table.seq})}/></div>
-          <div><CaretUpOutlined onClick={()=>this.props.tableOrderlHandler({action:'up', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/> <CaretDownOutlined onClick={()=>this.props.tableOrderlHandler({action:'down', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/></div>
-          <div><DeleteTable table={this.props.table} tableDeleteHandler={this.props.tableDeleteHandler}/></div>
+          <div><StepBackwardOutlined onClick={()=>this.tableLevelHandler({action:'left', tableId:this.props.table._id, presentLevel:this.props.table.level,seq:this.props.table.seq})}/> <StepForwardOutlined onClick={()=>this.tableLevelHandler({action:'right', tableId:this.props.table._id, presentLevel:this.props.table.level,seq:this.props.table.seq})}/></div>
+          {/* <div><CaretUpOutlined onClick={()=>this.tableOrderlHandler({action:'up', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/> <CaretDownOutlined onClick={()=>this.tableOrderlHandler({action:'down', bookId:this.props.table.book_id, tableId:this.props.table._id, presentOrder:this.props.table.seq})}/></div> */}
+          <div><DeleteTable table={this.props.table} updateContentsTable={this.props.updateContentsTable}/></div>
         </div>
       </div>
     );
@@ -107,12 +156,8 @@ class ContentsTable extends Component {
     const contentsTableList = this.props.table_of_contents.map((table)=>(
       <ContentsTableList key={table._id} 
                          table={table} 
-                         addTable={this.props.addTable} 
-                         table_of_contents={this.props.table_of_contents}
-                         changeTableNameHandler={this.props.changeTableNameHandler}
-                         tableLevelHandler={this.props.tableLevelHandler} 
-                         tableOrderlHandler={this.props.tableOrderlHandler}
-                         tableDeleteHandler={this.props.tableDeleteHandler}/>
+                         updateContentsTable={this.props.updateContentsTable} 
+                         table_of_contents={this.props.table_of_contents}/>
     ))
     return (
       <Modal
@@ -137,7 +182,7 @@ class ContentsTable extends Component {
             <div className="mokcha_right_columns">
               <div>이름변경</div>
               <div>레벨이동</div>
-              <div>순서이동</div>
+              {/* <div>순서이동</div> */}
               <div>삭제</div>
             </div>
           </div>
