@@ -22,6 +22,8 @@ import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 import BookRelocate from './BookRelocate'
 import NewCardTemplete from './NewCardTemplete';
 import NewPageTemplete from './NewPageTemplete';
+import CardTempleteEditing from './CardTempleteEditing'
+
 // import FroalaEditor from 'react-froala-wysiwyg';
 
 
@@ -84,8 +86,10 @@ export class BookWriting extends Component {
       })
   }
   getCardTypeList = () => {
-    axios.get('api/cardtype/get-cardtypelist')
+    axios.get('api/cardtype/get-cardtype')
       .then(res => {
+        console.log(res.data)
+        console.log("get cardtype list :", res.data)
         this.setState({ 
           card_type:res.data.cardtypes
         });
@@ -670,8 +674,9 @@ export class BookWriting extends Component {
       })
     }
     if(this.state.card_type){
-      var optionList = this.state.card_type.map((card_type)=>(
-          <Option value={card_type.nick}>{card_type.nick}</Option>
+      console.log(this.state.card_type)
+      var optionList = this.state.card_type.map((type)=>(
+          <Option value={type.name}>{type.name}</Option>
       ))
     }
     console.log(contentsList)
@@ -753,8 +758,9 @@ export class BookWriting extends Component {
           <div className="editor_top_menu">
             <div style={{display:'flex', alignItems:'center'}}>
               <Space>
-                <NewPageTemplete updateCardTypeState={this.updateCardTypeState} />
-                <NewCardTemplete updateCardTypeState={this.updateCardTypeState} />
+                <NewPageTemplete updateCardTypeState={this.updateCardTypeState}/>
+                <NewCardTemplete updateCardTypeState={this.updateCardTypeState}/>
+                <CardTempleteEditing card_type={this.state.card_type}/>
                 <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button>
               </Space>
               <Modal
