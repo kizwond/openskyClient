@@ -538,6 +538,7 @@ export class BookWriting extends Component {
                                                          current_card_type={this.state.current_card_type}
                                                          contents={this.state.contents}
                                                          index_id={this.state.index_id}
+                                                         current_card={this.state.current_card}
                                                          /> : ''}
             </div>
           </div>

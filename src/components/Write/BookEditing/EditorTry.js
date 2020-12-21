@@ -8,28 +8,30 @@ import 'froala-editor/js/plugins.pkgd.min.js'
 import 'froala-editor/js/languages/ko'
 import 'froala-editor//css/themes/gray.min.css'
 
-
 import FroalaEditorComponent from 'react-froala-wysiwyg';
+
+import axios from 'axios'
 
 export class EditorTry extends Component {
   constructor(props) {
     super(props)
     this.state = {
-       editor1: '',
-       editor2: '',
-       editor3: '',
-       editor4: '',
-       editor5: '',
-       editor6: '',
-       editor7: '',
-       editor8: '',
-       editor9: '',
-       editor10: '',
-       editor11: '',
-       editor12: '',
-       editor13: '',
-       editor14: '',
-       editor15: '',
+      flag:'',
+      editor1: '',
+      editor2: '',
+      editor3: '',
+      editor4: '',
+      editor5: '',
+      editor6: '',
+      editor7: '',
+      editor8: '',
+      editor9: '',
+      editor10: '',
+      editor11: '',
+      editor12: '',
+      editor13: '',
+      editor14: '',
+      editor15: '',
     }
   }
   handleModelChangeFlag = (model) => {
@@ -162,111 +164,106 @@ export class EditorTry extends Component {
         var annot = current.annot
       }
     }
-    // const first_face = [];
-    // const second_face = [];
-    // const third_face = [];
-    // const annotation = [];
-    // if (face1 && !face2 && !face3 && !annot){
-    //   for (var i = 1; i < face1+1; i++) {
-    //     first_face.push(this.state['editor'+i])
-    //   }
-    // }
-    // if (face1 && annot && !face3 && !face2){
-    //   for ( i = 1; i < face1+1; i++) {
-    //     first_face.push(this.state['editor'+i])
-    //   }
-    //   if(annot){
-    //     for ( i = face1+1; i < face1+annot+1; i++) {
-    //       annotation.push(this.state['editor'+i])
-    //     }
-    //   }
-    // }
+    const face1_array = [];
+    const selection_array = [];
+    const face2_array = [];
+    const share_array = [];
+    const annotation_array = [];
+    if (face1 && !face2 && !annot){
+      for (var i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+    }
+    if (face1 && annot && !face2){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(annot){
+        for ( i = face1+1; i < face1+annot+1; i++) {
+          annotation_array.push(this.state['editor'+i])
+        }
+      }
+    }
 
-    // if (face1 && face2 && !face3 && !annot){
-    //   for ( i = 1; i < face1+1; i++) {
-    //     first_face.push(this.state['editor'+i])
-    //   }
-    //   if(face2){
-    //     for ( i = face1+1; i < face1+face2+1; i++) {
-    //       second_face.push(this.state['editor'+i])
-    //     }
-    //   }
-    // }
+    if (face1 && face2 && !annot){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(face2){
+        for ( i = face1+1; i < face1+face2+1; i++) {
+          face2_array.push(this.state['editor'+i])
+        }
+      }
+    }
 
-    // if (face1 && face2 && !face3 &&annot){
-    //   for ( i = 1; i < face1+1; i++) {
-    //     first_face.push(this.state['editor'+i])
-    //   }
-    //   if(face2){
-    //     for ( i = face1+1; i < face1+face2+1; i++) {
-    //       second_face.push(this.state['editor'+i])
-    //     }
-    //     if(annot){
-    //       for ( i = face1+face2+1; i < face1+face2+annot+1; i++) {
-    //         annotation.push(this.state['editor'+i])
-    //       }
-    //     }
-    //   }
-    // }
+    if (face1 && face2 && annot){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(face2){
+        for ( i = face1+1; i < face1+face2+1; i++) {
+          face2_array.push(this.state['editor'+i])
+        }
+        if(annot){
+          for ( i = face1+face2+1; i < face1+face2+annot+1; i++) {
+            annotation_array.push(this.state['editor'+i])
+          }
+        }
+      }
+    }
 
-    // if (face1 && face2 && face3 && !annot){
-    //   for ( i = 1; i < face1+1; i++) {
-    //     first_face.push(this.state['editor'+i])
-    //   }
-    //   if(face2){
-    //     for ( i = face1+1; i < face1+face2+1; i++) {
-    //       second_face.push(this.state['editor'+i])
-    //     }
-    //   }
-    //   if(face3){
-    //     for ( i = face1+face2+1; i < face1+face2+face3+1; i++) {
-    //       third_face.push(this.state['editor'+i])
-    //     }
-    //   }
-    // }
+    if (face1 && face2 && !annot){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(face2){
+        for ( i = face1+1; i < face1+face2+1; i++) {
+          face2_array.push(this.state['editor'+i])
+        }
+      }
+    }
 
-    // if (face1 && face2 && face3 && annot){
-    //   for ( i = 1; i < face1+1; i++) {
-    //     first_face.push(this.state['editor'+i])
-    //   }
-    //   if(face2){
-    //     for ( i = face1+1; i < face1+face2+1; i++) {
-    //       second_face.push(this.state['editor'+i])
-    //     }
-    //   }
-    //   if(face3){
-    //     for ( i = face1+face2+1; i < face1+face2+face3+1; i++) {
-    //       third_face.push(this.state['editor'+i])
-    //     }
-    //   }
-    //   if(annot){
-    //     for ( i = face1+face2+face3+1; i < face1+face2+face3+annot+1; i++) {
-    //       annotation.push(this.state['editor'+i])
-    //     }
-    //   }
-    // }
+    if (face1 && face2 && annot){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(face2){
+        for ( i = face1+1; i < face1+face2+1; i++) {
+          face2_array.push(this.state['editor'+i])
+        }
+      }
+      if(annot){
+        for ( i = face1+face2+1; i < face1+face2+annot+1; i++) {
+          annotation_array.push(this.state['editor'+i])
+        }
+      }
+    }
     
-    // console.log("here?")
-    // console.log(this.props.contents)
-    // const seq_in_index = this.props.contents[0].seq_in_index 
-    // console.log('seq_in_index',seq_in_index)
-    // axios.post('api/card/create-card', {
-    //   cardtype_id:this.props.current_card_type,
-    //   index_id:this.props.index_id,
-    //   first_face : first_face,
-    //   second_face : second_face,
-    //   third_face : third_face,
-    //   annotation : annotation,
-    //   seq_in_index: seq_in_index
-    // })
-    // .then(res => {
-    //   console.log('after submit:', res.data)
-    //  this.props.updateContentsState(res.data.cardlist)
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-    // this.setState({card_add:false})
+    console.log("here?")
+    console.log(this.props.contents)
+    const seq_in_index = this.props.contents[0].seq_in_index 
+    console.log('seq_in_index',seq_in_index)
+    const book_id = sessionStorage.getItem('book_id')
+    axios.post('api/card/create-card', {
+      book_id : book_id,
+      cardtype_id:this.props.current_card_type,
+      index_id:this.props.index_id,
+      maker_flag : [this.state.flag],
+      share : share_array,
+      face1 : face1_array,
+      selection : selection_array,
+      face2 : face2_array,
+      annotation : annotation_array,
+      seq_in_index: seq_in_index
+    })
+    .then(res => {
+      console.log('after submit:', res.data)
+     this.props.updateContentsState(res.data.cardlist)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    this.setState({card_add:false})
   }
   render() {
     const config={
