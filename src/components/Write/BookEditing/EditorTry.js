@@ -41,7 +41,7 @@ export class EditorTry extends Component {
     console.log('this.props.arrayForEditor', this.props.arrayForEditor)
     const editorList = this.props.arrayForEditor.map((item,index)=>{
       return (
-                <>
+                <div key={index}>
                   <label className="control-label">{item}</label>
                   <FroalaEditorComponent
                     tag='textarea'
@@ -49,13 +49,17 @@ export class EditorTry extends Component {
                     model={this.props['editor'+(index+1).toString()]}
                     onModelChange={this.props['handleModelChangeEditor'+(index+1).toString()]}
                   />
-                </>
+                </div>
         )
       })
 
     return (
       <>
       <div  id="editor">
+        <div>
+          <label className="control-label">사용자플래그</label>
+          <input type="number"/>
+        </div>
         {editorList}
         <button onClick={this.props.handleSubmit} id="saveButton">Save</button>
       </div>

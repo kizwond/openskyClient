@@ -187,35 +187,71 @@ export class BookWriting extends Component {
       if(content.name === this.state.card_selected){
         console.log('here', content)
           const cardType = content.type
+          const selectionLength = content.num_of_row.selection
           console.log(cardType)
           if (cardType === 'read') {
             const faceLength_1 = content.num_of_row.face1
+            const annotLength = content.num_of_row.annotation
             const face_array = []
             for ( var i = 1; i < faceLength_1+1; i++) {
               face_array.push('1면'+i+'행')
             }
+            for ( i = 1; i < annotLength+1; i++) {
+              face_array.push('주석')
+            }
             console.log(face_array)
             this.setState({
-              current_card: {'face1':faceLength_1},
+              current_card: {'face1':faceLength_1,'annot':annotLength},
               current_card_type:content._id
             })
             return face_array
           } else if (cardType === 'flip-normal') {
-            const faceLength_1 = content.num_column.face1
-            const faceLength_2 = content.num_column.face2
-            const face_array = []
-            for ( i = 1; i < faceLength_1+1; i++) {
-              face_array.push('1면'+i+'행')
+            if(selectionLength > 0){
+              const faceLength_1 = content.num_of_row.face1
+              const faceLength_2 = content.num_of_row.face2
+              const annotLength = content.num_of_row.annotation
+              const face_array = []
+              for ( i = 1; i < faceLength_1+1; i++) {
+                face_array.push('1면'+i+'행')
+              }
+              for ( i = 1; i < selectionLength+1; i++) {
+                face_array.push('보기'+i+'행')
+              }
+              for ( i = 1; i < faceLength_2+1; i++) {
+                face_array.push('2면'+i+'행')
+              }
+              for ( i = 1; i < annotLength+1; i++) {
+                face_array.push('주석')
+              }
+              console.log(face_array)
+              this.setState({
+                current_card: {'face1':faceLength_1,'selection':selectionLength,'face2':faceLength_2,'annot':annotLength},
+                current_card_type:content._id
+              })
+              return face_array
+
+            }else {
+              const faceLength_1 = content.num_of_row.face1
+              const faceLength_2 = content.num_of_row.face2
+              const annotLength = content.num_of_row.annotation
+              const face_array = []
+              for ( i = 1; i < faceLength_1+1; i++) {
+                face_array.push('1면'+i+'행')
+              }
+              for ( i = 1; i < faceLength_2+1; i++) {
+                face_array.push('2면'+i+'행')
+              }
+              for ( i = 1; i < annotLength+1; i++) {
+                face_array.push('주석')
+              }
+              console.log(face_array)
+              this.setState({
+                current_card: {'face1':faceLength_1,'face2':faceLength_2,'annot':annotLength},
+                current_card_type:content._id
+              })
+              return face_array
             }
-            for ( i = 1; i < faceLength_2+1; i++) {
-              face_array.push('2면'+i+'행')
-            }
-            console.log(face_array)
-            this.setState({
-              current_card: {'face1':faceLength_1,'face2':faceLength_2},
-              current_card_type:content._id
-            })
-            return face_array
+            
           } 
         }
       })
