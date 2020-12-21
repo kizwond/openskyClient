@@ -673,8 +673,8 @@ export class BookWriting extends Component {
 
       })
     }
-    if(this.state.card_type){
-      console.log(this.state.card_type)
+    if(this.state.card_type.length > 0){
+      console.log('why?:', this.state.card_type)
       var optionList = this.state.card_type.map((type)=>(
           <Option value={type.name}>{type.name}</Option>
       ))
