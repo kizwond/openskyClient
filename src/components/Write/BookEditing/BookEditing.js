@@ -184,116 +184,42 @@ export class BookWriting extends Component {
   addCardHandler = () => {
     console.log('card_selected : ', this.state.card_selected)
     const contentsList = this.state.card_type.map((content)=>{
-          if(content.name === this.state.card_selected){
-            console.log('here', content)
-              const cardType = content.type
-              const annotation = content.annotation
-              console.log(cardType)
-              if (cardType === 'read') {
-
-                  const faceLength_1 = content.num_of_row.face1
-                  const face_array = []
-                  for ( var i = 1; i < faceLength_1+1; i++) {
-                    face_array.push('1면'+i+'행')
-                  }
-                  console.log(face_array)
-                  this.setState({
-                    current_card: {'face1':faceLength_1},
-                    current_card_type:content._id
-                  })
-                  return face_array
-                  
-              } else if (cardType === 'flip-normal') {
-                if(annotation === true){
-                  const faceLength_1 = content.num_column.face1
-                  const faceLength_2 = content.num_column.face2
-                  const annotLength = content.num_column.annot
-                  const face_array = []
-                  for ( i = 1; i < faceLength_1+1; i++) {
-                    face_array.push('1면'+i+'행')
-                  }
-                  for ( i = 1; i < faceLength_2+1; i++) {
-                    face_array.push('2면'+i+'행')
-                  }
-                  for ( i = 1; i < annotLength+1; i++) {
-                    face_array.push('주석'+i+'행')
-                  }
-                  console.log(face_array)
-                  this.setState({
-                    current_card: {'face1':faceLength_1,'face2':faceLength_2,'annot':annotLength},
-                    current_card_type:content._id
-                  })
-                  return face_array
-                }else {
-                  const faceLength_1 = content.num_column.face1
-                  const faceLength_2 = content.num_column.face2
-                  const face_array = []
-                  for ( i = 1; i < faceLength_1+1; i++) {
-                    face_array.push('1면'+i+'행')
-                  }
-                  for ( i = 1; i < faceLength_2+1; i++) {
-                    face_array.push('2면'+i+'행')
-                  }
-                  console.log(face_array)
-                  this.setState({
-                    current_card: {'face1':faceLength_1,'face2':faceLength_2},
-                    current_card_type:content._id
-                  })
-                  return face_array
-                }
-                  
-              } else if (cardType === 'face3') {
-                if(annotation === true){
-                  const faceLength_1 = content.num_column.face1
-                  const faceLength_2 = content.num_column.face2
-                  const faceLength_3 = content.num_column.face3
-                  const annotLength = content.num_column.annot
-                  const face_array = []
-                  for ( i = 1; i < faceLength_1+1; i++) {
-                    face_array.push('1면'+i+'행')
-                  }
-                  for ( i = 1; i < faceLength_2+1; i++) {
-                    face_array.push('2면'+i+'행')
-                  }
-                  for ( i = 1; i < faceLength_3+1; i++) {
-                    face_array.push('3면'+i+'행')
-                  }
-                  for ( i = 1; i < annotLength+1; i++) {
-                    face_array.push('주석'+i+'행')
-                  }
-                  console.log(face_array)
-                  this.setState({
-                    current_card: {'face1':faceLength_1,'face2':faceLength_2,'face3':faceLength_3,'annot':annotLength},
-                    current_card_type:content._id
-                  })
-                  return face_array
-                }else {
-                  const faceLength_1 = content.num_column.face1
-                  const faceLength_2 = content.num_column.face2
-                  const faceLength_3 = content.num_column.face3
-                  const face_array = []
-                  for ( i = 1; i < faceLength_1+1; i++) {
-                    face_array.push('1면'+i+'행')
-                  }
-                  for ( i = 1; i < faceLength_2+1; i++) {
-                    face_array.push('2면'+i+'행')
-                  }
-                  for ( i = 1; i < faceLength_3+1; i++) {
-                    face_array.push('3면'+i+'행')
-                  }
-                  console.log(face_array)
-                  this.setState({
-                    current_card: {'face1':faceLength_1,'face2':faceLength_2,'face3':faceLength_3},
-                    current_card_type:content._id
-                  })
-                  return face_array
-                }
-                  
+      if(content.name === this.state.card_selected){
+        console.log('here', content)
+          const cardType = content.type
+          console.log(cardType)
+          if (cardType === 'read') {
+            const faceLength_1 = content.num_of_row.face1
+            const face_array = []
+            for ( var i = 1; i < faceLength_1+1; i++) {
+              face_array.push('1면'+i+'행')
             }
-          }
-        
-      }
-    )
+            console.log(face_array)
+            this.setState({
+              current_card: {'face1':faceLength_1},
+              current_card_type:content._id
+            })
+            return face_array
+          } else if (cardType === 'flip-normal') {
+            const faceLength_1 = content.num_column.face1
+            const faceLength_2 = content.num_column.face2
+            const face_array = []
+            for ( i = 1; i < faceLength_1+1; i++) {
+              face_array.push('1면'+i+'행')
+            }
+            for ( i = 1; i < faceLength_2+1; i++) {
+              face_array.push('2면'+i+'행')
+            }
+            console.log(face_array)
+            this.setState({
+              current_card: {'face1':faceLength_1,'face2':faceLength_2},
+              current_card_type:content._id
+            })
+            return face_array
+          } 
+        }
+      })
+
     var filtered = contentsList.filter(function(x) {
       return x !== undefined;
     });
@@ -569,13 +495,16 @@ export class BookWriting extends Component {
       })
   };
   uplodeFile = event =>{
+    const value = sessionStorage.getItem("book_id")
     console.log(this.state.file)
     const data = new FormData();
     data.append("file", this.state.file)
     data.append("index_id", this.state.index_id)
+    data.append("book_id", value)
 
     axios.post('api/card/create-card-by-excel', data)
-      .then(res => {alert(res.data.msg); this.setState({
+      .then(res => {alert(res.data.msg); 
+        this.setState({
         file:''
       })})
       .catch(err => console.log(err))
