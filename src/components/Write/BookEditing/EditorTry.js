@@ -34,10 +34,10 @@ export class EditorTry extends Component {
       editor15: '',
     }
   }
-  handleModelChangeFlag = (model) => {
-    console.log(model)
+  handleModelChangeFlag = (e) => {
+    console.log(e.target.value)
     this.setState({
-      flag: model
+      flag: e.target.value
     })
   }
 
@@ -238,10 +238,19 @@ export class EditorTry extends Component {
         }
       }
     }
-    
+    console.log('flag',[this.state.flag])
+    console.log('face1_array',face1_array)
+    console.log('share_array',share_array)
+    console.log('selection_array',selection_array)
+    console.log('face2_array',face2_array)
+    console.log('annotation_array',annotation_array)
     console.log("here?")
     console.log(this.props.contents)
-    const seq_in_index = this.props.contents[0].seq_in_index 
+    if(this.props.contents.length > 0){
+      var seq_in_index = this.props.contents[0].seq_in_index 
+    } else {
+      seq_in_index = 0
+    }
     console.log('seq_in_index',seq_in_index)
     const book_id = sessionStorage.getItem('book_id')
     axios.post('api/card/create-card', {
@@ -303,7 +312,7 @@ export class EditorTry extends Component {
       <div  id="editor">
         <div>
           <label className="control-label">사용자플래그</label>
-          <input type="number" onChange={this.props.handleModelChangeFlag} />
+          <input type="number" onChange={this.handleModelChangeFlag} />
         </div>
         {editorList}
         <button onClick={this.handleSubmit} id="saveButton">Save</button>
