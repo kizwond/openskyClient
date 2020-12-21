@@ -28,13 +28,13 @@ class NewCardTemplete extends Component {
       var face1 = this.state.face1Num
       var selection = 0
       var face2 = 0
-    } else if(this.state.type === "flip_normal" && this.state.onChangeFlipMode === "normal") {
+    } else if(this.state.type === "flip-normal" && this.state.onChangeFlipMode === "normal") {
       console.log("here?")
       share = 0
       face1 = this.state.face1Num
       selection = 0
       face2 = this.state.face2Num
-    } else if(this.state.type === "flip_normal" && this.state.onChangeFlipMode === "selection") {
+    } else if(this.state.type === "flip-normal" && this.state.onChangeFlipMode === "selection") {
       share = 0
       face1 = this.state.face1Num
       selection = this.state.selection
@@ -163,12 +163,12 @@ class NewCardTemplete extends Component {
                       <QuestionCircleOutlined />
                     </Tooltip>
                 </Radio>
-                <Radio style={radioStyle} value='flip_normal'>
+                <Radio style={radioStyle} value='flip-normal'>
                   <span style={{marginRight:"10px"}}>학습 - 뒤집기카드</span>
                   <Tooltip title="prompt text" color="#2db7f5" >
                       <QuestionCircleOutlined />
                     </Tooltip>
-                    {this.state.type === "flip_normal" ? 
+                    {this.state.type === "flip-normal" ? 
                       <div style={{marginLeft:"20px"}}>
                           <Radio.Group onChange={this.onChangeFlipMode} defaultValue={this.state.onChangeFlipMode}>
                             <Radio style={radioStyle} value="normal">일반형 카드</Radio>
@@ -203,7 +203,7 @@ class NewCardTemplete extends Component {
                     <li>
                     <span>앞면 - 보기 개수</span><InputNumber value={this.state.selection} onChange={this.onChangeSelection} size="small" style={{width:"100px", fontSize:"11px", marginLeft:"10px"}}/>
                   </li>  : null}
-                  {this.state.type === "flip_normal" ? 
+                  {this.state.type === "flip-normal" ? 
                     <li>
                     <span>뒷면 - 행 개수</span><InputNumber value={this.state.face2Num} onChange={this.onChangeFace2} size="small" style={{width:"100px", fontSize:"11px", marginLeft:"10px"}}placeholder="최대 5행"/>
                   </li>  : null}
@@ -212,7 +212,7 @@ class NewCardTemplete extends Component {
                     <div style={{fontStyle:"italic", fontSize:"11px", marginLeft:"20px"}}>※ 읽기카드는 단면으로 된 카드입니다.</div>
                   </li> }
 
-                  {this.state.type === "flip_normal" && <li>
+                  {this.state.type === "flip-normal" && <li>
                     <div style={{fontStyle:"italic", fontSize:"11px", marginLeft:"20px"}}>※ 뒤집기카드는 양면으로 구성된 카드입니다. 앞면과 뒷면을 활용하여 다양한 학습기능을 사용하실 수 있습니다.</div>
                   </li>}
                   

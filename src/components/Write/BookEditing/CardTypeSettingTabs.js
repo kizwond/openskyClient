@@ -19,7 +19,7 @@ class CardTypeSettingTabs extends Component {
     const bookList = this.props.card_type.map((card_type)=> {
         if(card_type.type === "read"){
             var type = "학습 - 읽기카드"
-        } else if(card_type.type === "flip_normal"){
+        } else if(card_type.type === "flip-normal"){
             type = "학습 - 뒤집기카드"
         }else if(card_type.type === "none"){
             type = "기타 - 비학습카드"
