@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Space, Tabs,Input,Divider,Tooltip  } from 'antd';
+import { Space, Tabs,Input,Divider  } from 'antd';
+import {ArrowUpOutlined,ArrowDownOutlined,DeleteOutlined} from '@ant-design/icons';
 import "./BookTitleList.css"
+import axios from 'axios'
 
 const { TabPane } = Tabs;
 
@@ -9,7 +11,36 @@ class CardTypeSettingTabs extends Component {
     super(props);
     this.state = {  };
   }
-  
+
+  onClickUp = (value) => {
+    console.log(value)
+    // axios.post('api/studysetup/click-up',{
+    //   card_type_id: value,
+    //   status: 'up'
+    // }).then(res=>{
+    //   console.log(res)
+    //   this.props.updateCardTypeState(res.data.cardtypes)
+    // })
+  }
+  onClickDown = (value) => {
+    console.log(value)
+    // axios.post('api/studysetup/click-down',{
+    //   card_type_id: value,
+    //   status: 'down'
+    // }).then(res=>{
+    //   console.log(res)
+    //   this.props.updateCardTypeState(res.data.cardtypes)
+    // })
+  }
+  deleteCardType = (value) => {
+    console.log(value)
+    // axios.post('api/studysetup/delete-cardtype',{
+    //   card_type_id: value,
+    // }).then(res=>{
+    //   console.log(res)
+    //   this.props.updateCardTypeState(res.data.cardtypes)
+    // })
+  }
   render() {
     console.log('from :', this.props.card_type)
     const flexStyle = {
@@ -48,10 +79,14 @@ class CardTypeSettingTabs extends Component {
             </ul>
         )
         console.log(face1)
+        
      return <TabPane tab={
         <span>
           <Space>
-          {type} - {card_type.name}
+          {type} - {card_type.name} 
+          <ArrowUpOutlined onClick={()=>this.onClickUp(card_type._id)}/>
+          <ArrowDownOutlined onClick={()=>this.onClickDown(card_type._id)}/>
+          <DeleteOutlined onClick={()=>this.deleteCardType(card_type._id)}/>
           </Space>
         </span>
         } key={card_type._id}>
@@ -73,11 +108,17 @@ class CardTypeSettingTabs extends Component {
               {selection}
               <Divider />
               {face2}
+              <Divider />
+              <ul style={flexStyle}>
+                  <li>주석</li>
+                  <li>주석</li>
+                  <li>주석</li>
+              </ul>
           </div>
       </TabPane>
     })
     return (
-        <Tabs style={{height:"80%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">
+        <Tabs style={{height:"80%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left" tabBarStyle={{width:"300px", flexDirection:"row"}}>
           {bookList}
         </Tabs>
     );

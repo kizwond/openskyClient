@@ -56,14 +56,26 @@ class LikeListContent extends Component {
     }));
   }
 
+  // saveBookIdSession = (value)=> {
+  //   console.log(value)
+  //   axios.post('api/book/start-write',{
+  //     book_id:value.book_id
+  //   }).then(res => {
+  //     console.log(res)
+  //     window.location.href ="/editing"
+  //   })
+  // }
+
   saveBookIdSession = (value)=> {
-    console.log(value)
-    axios.post('api/book/start-write',{
-      book_id:value.book_id
-    }).then(res => {
-      console.log(res)
-      window.location.href ="/editing"
-    })
+    sessionStorage.setItem('book_id',value.book_id);
+    window.location.href ="/editing"
+    // console.log(value)
+    // axios.post('api/book/start-write',{
+    //   book_id:value.book_id
+    // }).then(res => {
+    //   console.log(res)
+    //   window.location.href ="/editing"
+    // })
   }
 
   eyeClickHandler = (value) =>{

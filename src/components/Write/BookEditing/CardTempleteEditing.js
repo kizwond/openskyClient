@@ -46,7 +46,7 @@ class CardTempleteEditing extends Component {
           okText='만들기'
           cancelText='취소'
           maskClosable={false}
-          width={800}
+          width={900}
         >
             <CardTypeSettingTabs card_type={this.props.card_type}/>
         </Modal>

@@ -74,7 +74,9 @@ class NewCardTemplete extends Component {
 
   addCardType =(value) => {
     console.log(value)
+    const book_id = sessionStorage.getItem("book_id")
     axios.post('api/cardtype/create-cardtype',{
+      book_id:book_id,
       name: value.name,
       type: value.type,
       face1: value.face1,

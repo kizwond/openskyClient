@@ -77,8 +77,11 @@ export class BookWriting extends Component {
   }
 
   getIndexList = () => {
+    const value = sessionStorage.getItem("book_id")
     console.log('req start!!!!!!!!!!')
-    axios.post('api/index/get-indexlist')
+    axios.post('api/index/get-indexlist',{
+      book_id:value
+    })
       .then(res => {
         this.setState({ 
           table_of_contents:res.data.indexList,
@@ -86,7 +89,10 @@ export class BookWriting extends Component {
       })
   }
   getCardTypeList = () => {
-    axios.get('api/cardtype/get-cardtype')
+    const value = sessionStorage.getItem("book_id")
+    axios.post('api/cardtype/get-cardtype',{
+      book_id:value
+    })
       .then(res => {
         console.log(res.data)
         console.log("get cardtype list :", res.data)
@@ -165,7 +171,6 @@ export class BookWriting extends Component {
     }
   }
   selectCardTypeHandler = (key) => {
-    console.log(key)
     if(key === '카드선택') {
       this.setState({
         card_selected: 'none'
@@ -177,33 +182,18 @@ export class BookWriting extends Component {
     }
   }
   addCardHandler = () => {
+    console.log('card_selected : ', this.state.card_selected)
     const contentsList = this.state.card_type.map((content)=>{
-          if(content.nick === this.state.card_selected){
+          if(content.name === this.state.card_selected){
             console.log('here', content)
               const cardType = content.type
               const annotation = content.annotation
               console.log(cardType)
-              if (cardType === 'face1') {
-                if(annotation === true){
-                  const faceLength_1 = content.num_column.face1
-                  const annotLength = content.num_column.annot
+              if (cardType === 'read') {
+
+                  const faceLength_1 = content.num_of_row.face1
                   const face_array = []
-                  for (var i = 1; i < faceLength_1+1; i++) {
-                    face_array.push('1면'+i+'행')
-                  }
-                  for ( i = 1; i < annotLength+1; i++) {
-                    face_array.push('주석'+i+'행')
-                  }
-                  console.log(face_array)
-                  this.setState({
-                    current_card: {'face1':faceLength_1,'annot':annotLength},
-                    current_card_type:content._id
-                  })
-                  return face_array
-                } else {
-                  const faceLength_1 = content.num_column.face1
-                  const face_array = []
-                  for ( i = 1; i < faceLength_1+1; i++) {
+                  for ( var i = 1; i < faceLength_1+1; i++) {
                     face_array.push('1면'+i+'행')
                   }
                   console.log(face_array)
@@ -212,9 +202,8 @@ export class BookWriting extends Component {
                     current_card_type:content._id
                   })
                   return face_array
-                }
                   
-              } else if (cardType === 'face2') {
+              } else if (cardType === 'flip-normal') {
                 if(annotation === true){
                   const faceLength_1 = content.num_column.face1
                   const faceLength_2 = content.num_column.face2
@@ -309,7 +298,7 @@ export class BookWriting extends Component {
       return x !== undefined;
     });
     const finalArray = filtered[0]
-    console.log(finalArray)
+    console.log('finalArray: ',finalArray)
       this.setState({
         card_add: true,
         arrayForEditor:finalArray
@@ -676,7 +665,7 @@ export class BookWriting extends Component {
     if(this.state.card_type){
       console.log('why?:', this.state.card_type)
       var optionList = this.state.card_type.map((type)=>(
-          <Option value={type.name}>{type.name}</Option>
+          <Option key={type._id} value={type.name}>{type.name}</Option>
       ))
     }
     console.log(contentsList)
@@ -760,7 +749,7 @@ export class BookWriting extends Component {
               <Space>
                 <NewPageTemplete updateCardTypeState={this.updateCardTypeState}/>
                 <NewCardTemplete updateCardTypeState={this.updateCardTypeState}/>
-                <CardTempleteEditing card_type={this.state.card_type}/>
+                <CardTempleteEditing updateCardTypeState={this.updateCardTypeState} card_type={this.state.card_type}/>
                 <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button>
               </Space>
               <Modal
