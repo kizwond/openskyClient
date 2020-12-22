@@ -364,75 +364,109 @@ export class BookWriting extends Component {
       console.log('original data:',this.state.contents)
       var contentsList = this.state.contents.map((content)=>{
         console.log(content)
+        const flag_column_num = content.cardtype_id.num_of_row.maker_flag;
         const face1_column_num = content.cardtype_id.num_of_row.face1;
+        const selection_column_num = content.cardtype_id.num_of_row.selection;
         const face2_column_num = content.cardtype_id.num_of_row.face2;
         const annot_column_num = content.cardtype_id.num_of_row.annotation;
-        const direction = content.cardtype_id.direction;
-        const annotation_on = content.cardtype_id.annotation;
+        const none_column_num = content.cardtype_id.num_of_row.none;
+        const share_column_num = content.cardtype_id.num_of_row.share;
 
-        if (content.cardtype_id.type === "face1"){
-          if(annotation_on === true){
+        const direction = content.cardtype_id.direction;
+        // const annotation_on = content.cardtype_id.annotation;
+
+        // 읽기카드
+        if (content.cardtype_id.type === "read"){
             const face1 = []
-            for(var i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
+            for( var i = 0; i <face1_column_num; i++){
+              face1.push(<FroalaEditorView model={content.contents.face1[i]}/>) 
             }
             const annotation_contents = [];
             for( i = 0; i <annot_column_num; i++){
-              annotation_contents.push(<FroalaEditorView model={content.content_of_annot[i]}/>)
+              annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'annotation_on':annotation_on})
+            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type})
             return total
-          } else {
-            const face1 = []
-            for( i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
-            }
-            const total=[]
-            total.push({'face1':face1,'type':content.cardtype_id.type,'annotation_on':annotation_on})
-            return total
-          }
-        } else if(content.cardtype_id.type === "face2"){
-          if(annotation_on === true){
+
+        } else if(content.cardtype_id.type === "flip-normal"){
+          if(selection_column_num > 0){
             const face1 = []
             for( i = 0; i <face1_column_num; i++){
               console.log('i', i)
-              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
+              face1.push(<FroalaEditorView model={content.contents.face1[i]}/>) 
             }
+            const selection_contents = [];
+              for( i = 0; i <selection_column_num; i++){
+                selection_contents.push(<FroalaEditorView model={content.contents.selection[i]}/>)
+              }
             const face2 = []
             for( i = 0; i <face2_column_num; i++){
-              face2.push(<FroalaEditorView model={content.content_of_second_face[i]}/>) 
+              face2.push(<FroalaEditorView model={content.contents.face2[i]}/>) 
             }
             const annotation_contents = [];
             for( i = 0; i <annot_column_num; i++){
-              annotation_contents.push(<FroalaEditorView model={content.content_of_annot[i]}/>)
+              annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'annotation_on':annotation_on,'direction':direction})
+            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction})
             return total
           } else {
             const face1 = []
             for( i = 0; i <face1_column_num; i++){
-              face1.push(<FroalaEditorView model={content.content_of_first_face[i]}/>) 
+              console.log('i', i)
+              face1.push(<FroalaEditorView model={content.contents.face1[i]}/>) 
             }
             const face2 = []
             for( i = 0; i <face2_column_num; i++){
-              face2.push(<FroalaEditorView model={content.content_of_second_face[i]}/>) 
+              face2.push(<FroalaEditorView model={content.contents.face2[i]}/>) 
+            }
+            const annotation_contents = [];
+            for( i = 0; i <annot_column_num; i++){
+              annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'face2':face2,'type':content.cardtype_id.type,'annotation_on':annotation_on,'direction':direction})
+            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction})
             return total
           }
+
+        } else if (content.cardtype_id.type === "none"){
+          const none = []
+          for( i = 0; i <none_column_num; i++){
+            none.push(<FroalaEditorView model={content.contents.none[i]}/>) 
+          }
+          const annotation_contents = [];
+          for( i = 0; i <annot_column_num; i++){
+            annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
+          }
+          const total = []
+          total.push({'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type})
+          return total
+
+        } else if (content.cardtype_id.type === "share"){
+          const share = []
+          for( i = 0; i <share_column_num; i++){
+            share.push(<FroalaEditorView model={content.contents.share[i]}/>) 
+          }
+          const annotation_contents = [];
+          for( i = 0; i <annot_column_num; i++){
+            annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
+          }
+          const total = []
+          total.push({'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type})
+          return total
         }
 
       })
     }
+
     if(this.state.card_type){
       var optionList = this.state.card_type.map((type)=>(
           <Option key={type._id} value={type.name}>{type.name}</Option>
       ))
     }
-    console.log(contentsList)
+
+    console.log('contentsList : ',contentsList)
     if(contentsList){
       console.log('hello',contentsList)
       var list = contentsList.map((content)=>{
