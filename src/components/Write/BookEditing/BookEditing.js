@@ -5,7 +5,7 @@ import './BookWriting.css'
 import {Button, Select,Modal,Space } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
-
+import {StarTwoTone} from '@ant-design/icons';
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
@@ -377,8 +377,12 @@ export class BookWriting extends Component {
 
         // 읽기카드
         if (content.cardtype_id.type === "read"){
+            const flag = []
+            for( var i = 0; i <flag_column_num; i++){
+              flag.push(content.contents.maker_flag[i]) 
+            }
             const face1 = []
-            for( var i = 0; i <face1_column_num; i++){
+            for( i = 0; i <face1_column_num; i++){
               face1.push(<FroalaEditorView model={content.contents.face1[i]}/>) 
             }
             const annotation_contents = [];
@@ -386,14 +390,17 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type})
+            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag})
             return total
 
         } else if(content.cardtype_id.type === "flip-normal"){
           if(selection_column_num > 0){
+            const flag = []
+            for( i = 0; i <flag_column_num; i++){
+              flag.push(content.contents.maker_flag[i]) 
+            }
             const face1 = []
             for( i = 0; i <face1_column_num; i++){
-              console.log('i', i)
               face1.push(<FroalaEditorView model={content.contents.face1[i]}/>) 
             }
             const selection_contents = [];
@@ -409,12 +416,15 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction})
+            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag})
             return total
           } else {
+            const flag = []
+            for( i = 0; i <flag_column_num; i++){
+              flag.push(content.contents.maker_flag[i]) 
+            }
             const face1 = []
             for( i = 0; i <face1_column_num; i++){
-              console.log('i', i)
               face1.push(<FroalaEditorView model={content.contents.face1[i]}/>) 
             }
             const face2 = []
@@ -426,7 +436,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction})
+            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag})
             return total
           }
 
@@ -470,10 +480,24 @@ export class BookWriting extends Component {
     if(contentsList){
       console.log('hello',contentsList)
       var list = contentsList.map((content)=>{
-          console.log(content)
-          console.log(content[0].face1)
+
+          if(content[0].flag == "1"){
+            var star = <StarTwoTone />
+          } else if(content[0].flag == "2"){
+            star = <><StarTwoTone /><StarTwoTone /></>
+          } else if(content[0].flag == "3"){
+            star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
+          } else if(content[0].flag == "4"){
+            console.log('4')
+            star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
+          } else if(content[0].flag == "5"){
+            star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
+          } else {
+            star = ''
+          }
           if(content[0].type === 'read'){
             return <>
+                    <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
@@ -482,6 +506,7 @@ export class BookWriting extends Component {
                   </>
           } else if(content[0].type === 'flip-normal'&& !content[0].selection_contents && content[0].direction === "left-right"){
             return <>
+                    <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].face2}</div>
@@ -491,9 +516,12 @@ export class BookWriting extends Component {
                   </>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "left-right"){
             return <>
+                    <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                      <div>{content[0].face1}</div>
-                      <div>{content[0].selection_contents}</div>
+                      <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> 
+                        <div>{content[0].face1}</div>
+                        <div>{content[0].selection_contents}</div>
+                      </div>
                       <div>{content[0].face2}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
@@ -501,6 +529,7 @@ export class BookWriting extends Component {
                   </>
           } else if(content[0].type === 'flip-normal' && !content[0].selection_contents && content[0].direction === "top-bottom"){
             return <>
+                    <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
                         <div>{content[0].face1}</div>
@@ -512,6 +541,7 @@ export class BookWriting extends Component {
                   </>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "top-bottom"){
             return <>
+                    <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
                         <div>{content[0].face1}</div>
@@ -536,7 +566,7 @@ export class BookWriting extends Component {
                       <div>{content[0].share}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <Button size="small" style={{fontSize:'10px'}}>하위카드추가</Button><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
           }
       })
