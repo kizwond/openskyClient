@@ -372,7 +372,7 @@ export class BookWriting extends Component {
         const none_column_num = content.cardtype_id.num_of_row.none;
         const share_column_num = content.cardtype_id.num_of_row.share;
 
-        const direction = content.cardtype_id.direction;
+        const direction = content.cardtype_id.card_direction;
         // const annotation_on = content.cardtype_id.annotation;
 
         // 읽기카드
@@ -472,22 +472,15 @@ export class BookWriting extends Component {
       var list = contentsList.map((content)=>{
           console.log(content)
           console.log(content[0].face1)
-          if(content[0].type === 'face1' && content[0].annotation_on === true){
+          if(content[0].type === 'read'){
             return <>
-                    <div className="test" style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
-          } else if(content[0].type === 'face1' && content[0].annotation_on === false){
-            return <>
-                    <div style={{marginBottom:'5px'}}>
-                      <div>{content[0].face1}</div>
-                    </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
-          } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "left_right"){
+          } else if(content[0].type === 'flip-normal'&& !content[0].selection_contents && content[0].direction === "left-right"){
             return <>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
@@ -496,15 +489,17 @@ export class BookWriting extends Component {
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
-          } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "left_right"){
+          } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "left-right"){
             return <>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
+                      <div>{content[0].selection_contents}</div>
                       <div>{content[0].face2}</div>
+                      <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
-          } else if(content[0].type === 'face2' && content[0].annotation_on === true && content[0].direction === "up_down"){
+          } else if(content[0].type === 'flip-normal' && !content[0].selection_contents && content[0].direction === "top-bottom"){
             return <>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -515,19 +510,37 @@ export class BookWriting extends Component {
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
-          } else if(content[0].type === 'face2' && content[0].annotation_on === false && content[0].direction === "up_down"){
+          } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "top-bottom"){
             return <>
-                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
-                      <div>{content[0].face1}</div>
-                      <div>{content[0].face2}</div>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
+                        <div>{content[0].face1}</div>
+                        <div>{content[0].selection_contents}</div>
+                        <div>{content[0].face2}</div>
+                      </div>
+                      <div>{content[0].annotation_contents}</div>
+                    </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
+          } else  if(content[0].type === 'none'){
+            return <>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div>{content[0].none}</div>
+                      <div>{content[0].annotation_contents}</div>
+                    </div>
+                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                  </>
+          } else  if(content[0].type === 'share'){
+            return <>
+                    <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <div>{content[0].share}</div>
+                      <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
                   </>
           }
-
       })
     }
-    console.log(this.state.table_of_contents)
     return (
       <>
       <div className="book_writing_container">

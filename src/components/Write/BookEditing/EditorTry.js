@@ -318,7 +318,7 @@ export class EditorTry extends Component {
       book_id : book_id,
       cardtype_id:this.props.current_card_type,
       index_id:this.props.index_id,
-      maker_flag : [this.state.flag],
+      flag_of_maker : [this.state.flag],
       share : share_array,
       face1 : face1_array,
       selection : selection_array,
