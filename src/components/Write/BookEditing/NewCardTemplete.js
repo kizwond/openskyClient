@@ -28,27 +28,31 @@ class NewCardTemplete extends Component {
       var face1 = this.state.face1Num
       var selection = 0
       var face2 = 0
+      var none = 0
     } else if(this.state.type === "flip-normal" && this.state.onChangeFlipMode === "normal") {
-      console.log("here?")
       share = 0
       face1 = this.state.face1Num
       selection = 0
       face2 = this.state.face2Num
+      none = 0
     } else if(this.state.type === "flip-normal" && this.state.onChangeFlipMode === "selection") {
       share = 0
       face1 = this.state.face1Num
       selection = this.state.selection
       face2 = this.state.face2Num
+      none = 0
     } else if(this.state.type === "none") {
       share = 0
-      face1 = this.state.face1Num
+      face1 = 0
       selection = 0
       face2 = 0
+      none = this.state.face1Num
     } else if(this.state.type === "share") {
       share = this.state.face1Num
       face1 = 0
       selection = 0
       face2 = 0
+      none = 0
     }
 
     console.log('name:', this.state.name)
@@ -58,9 +62,10 @@ class NewCardTemplete extends Component {
     console.log('selection:',selection)
     console.log('face2:', face2)
     console.log('share:',share)
+    console.log('none:',none)
 
 
-    this.addCardType({name:this.state.name, type:this.state.type, face1:face1, face2:face2, selection:selection, share:share})
+    this.addCardType({name:this.state.name, type:this.state.type, face1:face1, face2:face2, selection:selection, share:share, none:none})
 
     this.setState({
       visible: false,
@@ -83,6 +88,7 @@ class NewCardTemplete extends Component {
       face2: value.face2,
       selection: value.selection,
       share: value.share,
+      none:value.none
     }).then(res => {
       console.log(res.data)
       this.props.updateCardTypeState(res.data.cardtypes)

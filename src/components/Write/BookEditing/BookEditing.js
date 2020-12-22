@@ -251,7 +251,25 @@ export class BookWriting extends Component {
               current_card_type:content._id
             })
             return face_array
+
+          } else if (cardType === 'none') {
+            const noneLength = content.num_of_row.none
+            const annotLength = content.num_of_row.annotation
+            const face_array = []
+            for ( i = 1; i < noneLength+1; i++) {
+              face_array.push('비학습카드')
+            }
+            for ( i = 1; i < annotLength+1; i++) {
+              face_array.push('주석')
+            }
+            console.log(face_array)
+            this.setState({
+              current_card: {'none':noneLength,'annot':annotLength},
+              current_card_type:content._id
+            })
+            return face_array
           }
+
         }
       })
 
@@ -346,9 +364,9 @@ export class BookWriting extends Component {
       console.log('original data:',this.state.contents)
       var contentsList = this.state.contents.map((content)=>{
         console.log(content)
-        const face1_column_num = content.cardtype_id.num_column.face1;
-        const face2_column_num = content.cardtype_id.num_column.face2;
-        const annot_column_num = content.cardtype_id.num_column.annot;
+        const face1_column_num = content.cardtype_id.num_of_row.face1;
+        const face2_column_num = content.cardtype_id.num_of_row.face2;
+        const annot_column_num = content.cardtype_id.num_of_row.annotation;
         const direction = content.cardtype_id.direction;
         const annotation_on = content.cardtype_id.annotation;
 
@@ -410,7 +428,6 @@ export class BookWriting extends Component {
       })
     }
     if(this.state.card_type){
-      console.log('why?:', this.state.card_type)
       var optionList = this.state.card_type.map((type)=>(
           <Option key={type._id} value={type.name}>{type.name}</Option>
       ))

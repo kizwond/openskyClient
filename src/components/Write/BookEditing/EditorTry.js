@@ -163,18 +163,26 @@ export class EditorTry extends Component {
       if(current.annot){
         var annot = current.annot
       }
+      if(current.none){
+        var none = current.none
+      }
     }
     const face1_array = [];
     const selection_array = [];
     const face2_array = [];
     const share_array = [];
     const annotation_array = [];
-    if (face1 && !face2 && !annot){
+    const none_array = [];
+
+    //읽기카드만 있을때
+    if (face1 && !face2 && !annot && !selection && !share && !none){
       for (var i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
     }
-    if (face1 && annot && !face2){
+    
+    //읽기카드랑 주석이 있을때
+    if (face1 && annot && !face2 && !selection && !share && !none){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -184,8 +192,9 @@ export class EditorTry extends Component {
         }
       }
     }
-
-    if (face1 && face2 && !annot){
+    
+    //뒤집기카드만 있을때
+    if (face1 && face2 && !annot && !selection && !share && !none){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -196,34 +205,8 @@ export class EditorTry extends Component {
       }
     }
 
-    if (face1 && face2 && annot){
-      for ( i = 1; i < face1+1; i++) {
-        face1_array.push(this.state['editor'+i])
-      }
-      if(face2){
-        for ( i = face1+1; i < face1+face2+1; i++) {
-          face2_array.push(this.state['editor'+i])
-        }
-        if(annot){
-          for ( i = face1+face2+1; i < face1+face2+annot+1; i++) {
-            annotation_array.push(this.state['editor'+i])
-          }
-        }
-      }
-    }
-
-    if (face1 && face2 && !annot){
-      for ( i = 1; i < face1+1; i++) {
-        face1_array.push(this.state['editor'+i])
-      }
-      if(face2){
-        for ( i = face1+1; i < face1+face2+1; i++) {
-          face2_array.push(this.state['editor'+i])
-        }
-      }
-    }
-
-    if (face1 && face2 && annot){
+    //뒤집기카드랑 주석이 있을때
+    if (face1 && face2 && annot && !selection && !share && !none){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -238,12 +221,90 @@ export class EditorTry extends Component {
         }
       }
     }
+    //뒤집기카드랑 보기가 있을때
+    if (face1 && face2 && !annot && selection && !share && !none){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(selection){
+        for ( i = face1+1; i < face1+selection+1; i++) {
+          selection_array.push(this.state['editor'+i])
+        }
+      }
+      if(face2){
+        for ( i = face1+selection+1; i < face1+selection+face2+1; i++) {
+          face2_array.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    //뒤집기카드랑 보기랑 주석이 있을때
+    if (face1 && face2 && annot && selection && !share && !none){
+      for ( i = 1; i < face1+1; i++) {
+        face1_array.push(this.state['editor'+i])
+      }
+      if(selection){
+        for ( i = face1+1; i < face1+selection+1; i++) {
+          selection_array.push(this.state['editor'+i])
+        }
+      }
+      if(face2){
+        for ( i = face1+selection+1; i < face1+selection+face2+1; i++) {
+          face2_array.push(this.state['editor'+i])
+        }
+      }
+      if(annot){
+        for ( i = face1+selection+face2+1; i < face1+selection+face2+annot+1; i++) {
+          annotation_array.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    //공통지문카드만 있을때
+    if (share && !face1 && !face2 && !annot && !selection && !none){
+      for ( i = 1; i < share+1; i++) {
+        share_array.push(this.state['editor'+i])
+      }
+    }
+
+    //공통지문카드와 주석이 있을때
+    if (share && !face1 && !face2 && annot && !selection && !none){
+      for ( i = 1; i < share+1; i++) {
+        share_array.push(this.state['editor'+i])
+      }
+      if(annot){
+        for ( i = share+1; i < share+annot+1; i++) {
+          annotation_array.push(this.state['editor'+i])
+        }
+      }
+    }
+
+    //비학습카드만 있을때
+    if (none && !share && !face1 && !face2 && !annot && !selection){
+      for ( i = 1; i < none+1; i++) {
+        none_array.push(this.state['editor'+i])
+      }
+    }
+
+    //비학습카드와 주석이 있을때
+    if (none && !share && !face1 && !face2 && annot && !selection){
+      for ( i = 1; i < none+1; i++) {
+        none_array.push(this.state['editor'+i])
+      }
+      if(annot){
+        for ( i = none+1; i < none+annot+1; i++) {
+          annotation_array.push(this.state['editor'+i])
+        }
+      }
+    }
+
     console.log('flag',[this.state.flag])
     console.log('face1_array',face1_array)
     console.log('share_array',share_array)
     console.log('selection_array',selection_array)
     console.log('face2_array',face2_array)
     console.log('annotation_array',annotation_array)
+    console.log('none_array',none_array)
     console.log("here?")
     console.log(this.props.contents)
     if(this.props.contents.length > 0){
@@ -267,7 +328,7 @@ export class EditorTry extends Component {
     })
     .then(res => {
       console.log('after submit:', res.data)
-     this.props.updateContentsState(res.data.cardlist)
+      this.props.updateContentsState(res.data.cardlist)
     })
     .catch(function (error) {
       console.log(error);
