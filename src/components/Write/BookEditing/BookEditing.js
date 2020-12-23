@@ -623,7 +623,7 @@ export class BookWriting extends Component {
           <div className="editor_panel">
             {/* 카드 뿌려지는 영역 */}
             {list ? list : ''}
-            <div id="toolbarContainer"></div>
+            
             
             <div className="a4">
               {this.state.card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}

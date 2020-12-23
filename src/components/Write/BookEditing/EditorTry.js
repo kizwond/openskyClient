@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './EditorTry.css'
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
 import 'froala-editor/css/froala_editor.pkgd.min.css'
@@ -11,6 +11,7 @@ import 'froala-editor//css/themes/gray.min.css'
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 
 import axios from 'axios'
+// import { InputNumber } from 'antd'
 
 export class EditorTry extends Component {
   constructor(props) {
@@ -337,6 +338,8 @@ export class EditorTry extends Component {
   }
   render() {
     const config={
+      editorClass:"editor_try",
+      quickInsertEnabled: false,
       imageUploadURL: 'api/create/upload_image',
       saveParam: 'content',
       width: 'auto',
@@ -356,13 +359,14 @@ export class EditorTry extends Component {
 
     const editorList = this.props.arrayForEditor.map((item,index)=>{
       return (
-                <div key={index}>
-                  <label className="control-label">{item}</label>
+                <div key={index} style={{display:"flex", marginTop:"5px", alignItems:"center"}}>
+                  <label className="editor_label" style={{width:"80px"}}>{item}</label>
                   <FroalaEditorComponent
                     tag='textarea'
                     config={config}
                     model={this.state['editor'+(index+1).toString()]}
                     onModelChange={this['handleModelChangeEditor'+(index+1).toString()]}
+                    width={100}
                   />
                 </div>
         )
@@ -370,12 +374,15 @@ export class EditorTry extends Component {
 
     return (
       <>
-      <div  id="editor">
-        <div>
-          <label className="control-label">사용자플래그</label>
-          <input type="number" onChange={this.handleModelChangeFlag} />
+      <div id="editor" style={{border:"1px solid black", borderRadius:"10px"}}>
+        <div id="toolbarContainer"></div>
+        <div style={{padding:"10px"}}>
+          <div style={{display:"flex", alignItems:"center"}}>
+            <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
+            <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5
+          </div>
+          {editorList}
         </div>
-        {editorList}
         <button onClick={this.handleSubmit} id="saveButton">Save</button>
       </div>
       </>
