@@ -13,7 +13,7 @@ import FroalaEditorComponent from 'react-froala-wysiwyg';
 import axios from 'axios'
 // import { InputNumber } from 'antd'
 
-export class EditorTry extends Component {
+export class CardEditing extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -33,7 +33,6 @@ export class EditorTry extends Component {
       editor13: '',
       editor14: '',
       editor15: '',
-      editor16: '',
     }
   }
   handleModelChangeFlag = (e) => {
@@ -144,13 +143,6 @@ export class EditorTry extends Component {
       editor15: model
     })
   }
-  handleModelChangeEditor16 = (model) => {
-    console.log('editor16:',model)
-    this.setState({
-      editor16: model
-    })
-  }
-
 
   handleSubmit = () => {
     console.log('111:',this.props.current_card)
@@ -390,4 +382,4 @@ export class EditorTry extends Component {
   }
 }
 
-export default EditorTry
+export default CardEditing

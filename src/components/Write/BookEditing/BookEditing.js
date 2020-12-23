@@ -5,7 +5,7 @@ import './BookWriting.css'
 import {Button, Select,Modal,Space } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
-import {StarTwoTone} from '@ant-design/icons';
+import {StarTwoTone,DeleteOutlined,EditOutlined} from '@ant-design/icons';
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
@@ -23,6 +23,7 @@ import BookRelocate from './BookRelocate'
 import NewCardTemplete from './NewCardTemplete';
 import NewPageTemplete from './NewPageTemplete';
 import CardTempleteEditing from './CardTempleteEditing'
+import CardDelete from './CardDelete'
 
 // import FroalaEditor from 'react-froala-wysiwyg';
 
@@ -118,6 +119,11 @@ export class BookWriting extends Component {
       card_type:value
     })
   }
+  updateCardListState = (value) => {
+    this.setState({ 
+      contents:value,
+    });
+  };
 
   handleClick = (key) => {
     if(key === '1' ){
@@ -418,7 +424,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag, 'card_id':content._id})
+            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
 
         } else if(content.cardtype_id.type === "flip-normal"){
@@ -444,7 +450,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id})
+            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
           } else {
             const flag = []
@@ -464,7 +470,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id})
+            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
           }
 
@@ -478,7 +484,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id})
+          total.push({'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
           return total
 
         } else if (content.cardtype_id.type === "share"){
@@ -491,7 +497,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id})
+          total.push({'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
           return total
         }
 
@@ -534,8 +540,8 @@ export class BookWriting extends Component {
                       <div></div> 
                       <div>  
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                        <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
                     </div>
@@ -552,8 +558,8 @@ export class BookWriting extends Component {
                       <div></div> 
                       <div> 
                       <Space>   
-                        <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                        <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div> 
                     </div>
@@ -573,8 +579,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                        <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
                     </div>
@@ -593,8 +599,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                        <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
                     </div>
@@ -614,8 +620,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                        <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
                     </div>
@@ -630,8 +636,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                        <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
                     </div>
@@ -648,8 +654,9 @@ export class BookWriting extends Component {
                       </div>
                       <div>
                       <Space>
-                      <Button size="small" style={{fontSize:'10px'}}>수정</Button>
-                      <Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        {/* <Button size="small" style={{fontSize:'10px'}} icon={<DeleteOutlined />}>카드 삭제</Button> */}
+                        <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
                     </div>
