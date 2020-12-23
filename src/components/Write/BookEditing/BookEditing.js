@@ -346,6 +346,26 @@ export class BookWriting extends Component {
       .catch(err => console.log(err))
   }
   
+  onClickCardHandler = (value) => {
+    console.log(value)
+    var elem = document.getElementById(value);
+    elem.style.transform = "scale( 1.01 )";
+    elem.style.transition = "all ease 0.2s";
+    elem.style.border = "1px solid lightgrey";
+    elem.style.borderRadius = "10px";
+    elem.style.boxShadow = "5px 5px 5px -3px rgba(112,112,112,1)";
+  }
+  onLeaveCardHandler = (value) => {
+    console.log(value)
+    var elem = document.getElementById(value);
+    elem.style.transform = "none";
+    elem.style.transition = "all ease 0s";
+    elem.style.border = "none";
+    elem.style.borderRadius = "0px";
+    elem.style.boxShadow ="none";
+  }
+  // transform: scale( 1.5 )
+  // transition: all ease 1s;
   render() {
     if (this.state.hide_show_toggle === false){
       var toggle = '-308px' 
@@ -390,7 +410,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag})
+            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag, 'card_id':content._id})
             return total
 
         } else if(content.cardtype_id.type === "flip-normal"){
@@ -416,7 +436,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag})
+            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id})
             return total
           } else {
             const flag = []
@@ -436,7 +456,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag})
+            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id})
             return total
           }
 
@@ -450,7 +470,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type})
+          total.push({'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id})
           return total
 
         } else if (content.cardtype_id.type === "share"){
@@ -463,7 +483,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type})
+          total.push({'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id})
           return total
         }
 
@@ -496,16 +516,16 @@ export class BookWriting extends Component {
             star = ''
           }
           if(content[0].type === 'read'){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           } else if(content[0].type === 'flip-normal'&& !content[0].selection_contents && content[0].direction === "left-right"){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
@@ -513,9 +533,9 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "left-right"){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> 
@@ -526,9 +546,9 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           } else if(content[0].type === 'flip-normal' && !content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -538,9 +558,9 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -551,23 +571,23 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           } else  if(content[0].type === 'none'){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].none}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           } else  if(content[0].type === 'share'){
-            return <>
+            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].share}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <Button size="small" style={{fontSize:'10px'}}>하위카드추가</Button><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
-                  </>
+                  </div>
           }
       })
     }

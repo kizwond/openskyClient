@@ -299,17 +299,9 @@ export class EditorTry extends Component {
       }
     }
 
-    console.log('flag',[this.state.flag])
-    console.log('face1_array',face1_array)
-    console.log('share_array',share_array)
-    console.log('selection_array',selection_array)
-    console.log('face2_array',face2_array)
-    console.log('annotation_array',annotation_array)
-    console.log('none_array',none_array)
-    console.log("here?")
-    console.log(this.props.contents)
     if(this.props.contents.length > 0){
-      var seq_in_index = this.props.contents[0].seq_in_index 
+      const get_seq = this.props.contents.length-1
+      var seq_in_index = this.props.contents[get_seq].seq_in_index 
     } else {
       seq_in_index = 0
     }
