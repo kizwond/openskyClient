@@ -349,20 +349,26 @@ export class BookWriting extends Component {
   onClickCardHandler = (value) => {
     console.log(value)
     var elem = document.getElementById(value);
+    var elem_btn = document.getElementById(value+"_btn");
     elem.style.transform = "scale( 1.01 )";
     elem.style.transition = "all ease 0.2s";
     elem.style.border = "1px solid lightgrey";
     elem.style.borderRadius = "10px";
     elem.style.boxShadow = "5px 5px 5px -3px rgba(112,112,112,1)";
+
+    elem_btn.style.display = "block";
   }
   onLeaveCardHandler = (value) => {
     console.log(value)
     var elem = document.getElementById(value);
+    var elem_btn = document.getElementById(value+"_btn");
     elem.style.transform = "none";
     elem.style.transition = "all ease 0s";
     elem.style.border = "none";
     elem.style.borderRadius = "0px";
     elem.style.boxShadow ="none";
+
+    elem_btn.style.display = "none";
   }
   // transform: scale( 1.5 )
   // transition: all ease 1s;
@@ -516,26 +522,26 @@ export class BookWriting extends Component {
             star = ''
           }
           if(content[0].type === 'read'){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           } else if(content[0].type === 'flip-normal'&& !content[0].selection_contents && content[0].direction === "left-right"){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].face2}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "left-right"){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> 
@@ -545,10 +551,10 @@ export class BookWriting extends Component {
                       <div>{content[0].face2}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           } else if(content[0].type === 'flip-normal' && !content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -557,10 +563,10 @@ export class BookWriting extends Component {
                       </div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -570,23 +576,23 @@ export class BookWriting extends Component {
                       </div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           } else  if(content[0].type === 'none'){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].none}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           } else  if(content[0].type === 'share'){
-            return <div style={{cursor:"pointer", backgroundColor:"white"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].share}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <Button size="small" style={{fontSize:'10px'}}>하위카드추가</Button><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button>
+                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}><Button size="small" style={{fontSize:'10px'}}>하위카드추가</Button><Button size="small" style={{fontSize:'10px'}}>수정</Button><Button size="small" style={{fontSize:'10px'}}>삭제</Button></div>
                   </div>
           }
       })
