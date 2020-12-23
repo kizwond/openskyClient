@@ -24,7 +24,7 @@ import NewCardTemplete from './NewCardTemplete';
 import NewPageTemplete from './NewPageTemplete';
 import CardTempleteEditing from './CardTempleteEditing'
 import CardDelete from './CardDelete'
-
+import CardEditing from './CardEditing'
 // import FroalaEditor from 'react-froala-wysiwyg';
 
 const { Option } = Select;
@@ -393,7 +393,7 @@ export class BookWriting extends Component {
     } else {
       toggleLeft = '0px' 
     }
-
+    
     if(this.state.contents){
       console.log('original data:',this.state.contents)
       var contentsList = this.state.contents.map((content)=>{
@@ -424,7 +424,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
+            total.push({'content':content,'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
 
         } else if(content.cardtype_id.type === "flip-normal"){
@@ -450,7 +450,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
+            total.push({'content':content,'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
           } else {
             const flag = []
@@ -470,7 +470,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
+            total.push({'content':content,'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
           }
 
@@ -484,7 +484,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
+          total.push({'content':content,'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
           return total
 
         } else if (content.cardtype_id.type === "share"){
@@ -497,7 +497,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
+          total.push({'content':content,'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
           return total
         }
 
@@ -541,6 +541,10 @@ export class BookWriting extends Component {
                       <div>  
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
@@ -559,6 +563,10 @@ export class BookWriting extends Component {
                       <div> 
                       <Space>   
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div> 
@@ -580,6 +588,10 @@ export class BookWriting extends Component {
                       <div>
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
@@ -600,6 +612,10 @@ export class BookWriting extends Component {
                       <div>
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
@@ -621,6 +637,10 @@ export class BookWriting extends Component {
                       <div>
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
@@ -637,6 +657,10 @@ export class BookWriting extends Component {
                       <div>
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
@@ -655,6 +679,10 @@ export class BookWriting extends Component {
                       <div>
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+                        <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     content={content[0].content}
+                                     handleSubmit={this.handleSubmit}
+                                     updateContentsState={this.updateContentsState} />
                         {/* <Button size="small" style={{fontSize:'10px'}} icon={<DeleteOutlined />}>카드 삭제</Button> */}
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>

@@ -356,7 +356,7 @@ export class EditorTry extends Component {
                        'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
                        'help', 'html', 'undo', 'redo'],
     }
-
+console.log('arrayForEditor:', this.props.arrayForEditor)
     const editorList = this.props.arrayForEditor.map((item,index)=>{
       return (
                 <div key={index} style={{display:"flex", marginTop:"5px", alignItems:"center"}}>

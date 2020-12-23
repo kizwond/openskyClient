@@ -9,14 +9,20 @@ import 'froala-editor/js/languages/ko'
 import 'froala-editor//css/themes/gray.min.css'
 
 import FroalaEditorComponent from 'react-froala-wysiwyg';
+import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import axios from 'axios'
-// import { InputNumber } from 'antd'
+import { Button, Modal } from 'antd'
 
 export class CardEditing extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      visible:false,
+      card_add:false,
+      arrayForEditor:[],
+      current_card_type:'',
+      current_card:{},
       flag:'',
       editor1: '',
       editor2: '',
@@ -328,6 +334,139 @@ export class CardEditing extends Component {
     });
     this.setState({card_add:false})
   }
+
+  showModal = () => {
+    this.setState({visible:true});
+  };
+
+  handleOk = () => {
+    this.setState({visible:false});
+  };
+
+  handleCancel = () => {
+    this.setState({visible:false});
+  };
+
+  addCardHandler = () => {
+    console.log('content : ', this.props.content)
+    const { content } = this.props
+    const cardType = content.cardtype_id.type
+    const selectionLength = content.cardtype_id.num_of_row.selection
+    console.log(cardType)
+
+
+        if (cardType === 'read') {
+            const faceLength_1 = content.cardtype_id.num_of_row.face1
+            const annotLength = content.cardtype_id.num_of_row.annotation
+            const face_array = []
+            for ( var i = 1; i < faceLength_1+1; i++) {
+              face_array.push('1면'+i+'행')
+            }
+            for ( i = 1; i < annotLength+1; i++) {
+              face_array.push('주석')
+            }
+            console.log(face_array)
+            this.setState({
+              current_card: {'face1':faceLength_1,'annot':annotLength},
+              current_card_type:content._id
+            })
+            var contentsList = face_array
+          } else if (cardType === 'flip-normal') {
+            if(selectionLength > 0){
+              const faceLength_1 = content.cardtype_id.num_of_row.face1
+              const faceLength_2 = content.cardtype_id.num_of_row.face2
+              const annotLength = content.cardtype_id.num_of_row.annotation
+              const face_array = []
+              for ( i = 1; i < faceLength_1+1; i++) {
+                face_array.push('1면'+i+'행')
+              }
+              for ( i = 1; i < selectionLength+1; i++) {
+                face_array.push('보기'+i+'행')
+              }
+              for ( i = 1; i < faceLength_2+1; i++) {
+                face_array.push('2면'+i+'행')
+              }
+              for ( i = 1; i < annotLength+1; i++) {
+                face_array.push('주석')
+              }
+              console.log(face_array)
+              this.setState({
+                current_card: {'face1':faceLength_1,'selection':selectionLength,'face2':faceLength_2,'annot':annotLength},
+                current_card_type:content._id
+              })
+              contentsList = face_array
+
+            }else {
+              const faceLength_1 = content.cardtype_id.num_of_row.face1
+              const faceLength_2 = content.cardtype_id.num_of_row.face2
+              const annotLength = content.cardtype_id.num_of_row.annotation
+              const face_array = []
+              for ( i = 1; i < faceLength_1+1; i++) {
+                face_array.push('1면'+i+'행')
+              }
+              for ( i = 1; i < faceLength_2+1; i++) {
+                face_array.push('2면'+i+'행')
+              }
+              for ( i = 1; i < annotLength+1; i++) {
+                face_array.push('주석')
+              }
+              console.log(face_array)
+              this.setState({
+                current_card: {'face1':faceLength_1,'face2':faceLength_2,'annot':annotLength},
+                current_card_type:content._id
+              })
+              contentsList = face_array
+            }
+            
+          } else if (cardType === 'share') {
+            const shareLength = content.cardtype_id.num_of_row.share
+            const annotLength = content.cardtype_id.num_of_row.annotation
+            const face_array = []
+            for ( i = 1; i < shareLength+1; i++) {
+              face_array.push('공통'+i+'행')
+            }
+            for ( i = 1; i < annotLength+1; i++) {
+              face_array.push('주석')
+            }
+            console.log(face_array)
+            this.setState({
+              current_card: {'share':shareLength,'annot':annotLength},
+              current_card_type:content._id
+            })
+            contentsList = face_array
+
+          } else if (cardType === 'none') {
+            const noneLength = content.cardtype_id.num_of_row.none
+            const annotLength = content.cardtype_id.num_of_row.annotation
+            const face_array = []
+            for ( i = 1; i < noneLength+1; i++) {
+              face_array.push('비학습카드')
+            }
+            for ( i = 1; i < annotLength+1; i++) {
+              face_array.push('주석')
+            }
+            console.log(face_array)
+            this.setState({
+              current_card: {'none':noneLength,'annot':annotLength},
+              current_card_type:content._id
+            })
+            contentsList = face_array
+          }     
+    
+
+    // var filtered = contentsList.filter(function(x) {
+    //   return x !== undefined;
+    // });
+    const finalArray = contentsList
+    console.log('finalArray: ',finalArray)
+      this.setState({
+        card_add: true,
+        arrayForEditor:finalArray
+      })
+
+      this.showModal()
+  }
+ 
   render() {
     const config={
       editorClass:"editor_try",
@@ -349,7 +488,7 @@ export class CardEditing extends Component {
                        'help', 'html', 'undo', 'redo'],
     }
 
-    const editorList = this.props.arrayForEditor.map((item,index)=>{
+    const editorList = this.state.arrayForEditor.map((item,index)=>{
       return (
                 <div key={index} style={{display:"flex", marginTop:"5px", alignItems:"center"}}>
                   <label className="editor_label" style={{width:"80px"}}>{item}</label>
@@ -366,17 +505,23 @@ export class CardEditing extends Component {
 
     return (
       <>
-      <div id="editor" style={{border:"1px solid black", borderRadius:"10px"}}>
-        <div id="toolbarContainer"></div>
-        <div style={{padding:"10px"}}>
-          <div style={{display:"flex", alignItems:"center"}}>
-            <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
-            <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5
+      <Button type="primary" onClick={this.addCardHandler}>
+        Open Modal
+      </Button>
+      <Modal title="Basic Modal" visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
+        <div id="editor" style={{border:"1px solid black", borderRadius:"10px"}}>
+          <div id="toolbarContainer"></div>
+          <div style={{padding:"10px"}}>
+            <div style={{display:"flex", alignItems:"center"}}>
+              <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
+              <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5
+            </div>
+            {editorList}
           </div>
-          {editorList}
+          <button onClick={this.handleSubmit} id="saveButton">Save</button>
         </div>
-        <button onClick={this.handleSubmit} id="saveButton">Save</button>
-      </div>
+      </Modal>
+      
       </>
     )
   }
