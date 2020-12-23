@@ -341,6 +341,7 @@ export class CardEditing extends Component {
 
   handleOk = () => {
     this.setState({visible:false});
+
   };
 
   handleCancel = () => {
@@ -466,29 +467,30 @@ export class CardEditing extends Component {
 
       this.showModal()
   }
- 
+
   render() {
-    const config={
-      editorClass:"editor_try",
-      quickInsertEnabled: false,
-      imageUploadURL: 'api/create/upload_image',
-      saveParam: 'content',
-      width: 'auto',
-      theme: "gray",
-      tabSpaces: 4,
-      toolbarContainer: '#toolbarContainer',
-      attribution: false,
-      charCounterCount: false,
-      language: 'ko',
-      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'subscript', 'superscript', 
-                       'fontFamily', 'fontSize', 'color', 
-                       'align', 'formatOL', 'formatUL', 'outdent', 'indent',
-                       'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 
-                       'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
-                       'help', 'html', 'undo', 'redo'],
-    }
 
     const editorList = this.state.arrayForEditor.map((item,index)=>{
+      console.log(item)
+      const config={
+        editorClass:"editor_try",
+        quickInsertEnabled: false,
+        imageUploadURL: 'api/create/upload_image',
+        saveParam: 'content',
+        width: 'auto',
+        theme: "gray",
+        tabSpaces: 4,
+        toolbarContainer: `.toolbarcontainer`,
+        attribution: false,
+        charCounterCount: false,
+        language: 'ko',
+        toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'subscript', 'superscript', 
+                         'fontFamily', 'fontSize', 'color', 
+                         'align', 'formatOL', 'formatUL', 'outdent', 'indent',
+                         'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 
+                         'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
+                         'help', 'html', 'undo', 'redo'],
+      }
       return (
                 <div key={index} style={{display:"flex", marginTop:"5px", alignItems:"center"}}>
                   <label className="editor_label" style={{width:"80px"}}>{item}</label>
@@ -510,7 +512,7 @@ export class CardEditing extends Component {
       </Button>
       <Modal title="Basic Modal" visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
         <div id="editor" style={{border:"1px solid black", borderRadius:"10px"}}>
-          <div id="toolbarContainer"></div>
+          <div className='toolbarcontainer'></div>
           <div style={{padding:"10px"}}>
             <div style={{display:"flex", alignItems:"center"}}>
               <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>

@@ -542,6 +542,7 @@ export class BookWriting extends Component {
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
@@ -564,6 +565,7 @@ export class BookWriting extends Component {
                       <Space>   
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
@@ -589,6 +591,7 @@ export class BookWriting extends Component {
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
@@ -613,6 +616,7 @@ export class BookWriting extends Component {
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
@@ -638,6 +642,7 @@ export class BookWriting extends Component {
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
@@ -658,6 +663,7 @@ export class BookWriting extends Component {
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
@@ -680,6 +686,7 @@ export class BookWriting extends Component {
                       <Space>
                         <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
