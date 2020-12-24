@@ -321,6 +321,7 @@ export class EditorTry extends Component {
       index_id:this.props.index_id,
       flag_of_maker : [this.state.flag],
       share : share_array,
+      none : none_array, 
       face1 : face1_array,
       selection : selection_array,
       face2 : face2_array,
@@ -378,8 +379,9 @@ console.log('arrayForEditor:', this.props.arrayForEditor)
         <div id="toolbarContainer"></div>
         <div style={{padding:"10px"}}>
           <div style={{display:"flex", alignItems:"center"}}>
-            <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
-            <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5
+          {this.props.current_card_type === "none" || "share" ? '' : <><label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
+            <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
+            
           </div>
           {editorList}
         </div>

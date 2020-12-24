@@ -289,7 +289,7 @@ export class BookWriting extends Component {
         arrayForEditor:finalArray
       })
   }
- 
+  contentsList
   updateContentsState = (value) => {
     console.log('updateContentsState', value)
     this.setState({
@@ -311,6 +311,20 @@ export class BookWriting extends Component {
       editor15: '',
     })
     this.setState({card_add:false})
+  }
+  updateContentsListState = () => {
+    this.setState({ 
+      contents:[],
+    });
+    axios.post('api/card/get-cardlist',{
+      index_id: this.state.index_id
+    })
+      .then(res => {
+        console.log('what', res.data)
+        this.setState({ 
+          contents:res.data.cardlist,
+        });
+      })
   }
   
   onCardChangeHandler = (value) => {
@@ -353,11 +367,10 @@ export class BookWriting extends Component {
   }
   
   onClickCardHandler = (value) => {
-    console.log(value)
     var elem = document.getElementById(value);
     var elem_btn = document.getElementById(value+"_btn");
     elem.style.transform = "scale( 1.01 )";
-    elem.style.transition = "all ease 0.2s";
+    elem.style.transition = "all ease 0.7s";
     elem.style.border = "1px solid lightgrey";
     elem.style.borderRadius = "10px";
     elem.style.boxShadow = "5px 5px 5px -3px rgba(112,112,112,1)";
@@ -367,7 +380,6 @@ export class BookWriting extends Component {
     elem_btn.style.justifyContent = "space-between";
   }
   onLeaveCardHandler = (value) => {
-    console.log(value)
     var elem = document.getElementById(value);
     var elem_btn = document.getElementById(value+"_btn");
     elem.style.transform = "none";
@@ -540,8 +552,8 @@ export class BookWriting extends Component {
                       <div></div> 
                       <div>  
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -563,8 +575,8 @@ export class BookWriting extends Component {
                       <div></div> 
                       <div> 
                       <Space>   
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -589,8 +601,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -614,8 +626,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -640,8 +652,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -661,8 +673,8 @@ export class BookWriting extends Component {
                       <div></div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -684,8 +696,8 @@ export class BookWriting extends Component {
                       </div>
                       <div>
                       <Space>
-                        <Button size="small" style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
+                                     updateContentsListState={this.updateContentsListState}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
