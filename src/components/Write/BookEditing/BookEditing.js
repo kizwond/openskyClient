@@ -554,6 +554,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -577,6 +578,7 @@ export class BookWriting extends Component {
                       <Space>   
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -603,6 +605,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -628,6 +631,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -654,6 +658,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -675,6 +680,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
@@ -698,6 +704,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}

@@ -151,8 +151,8 @@ export class CardEditing extends Component {
   }
 
   handleSubmit = () => {
-    console.log('111:',this.props.current_card)
-    const current = this.props.current_card
+    console.log('111:',this.state.current_card)
+    const current = this.state.current_card
     console.log(current)
     if(current){
       if(current.face1){
@@ -305,17 +305,21 @@ export class CardEditing extends Component {
       }
     }
 
-    if(this.props.contents.length > 0){
-      const get_seq = this.props.contents.length-1
-      var seq_in_index = this.props.contents[get_seq].seq_in_index 
-    } else {
-      seq_in_index = 0
-    }
-    console.log('seq_in_index',seq_in_index)
+    // if(this.props.contents.length > 0){
+    //   const get_seq = this.props.contents.length-1
+    //   var seq_in_index = this.props.contents[get_seq].seq_in_index 
+    // } else {
+    //   seq_in_index = 0
+    // }
+    // console.log('seq_in_index',seq_in_index)
+    console.log(face1_array)
+    console.log(face2_array)
+    console.log(this.props.card_type)
     const book_id = sessionStorage.getItem('book_id')
-    axios.post('api/card/create-card', {
+    axios.post('api/card/update-card', {
       book_id : book_id,
-      cardtype_id:this.props.current_card_type,
+      card_id : this.props.card_id,
+      cardtype_id:this.props.content.cardtype_id._id,
       index_id:this.props.index_id,
       flag_of_maker : [this.state.flag],
       share : share_array,
@@ -323,7 +327,7 @@ export class CardEditing extends Component {
       selection : selection_array,
       face2 : face2_array,
       annotation : annotation_array,
-      seq_in_index: seq_in_index
+      parent_card_id:null
     })
     .then(res => {
       console.log('after submit:', res.data)
