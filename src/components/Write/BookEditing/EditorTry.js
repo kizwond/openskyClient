@@ -338,6 +338,7 @@ export class EditorTry extends Component {
     this.setState({card_add:false})
   }
   render() {
+    console.log('aslkdfjasldfjasldfkajsdklfj:', this.props.card_type_name)
     const config={
       editorClass:"editor_try",
       quickInsertEnabled: false,
@@ -379,13 +380,16 @@ console.log('arrayForEditor:', this.props.arrayForEditor)
         <div id="toolbarContainer"></div>
         <div style={{padding:"10px"}}>
           <div style={{display:"flex", alignItems:"center"}}>
-          {this.props.current_card_type === "none" || "share" ? '' : <><label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
-            <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
-            
+          {this.props.card_type_name === "read"  &&  <><label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
+          <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
+          {this.props.card_type_name === "flip-normal"  &&  <><label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
+          <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
+          {this.props.card_type_name === "none"  &&  ''}
+          {this.props.card_type_name === "share"  &&  ''}
           </div>
           {editorList}
         </div>
-        <button onClick={this.handleSubmit} id="saveButton">Save</button>
+        <button onClick={this.handleSubmit} id="saveButton">저장</button><button onClick={this.props.cardAddStateHandler} id="cancelButton">취소</button>
       </div>
       </>
     )

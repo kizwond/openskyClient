@@ -49,9 +49,11 @@ export class BookWriting extends Component {
        arrayForEditor:[],
        current_card:{},
        current_card_type:'',
+       card_type_name:'',
        card_selected_detailsetting:'',
        index_id:'',
        file:'',
+       menu_position:10
     }
   }
 
@@ -191,7 +193,8 @@ export class BookWriting extends Component {
             console.log(face_array)
             this.setState({
               current_card: {'face1':faceLength_1,'annot':annotLength},
-              current_card_type:content._id
+              current_card_type:content._id,
+              card_type_name:content.type
             })
             return face_array
           } else if (cardType === 'flip-normal') {
@@ -215,7 +218,8 @@ export class BookWriting extends Component {
               console.log(face_array)
               this.setState({
                 current_card: {'face1':faceLength_1,'selection':selectionLength,'face2':faceLength_2,'annot':annotLength},
-                current_card_type:content._id
+                current_card_type:content._id,
+                card_type_name:content.type
               })
               return face_array
 
@@ -236,7 +240,8 @@ export class BookWriting extends Component {
               console.log(face_array)
               this.setState({
                 current_card: {'face1':faceLength_1,'face2':faceLength_2,'annot':annotLength},
-                current_card_type:content._id
+                current_card_type:content._id,
+                card_type_name:content.type
               })
               return face_array
             }
@@ -254,7 +259,8 @@ export class BookWriting extends Component {
             console.log(face_array)
             this.setState({
               current_card: {'share':shareLength,'annot':annotLength},
-              current_card_type:content._id
+              current_card_type:content._id,
+              card_type_name:content.type
             })
             return face_array
 
@@ -271,7 +277,8 @@ export class BookWriting extends Component {
             console.log(face_array)
             this.setState({
               current_card: {'none':noneLength,'annot':annotLength},
-              current_card_type:content._id
+              current_card_type:content._id,
+              card_type_name:content.type
             })
             return face_array
           }
@@ -288,6 +295,11 @@ export class BookWriting extends Component {
         card_add: true,
         arrayForEditor:finalArray
       })
+  }
+  cardAddStateHandler = () => {
+    this.setState({
+      card_add: false,
+    })
   }
   contentsList
   updateContentsState = (value) => {
@@ -378,6 +390,11 @@ export class BookWriting extends Component {
     elem_btn.style.display = "flex";
     elem_btn.style.flexDirection = "row";
     elem_btn.style.justifyContent = "space-between";
+
+    let offsetTop  = elem.getBoundingClientRect().top;
+    this.setState({
+      menu_position:offsetTop-140
+    })
   }
   onLeaveCardHandler = (value) => {
     var elem = document.getElementById(value);
@@ -554,6 +571,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -578,6 +596,7 @@ export class BookWriting extends Component {
                       <Space>   
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -605,6 +624,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -631,6 +651,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -658,6 +679,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -680,6 +702,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -704,6 +727,7 @@ export class BookWriting extends Component {
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
                                      updateContentsListState={this.updateContentsListState}
+                                     index_id={this.state.index_id}
                                      card_type={content[0].type}
                                      card_id={content[0].card_id}
                                      content={content[0].content}
@@ -765,9 +789,11 @@ export class BookWriting extends Component {
               </form>
               <Button size='small' onClick={this.uplodeFile}>파일업로드</Button>
               
+              
             </div>
           </div>
-          <div className="editor_panel">
+          <div className="editor_panel" style={{position:"relative"}}>
+            <div style={{border:"1px solid red", width:"100px", height:"100px", position:"absolute", right:"-110px", top:`${this.state.menu_position}px`}}> hellor </div>
             {/* 카드 뿌려지는 영역 */}
             {list ? list : ''}
             
@@ -775,6 +801,8 @@ export class BookWriting extends Component {
             <div className="a4">
               {this.state.card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                                                          handleSubmit={this.handleSubmit}
+                                                         cardAddStateHandler={this.cardAddStateHandler}
+                                                         card_type_name={this.state.card_type_name}
                                                          updateContentsState={this.updateContentsState}
                                                          current_card_type={this.state.current_card_type}
                                                          contents={this.state.contents}

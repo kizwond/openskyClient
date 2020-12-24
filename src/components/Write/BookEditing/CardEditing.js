@@ -305,13 +305,6 @@ export class CardEditing extends Component {
       }
     }
 
-    // if(this.props.contents.length > 0){
-    //   const get_seq = this.props.contents.length-1
-    //   var seq_in_index = this.props.contents[get_seq].seq_in_index 
-    // } else {
-    //   seq_in_index = 0
-    // }
-    // console.log('seq_in_index',seq_in_index)
     console.log(face1_array)
     console.log(face2_array)
     console.log(this.props.card_type)
@@ -336,7 +329,7 @@ export class CardEditing extends Component {
     .catch(function (error) {
       console.log(error);
     });
-    this.setState({card_add:false})
+    this.setState({visible:false})
   }
 
   showModal = () => {
