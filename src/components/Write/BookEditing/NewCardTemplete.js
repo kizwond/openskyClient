@@ -156,15 +156,23 @@ class NewCardTemplete extends Component {
           okText='만들기'
           cancelText='취소'
           maskClosable={false}
+          width={700}
         >
-          <div className="new_card_templete_container" style={{fontSize:"11px"}}>
-            <ul>
-              <li style={{display:"flex", alignItems:"center"}}>
-                <span style={{width:"100px"}}>카드별칭</span><Input size="small" onChange={this.onChangeName} value={this.state.name} style={{width:"150px", fontSize:"11px"}}placeholder="별칭을 입력하세요"/>
-              </li>
+          <div className="new_card_templete_container" style={{fontSize:"11px", display:"flex", alignItems:"flex-start", justifyContent:"space-evenly"}}>
+            <div style={{width:"30%"}}>
+                <div style={{display:"flex", alignItems:"center", marginBottom:"10px"}}>
+                  <span style={{display:"inline-block",fontSize:"11px",paddingLeft:"5px",lineHeight:"20px",width:"100px",height:"20px", backgroundColor:"skyblue"}}>카드이름 입력</span>
+                  <span style={{width:"0", height:"0", display:"inline-block",borderTop:"10px solid transparent", borderBottom:"10px solid transparent", borderLeft:"15px solid skyblue"}}></span>                
+                </div>
+                <Input size="small" onChange={this.onChangeName} value={this.state.name} style={{width:"150px", fontSize:"11px"}}placeholder="별칭을 입력하세요"/>
+            </div>
+            <ul style={{width:"30%"}}>
               <li>
-                <div>카드종류</div>
-                <Radio.Group onChange={this.onChange} style={{marginLeft:"30px", fontSize:"11px", height:"100%"}} defaultValue={this.state.type}>
+                <div style={{display:"flex", alignItems:"center", marginBottom:"10px"}}>
+                  <span style={{display:"inline-block",fontSize:"11px",paddingLeft:"5px",lineHeight:"20px",width:"100px",height:"20px", backgroundColor:"skyblue"}}>카드종류 선택</span>
+                  <span style={{width:"0", height:"0", display:"inline-block",borderTop:"10px solid transparent", borderBottom:"10px solid transparent", borderLeft:"15px solid skyblue"}}></span>                
+                </div>
+                <Radio.Group onChange={this.onChange} style={{fontSize:"11px", height:"100%"}} defaultValue={this.state.type}>
                 <Radio style={radioStyle} value='read'>
                   <span style={{marginRight:"10px"}}>학습 - 읽기카드</span>
                     <Tooltip title="prompt text" color="#2db7f5" >
@@ -178,13 +186,18 @@ class NewCardTemplete extends Component {
                     </Tooltip>
                     {this.state.type === "flip-normal" ? 
                       <div style={{marginLeft:"20px"}}>
-                          <Radio.Group onChange={this.onChangeFlipMode} defaultValue={this.state.onChangeFlipMode}>
+                          <Radio.Group onChange={this.onChangeFlipMode} value={this.state.onChangeFlipMode}>
                             <Radio style={radioStyle} value="normal">일반형 카드</Radio>
                             <Radio style={radioStyle} value="selection">선택형 카드</Radio>
                           </Radio.Group>
-                      </div> : null}
+                      </div> :  <div style={{marginLeft:"20px"}}>
+                          <Radio.Group disabled>
+                            <Radio style={radioStyle} value="normal">일반형 카드</Radio>
+                            <Radio style={radioStyle} value="selection">선택형 카드</Radio>
+                          </Radio.Group>
+                      </div>}
                 </Radio>
-                <Radio style={radioStyle} value='none'>
+                <Radio style={{...radioStyle, marginTop:"-25px"}} value='none'>
                   <span style={{marginRight:"10px"}}>기타 - 비학습카드</span>
                   <Tooltip title="prompt text" color="#2db7f5" >
                       <QuestionCircleOutlined />
@@ -199,10 +212,13 @@ class NewCardTemplete extends Component {
               </Radio.Group>
               </li>
             </ul>
-            <Divider />
-            <div>
-              <div>행 설정</div>
-                <ul style={{marginLeft:"30px"}}>
+            
+            <div style={{width:"30%"}}>
+              <div style={{display:"flex", alignItems:"center", marginBottom:"10px"}}>
+                <span style={{display:"inline-block",fontSize:"11px",paddingLeft:"5px",lineHeight:"20px",width:"100px",height:"20px", backgroundColor:"skyblue"}}>행 개수 선택</span>
+                <span style={{width:"0", height:"0", display:"inline-block",borderTop:"10px solid transparent", borderBottom:"10px solid transparent", borderLeft:"15px solid skyblue"}}></span>                
+              </div>
+                <ul>
                   <Space direction="vertical">
                     <li>
                       <span>앞면 - 행 개수</span><InputNumber value={this.state.face1Num} onChange={this.onChangeFace1} size="small" style={{width:"100px", fontSize:"11px", marginLeft:"10px"}}placeholder="최대 5행"/>
