@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import LeftDrawer from './BookWritingLeftDrawer'
 import './BookWriting.css'
-import {Button, Select,Modal,Space } from 'antd';
+import {Button, Select,Modal,Space, Divider } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
-import {StarTwoTone,DeleteOutlined,EditOutlined} from '@ant-design/icons';
+import {StarTwoTone,DownloadOutlined,EditOutlined} from '@ant-design/icons';
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
@@ -25,6 +25,8 @@ import NewPageTemplete from './NewPageTemplete';
 import CardTempleteEditing from './CardTempleteEditing'
 import CardDelete from './CardDelete'
 import CardEditing from './CardEditing'
+import ImportModal from './ImportModal'
+
 // import FroalaEditor from 'react-froala-wysiwyg';
 
 const { Option } = Select;
@@ -172,10 +174,23 @@ export class BookWriting extends Component {
       })
     }
   }
-  addCardHandler = () => {
-    console.log('card_selected : ', this.state.card_selected)
+
+  updateCardSelectedState = (key) => {
+    if(this.state.index_id){
+      this.setState({
+        card_selected: key
+      })
+      this.addCardHandler(key)
+    } else {
+      alert("목차를 선택후 카드추가를 시작하세요!!!")
+    }
+   
+  }
+
+  addCardHandler = (key) => {
     const contentsList = this.state.card_type.map((content)=>{
-      if(content.name === this.state.card_selected){
+      console.log(content.name)
+      if(content.name === key){
         console.log('here', content)
           const cardType = content.type
           const selectionLength = content.num_of_row.selection
@@ -361,22 +376,6 @@ export class BookWriting extends Component {
         });
       })
   };
-
-  uplodeFile = event =>{
-    const value = sessionStorage.getItem("book_id")
-    console.log(this.state.file)
-    const data = new FormData();
-    data.append("file", this.state.file)
-    data.append("index_id", this.state.index_id)
-    data.append("book_id", value)
-
-    axios.post('api/card/create-card-by-excel', data)
-      .then(res => {alert(res.data.msg); 
-        this.setState({
-        file:''
-      })})
-      .catch(err => console.log(err))
-  }
   
   onClickCardHandler = (value) => {
     var elem = document.getElementById(value);
@@ -393,7 +392,7 @@ export class BookWriting extends Component {
 
     let offsetTop  = elem.getBoundingClientRect().top;
     this.setState({
-      menu_position:offsetTop-140
+      menu_position:offsetTop-95
     })
   }
   onLeaveCardHandler = (value) => {
@@ -407,8 +406,7 @@ export class BookWriting extends Component {
 
     elem_btn.style.display = "none";
   }
-  // transform: scale( 1.5 )
-  // transition: all ease 1s;
+
   render() {
     if (this.state.hide_show_toggle === false){
       var toggle = '-308px' 
@@ -535,7 +533,7 @@ export class BookWriting extends Component {
 
     if(this.state.card_type){
       var optionList = this.state.card_type.map((type)=>(
-          <Option key={type._id} value={type.name}>{type.name}</Option>
+          <Button size="small" onClick={() => this.updateCardSelectedState(type.name)} style={{cursor:"pointer", marginBottom:"5px", fontSize:"10px"}} key={type._id} > {type.name}</Button>
       ))
     }
 
@@ -774,26 +772,36 @@ export class BookWriting extends Component {
               </Modal>
             </div>
             <div>
-              <Select size='small' defaultValue={'카드선택'} style={{width:'150px'}} onChange={this.selectCardTypeHandler}>
+              {/* <Select size='small' defaultValue={'카드선택'} style={{width:'150px'}} onChange={this.selectCardTypeHandler}>
                 <Option value="카드선택">카드선택</Option>
                 {optionList}
               </Select>
-              <Button size='small' onClick={this.addCardHandler}>카드추가</Button>
-              <form action="#">
-                <input type="file" name="import_file" onChange={(event)=>{
-                  const file = event.target.files[0];
-                  this.setState({
-                    file:file
-                  })
-                }}/>
-              </form>
-              <Button size='small' onClick={this.uplodeFile}>파일업로드</Button>
-              
+              <Button size='small' onClick={this.addCardHandler}>카드추가</Button> */}              
               
             </div>
           </div>
           <div className="editor_panel" style={{position:"relative"}}>
-            <div style={{border:"1px solid red", width:"100px", height:"100px", position:"absolute", right:"-110px", top:`${this.state.menu_position}px`}}> hellor </div>
+            <div style={{border:"1px solid lightgrey", 
+                         borderRadius:"5px",
+                         backgroundColor:"white",
+                         width:"120px", 
+                         padding:"10px",
+                        //  height:"100px", 
+                         position:"absolute", 
+                         right:"-130px", 
+                         fontSize:'11px',
+                         top:`${this.state.menu_position}px`,
+                         boxShadow : "3px 2px 4px -2px rgba(138,138,138,1)",
+                         transition:"all ease 0.4s"}}> 
+              <Space direction="vertical">        
+              <h3>카드추가</h3>
+              <ul style={{marginLeft:"10px"}}>
+                {optionList}
+              </ul>
+              </Space>
+              <Divider style={{margin:"5px 0"}}/>
+              <ImportModal index_id={this.state.index_id}/>
+            </div>
             {/* 카드 뿌려지는 영역 */}
             {list ? list : ''}
             
