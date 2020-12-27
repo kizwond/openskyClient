@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import LeftDrawer from './BookWritingLeftDrawer'
 import './BookWriting.css'
-import {Button, Select,Modal,Space, Divider } from 'antd';
+import {Button, Select,Modal,Space, Divider,Spin } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
-import {StarTwoTone,DownloadOutlined,EditOutlined} from '@ant-design/icons';
+import {StarTwoTone,LoadingOutlined,EditOutlined} from '@ant-design/icons';
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
@@ -55,8 +55,11 @@ export class BookWriting extends Component {
        card_selected_detailsetting:'',
        index_id:'',
        file:'',
-       menu_position:10
+       menu_position:10,
+       loading:false,
+       card_selected_id:''
     }
+    this.onSelect = this.onSelect.bind(this)
   }
 
   componentDidMount() {
@@ -338,6 +341,9 @@ export class BookWriting extends Component {
       editor15: '',
     })
     this.setState({card_add:false})
+    const card_id = value[value.length-1]._id
+    const seq = value[value.length-1].seq
+    this.onClickCardHandler(card_id, seq)
   }
   updateContentsListState = () => {
     this.setState({ 
@@ -361,23 +367,41 @@ export class BookWriting extends Component {
     })
   }
 
-  onSelect = (selectedKeys, info) => {
+  async onSelect(selectedKeys, info){
     console.log('selected', selectedKeys, info);
     this.setState({
-      index_id:info.node.index_id
+      index_id: info.node.index_id,
+      loading : true
     })
-    axios.post('api/card/get-cardlist',{
+    await axios.post('api/card/get-cardlist',{
       index_id: info.node.index_id
     })
       .then(res => {
         console.log('what', res.data)
         this.setState({ 
           contents:res.data.cardlist,
+          loading : false
         });
       })
   };
   
   onClickCardHandler = (value, seq) => {
+    var elemClass = document.getElementsByClassName("card_class");
+    var elemBtnsClass = document.getElementsByClassName("card_edit_btns");
+    
+    for(var i = 0; i<elemClass.length; i++){
+      elemClass[i].style.transform = "none";
+      elemClass[i].style.transition = "all ease 0.7s";
+      elemClass[i].style.border = "none";
+      elemClass[i].style.borderRadius = "0px";
+      elemClass[i].style.boxShadow ="none";
+    }
+
+    for( i = 0; i<elemClass.length; i++){
+      elemBtnsClass[i].style.display = "none";
+    }
+
+
     var elem = document.getElementById(value);
     var elem_btn = document.getElementById(value+"_btn");
     elem.style.transform = "scale( 1.01 )";
@@ -390,22 +414,43 @@ export class BookWriting extends Component {
     elem_btn.style.flexDirection = "row";
     elem_btn.style.justifyContent = "space-between";
 
+   
     let offsetTop  = elem.getBoundingClientRect().top;
     this.setState({
       menu_position:offsetTop-95,
-      selected_card_seq:seq
+      selected_card_seq:seq,
+      card_selected_id:value
     })
   }
-  onLeaveCardHandler = (value) => {
-    var elem = document.getElementById(value);
-    var elem_btn = document.getElementById(value+"_btn");
-    elem.style.transform = "none";
-    elem.style.transition = "all ease 0s";
-    elem.style.border = "none";
-    elem.style.borderRadius = "0px";
-    elem.style.boxShadow ="none";
+   onMouseOverCardHandler = (value, seq) => {
+    // var elem = document.getElementById(value);
+    // var elem_btn = document.getElementById(value+"_btn");
+    // elem.style.transform = "scale( 1.01 )";
+    // elem.style.transition = "all ease 0.7s";
+    // elem.style.border = "1px solid lightgrey";
+    // elem.style.borderRadius = "10px";
+    // elem.style.boxShadow = "5px 5px 5px -3px rgba(112,112,112,1)";
 
-    elem_btn.style.display = "none";
+    // elem_btn.style.display = "flex";
+    // elem_btn.style.flexDirection = "row";
+    // elem_btn.style.justifyContent = "space-between";
+
+    // let offsetTop  = elem.getBoundingClientRect().top;
+    // this.setState({
+    //   menu_position:offsetTop-95,
+    //   selected_card_seq:seq
+    // })
+  }
+  onLeaveCardHandler = (value) => {
+    // var elem = document.getElementById(value);
+    // var elem_btn = document.getElementById(value+"_btn");
+    // elem.style.transform = "none";
+    // elem.style.transition = "all ease 0.7s";
+    // elem.style.border = "none";
+    // elem.style.borderRadius = "0px";
+    // elem.style.boxShadow ="none";
+
+    // elem_btn.style.display = "none";
   }
 
   render() {
@@ -558,13 +603,18 @@ export class BookWriting extends Component {
             star = ''
           }
           if(content[0].type === 'read'){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <> <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div></div> 
                       <div>  
                       <Space>
@@ -581,15 +631,31 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           } else if(content[0].type === 'flip-normal'&& !content[0].selection_contents && content[0].direction === "left-right"){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
                       <div>{content[0].face2}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div></div> 
                       <div> 
                       <Space>   
@@ -606,8 +672,24 @@ export class BookWriting extends Component {
                       </div> 
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "left-right"){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> 
@@ -617,7 +699,7 @@ export class BookWriting extends Component {
                       <div>{content[0].face2}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div></div>
                       <div>
                       <Space>
@@ -634,8 +716,24 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           } else if(content[0].type === 'flip-normal' && !content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -644,7 +742,7 @@ export class BookWriting extends Component {
                       </div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div></div>
                       <div>
                       <Space>
@@ -661,8 +759,24 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -672,7 +786,7 @@ export class BookWriting extends Component {
                       </div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div></div>
                       <div>
                       <Space>
@@ -689,13 +803,29 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           } else  if(content[0].type === 'none'){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].none}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div></div>
                       <div>
                       <Space>
@@ -712,13 +842,29 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           } else  if(content[0].type === 'share'){
-            return <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} id={content[0].card_id} onMouseOver={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+                        id={content[0].card_id} 
+                        className="card_class"
+                        onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
+                        onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].share}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
-                    <div id={content[0].card_id+"_btn"} style={{display:"none"}}>
+                    <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div>
                       <Button size="small" style={{fontSize:'10px'}}>하위카드추가</Button>
                       </div>
@@ -738,9 +884,21 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   /> : ''}</>
           }
       })
     }
+    console.log("what?", this.state.card_selected_id)
     return (
       <>
       <div className="book_writing_container">
@@ -772,14 +930,6 @@ export class BookWriting extends Component {
                 <BookRelocate/>
               </Modal>
             </div>
-            <div>
-              {/* <Select size='small' defaultValue={'카드선택'} style={{width:'150px'}} onChange={this.selectCardTypeHandler}>
-                <Option value="카드선택">카드선택</Option>
-                {optionList}
-              </Select>
-              <Button size='small' onClick={this.addCardHandler}>카드추가</Button> */}              
-              
-            </div>
           </div>
           <div className="editor_panel" style={{position:"relative"}}>
             <div style={{border:"1px solid lightgrey", 
@@ -805,10 +955,11 @@ export class BookWriting extends Component {
             </div>
             {/* 카드 뿌려지는 영역 */}
             {list ? list : ''}
+            {this.state.loading && <div style={{position:"absolute", top:"50%", left:"50%", transform:"(50%,50%)"}}><Spin tip="Loading..."/></div>}
             
             
             <div className="a4">
-              {this.state.card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+              {this.state.card_add === true && this.state.card_selected_id === '' ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                                                          selected_card_seq={this.state.selected_card_seq}
                                                          handleSubmit={this.handleSubmit}
                                                          cardAddStateHandler={this.cardAddStateHandler}
