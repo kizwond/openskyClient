@@ -307,13 +307,13 @@ export class EditorTry extends Component {
       }
     }
 
-    if(this.props.contents.length > 0){
-      const get_seq = this.props.contents.length-1
-      var seq_in_index = this.props.contents[get_seq].seq_in_index 
-    } else {
-      seq_in_index = 0
-    }
-    console.log('seq_in_index',seq_in_index)
+    // if(this.props.contents.length > 0){
+    //   const get_seq = this.props.contents.length-1
+    //   var seq_in_index = this.props.contents[get_seq].seq_in_index 
+    // } else {
+    //   seq_in_index = 0
+    // }
+    console.log('seq_in_index',this.props.selected_card_seq)
     const book_id = sessionStorage.getItem('book_id')
     axios.post('api/card/create-card', {
       book_id : book_id,
@@ -326,7 +326,7 @@ export class EditorTry extends Component {
       selection : selection_array,
       face2 : face2_array,
       annotation : annotation_array,
-      seq_in_index: seq_in_index
+      seq_in_index: this.props.selected_card_seq
     })
     .then(res => {
       console.log('after submit:', res.data)
