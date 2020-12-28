@@ -341,8 +341,17 @@ export class BookWriting extends Component {
       editor15: '',
     })
     this.setState({card_add:false})
-    const card_id = value[value.length-1]._id
-    const seq = value[value.length-1].seq
+    
+    const sortValue = value
+    sortValue.sort(function(a, b) { 
+      return a.time_created > b.time_created ? -1 : a.time_created < b.time_created ? 1 : 0;
+    });
+    console.log("after sort:", sortValue[0])
+    const card_id = sortValue[0]._id
+    const seq = sortValue[0].seq
+    sortValue.sort(function(a, b) { 
+      return a.seq_in_index < b.seq_in_index ? -1 : a.seq_in_index > b.seq_in_index ? 1 : 0;
+    });
     this.onClickCardHandler(card_id, seq)
   }
   updateContentsListState = () => {
@@ -371,7 +380,8 @@ export class BookWriting extends Component {
     console.log('selected', selectedKeys, info);
     this.setState({
       index_id: info.node.index_id,
-      loading : true
+      loading : true,
+      card_selected_id:''
     })
     await axios.post('api/card/get-cardlist',{
       index_id: info.node.index_id
@@ -946,7 +956,7 @@ export class BookWriting extends Component {
                          transition:"all ease 0.4s"}}> 
               <Space direction="vertical">        
               <h3>카드추가</h3>
-              <ul style={{marginLeft:"10px"}}>
+              <ul style={{marginLeft:"10px", display:"flex", flexDirection:"column"}}>
                 {optionList}
               </ul>
               </Space>
