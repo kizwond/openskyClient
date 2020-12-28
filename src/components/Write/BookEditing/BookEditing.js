@@ -31,6 +31,7 @@ import ImportModal from './ImportModal'
 
 const { Option } = Select;
 
+
 export class BookWriting extends Component {
   constructor(props) {
     super(props)
@@ -57,14 +58,26 @@ export class BookWriting extends Component {
        file:'',
        menu_position:10,
        loading:false,
-       card_selected_id:''
+       card_selected_id:'',
+       locationY:'',
+       scrollTop: 0
     }
     this.onSelect = this.onSelect.bind(this)
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
     this.getIndexList()
     this.getCardTypeList()
+  }
+
+  handleScroll = (e) => {
+    console.log(e)
+    const scrollTop = ('scroll', e.srcElement.scrollingElement.scrollTop);
+    console.log(scrollTop)
+      this.setState({
+        scrollTop
+      })
   }
 
   getIndexList = () => {
@@ -419,13 +432,10 @@ export class BookWriting extends Component {
     elem_btn.style.flexDirection = "row";
     elem_btn.style.justifyContent = "space-between";
 
-   
+
     let offsetTop  = elem.getBoundingClientRect().top;
-    const Location = elem.clientHeight
-    console.log("===============================================offsetTop",offsetTop)
-    console.log("===============================================Location",Location)
     this.setState({
-      menu_position:offsetTop+Location-95,
+      menu_position:offsetTop+this.state.scrollTop -95,
       selected_card_seq:seq,
       card_selected_id:value
     })
@@ -599,7 +609,6 @@ export class BookWriting extends Component {
           } else if(content[0].flag == "3"){
             star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
           } else if(content[0].flag == "4"){
-            console.log('4')
             star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
           } else if(content[0].flag == "5"){
             star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
@@ -902,7 +911,7 @@ export class BookWriting extends Component {
           }
       })
     }
-
+    
     return (
       <>
       <div className="book_writing_container">
@@ -935,7 +944,7 @@ export class BookWriting extends Component {
               </Modal>
             </div>
           </div>
-          <div className="editor_panel" style={{position:"relative"}}>
+          <div className="editor_panel" id="editor_panel" onScroll={this.handleScroll} style={{position:"relative"}}>
             <div style={{border:"1px solid lightgrey", 
                          borderRadius:"5px",
                          backgroundColor:"white",

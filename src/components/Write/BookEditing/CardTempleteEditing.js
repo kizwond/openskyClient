@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Tooltip, Modal, Input, Radio, Divider, InputNumber, Space} from 'antd';
-import axios from 'axios'
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Modal} from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import CardTypeSettingTabs from './CardTypeSettingTabs'
 
@@ -32,9 +30,7 @@ class CardTempleteEditing extends Component {
 
 
 
-  render() {
-    console.log('modal props:', this.props.card_type)
-    
+  render() {  
     return (
       <>
         <SettingOutlined onClick={this.showModal}/>
