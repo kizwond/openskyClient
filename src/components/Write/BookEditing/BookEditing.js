@@ -69,7 +69,6 @@ export class BookWriting extends Component {
 
   getIndexList = () => {
     const value = sessionStorage.getItem("book_id")
-    console.log('req start!!!!!!!!!!')
     axios.post('api/index/get-indexlist',{
       book_id:value
     })
@@ -85,7 +84,6 @@ export class BookWriting extends Component {
       book_id:value
     })
       .then(res => {
-        console.log(res.data)
         console.log("get cardtype list :", res.data)
         this.setState({ 
           card_type:res.data.cardtypes
@@ -423,8 +421,11 @@ export class BookWriting extends Component {
 
    
     let offsetTop  = elem.getBoundingClientRect().top;
+    const Location = elem.clientHeight
+    console.log("===============================================offsetTop",offsetTop)
+    console.log("===============================================Location",Location)
     this.setState({
-      menu_position:offsetTop-95,
+      menu_position:offsetTop+Location-95,
       selected_card_seq:seq,
       card_selected_id:value
     })
@@ -475,9 +476,7 @@ export class BookWriting extends Component {
     }
     
     if(this.state.contents){
-      console.log('original data:',this.state.contents)
       var contentsList = this.state.contents.map((content)=>{
-        console.log(content)
         const flag_column_num = content.cardtype_id.num_of_row.maker_flag;
         const face1_column_num = content.cardtype_id.num_of_row.face1;
         const selection_column_num = content.cardtype_id.num_of_row.selection;
@@ -590,9 +589,7 @@ export class BookWriting extends Component {
       ))
     }
 
-    console.log('contentsList : ',contentsList)
     if(contentsList){
-      console.log('hello',contentsList)
       var list = contentsList.map((content)=>{
 
           if(content[0].flag == "1"){
@@ -905,7 +902,7 @@ export class BookWriting extends Component {
           }
       })
     }
-    console.log("what?", this.state.card_selected_id)
+
     return (
       <>
       <div className="book_writing_container">
