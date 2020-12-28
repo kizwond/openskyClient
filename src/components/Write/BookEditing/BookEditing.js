@@ -342,16 +342,13 @@ export class BookWriting extends Component {
     })
     this.setState({card_add:false})
     
-    const sortValue = value
+    const sortValue = value.slice()
     sortValue.sort(function(a, b) { 
       return a.time_created > b.time_created ? -1 : a.time_created < b.time_created ? 1 : 0;
     });
     console.log("after sort:", sortValue[0])
     const card_id = sortValue[0]._id
     const seq = sortValue[0].seq
-    sortValue.sort(function(a, b) { 
-      return a.seq_in_index < b.seq_in_index ? -1 : a.seq_in_index > b.seq_in_index ? 1 : 0;
-    });
     this.onClickCardHandler(card_id, seq)
   }
   updateContentsListState = () => {
