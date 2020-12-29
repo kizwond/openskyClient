@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from "axios"
 import { Radio,Row, Col,Button,Switch,Tabs,Form, Input, Checkbox, InputNumber   } from 'antd';
 import BookTitleList from './BookTitleList'
-
+import "./ChooseIndex.css"
 import SelectedIndexTotal from './SelectedIndexTotal'
-import ReadModeTab from './ReadModeTab';
+import StudyModeTab from './StudyModeTab';
 
 const { TabPane } = Tabs;
 
@@ -64,7 +64,6 @@ class ChooseIndex extends Component {
           books:[...this.state.books, res.data.single_book_info]
         })
       })
-    return null
     })
     console.log(requestArray)
   }
@@ -280,10 +279,11 @@ class ChooseIndex extends Component {
     console.log('Success:', values);
   };
   render() {
+    console.log("lets see this", this.state.books)
     
     return (
-      <div style={{fontSize:"12px",width:"90%", margin:"auto", height:"80vh"}}>
-        <Row gutter={1} style={{margin:"10px 0", height:"100%"}} justify="center">
+      <div style={{fontSize:"12px",width:"100%", margin:"auto", height:"100%"}}>
+        <Row style={{margin:"10px 0", height:"100%"}} justify="center">
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={18}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
             <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
@@ -292,20 +292,19 @@ class ChooseIndex extends Component {
               <SelectedIndexTotal />
             </div>
           </Col>
-          <Col className="gutter-row" style={{height:"103.7%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
-            <Tabs defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
+          <Col style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
+            <Tabs className="study_mode_class" defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
               <TabPane tab="책모드" key="0" style={{textAlign:"left", padding:"10px"}}>
-                <ReadModeTab onFinish={this.onFinish}/>
-                
+                <StudyModeTab onFinish={this.onFinish}/>
               </TabPane>
-              <TabPane tab="카드모드" key="1">
-                qqqe
+              <TabPane tab="카드모드" key="1" style={{textAlign:"left", padding:"10px"}}>
+                <StudyModeTab onFinish={this.onFinish}/>
               </TabPane>
-              <TabPane tab="시험모드" key="3">
-                qeqeq
+              <TabPane tab="시험모드" key="3" style={{textAlign:"left", padding:"10px"}}>
+                <StudyModeTab onFinish={this.onFinish}/>
               </TabPane>
             </Tabs>
-            <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px"}}><Button onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button></div>
+            
           </Col>
         </Row>
       </div>

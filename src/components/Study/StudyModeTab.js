@@ -1,0 +1,250 @@
+import React, { Component } from 'react';
+import { Radio,Row, Col,Button,Switch,Tabs,Form, Divider, Checkbox, InputNumber   } from 'antd';
+
+class StudyModeTab extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+
+     };
+  }
+  render() {
+    return (
+      <>
+        <div>정렬</div>
+        <Form
+            name="settings"
+            initialValues={{
+              read_card: true,
+              study_all_read_card:false,
+              yet_card:false
+            }}
+            onFinish={this.props.onFinish}
+          >
+            <Form.Item
+              name="sort_value"
+            >
+              <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
+                <Radio.Group onChange={this.onChangeMode} value={this.state.mode} style={{display:"flex", flexDirection:"column"}}>
+                  <Radio value="normal" style={{fontSize:"11px"}}>
+                    기본(순서대로)
+                  </Radio>
+                  <Radio value="review" style={{fontSize:"11px"}}>
+                    복습시점 빠른 순
+                  </Radio>
+                  <Radio value="random" style={{fontSize:"11px"}}>
+                    랜덤하게
+                  </Radio>
+                </Radio.Group>
+              </div>
+            </Form.Item>
+            <div>필터</div>
+            <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="read_card"
+                  valuePropName="checked"
+                >
+                  <span  style={{fontSize:"13px", fontWeight:"700"}}>읽기카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="study_all_read_card"
+                  valuePropName="checked"
+                >
+                  <Checkbox style={{fontSize:"11px"}}>
+                    모든카드 다보기
+                  </Checkbox>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="read_yet_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>미학습카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="read_yet_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="read_ing_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>학습중카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="read_ing_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <div style={{background:"white", padding:"5px", textAlign:"left"}}>
+                <Form.Item
+                  name="read_ing_card_detail"
+                >
+                  <Radio.Group onChange={this.onChangeMode} value={this.state.mode} style={{marginLeft:"30px", display:"flex", flexDirection:"column", textAlign:"left"}}>
+                    <Radio value="ing_all" style={{fontSize:"11px"}}>
+                      모든학습중카드
+                    </Radio>
+                    <Radio value="limit_now" style={{fontSize:"11px"}}>
+                      현시간기준 복습필요카드만
+                    </Radio>
+                    <Radio value="limit_today" style={{fontSize:"11px"}}>
+                      오늘까지 복습필요카드만
+                    </Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="read_completed_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>학습완료카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="read_completed_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="read_suspend_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>학습보류카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="read_suspend_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <Divider style={{margin:"0"}}/>
+              {/* 뒤집기카드 */}
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="flip_card"
+                  valuePropName="checked"
+                >
+                  <span  style={{fontSize:"13px", fontWeight:"700"}}>뒤집기카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="study_all_flip_card"
+                  valuePropName="checked"
+                >
+                  <Checkbox style={{fontSize:"11px"}}>
+                    모든카드 다보기
+                  </Checkbox>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="flip_yet_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>미학습카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="flip_yet_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="flip_ing_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>학습중카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="flip_ing_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <div style={{ background:"white", padding:"5px", textAlign:"left"}}>
+                <Form.Item
+                  name="flip_ing_card_detail"
+                >
+                  <Radio.Group onChange={this.onChangeMode} value={this.state.mode} style={{marginLeft:"30px", display:"flex", flexDirection:"column", textAlign:"left"}}>
+                    <Radio value="flip_ing_all" style={{fontSize:"11px"}}>
+                      모든학습중카드
+                    </Radio>
+                    <Radio value="flip_limit_now" style={{fontSize:"11px"}}>
+                      현시간기준 복습필요카드만
+                    </Radio>
+                    <Radio value="flip_limit_today" style={{fontSize:"11px"}}>
+                      오늘까지 복습필요카드만
+                    </Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="flip_completed_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>학습완료카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="flip_completed_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+              <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
+                <Form.Item
+                  name="flip_suspend_card"
+                  valuePropName="checked"
+                >
+                  <span style={{fontSize:"11px", marginLeft:"20px"}}>학습보류카드 </span> <Switch size="small" />
+                </Form.Item>
+                <Form.Item
+                  name="flip_suspend_card_num"
+                  noStyle
+                >
+                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
+                </Form.Item>
+              </div>
+
+            </div>
+
+
+          <Form.Item>
+            <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px", marginTop:"10px"}}>
+              <Button htmlType="submit" onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button>
+            </div>
+          </Form.Item>
+        </Form>
+      </>
+    );
+  }
+}
+
+export default StudyModeTab;
