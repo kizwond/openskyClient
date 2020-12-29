@@ -4,6 +4,7 @@ import { Radio,Row, Col,Button,Switch,Tabs,Form, Input, Checkbox, InputNumber   
 import BookTitleList from './BookTitleList'
 
 import SelectedIndexTotal from './SelectedIndexTotal'
+import ReadModeTab from './ReadModeTab';
 
 const { TabPane } = Tabs;
 
@@ -114,16 +115,6 @@ class ChooseIndex extends Component {
     console.log("on_off : ", {yet: newToggle, re:reviewToggle, hold:hold, completed:completed})
     console.log("num_cards : ", {yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum})
 
-    // const study_setting = {
-    //   session_id: value,
-    //   study_mode:this.state.mode, 
-    //   card_order: order_by,
-    //   re_card_collect_criteria: reviewMode,
-    //   on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
-    //   num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
-    //   num_request_cards:2
-    // }
-
     axios.post('api/studysetup/start-study',{
       session_id: value,
       study_mode:this.state.mode, 
@@ -134,10 +125,6 @@ class ChooseIndex extends Component {
       num_request_cards:2
     }).then(window.location.href="/start-study")
 
-    
-    // sessionStorage.setItem('study_setting',JSON.stringify(study_setting));
-    // // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
-    // window.location.href="/start-study"
   }
   
   onChangeNewCardNum = (e) =>{
@@ -293,30 +280,6 @@ class ChooseIndex extends Component {
     console.log('Success:', values);
   };
   render() {
-    var radioStyle1 = {
-      display: 'block',
-      fontSize:'12px',
-      marginTop:'5px'
-    };
-    var radioStyle2 = {
-      display: 'block',
-      fontSize:'12px',
-      marginTop:'5px'
-    };
-
-    if(this.state.order === "normal"){
-      var radioStyleNormal = radioStyle2
-      var radioStyleReview = radioStyle1
-      var radioStyleRandom = radioStyle1
-    } else if(this.state.order === "review"){
-      radioStyleNormal = radioStyle1
-      radioStyleReview = radioStyle2
-      radioStyleRandom = radioStyle1
-    } else if(this.state.order === "random"){
-      radioStyleNormal = radioStyle1
-      radioStyleReview = radioStyle1
-      radioStyleRandom = radioStyle2
-    }
     
     return (
       <div style={{fontSize:"12px",width:"90%", margin:"auto", height:"80vh"}}>
@@ -332,141 +295,7 @@ class ChooseIndex extends Component {
           <Col className="gutter-row" style={{height:"103.7%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <Tabs defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
               <TabPane tab="책모드" key="0" style={{textAlign:"left", padding:"10px"}}>
-                <div>정렬</div>
-                <Form
-                    name="settings"
-                    initialValues={{
-                      read_card: true,
-                      study_all_read_card:false,
-                      yet_card:false
-                    }}
-                    onFinish={this.onFinish}
-                  >
-                    <Form.Item
-                      name="sort_value"
-                    >
-                     <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
-                        <Radio.Group onChange={this.onChangeMode} value={this.state.mode}>
-                          <Radio value="normal" style={{fontSize:"11px"}}>
-                            기본(순서대로)
-                          </Radio>
-                          <Radio value="review" style={{fontSize:"11px"}}>
-                            복습시점 빠른 순
-                          </Radio>
-                          <Radio value="random" style={{fontSize:"11px"}}>
-                            랜덤하게
-                          </Radio>
-                        </Radio.Group>
-                      </div>
-                    </Form.Item>
-                    <div>필터</div>
-                    <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
-
-                      <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
-                        <Form.Item
-                          name="read_card"
-                          valuePropName="checked"
-                        >
-                          <span  style={{fontSize:"11px"}}>읽기카드 </span> <Switch size="small" />
-                        </Form.Item>
-                        <Form.Item
-                          name="study_all_read_card"
-                          valuePropName="checked"
-                        >
-                          <Checkbox style={{fontSize:"11px"}}>
-                            모든카드 다보기
-                          </Checkbox>
-                        </Form.Item>
-                      </div>
-
-                      <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
-                        <Form.Item
-                          name="yet_card"
-                          valuePropName="checked"
-                        >
-                          <span style={{fontSize:"11px"}}>미학습카드 </span> <Switch size="small" />
-                        </Form.Item>
-                        <Form.Item
-                          name="yet_card_num"
-                          noStyle
-                        >
-                          <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                        </Form.Item>
-                      </div>
-
-                      <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
-                        <Form.Item
-                          name="ing_card"
-                          valuePropName="checked"
-                        >
-                          <span style={{fontSize:"11px"}}>학습중카드 </span> <Switch size="small" />
-                        </Form.Item>
-                        <Form.Item
-                          name="ing_card_num"
-                          noStyle
-                        >
-                          <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                        </Form.Item>
-                      </div>
-
-                      <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
-                        <Form.Item
-                          name="ing_card_detail"
-                        >
-                          <Radio.Group onChange={this.onChangeMode} value={this.state.mode}>
-                            <Radio value="ing_all" style={{fontSize:"11px"}}>
-                              모든학습중카드
-                            </Radio>
-                            <Radio value="limit_now" style={{fontSize:"11px"}}>
-                              현시간기준 복습필요카드만
-                            </Radio>
-                            <Radio value="limit_today" style={{fontSize:"11px"}}>
-                              오늘까지 복습필요카드만
-                            </Radio>
-                          </Radio.Group>
-                        </Form.Item>
-                      </div>
-
-                      <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
-                        <Form.Item
-                          name="completed_card"
-                          valuePropName="checked"
-                        >
-                          <span style={{fontSize:"11px"}}>학습완료카드 </span> <Switch size="small" />
-                        </Form.Item>
-                        <Form.Item
-                          name="completed_card_num"
-                          noStyle
-                        >
-                          <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                        </Form.Item>
-                      </div>
-
-                      <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
-                        <Form.Item
-                          name="suspend_card"
-                          valuePropName="checked"
-                        >
-                          <span style={{fontSize:"11px"}}>학습보류카드 </span> <Switch size="small" />
-                        </Form.Item>
-                        <Form.Item
-                          name="suspend_card_num"
-                          noStyle
-                        >
-                          <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                        </Form.Item>
-                      </div>
-
-
-                    </div>
-
-
-                    <Form.Item>
-                      <Button type="primary" htmlType="submit">
-                        Submit
-                      </Button>
-                    </Form.Item>
-                  </Form>
+                <ReadModeTab onFinish={this.onFinish}/>
                 
               </TabPane>
               <TabPane tab="카드모드" key="1">
