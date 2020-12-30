@@ -11,7 +11,6 @@ class IndexTree extends Component {
   }
   render() {
     // const onSelect = this.props.onSelect
-  
     const onCheck = (checkedKeys, info) => {
       console.log('onCheck', checkedKeys, info);
     };
@@ -225,7 +224,6 @@ class IndexTree extends Component {
             }
           }
         }
-
         //level_4 exist
       } else if(level_4_exist === true){
         let temp_data_3 = []
@@ -295,10 +293,7 @@ class IndexTree extends Component {
               }
             }
           }
-    
-          
-    
-        }console.log('result:',level_all)
+        }
         //level_3 exist
       } else if(level_3_exist === true){
         let temp_data_2 = []
@@ -345,10 +340,7 @@ class IndexTree extends Component {
               }
             }
           }
-    
-          
-    
-        }console.log('result:',level_all)
+        }
         //level_2 exist
       } else if(level_2_exist === true){
 
@@ -373,15 +365,10 @@ class IndexTree extends Component {
                 ++i;
               }
             }
-          
-          // console.log('result:',level_all)
-    
         }
+
       }
     }
-
-    
-    
 
     if(level_all.length > 0){
       var treeData = level_all
@@ -390,7 +377,7 @@ class IndexTree extends Component {
     return (
       <Tree
         checkable
-        multiple={true}
+        // multiple={true}
         // showLine={true}
         showIcon={true}
         defaultExpandAll={true}
