@@ -60,7 +60,9 @@ export class BookWriting extends Component {
        loading:false,
        card_selected_id:'',
        locationY:'',
-       scrollTop: 0
+       scrollTop: 0,
+       child_card_add:false,
+       current_card_name:'',
     }
     this.onSelect = this.onSelect.bind(this)
   }
@@ -201,6 +203,7 @@ export class BookWriting extends Component {
   }
 
   addCardHandler = (key) => {
+    console.log("check 1", this.state.card_type)
     const contentsList = this.state.card_type.map((content)=>{
       console.log(content.name)
       if(content.name === key){
@@ -468,7 +471,22 @@ export class BookWriting extends Component {
 
     // elem_btn.style.display = "none";
   }
+  addChildCard = () => {
+    console.log("add ChildCard Clicked!!!")
+    this.setState({
+      child_card_add : true,
+      card_add:true
+    })
+    this.addCardHandler(this.state.current_card_name)
+  }
+  handleShareChildAddChange = (value) => {
+    console.log(`selected ${value}`);
+    this.setState({
+      current_card_name:value
+    })
 
+   
+  }
   render() {
     if (this.state.hide_show_toggle === false){
       var toggle = '-308px' 
@@ -595,6 +613,11 @@ export class BookWriting extends Component {
       var optionList = this.state.card_type.map((type)=>(
           <Button size="small" onClick={() => this.updateCardSelectedState(type.name)} style={{cursor:"pointer", marginBottom:"5px", fontSize:"10px"}} key={type._id} > {type.name}</Button>
       ))
+      var optionShareList = this.state.card_type.map((type)=>{
+        if(type.type === "flip-normal"){
+          return <Option size="small" style={{ fontSize:"10px"}} key={type._id} value={type.name}> {type.name}</Option>
+        } 
+      })
     }
 
     if(contentsList){
@@ -877,7 +900,11 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div>
-                      <Button size="small" style={{fontSize:'10px'}}>하위카드추가</Button>
+                      <Select defaultValue="default" style={{ width: 120 }} onChange={this.handleShareChildAddChange}>
+                        <Option value="default">카드타입선택</Option>
+                        {optionShareList}
+                      </Select>
+                      <Button size="small" style={{fontSize:'10px'}} onClick={this.addChildCard}>하위카드추가</Button>
                       </div>
                       <div>
                       <Space>
@@ -895,7 +922,7 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
-                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === false ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                    selected_card_seq={this.state.selected_card_seq}
                    handleSubmit={this.handleSubmit}
                    cardAddStateHandler={this.cardAddStateHandler}
@@ -905,6 +932,18 @@ export class BookWriting extends Component {
                    contents={this.state.contents}
                    index_id={this.state.index_id}
                    current_card={this.state.current_card}
+                   /> : ''}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   child_card_add={this.state.child_card_add}
                    /> : ''}</>
           }
       })
