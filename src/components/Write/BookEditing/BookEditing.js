@@ -72,9 +72,7 @@ export class BookWriting extends Component {
   }
 
   handleScroll = (e) => {
-    console.log(e)
     const scrollTop = ('scroll', e.srcElement.scrollingElement.scrollTop);
-    console.log(scrollTop)
       this.setState({
         scrollTop
       })
@@ -86,6 +84,7 @@ export class BookWriting extends Component {
       book_id:value
     })
       .then(res => {
+        console.log("Index List Received : ", res.data.indexList)
         this.setState({ 
           table_of_contents:res.data.indexList,
         });
@@ -97,7 +96,7 @@ export class BookWriting extends Component {
       book_id:value
     })
       .then(res => {
-        console.log("get cardtype list :", res.data)
+        console.log("Cardtype list Received:", res.data.cardtypes)
         this.setState({ 
           card_type:res.data.cardtypes
         });
@@ -330,7 +329,7 @@ export class BookWriting extends Component {
       card_add: false,
     })
   }
-  contentsList
+
   updateContentsState = (value) => {
     console.log('updateContentsState', value)
     this.setState({
@@ -385,7 +384,6 @@ export class BookWriting extends Component {
   }
 
   async onSelect(selectedKeys, info){
-    console.log('selected', selectedKeys, info);
     this.setState({
       index_id: info.node.index_id,
       loading : true,
@@ -395,7 +393,7 @@ export class BookWriting extends Component {
       index_id: info.node.index_id
     })
       .then(res => {
-        console.log('what', res.data)
+        console.log('Index Clicked!! & Get Crdlist Data: ', res.data.cardlist)
         this.setState({ 
           contents:res.data.cardlist,
           loading : false

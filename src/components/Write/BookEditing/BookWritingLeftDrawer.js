@@ -97,10 +97,9 @@ class LeftDrawer extends Component {
               level_all.push(level)
           }     
         } 
-        return null
       }
     )
-    console.log(contentsTableList)
+
 
     const level_5 = obj => obj.level === 5;
     const level_4 = obj => obj.level === 4;
