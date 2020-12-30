@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Space, Tabs } from 'antd';
 import "./BookTitleList.css"
-import IndexTree from "./IndexTree"
+import IndexTree from "./IndexTree/IndexTree"
 import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
-import SelectedIndexCardCount from './SelectedIndexCardCount'
+import SelectedIndexCardCount from '../../2-FlipMode/SelectedIndexCardCount'
 
 const { TabPane } = Tabs;
 
@@ -32,7 +32,7 @@ class BookTitleList extends Component {
       </TabPane>
       )
     return (
-        <Tabs style={{height:"80%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">
+        <Tabs style={{height:"100%",paddingLeft:"10px"}} className="study_next_page_tabs" tabPosition="left">
           {bookList}
         </Tabs>
     );

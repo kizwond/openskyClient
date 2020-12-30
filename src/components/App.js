@@ -12,8 +12,8 @@ import Store from './Store/Store'
 import BookNaming from './Write/BookEditing/BookNaming'
 // import BookWriting from './Write/BookEditing/BookWriting'
 import BookEditing from './Write/BookEditing/BookEditing'
-import ChooseIndex from './Study/ChooseIndex'
-import StudyFlip from './Study/StudyFlip'
+import ChooseIndex from './Study/1-ChooseIndex/ChooseIndex'
+import StudyFlip from './Study/2-FlipMode/StudyFlip'
 import MentoringMain from './Mentoring/MentoringMain'
 
 const { Header, Content, Footer } = Layout;

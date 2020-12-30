@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StudyList from "./StudyList"
+import StudyList from "./0-StudyList/StudyList"
 
 class StudyMain extends Component {
   constructor(props) {

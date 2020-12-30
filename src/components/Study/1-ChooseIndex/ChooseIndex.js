@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from "axios"
-import { Radio,Row, Col,Button,Switch,Tabs,Form, Input, Checkbox, InputNumber   } from 'antd';
-import BookTitleList from './BookTitleList'
+import {Row, Col, Tabs } from 'antd';
+import BookTitleList from './BookTitleList/BookTitleList'
 import "./ChooseIndex.css"
-import SelectedIndexTotal from './SelectedIndexTotal'
-import StudyModeTab from './StudyModeTab';
+// import SelectedIndexTotal from '../2-FlipMode/SelectedIndexTotal'
+import StudyModeTab from './StudyModeTab/StudyModeTab';
 
 const { TabPane } = Tabs;
 
@@ -290,10 +290,10 @@ class ChooseIndex extends Component {
                            onClickDown={this.onClickDown} 
                           //  onSelect={this.onSelect} 
                            books={this.state.books}/>
-            <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
+            {/* <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
               <div style={{color:"white", height:"26px", lineHeight:"26px", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
               <SelectedIndexTotal />
-            </div>
+            </div> */}
           </Col>
           <Col style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <Tabs className="study_mode_class" defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >

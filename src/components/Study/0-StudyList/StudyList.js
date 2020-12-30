@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import ListSectionContent from "./ListSectionContent"
-import LikeSectionContent from "./LikeSectionContent"
+import LikeSectionContent from "../0-StudyList/LikeSectionContent/LikeSectionContent"
+import ListSectionContent from "../0-StudyList/ListSectionContent/ListSectionContent"
 import { Layout,Button } from 'antd';
 import "./StudyList.css"
 
