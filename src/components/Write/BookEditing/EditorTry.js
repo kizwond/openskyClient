@@ -314,10 +314,18 @@ export class EditorTry extends Component {
     } else {
       selected_card_seq = this.props.selected_card_seq
     }
+
+    if(this.props.parent_card_id === undefined){
+      var parent_card_id = null
+    } else {
+      parent_card_id = this.props.parent_card_id
+    }
+
     const book_id = sessionStorage.getItem('book_id')
     axios.post('api/card/create-card', {
       book_id : book_id,
       cardtype_id:this.props.current_card_type,
+      parent_card_id : parent_card_id,
       index_id:this.props.index_id,
       flag_of_maker : [this.state.flag],
       share : share_array,

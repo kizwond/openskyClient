@@ -63,6 +63,7 @@ export class BookWriting extends Component {
        scrollTop: 0,
        child_card_add:false,
        current_card_name:'',
+       parent_card_id:''
     }
     this.onSelect = this.onSelect.bind(this)
   }
@@ -475,7 +476,8 @@ export class BookWriting extends Component {
     console.log("add ChildCard Clicked!!!")
     this.setState({
       child_card_add : true,
-      card_add:true
+      card_add:true,
+      parent_card_id:this.state.card_selected_id
     })
     this.addCardHandler(this.state.current_card_name)
   }
@@ -944,6 +946,7 @@ export class BookWriting extends Component {
                    index_id={this.state.index_id}
                    current_card={this.state.current_card}
                    child_card_add={this.state.child_card_add}
+                   parent_card_id={this.state.parent_card_id}
                    /> : ''}</>
           }
       })
