@@ -10,7 +10,7 @@ class IndexTree extends Component {
     this.state = {  };
   }
   render() {
-    const onSelect = this.props.onSelect
+    // const onSelect = this.props.onSelect
   
     const onCheck = (checkedKeys, info) => {
       console.log('onCheck', checkedKeys, info);
@@ -389,12 +389,12 @@ class IndexTree extends Component {
     
     return (
       <Tree
-        // checkable
+        checkable
         multiple={true}
         // showLine={true}
         showIcon={true}
         defaultExpandAll={true}
-        onSelect={onSelect}
+        // onSelect={onSelect}
         onCheck={onCheck}
         treeData={treeData}
         style={{width:"100%", height:"68vh", fontSize:"11px", backgroundColor:"#dfecf6"}}

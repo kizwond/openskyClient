@@ -138,40 +138,40 @@ class ChooseIndex extends Component {
       reviewCardNum : e.target.value
     })
   }
-  onSelect = (selectedKeys, info) => {
-    console.log(info)
-    if(info.selected === true){
-      var index_id = info.node.index_id
-      var book_id = info.node.book_id
-      var status = true
-      this.setState( prevState =>({
-        selected_index_num : prevState.selected_index_num + 1})
-      )
-    } else {
-      index_id = info.node.index_id
-      book_id = info.node.book_id
-      status = false
-      this.setState( prevState =>({
-        selected_index_num : prevState.selected_index_num - 1})
-      )
-    }
-    const session_id = sessionStorage.getItem("session_id")
-    console.log(index_id, book_id, status)
-    axios.post('api/studysetup/click-index',{
-      index_id: index_id,
-      book_id: book_id,
-      session_id:session_id,
-      status: status
-    }).then(res=>{
-      console.log(res)
-      this.setState( {
-        num_new : res.data.num_total_cards.yet,
-        num_need_study : res.data.num_total_cards.re,
-        num_total : res.data.num_total_cards.total
-        }
-      )
-    })
-  }
+  // onSelect = (selectedKeys, info) => {
+  //   console.log(info)
+  //   if(info.selected === true){
+  //     var index_id = info.node.index_id
+  //     var book_id = info.node.book_id
+  //     var status = true
+  //     this.setState( prevState =>({
+  //       selected_index_num : prevState.selected_index_num + 1})
+  //     )
+  //   } else {
+  //     index_id = info.node.index_id
+  //     book_id = info.node.book_id
+  //     status = false
+  //     this.setState( prevState =>({
+  //       selected_index_num : prevState.selected_index_num - 1})
+  //     )
+  //   }
+  //   const session_id = sessionStorage.getItem("session_id")
+  //   console.log(index_id, book_id, status)
+  //   axios.post('api/studysetup/click-index',{
+  //     index_id: index_id,
+  //     book_id: book_id,
+  //     session_id:session_id,
+  //     status: status
+  //   }).then(res=>{
+  //     console.log(res)
+  //     this.setState( {
+  //       num_new : res.data.num_total_cards.yet,
+  //       num_need_study : res.data.num_total_cards.re,
+  //       num_total : res.data.num_total_cards.total
+  //       }
+  //     )
+  //   })
+  // }
 
   onChangeMode = e => {
     console.log('radio checked', e.target.value);
@@ -286,7 +286,10 @@ class ChooseIndex extends Component {
         <Row style={{margin:"10px 0", height:"100%"}} justify="center">
           <Col className="gutter-row" style={{height:"100%", backgroundColor:"#b1c6ec"}} span={18}>
             <div style={{height:"26px", lineHeight:"26px", backgroundColor:"#b1c6ec", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>책이름 및 목차선택</div>
-            <BookTitleList onClickUp={this.onClickUp} onClickDown={this.onClickDown} onSelect={this.onSelect} books={this.state.books}/>
+            <BookTitleList onClickUp={this.onClickUp} 
+                           onClickDown={this.onClickDown} 
+                          //  onSelect={this.onSelect} 
+                           books={this.state.books}/>
             <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
               <div style={{color:"white", height:"26px", lineHeight:"26px", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
               <SelectedIndexTotal />

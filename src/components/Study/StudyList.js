@@ -17,9 +17,9 @@ class WriteMain extends Component {
   }
   componentDidMount() {
     sessionStorage.removeItem("book_ids")
-    this.getOnlyShowTitle()
+    this.showTitle()
   }
-  getOnlyShowTitle() {
+  showTitle() {
     axios.get('api/book/get-booklist')
     .then(res => {
       console.log(res)
@@ -39,29 +39,11 @@ class WriteMain extends Component {
       selected_book:json
     })
   }
-  // sessionSaveBookIds = () => {
-  //   axios.post('api/studysetup/save-booklist',{
-  //     book_ids: this.state.selected_book
-  //   }).then(res => {
-  //     console.log("before href:",res)
-  //     window.location.href ="/choose-index"
-  //   })
-  // }
-  sessionSaveBookIds = () => {
 
+  sessionSaveBookIds = () => {
     sessionStorage.setItem("book_ids", JSON.stringify(this.state.selected_book));
     sessionStorage.setItem('current_seq','0');
-    window.location.href ="/choose-index"
-
-    // sessionStorage.removeItem("session_id")
-    // axios.post('api/studysetup/save-booklist',{
-    //   book_ids: this.state.selected_book
-    // }).then(res => {
-    //   sessionStorage.setItem('session_id',res.data.session_id);
-    //   sessionStorage.setItem('current_seq','0');
-    //   window.location.href ="/choose-index"
-    // })
-    
+    window.location.href ="/choose-index"    
   }
   render() { 
     if(this.state.selected_book){
