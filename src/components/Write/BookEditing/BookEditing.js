@@ -362,7 +362,7 @@ export class BookWriting extends Component {
     });
     console.log("after sort:", sortValue[0])
     const card_id = sortValue[0]._id
-    const seq = sortValue[0].seq
+    const seq = sortValue[0].seq_in_index
     this.onClickCardHandler(card_id, seq)
   }
   updateContentsListState = () => {
@@ -481,14 +481,24 @@ export class BookWriting extends Component {
     })
     this.addCardHandler(this.state.current_card_name)
   }
+  addSiblingCard = (parent) => {
+    console.log("add SiblingCard Clicked!!!")
+    console.log(parent)
+    this.setState({
+      child_card_add : true,
+      card_add:true,
+      parent_card_id:parent
+    })
+    this.addCardHandler(this.state.current_card_name)
+  }
+
   handleShareChildAddChange = (value) => {
     console.log(`selected ${value}`);
     this.setState({
-      current_card_name:value
+      current_card_name:value,
     })
-
-   
   }
+
   render() {
     if (this.state.hide_show_toggle === false){
       var toggle = '-308px' 
@@ -615,16 +625,15 @@ export class BookWriting extends Component {
       var optionList = this.state.card_type.map((type)=>(
           <Button size="small" onClick={() => this.updateCardSelectedState(type.name)} style={{cursor:"pointer", marginBottom:"5px", fontSize:"10px"}} key={type._id} > {type.name}</Button>
       ))
-      var optionShareList = this.state.card_type.map((type)=>{
+      var optionShareList = this.state.card_type.map((type, index)=>{
         if(type.type === "flip-normal"){
-          return <Option size="small" style={{ fontSize:"10px"}} key={type._id} value={type.name}> {type.name}</Option>
+          return <Option size="small" style={{ fontSize:"10px"}} key={index} value={type.name}> {type.name}</Option>
         } 
       })
     }
 
     if(contentsList){
       var list = contentsList.map((content)=>{
-
           if(content[0].flag == "1"){
             var star = <StarTwoTone />
           } else if(content[0].flag == "2"){
@@ -637,6 +646,11 @@ export class BookWriting extends Component {
             star = <><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /><StarTwoTone /></>
           } else {
             star = ''
+          }
+          if(content[0].content.parent_card_id) {
+            var childStyle = {cursor:"pointer", backgroundColor:"white", padding:"5px", border:"1px dashed green"}
+          } else {
+            childStyle = {cursor:"pointer", backgroundColor:"white", padding:"5px"}
           }
           if(content[0].type === 'read'){
             return <> <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
@@ -679,7 +693,7 @@ export class BookWriting extends Component {
                    current_card={this.state.current_card}
                    /> : ''}</>
           } else if(content[0].type === 'flip-normal'&& !content[0].selection_contents && content[0].direction === "left-right"){
-            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+            return <><div style={childStyle} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
@@ -692,7 +706,13 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div></div> 
+                      <div>
+                      {content[0].content.parent_card_id && <>
+                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                          <Option value="default">카드타입선택</Option>
+                          {optionShareList}
+                        </Select>
+                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}</div> 
                       <div> 
                       <Space>   
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -708,7 +728,7 @@ export class BookWriting extends Component {
                       </div> 
                     </div>
                   </div>
-                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === false ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                    selected_card_seq={this.state.selected_card_seq}
                    handleSubmit={this.handleSubmit}
                    cardAddStateHandler={this.cardAddStateHandler}
@@ -718,9 +738,22 @@ export class BookWriting extends Component {
                    contents={this.state.contents}
                    index_id={this.state.index_id}
                    current_card={this.state.current_card}
+                   /> : ''}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   child_card_add={this.state.child_card_add}
+                   parent_card_id={this.state.parent_card_id}
                    /> : ''}</>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "left-right"){
-            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+            return <><div style={childStyle} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
@@ -736,7 +769,14 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div></div>
+                      <div>
+                      {content[0].content.parent_card_id && <>
+                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                          <Option value="default">카드타입선택</Option>
+                          {optionShareList}
+                        </Select>
+                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}
+                      </div>
                       <div>
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -752,7 +792,7 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
-                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === false ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                    selected_card_seq={this.state.selected_card_seq}
                    handleSubmit={this.handleSubmit}
                    cardAddStateHandler={this.cardAddStateHandler}
@@ -762,9 +802,22 @@ export class BookWriting extends Component {
                    contents={this.state.contents}
                    index_id={this.state.index_id}
                    current_card={this.state.current_card}
+                   /> : ''}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   child_card_add={this.state.child_card_add}
+                   parent_card_id={this.state.parent_card_id}
                    /> : ''}</>
           } else if(content[0].type === 'flip-normal' && !content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+            return <><div style={childStyle} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
@@ -779,7 +832,14 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div></div>
+                      <div>
+                        {content[0].content.parent_card_id && <>
+                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                          <Option value="default">카드타입선택</Option>
+                          {optionShareList}
+                        </Select>
+                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}
+                      </div>
                       <div>
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -795,7 +855,7 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
-                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === false ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                    selected_card_seq={this.state.selected_card_seq}
                    handleSubmit={this.handleSubmit}
                    cardAddStateHandler={this.cardAddStateHandler}
@@ -805,9 +865,22 @@ export class BookWriting extends Component {
                    contents={this.state.contents}
                    index_id={this.state.index_id}
                    current_card={this.state.current_card}
+                   /> : ''}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   child_card_add={this.state.child_card_add}
+                   parent_card_id={this.state.parent_card_id}
                    /> : ''}</>
           } else if(content[0].type === 'flip-normal' && content[0].selection_contents && content[0].direction === "top-bottom"){
-            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+            return <><div style={childStyle} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
@@ -823,7 +896,14 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div></div>
+                      <div>
+                      {content[0].content.parent_card_id && <>
+                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                          <Option value="default">카드타입선택</Option>
+                          {optionShareList}
+                        </Select>
+                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}
+                      </div>
                       <div>
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -839,7 +919,7 @@ export class BookWriting extends Component {
                       </div>
                     </div>
                   </div>
-                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === false ? <EditorTry arrayForEditor={this.state.arrayForEditor}
                    selected_card_seq={this.state.selected_card_seq}
                    handleSubmit={this.handleSubmit}
                    cardAddStateHandler={this.cardAddStateHandler}
@@ -849,6 +929,19 @@ export class BookWriting extends Component {
                    contents={this.state.contents}
                    index_id={this.state.index_id}
                    current_card={this.state.current_card}
+                   /> : ''}
+                   {this.state.card_add === true && this.state.card_selected_id === content[0].card_id && this.state.child_card_add === true ? <EditorTry arrayForEditor={this.state.arrayForEditor}
+                   selected_card_seq={this.state.selected_card_seq}
+                   handleSubmit={this.handleSubmit}
+                   cardAddStateHandler={this.cardAddStateHandler}
+                   card_type_name={this.state.card_type_name}
+                   updateContentsState={this.updateContentsState}
+                   current_card_type={this.state.current_card_type}
+                   contents={this.state.contents}
+                   index_id={this.state.index_id}
+                   current_card={this.state.current_card}
+                   child_card_add={this.state.child_card_add}
+                   parent_card_id={this.state.parent_card_id}
                    /> : ''}</>
           } else  if(content[0].type === 'none'){
             return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
@@ -890,7 +983,7 @@ export class BookWriting extends Component {
                    current_card={this.state.current_card}
                    /> : ''}</>
           } else  if(content[0].type === 'share'){
-            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+            return <><div style={{cursor:"pointer", backgroundColor:"white", padding:"5px", border:"1px solid green"}} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
@@ -902,11 +995,11 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div>
-                      <Select defaultValue="default" style={{ width: 120 }} onChange={this.handleShareChildAddChange}>
+                      <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
                         <Option value="default">카드타입선택</Option>
                         {optionShareList}
                       </Select>
-                      <Button size="small" style={{fontSize:'10px'}} onClick={this.addChildCard}>하위카드추가</Button>
+                      <Button size="small" style={{fontSize:'10px'}} onClick={this.addChildCard}>자식카드추가</Button>
                       </div>
                       <div>
                       <Space>

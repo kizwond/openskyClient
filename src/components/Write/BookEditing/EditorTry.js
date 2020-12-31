@@ -309,6 +309,7 @@ export class EditorTry extends Component {
 
 
     console.log('seq_in_index',this.props.selected_card_seq)
+    
     if(this.props.selected_card_seq === undefined){
       var selected_card_seq = 0
     } else {
