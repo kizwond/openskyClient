@@ -1047,7 +1047,7 @@ export class BookWriting extends Component {
     
     return (
       <>
-      <div className="book_writing_container">
+      <div className="book_writing_container" style={{overflowY:"hidden"}}>
         <div className="left_side_container" style={{marginLeft:toggleLeft}}>
         <LeftDrawer updateContentsTable={this.updateContentsTable} 
                     table_of_contents={this.state.table_of_contents} 
