@@ -25,10 +25,14 @@ class BookTitleList extends Component {
           </Space>
         </span>
         } key={book.book_id}>
-          <div style={{padding:'10px', fontSize:"11px", backgroundColor:"#5c89cf", borderBottom:"10px solid #b1c6ec"}}><SelectedIndexCardCount /></div>
-        <IndexTree book_id={book.book_id} 
+          <div style={{padding:'10px', fontSize:"11px", backgroundColor:"#5c89cf", borderBottom:"10px solid #b1c6ec"}}>
+            선택 영역에 포함된 카드의 학습정보 
+            괄호안 숫자는 현재시각 기준으로 산출한 복습 필요 카드 수량입니다.
+            <SelectedIndexCardCount books={this.props.books} />
+          </div>
+          <IndexTree book_id={book.book_id} 
                   //  onSelect={this.props.onSelect}
-                   book={book.index_info}/>
+                     book={book.index_info}/>
       </TabPane>
       )
     return (

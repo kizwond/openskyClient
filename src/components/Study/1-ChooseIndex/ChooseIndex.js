@@ -4,7 +4,9 @@ import {Row, Col, Tabs } from 'antd';
 import BookTitleList from './BookTitleList/BookTitleList'
 import "./ChooseIndex.css"
 // import SelectedIndexTotal from '../2-FlipMode/SelectedIndexTotal'
-import StudyModeTab from './StudyModeTab/StudyModeTab';
+import ReadModeTab from './StudyModeTab/ReadModeTab';
+import FlipModeTab from './StudyModeTab/FlipModeTab';
+import ExamModeTab from './StudyModeTab/ExamModeTab';
 
 const { TabPane } = Tabs;
 
@@ -298,13 +300,13 @@ class ChooseIndex extends Component {
           <Col style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <Tabs className="study_mode_class" defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
               <TabPane tab="책모드" key="0" style={{textAlign:"left", padding:"10px"}}>
-                <StudyModeTab onFinish={this.onFinish}/>
+                <ReadModeTab onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="카드모드" key="1" style={{textAlign:"left", padding:"10px"}}>
-                <StudyModeTab onFinish={this.onFinish}/>
+                <FlipModeTab onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="시험모드" key="3" style={{textAlign:"left", padding:"10px"}}>
-                <StudyModeTab onFinish={this.onFinish}/>
+                <ExamModeTab onFinish={this.onFinish}/>
               </TabPane>
             </Tabs>
             
