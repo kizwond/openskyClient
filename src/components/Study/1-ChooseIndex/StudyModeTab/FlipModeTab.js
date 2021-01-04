@@ -235,7 +235,7 @@ class FlipModeTab extends Component {
                   <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
                 </Form.Item> */}
               </div>
-
+              <div style={{textAlign:"right"}}><Button size="small" style={{fontSize:"11px"}}>고급필터</Button> <Switch size="small" /></div>
             </div>
             <div>학습량 설정 <Switch size="small" /></div>
             <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
