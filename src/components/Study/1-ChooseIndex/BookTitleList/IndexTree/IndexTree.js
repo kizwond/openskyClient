@@ -8,7 +8,7 @@ class IndexTree extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-
+      expand:this.props.expand
      };
   }
   expandTree = () => {
@@ -16,6 +16,12 @@ class IndexTree extends Component {
     this.props.updateExpandState()
     console.log("indextree", this.props.expand)
   }
+  componentDidUpdate(prevProps) {
+    if(this.props.expand !== prevProps.expand){
+      console.log("why?")
+      this.setState({expand:this.props.expand})
+    }
+  } 
   render() {
     // const onSelect = this.props.onSelect
     const onCheck = (checkedKeys, info) => {
@@ -385,14 +391,14 @@ class IndexTree extends Component {
         children: level_all,
       }]
     }
-    
+    console.log("---------------------",this.state.expand)
     return (
       <Tree
         checkable
         // multiple={true}
         // showLine={true}
         showIcon={true}
-        defaultExpandAll={this.props.expand}
+        defaultExpandAll={this.state.expand}
         // onSelect={onSelect}
         onCheck={onCheck}
         treeData={treeData}
