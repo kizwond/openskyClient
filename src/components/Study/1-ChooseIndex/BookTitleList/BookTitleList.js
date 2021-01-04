@@ -32,7 +32,9 @@ class BookTitleList extends Component {
           </div>
           <IndexTree book_id={book.book_id} 
                   //  onSelect={this.props.onSelect}
-                     book={book.index_info}/>
+                     book={book.index_info}
+                     expand={this.props.expand}
+                     updateExpandState={this.props.updateExpandState}/>
       </TabPane>
       )
     return (

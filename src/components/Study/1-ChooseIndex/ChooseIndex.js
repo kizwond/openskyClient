@@ -35,6 +35,7 @@ class ChooseIndex extends Component {
       completedCardNum:0,
       tab_mode: 'left',
       key:'0',
+      expand:true,
      }
   }
 
@@ -140,40 +141,6 @@ class ChooseIndex extends Component {
       reviewCardNum : e.target.value
     })
   }
-  // onSelect = (selectedKeys, info) => {
-  //   console.log(info)
-  //   if(info.selected === true){
-  //     var index_id = info.node.index_id
-  //     var book_id = info.node.book_id
-  //     var status = true
-  //     this.setState( prevState =>({
-  //       selected_index_num : prevState.selected_index_num + 1})
-  //     )
-  //   } else {
-  //     index_id = info.node.index_id
-  //     book_id = info.node.book_id
-  //     status = false
-  //     this.setState( prevState =>({
-  //       selected_index_num : prevState.selected_index_num - 1})
-  //     )
-  //   }
-  //   const session_id = sessionStorage.getItem("session_id")
-  //   console.log(index_id, book_id, status)
-  //   axios.post('api/studysetup/click-index',{
-  //     index_id: index_id,
-  //     book_id: book_id,
-  //     session_id:session_id,
-  //     status: status
-  //   }).then(res=>{
-  //     console.log(res)
-  //     this.setState( {
-  //       num_new : res.data.num_total_cards.yet,
-  //       num_need_study : res.data.num_total_cards.re,
-  //       num_total : res.data.num_total_cards.total
-  //       }
-  //     )
-  //   })
-  // }
 
   onChangeMode = e => {
     console.log('radio checked', e.target.value);
@@ -280,6 +247,11 @@ class ChooseIndex extends Component {
     }
     console.log('Success:', values);
   };
+  updateExpandState = () => {
+    console.log("here??????????????")
+    this.setState((prevState)=>({expand:!prevState.expand}))
+    console.log(this.state.expand)
+  }
   render() {
     console.log("lets see this", this.state.books)
     
@@ -291,7 +263,9 @@ class ChooseIndex extends Component {
             <BookTitleList onClickUp={this.onClickUp} 
                            onClickDown={this.onClickDown} 
                           //  onSelect={this.onSelect} 
-                           books={this.state.books}/>
+                           books={this.state.books}
+                           expand={this.state.expand}
+                           updateExpandState={this.updateExpandState}/>
             {/* <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
               <div style={{color:"white", height:"26px", lineHeight:"26px", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
               <SelectedIndexTotal />

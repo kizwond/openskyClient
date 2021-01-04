@@ -68,14 +68,6 @@ class ExamModeTab extends Component {
                 >
                   <span  style={{fontSize:"13px", fontWeight:"700"}}>읽기카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="study_all_read_card"
-                  valuePropName="checked"
-                >
-                  <Checkbox style={{fontSize:"11px"}}>
-                    모든카드 다보기
-                  </Checkbox>
-                </Form.Item> */}
               </div>
 
               <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
@@ -85,12 +77,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>미학습카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="read_yet_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
@@ -100,12 +86,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>학습중카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="read_ing_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <div style={{background:"white", padding:"5px", textAlign:"left"}}>
@@ -133,12 +113,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>학습완료카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="read_completed_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
@@ -148,12 +122,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>학습보류카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="read_suspend_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <Divider style={{margin:"0"}}/>
@@ -165,14 +133,6 @@ class ExamModeTab extends Component {
                 >
                   <span  style={{fontSize:"13px", fontWeight:"700"}}>뒤집기카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="study_all_flip_card"
-                  valuePropName="checked"
-                >
-                  <Checkbox style={{fontSize:"11px"}}>
-                    모든카드 다보기
-                  </Checkbox>
-                </Form.Item> */}
               </div>
 
               <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
@@ -182,12 +142,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>미학습카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="flip_yet_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
@@ -197,12 +151,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>학습중카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="flip_ing_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <div style={{ background:"white", padding:"5px", textAlign:"left"}}>
@@ -230,12 +178,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>학습완료카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="flip_completed_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
 
               <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", fontSize:"11px"}}>
@@ -245,12 +187,6 @@ class ExamModeTab extends Component {
                 >
                   <span style={{fontSize:"11px", marginLeft:"20px"}}>학습보류카드 </span> <Switch size="small" />
                 </Form.Item>
-                {/* <Form.Item
-                  name="flip_suspend_card_num"
-                  noStyle
-                >
-                  <InputNumber size="small" defaultValue={0} style={{fontSize:"11px"}} /> <Button style={{fontSize:"11px"}} size="small">All</Button>
-                </Form.Item> */}
               </div>
               <div style={{textAlign:"right"}}><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button> <Switch size="small" /></div>
               <AdvancedFilterModal modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>

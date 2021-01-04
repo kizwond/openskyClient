@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tree,Progress } from 'antd';
+import { Tree,Progress,Button } from 'antd';
 import { CarryOutOutlined } from '@ant-design/icons';
 import "./IndexTree.css"
 
@@ -7,7 +7,14 @@ import "./IndexTree.css"
 class IndexTree extends Component {
   constructor(props) {
     super(props);
-    this.state = {  };
+    this.state = { 
+
+     };
+  }
+  expandTree = () => {
+    console.log("here")
+    this.props.updateExpandState()
+    console.log("indextree", this.props.expand)
   }
   render() {
     // const onSelect = this.props.onSelect
@@ -372,7 +379,11 @@ class IndexTree extends Component {
 
     if(level_all.length > 0){
       console.log("level_all",level_all)
-      var treeData = level_all
+      var treeData = [{
+        title: (<><div>전체선택</div> <span><Button size="small" style={{fontSize:"11px"}} onClick={this.expandTree}>목차펼치기/접기</Button></span></>),
+        key: 'default',
+        children: level_all,
+      }]
     }
     
     return (
@@ -381,7 +392,7 @@ class IndexTree extends Component {
         // multiple={true}
         // showLine={true}
         showIcon={true}
-        defaultExpandAll={true}
+        defaultExpandAll={this.props.expand}
         // onSelect={onSelect}
         onCheck={onCheck}
         treeData={treeData}
