@@ -371,6 +371,7 @@ class IndexTree extends Component {
     }
 
     if(level_all.length > 0){
+      console.log("level_all",level_all)
       var treeData = level_all
     }
     
