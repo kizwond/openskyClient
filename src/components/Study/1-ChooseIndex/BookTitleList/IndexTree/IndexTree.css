@@ -24,3 +24,10 @@
 .ant-tree .ant-tree-node-content-wrapper:hover{
   background-color: transparent;
 }
+
+.detail_hide{
+  display:none;
+}
+.detail_show{
+  display:block;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tree,Progress,Button } from 'antd';
-import { CarryOutOutlined } from '@ant-design/icons';
+import { CarryOutOutlined,SearchOutlined } from '@ant-design/icons';
 import "./IndexTree.css"
 
 
@@ -8,24 +8,32 @@ class IndexTree extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      expand:this.props.expand
+      key:'',
+      ckeckedKeys:[]
      };
   }
   expandTree = () => {
     console.log("here")
     this.props.updateExpandState()
     console.log("indextree", this.props.expand)
+    this.setState({ key: Math.random() });
   }
-  componentDidUpdate(prevProps) {
-    if(this.props.expand !== prevProps.expand){
-      console.log("why?")
-      this.setState({expand:this.props.expand})
+  onClickHideDetail = (index_id) => {
+    console.log(index_id)
+    // document.getElementById(index_id).classList.remove('detail_show');
+    // document.getElementById(index_id).classList.add('detail_hide');
+    
+    if(document.getElementById(index_id).style.display === "none"){
+      document.getElementById(index_id).style.display = "block"
+    } else {
+      document.getElementById(index_id).style.display = "none"
     }
-  } 
+  }
   render() {
     // const onSelect = this.props.onSelect
     const onCheck = (checkedKeys, info) => {
       console.log('onCheck', checkedKeys, info);
+      this.setState({ckeckedKeys:checkedKeys})
     };
 
     console.log('index : ',this.props.book)
@@ -35,16 +43,48 @@ class IndexTree extends Component {
         if(table){
           if(table.level === 1){
             let level = {
-              title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                          <span style={{width:"70px"}}>{table.yet}</span> 
-                          <span style={{width:"100px"}}>{table.ing.total}</span>
-                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                          <span style={{width:"35px"}}>{table.completed}</span>
-                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
-                        </div></>),
+              title: (<>
+                        <div style={{width:"100%"}}>
+                          <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.yet}</span> 
+                              <span style={{width:"100px"}}>{table.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                            </div>
+                          </div>
+                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>읽기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>뒤집기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>),
               index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
@@ -54,16 +94,48 @@ class IndexTree extends Component {
               level_all.push(level)
           } else if(table.level === 2){
             let level = {
-              title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                          <span style={{width:"70px"}}>{table.yet}</span> 
-                          <span style={{width:"100px"}}>{table.ing.total}</span>
-                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                          <span style={{width:"35px"}}>{table.completed}</span>
-                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
-                        </div></>),
+              title: (<>
+                        <div style={{width:"100%"}}>
+                          <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.yet}</span> 
+                              <span style={{width:"100px"}}>{table.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                            </div>
+                          </div>
+                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>읽기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>뒤집기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>),
               index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
@@ -73,16 +145,48 @@ class IndexTree extends Component {
               level_all.push(level)
           } else if(table.level === 3){
             let level = {
-              title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                          <span style={{width:"70px"}}>{table.yet}</span> 
-                          <span style={{width:"100px"}}>{table.ing.total}</span>
-                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                          <span style={{width:"35px"}}>{table.completed}</span>
-                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
-                        </div></>),
+              title: (<>
+                        <div style={{width:"100%"}}>
+                          <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.yet}</span> 
+                              <span style={{width:"100px"}}>{table.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                            </div>
+                          </div>
+                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>읽기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>뒤집기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>),
               index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
@@ -92,16 +196,48 @@ class IndexTree extends Component {
               level_all.push(level)
           } else if(table.level === 4){
             let level = {
-              title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                          <span style={{width:"70px"}}>{table.yet}</span> 
-                          <span style={{width:"100px"}}>{table.ing.total}</span>
-                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                          <span style={{width:"35px"}}>{table.completed}</span>
-                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
-                        </div></>),
+              title: (<>
+                        <div style={{width:"100%"}}>
+                          <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.yet}</span> 
+                              <span style={{width:"100px"}}>{table.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                            </div>
+                          </div>
+                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>읽기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>뒤집기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>),
               index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
@@ -111,16 +247,48 @@ class IndexTree extends Component {
               level_all.push(level)
           } else if(table.level === 5){
             let level = {
-              title: (<><div>{table.name}</div> 
-                        <div style={{fontSize:"10px",width:"440px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                          <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                          <span style={{width:"70px"}}>{table.yet}</span> 
-                          <span style={{width:"100px"}}>{table.ing.total}</span>
-                          <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                          <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                          <span style={{width:"35px"}}>{table.completed}</span>
-                          <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
-                        </div></>),
+              title: (<>
+                        <div style={{width:"100%"}}>
+                          <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.yet}</span> 
+                              <span style={{width:"100px"}}>{table.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                            </div>
+                          </div>
+                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>읽기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                            <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
+                              <div>뒤집기카드</div> 
+                              <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.yet}</span> 
+                                <span style={{width:"100px"}}>{table.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>),
               index_id:table.index_id,
               book_id:this.props.book_id,
               key: table.seq,
@@ -391,19 +559,23 @@ class IndexTree extends Component {
         children: level_all,
       }]
     }
-    console.log("---------------------",this.state.expand)
+
     return (
+      
       <Tree
         checkable
+        key={this.state.key}
         // multiple={true}
         // showLine={true}
         showIcon={true}
-        defaultExpandAll={this.state.expand}
+        defaultExpandAll={this.props.expand}
         // onSelect={onSelect}
         onCheck={onCheck}
         treeData={treeData}
+        defaultCheckedKeys={this.state.ckeckedKeys}
         style={{width:"100%", height:"73.5vh", fontSize:"11px", backgroundColor:"#dfecf6"}}
       />
+
     );
   }
 }
