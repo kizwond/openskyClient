@@ -29,17 +29,15 @@ class IndexTree extends Component {
       document.getElementById(index_id).style.display = "none"
     }
   }
+  onCheck = (checkedKeys, info) => {
+    this.setState({ckeckedKeys:checkedKeys})
+    this.props.getSelected(info)
+    console.log(checkedKeys)
+  };
   render() {
-    // const onSelect = this.props.onSelect
-    const onCheck = (checkedKeys, info) => {
-      console.log('onCheck', checkedKeys, info);
-      this.setState({ckeckedKeys:checkedKeys})
-    };
-
-    console.log('index : ',this.props.book)
+    // const onSelect = this.props.onSelect 
     let level_all =[];
     const contentsTableList = this.props.book.map((table, index)=>{
-      console.log('try this : ',table)
         if(table){
           if(table.level === 1){
             let level = {
@@ -301,7 +299,7 @@ class IndexTree extends Component {
         return null
       }
     )
-    console.log(contentsTableList)
+
     const level_5 = obj => obj.level === 5;
     const level_4 = obj => obj.level === 4;
     const level_3 = obj => obj.level === 3;
@@ -552,7 +550,6 @@ class IndexTree extends Component {
     }
 
     if(level_all.length > 0){
-      console.log("level_all",level_all)
       var treeData = [{
         title: (<><div>전체선택</div> <span><Button size="small" style={{fontSize:"11px"}} onClick={this.expandTree}>목차펼치기/접기</Button></span></>),
         key: 'default',
@@ -570,7 +567,7 @@ class IndexTree extends Component {
         showIcon={true}
         defaultExpandAll={this.props.expand}
         // onSelect={onSelect}
-        onCheck={onCheck}
+        onCheck={this.onCheck}
         treeData={treeData}
         defaultCheckedKeys={this.state.ckeckedKeys}
         style={{width:"100%", height:"73.5vh", fontSize:"11px", backgroundColor:"#dfecf6"}}

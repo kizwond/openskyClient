@@ -27,7 +27,7 @@ class BookTitleList extends Component {
 
   }
   render() {
-    console.log('from :', this.props.books)
+    // console.log('from :', this.props.books)
     const bookList = this.props.books.map((book)=> 
       <TabPane tab={
         <span>
@@ -52,6 +52,7 @@ class BookTitleList extends Component {
                   //  onSelect={this.props.onSelect}
                      book={book.index_info}
                      expand={this.props.expand}
+                     getSelected={this.props.getSelected}
                      updateExpandState={this.props.updateExpandState}/>
       </TabPane>
       )

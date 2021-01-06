@@ -36,6 +36,7 @@ class ChooseIndex extends Component {
       tab_mode: 'left',
       key:'0',
       expand:true,
+      selected_index:[]
      }
   }
 
@@ -57,75 +58,29 @@ class ChooseIndex extends Component {
   componentDidMount() {
     // const value = sessionStorage.getItem("session_id")
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
-    console.log('sessionstorage',value)
     const requestArray = value.map((item)=>{
       axios.post('api/studysetup/get-index',{
         selected_books:item
       }).then(res => {
-        console.log('데이타:', res.data)
+        // console.log('데이타:', res.data)
         this.setState({
           books:[...this.state.books, res.data.single_book_info]
         })
       })
     })
-    console.log(requestArray)
   }
 
   startStudy = () => {
-    const value = sessionStorage.getItem("session_id")
-    if(this.state.reviewDetail === "all"){
-      var reviewMode = "all"
-    } else if(this.state.reviewDetail === "review"){
-      if(this.state.reviewDetailDetail === "now"){
-        reviewMode = "now"
-      } else {
-        reviewMode = "today"
-      }
-    }
-    if(this.state.order === "normal"){
-      var order_by = "sort_by_index"
-    } else if(this.state.order === "review"){
-      order_by = "sort_by_restudytime"
-    } else if(this.state.order === "random"){
-      order_by = "random"
-    }
-    if(this.state.newToggle === true){
-      var newToggle = "on"
-    } else {
-      newToggle = "off"
-    }
-    if(this.state.reviewToggle === true){
-      var reviewToggle = "on"
-    } else {
-      reviewToggle = "off"
-    }
-    if(this.state.hold === true){
-      var hold = "on"
-    } else {
-      hold = "off"
-    }
-    if(this.state.completed === true){
-      var completed = "on"
-    } else {
-      completed = "off"
-    }
-
-    console.log("session_id : ", value)
-    console.log("study_mode : ", this.state.mode)
-    console.log("card_order : ", order_by)
-    console.log("re_card_collect_criteria : ", reviewMode)
-    console.log("on_off : ", {yet: newToggle, re:reviewToggle, hold:hold, completed:completed})
-    console.log("num_cards : ", {yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum})
-
-    axios.post('api/studysetup/start-study',{
-      session_id: value,
-      study_mode:this.state.mode, 
-      card_order: order_by,
-      re_card_collect_criteria: reviewMode,
-      on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
-      num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
-      num_request_cards:2
-    }).then(window.location.href="/start-study")
+    console.log("startStudy Clicked!!!!")
+    // axios.post('api/studysetup/start-study',{
+    //   session_id: value,
+    //   study_mode:this.state.mode, 
+    //   card_order: order_by,
+    //   re_card_collect_criteria: reviewMode,
+    //   on_off: {yet: newToggle, re:reviewToggle, hold:hold, completed:completed},
+    //   num_cards:{yet:this.state.newCardNum, re:this.state.reviewCardNum, hold:this.state.holdCardNum, completed:this.state.completedCardNum},
+    //   num_request_cards:2
+    // }).then(window.location.href="/start-study")
 
   }
   
@@ -242,19 +197,27 @@ class ChooseIndex extends Component {
   }
 
   onFinish = (values) => {
-    if(values.sort_value === undefined){
-     values.sort_value = "normal"
-    }
     console.log('Success:', values);
+    console.log(this.state.selected_index)
+
+    const result = this.state.selected_index.reduce((accu, curr) => { 
+      accu[curr.index_id] = (accu[curr.index_id] || 0)+1; 
+      return accu;
+    }, {});
+    console.log(result)
+
   };
+  getSelected = (value) => {
+    console.log('selected_info', value.checkedNodes)
+    const contents = this.state.selected_index.concat(value.checkedNodes)
+    this.setState({selected_index :contents })
+
+  }
   updateExpandState = () => {
-    console.log("here??????????????")
     this.setState((prevState)=>({expand:!prevState.expand}))
     console.log(this.state.expand)
   }
-  render() {
-    console.log("lets see this", this.state.books)
-    
+  render() { 
     return (
       <div style={{fontSize:"12px",width:"100%", margin:"auto", height:"100%"}}>
         <Row style={{margin:"10px 0", height:"100%"}} justify="center">
@@ -265,6 +228,7 @@ class ChooseIndex extends Component {
                           //  onSelect={this.onSelect} 
                            books={this.state.books}
                            expand={this.state.expand}
+                           getSelected={this.getSelected}
                            updateExpandState={this.updateExpandState}/>
             {/* <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
               <div style={{color:"white", height:"26px", lineHeight:"26px", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
