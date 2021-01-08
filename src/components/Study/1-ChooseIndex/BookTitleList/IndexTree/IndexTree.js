@@ -30,9 +30,42 @@ class IndexTree extends Component {
     }
   }
   onCheck = (checkedKeys, info) => {
-    this.setState({ckeckedKeys:checkedKeys})
-    this.props.getSelected(info)
     console.log(checkedKeys)
+    this.setState({ckeckedKeys:checkedKeys})
+    // this.props.getSelected(info)
+    console.log('info',info)
+    const value = info.checkedNodes.map((item)=> item.index_id)
+    
+    var filtered = value.filter(function (el) {
+      return el != null;
+    });
+    console.log('filtered',filtered)
+
+    if(info.checked === true){
+      const sessionData = JSON.parse(sessionStorage.getItem("selectedIndex"))
+      if(sessionData){
+        sessionStorage.setItem("selectedIndex", JSON.stringify(sessionData.concat(filtered)));
+        const removeDuplicate = JSON.parse(sessionStorage.getItem("selectedIndex"))
+        const removed = [...new Set(removeDuplicate)]
+        sessionStorage.setItem("selectedIndex", JSON.stringify(removed));
+
+      } else {
+        sessionStorage.setItem("selectedIndex", JSON.stringify(filtered));
+      }
+      
+    } else {
+      console.log("unckeck",info.node)
+      const resultAll = []
+      resultAll.push(info.node.index_id)
+      // const parentIndex = info.node.parent.map((item)=> item.index_id)
+      const childrenIndex = info.node.children.map((item)=> item.index_id)
+      const deleteThis = resultAll.concat(childrenIndex)
+      const sessionData = JSON.parse(sessionStorage.getItem("selectedIndex"))
+      const finalArray = sessionData.filter(val => !deleteThis.includes(val));
+
+      sessionStorage.setItem("selectedIndex", JSON.stringify(finalArray));
+    }
+    console.log('get item : ',JSON.parse(sessionStorage.getItem("selectedIndex")))
   };
   render() {
     // const onSelect = this.props.onSelect 

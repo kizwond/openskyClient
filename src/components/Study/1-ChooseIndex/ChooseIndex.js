@@ -210,8 +210,14 @@ class ChooseIndex extends Component {
   getSelected = (value) => {
     console.log('selected_info', value.checkedNodes)
     const contents = this.state.selected_index.concat(value.checkedNodes)
-    this.setState({selected_index :contents })
-
+    
+    console.log("result : ",contents)
+    const key = "default"
+    const myArray = contents.filter(function( obj ) {
+      return obj.key !== key;
+    });
+    console.log('myArray',myArray)
+    this.setState({selected_index :myArray })
   }
   updateExpandState = () => {
     this.setState((prevState)=>({expand:!prevState.expand}))
