@@ -48,18 +48,28 @@ class IndexTree extends Component {
         const removeDuplicate = JSON.parse(sessionStorage.getItem("selectedIndex"))
         const removed = [...new Set(removeDuplicate)]
         sessionStorage.setItem("selectedIndex", JSON.stringify(removed));
-
       } else {
         sessionStorage.setItem("selectedIndex", JSON.stringify(filtered));
       }
-      
     } else {
       console.log("unckeck",info.node)
       const resultAll = []
       resultAll.push(info.node.index_id)
-      // const parentIndex = info.node.parent.map((item)=> item.index_id)
-      const childrenIndex = info.node.children.map((item)=> item.index_id)
-      const deleteThis = resultAll.concat(childrenIndex)
+      const parentIndex = []
+      if(info.node.parent){
+        console.log(info.node.parent)
+        parentIndex.push(info.node.parent)
+      }
+      const temp = resultAll.concat(parentIndex)
+      
+      const children = []
+      const childrenIndex1 = info.node.children.map((item)=> children.push(item.index_id))
+      const childrenIndex2 = info.node.children.map((item)=> item.children.map(item => children.push(item.index_id)))
+      const childrenIndex3 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>children.push(item.index_id))))
+      const childrenIndex4 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>children.push(item.index_id)))))
+      const childrenIndex5 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>item.children.map(children.push(item.index_id))))))
+
+      const deleteThis = temp.concat(children)
       const sessionData = JSON.parse(sessionStorage.getItem("selectedIndex"))
       const finalArray = sessionData.filter(val => !deleteThis.includes(val));
 
@@ -168,6 +178,7 @@ class IndexTree extends Component {
                         </div>
                       </>),
               index_id:table.index_id,
+              parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
               level: 2,
@@ -219,6 +230,7 @@ class IndexTree extends Component {
                         </div>
                       </>),
               index_id:table.index_id,
+              parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
               level: 3,
@@ -270,6 +282,7 @@ class IndexTree extends Component {
                         </div>
                       </>),
               index_id:table.index_id,
+              parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
               level: 4,
@@ -321,6 +334,7 @@ class IndexTree extends Component {
                         </div>
                       </>),
               index_id:table.index_id,
+              parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
               level: 5,
@@ -352,6 +366,7 @@ class IndexTree extends Component {
             temp_data_4.push(level_all[i])
           } else if(level_all[i]['level'] === 5 && temp_data_4.length > 0) {
             for(var a = 0; a < temp_data_4.length; a += 1) {
+              level_all[i].parent = temp_data_4[temp_data_4.length - 1].index_id
               temp_data_4[temp_data_4.length - 1]['children'].push(level_all[i])
               break;
             }
@@ -373,6 +388,7 @@ class IndexTree extends Component {
               temp_data_3.push(level_all[i])
             } else if(level_all[i]['level'] === 4) {
               for( a = 0; a < temp_data_3.length; a += 1) {
+                level_all[i].parent = temp_data_3[temp_data_3.length - 1].index_id
                 temp_data_3[temp_data_3.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -396,6 +412,7 @@ class IndexTree extends Component {
               temp_data_2.push(level_all[i])
             } else if(level_all[i]['level'] === 3) {
               for( a = 0; a < temp_data_2.length; a += 1) {
+                level_all[i].parent = temp_data_2[temp_data_2.length - 1].index_id
                 temp_data_2[temp_data_2.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -419,6 +436,7 @@ class IndexTree extends Component {
               temp_data_1.push(level_all[i])
             } else if(level_all[i]['level'] === 2) {
               for( a = 0; a < temp_data_1.length; a += 1) {
+                level_all[i].parent = temp_data_1[temp_data_1.length - 1].index_id
                 temp_data_1[temp_data_1.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -444,6 +462,7 @@ class IndexTree extends Component {
               temp_data_3.push(level_all[i])
             } else if(level_all[i]['level'] === 4) {
               for( a = 0; a < temp_data_3.length; a += 1) {
+                level_all[i].parent = temp_data_3[temp_data_3.length - 1].index_id
                 temp_data_3[temp_data_3.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -466,6 +485,7 @@ class IndexTree extends Component {
               temp_data_2.push(level_all[i])
             } else if(level_all[i]['level'] === 3) {
               for( a = 0; a < temp_data_2.length; a += 1) {
+                level_all[i].parent = temp_data_2[temp_data_2.length - 1].index_id
                 temp_data_2[temp_data_2.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -489,6 +509,7 @@ class IndexTree extends Component {
               temp_data_1.push(level_all[i])
             } else if(level_all[i]['level'] === 2) {
               for( a = 0; a < temp_data_1.length; a += 1) {
+                level_all[i].parent = temp_data_1[temp_data_1.length - 1].index_id
                 temp_data_1[temp_data_1.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -514,6 +535,7 @@ class IndexTree extends Component {
               temp_data_2.push(level_all[i])
             } else if(level_all[i]['level'] === 3) {
               for( a = 0; a < temp_data_2.length; a += 1) {
+                level_all[i].parent = temp_data_2[temp_data_2.length - 1].index_id
                 temp_data_2[temp_data_2.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -536,6 +558,7 @@ class IndexTree extends Component {
               temp_data_1.push(level_all[i])
             } else if(level_all[i]['level'] === 2) {
               for( a = 0; a < temp_data_1.length; a += 1) {
+                level_all[i].parent = temp_data_1[temp_data_1.length - 1].index_id
                 temp_data_1[temp_data_1.length - 1]['children'].push(level_all[i])
                 break;
               }
@@ -562,6 +585,7 @@ class IndexTree extends Component {
             temp_data_1.push(level_all[i])
           } else if(level_all[i]['level'] === 2) {
             for( a = 0; a < temp_data_1.length; a += 1) {
+              level_all[i].parent = temp_data_1[temp_data_1.length - 1].index_id
               temp_data_1[temp_data_1.length - 1]['children'].push(level_all[i])
               break;
             }
