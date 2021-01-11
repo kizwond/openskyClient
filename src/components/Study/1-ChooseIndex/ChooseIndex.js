@@ -197,11 +197,9 @@ class ChooseIndex extends Component {
 
   onFinish = (values) => {
     console.log('Success:', values);
+
     const books = this.state.books
-    console.log('original books',books)
-    // console.log('get item : ',JSON.parse(sessionStorage.getItem("selectedIndex")))
     const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
-    console.log(indexes)
     const booksSlice = JSON.parse(JSON.stringify( books ))
     const value = indexes.map(index => {
       booksSlice.map(book => {
@@ -215,38 +213,29 @@ class ChooseIndex extends Component {
           })
       })
     })
-    console.log(booksSlice)
     const final = booksSlice.map(book=>{
         const indexGet = []
         book.index_info.map((element)=>{
-          console.log(typeof(element), element)
           if(typeof(element) === 'object'){
             const index = book.index_info.indexOf(element)
-            console.log(index)
             indexGet.push(index)
-            
           }
         })
-        console.log('indexGet',indexGet)
         book.index_info.splice(indexGet[0], indexGet.length);
-          
-        console.log('hello',book.index_info)
       })
     console.log('books:',booksSlice)
 
+    axios.post('api/studysetup/create-session',{
+      booksnindexes: booksSlice,
+      study_mode: "",
+      session_config:""
+    }).then(res=>{
+      console.log(res.data)
+    })
+
   };
-  // getSelected = (value) => {
-  //   console.log('selected_info', value.checkedNodes)
-  //   const contents = this.state.selected_index.concat(value.checkedNodes)
-    
-  //   console.log("result : ",contents)
-  //   const key = "default"
-  //   const myArray = contents.filter(function( obj ) {
-  //     return obj.key !== key;
-  //   });
-  //   console.log('myArray',myArray)
-  //   this.setState({selected_index :myArray })
-  // }
+
+
   updateExpandState = () => {
     this.setState((prevState)=>({expand:!prevState.expand}))
     console.log(this.state.expand)
