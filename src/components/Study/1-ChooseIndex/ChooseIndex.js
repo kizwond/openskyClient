@@ -225,13 +225,13 @@ class ChooseIndex extends Component {
       })
     console.log('books:',booksSlice)
 
-    axios.post('api/studysetup/create-session',{
-      booksnindexes: booksSlice,
-      study_mode: "",
-      session_config:""
-    }).then(res=>{
-      console.log(res.data)
-    })
+    // axios.post('api/studysetup/create-session',{
+    //   booksnindexes: booksSlice,
+    //   study_mode: "",
+    //   session_config:""
+    // }).then(res=>{
+    //   console.log(res.data)
+    // })
 
   };
 
