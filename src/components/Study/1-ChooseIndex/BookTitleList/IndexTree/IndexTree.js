@@ -67,7 +67,7 @@ class IndexTree extends Component {
       const childrenIndex2 = info.node.children.map((item)=> item.children.map(item => children.push(item.index_id)))
       const childrenIndex3 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>children.push(item.index_id))))
       const childrenIndex4 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>children.push(item.index_id)))))
-      const childrenIndex5 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>item.children.map(children.push(item.index_id))))))
+      const childrenIndex5 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>item.children.map(children.push(item.index))))))
 
       const deleteThis = temp.concat(children)
       const sessionData = JSON.parse(sessionStorage.getItem("selectedIndex"))
@@ -77,6 +77,7 @@ class IndexTree extends Component {
     }
     console.log('get item : ',JSON.parse(sessionStorage.getItem("selectedIndex")))
   };
+
   render() {
     // const onSelect = this.props.onSelect 
     let level_all =[];

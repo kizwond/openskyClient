@@ -56,7 +56,6 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
-    // const value = sessionStorage.getItem("session_id")
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
     const requestArray = value.map((item)=>{
       axios.post('api/studysetup/get-index',{
@@ -198,27 +197,56 @@ class ChooseIndex extends Component {
 
   onFinish = (values) => {
     console.log('Success:', values);
-    console.log(this.state.selected_index)
-
-    const result = this.state.selected_index.reduce((accu, curr) => { 
-      accu[curr.index_id] = (accu[curr.index_id] || 0)+1; 
-      return accu;
-    }, {});
-    console.log(result)
+    const books = this.state.books
+    console.log('original books',books)
+    // console.log('get item : ',JSON.parse(sessionStorage.getItem("selectedIndex")))
+    const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
+    console.log(indexes)
+    const booksSlice = JSON.parse(JSON.stringify( books ))
+    const value = indexes.map(index => {
+      booksSlice.map(book => {
+          book.index_info.map(item =>{
+            if(item.index_id === index){
+              book.index_info.push(index)
+              book.index_info.filter(function (el) {
+                return el.index_id !== index;
+              })
+            }
+          })
+      })
+    })
+    console.log(booksSlice)
+    const final = booksSlice.map(book=>{
+        const indexGet = []
+        book.index_info.map((element)=>{
+          console.log(typeof(element), element)
+          if(typeof(element) === 'object'){
+            const index = book.index_info.indexOf(element)
+            console.log(index)
+            indexGet.push(index)
+            
+          }
+        })
+        console.log('indexGet',indexGet)
+        book.index_info.splice(indexGet[0], indexGet.length);
+          
+        console.log('hello',book.index_info)
+      })
+    console.log('books:',booksSlice)
 
   };
-  getSelected = (value) => {
-    console.log('selected_info', value.checkedNodes)
-    const contents = this.state.selected_index.concat(value.checkedNodes)
+  // getSelected = (value) => {
+  //   console.log('selected_info', value.checkedNodes)
+  //   const contents = this.state.selected_index.concat(value.checkedNodes)
     
-    console.log("result : ",contents)
-    const key = "default"
-    const myArray = contents.filter(function( obj ) {
-      return obj.key !== key;
-    });
-    console.log('myArray',myArray)
-    this.setState({selected_index :myArray })
-  }
+  //   console.log("result : ",contents)
+  //   const key = "default"
+  //   const myArray = contents.filter(function( obj ) {
+  //     return obj.key !== key;
+  //   });
+  //   console.log('myArray',myArray)
+  //   this.setState({selected_index :myArray })
+  // }
   updateExpandState = () => {
     this.setState((prevState)=>({expand:!prevState.expand}))
     console.log(this.state.expand)
@@ -234,7 +262,7 @@ class ChooseIndex extends Component {
                           //  onSelect={this.onSelect} 
                            books={this.state.books}
                            expand={this.state.expand}
-                           getSelected={this.getSelected}
+                          //  getSelected={this.getSelected}
                            updateExpandState={this.updateExpandState}/>
             {/* <div style={{background:"#5c89cf", padding:"0 10px 10px 10px", borderTop:"10px solid white"}}>
               <div style={{color:"white", height:"26px", lineHeight:"26px", textAlign:"left", paddingLeft:"10px", fontWeight:"700"}}>선택된 영역에 포함된 카드의 학습 정보</div>
