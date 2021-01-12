@@ -251,14 +251,24 @@ class ChooseIndex extends Component {
       })
     console.log('books:',booksSlice)
 
+    var output = booksSlice.map( s => {
+      if ( s.hasOwnProperty("index_info") )
+      {
+         s.index_ids = s.index_info;
+         delete s.index_info;   
+      }
+      return s;
+    })
+    console.log('output',output)
+
     axios.post('api/studysetup/create-session',{
-      booksnindexes: booksSlice,
+      booksnindexes: output,
       study_mode: this.state.key,
       study_config:study_config
     }).then(res=>{
       console.log(res.data)
       sessionStorage.setItem('sessionId', res.data.session_id)
-      window.location.href="/start-study"
+      // window.location.href="/start-study"
     })
 
   };
