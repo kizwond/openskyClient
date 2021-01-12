@@ -34,7 +34,7 @@ class ChooseIndex extends Component {
       holdCardNum:0,
       completedCardNum:0,
       tab_mode: 'left',
-      key:'0',
+      key:'read',
       expand:true,
       selected_index:[]
      }
@@ -198,6 +198,32 @@ class ChooseIndex extends Component {
   onFinish = (values) => {
     console.log('Success:', values);
 
+    const study_config = {            
+      sort_option : "standard",   //standard, time, random     
+      card_on_off : {
+          read_card : "on",
+          flip_card : "on",
+      },
+      status_on_off : {
+          yet : "on",
+          ing : "on",            
+          hold : "on",
+          completed : "on",
+      },
+      collect_criteria : "all", //all, by_now, by_today
+      needstudytime_filter : {
+          low : "",
+          high : ""
+      },
+      num_cards : {            
+          on_off : "on",
+          yet : 10,
+          ing : 10,
+          hold : 10,
+          completed : 10,
+      },
+  }
+
     const books = this.state.books
     const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
     const booksSlice = JSON.parse(JSON.stringify( books ))
@@ -225,16 +251,20 @@ class ChooseIndex extends Component {
       })
     console.log('books:',booksSlice)
 
-    // axios.post('api/studysetup/create-session',{
-    //   booksnindexes: booksSlice,
-    //   study_mode: "",
-    //   session_config:""
-    // }).then(res=>{
-    //   console.log(res.data)
-    // })
+    axios.post('api/studysetup/create-session',{
+      booksnindexes: booksSlice,
+      study_mode: this.state.key,
+      study_config:study_config
+    }).then(res=>{
+      console.log(res.data)
+      sessionStorage.setItem('sessionId', res.data.session_id)
+      window.location.href="/start-study"
+    })
 
   };
 
+
+    
 
   updateExpandState = () => {
     this.setState((prevState)=>({expand:!prevState.expand}))
@@ -260,13 +290,13 @@ class ChooseIndex extends Component {
           </Col>
           <Col style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <Tabs className="study_mode_class" defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
-              <TabPane tab="책모드" key="0" style={{textAlign:"left", padding:"10px"}}>
+              <TabPane tab="책모드" key="read" style={{textAlign:"left", padding:"10px"}}>
                 <ReadModeTab onFinish={this.onFinish}/>
               </TabPane>
-              <TabPane tab="카드모드" key="1" style={{textAlign:"left", padding:"10px"}}>
+              <TabPane tab="카드모드" key="flip" style={{textAlign:"left", padding:"10px"}}>
                 <FlipModeTab onFinish={this.onFinish}/>
               </TabPane>
-              <TabPane tab="시험모드" key="3" style={{textAlign:"left", padding:"10px"}}>
+              <TabPane tab="시험모드" key="exam" style={{textAlign:"left", padding:"10px"}}>
                 <ExamModeTab onFinish={this.onFinish}/>
               </TabPane>
             </Tabs>
