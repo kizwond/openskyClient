@@ -268,7 +268,7 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res.data)
       sessionStorage.setItem('sessionId', res.data.session_id)
-      // window.location.href="/start-study"
+      window.location.href="/start-study"
     })
 
   };
