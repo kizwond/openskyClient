@@ -99,7 +99,7 @@ class AdvancedFilterModal extends Component {
                       name="user_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -126,7 +126,7 @@ class AdvancedFilterModal extends Component {
                       name="maker_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -153,7 +153,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_study_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -177,7 +177,7 @@ class AdvancedFilterModal extends Component {
                       name="card_level_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -205,7 +205,7 @@ class AdvancedFilterModal extends Component {
                       name="study_times_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -233,7 +233,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_difficulty_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -260,7 +260,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_exam_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox>{andOr}</Checkbox>
+                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
