@@ -19,7 +19,8 @@ class FlipModeTab extends Component {
     });
   };
 
-  handleOk = () => {
+  handleOk = (values) => {
+    console.log('advanced', values)
     this.setState({
       modalVisible:false
     });
