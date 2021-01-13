@@ -88,7 +88,7 @@ class IndexTree extends Component {
               title: (<>
                         <div style={{width:"100%"}}>
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
-                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table._id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
                               <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
                               <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
@@ -99,7 +99,7 @@ class IndexTree extends Component {
                               <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
-                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                          <div id={table._id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
@@ -139,7 +139,7 @@ class IndexTree extends Component {
               title: (<>
                         <div style={{width:"100%"}}>
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
-                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table._id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
                               <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
                               <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
@@ -150,7 +150,7 @@ class IndexTree extends Component {
                               <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
-                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                          <div id={table._id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
@@ -191,7 +191,7 @@ class IndexTree extends Component {
               title: (<>
                         <div style={{width:"100%"}}>
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
-                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table._id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
                               <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
                               <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
@@ -202,7 +202,7 @@ class IndexTree extends Component {
                               <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
-                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                          <div id={table._id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
@@ -243,7 +243,7 @@ class IndexTree extends Component {
               title: (<>
                         <div style={{width:"100%"}}>
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
-                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table._id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
                               <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
                               <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
@@ -254,7 +254,7 @@ class IndexTree extends Component {
                               <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
-                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                          <div id={table._id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
@@ -295,7 +295,7 @@ class IndexTree extends Component {
               title: (<>
                         <div style={{width:"100%"}}>
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
-                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
+                            <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table._id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
                               <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
                               <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
@@ -306,7 +306,7 @@ class IndexTree extends Component {
                               <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
-                          <div id={table.index_id} className="detail_info" style={{display:"none"}}>
+                          <div id={table._id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
