@@ -40,7 +40,20 @@ class ReadModeTab extends Component {
             name="settings"
             initialValues={{
               sort_option: "standard",
-              collect_criteria:"ing_all"
+              read_card:true,
+              flip_card:true,
+              yet:true,
+              ing:true,
+              completed:true,
+              hold:true,
+              collect_criteria:"all",
+              advanced_filter_mode:false,
+              study_quantity_use_switch:true,
+              yet_card_num:1,
+              ing_card_num:1,
+              completed_card_num:1,
+              hold_card_num:1,
+              
             }}
             onFinish={this.props.onFinish}
             size="small"
