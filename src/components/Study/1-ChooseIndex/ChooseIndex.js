@@ -234,6 +234,11 @@ class ChooseIndex extends Component {
     } else {
       study_quantity_use_switch = "off"
     }
+    if(values.advanced_filter_mode === true){
+      var advanced_filter_mode = "on"
+    } else {
+      advanced_filter_mode = "off"
+    }
 
     const study_config = {            
       sort_option : values.sort_option,   //standard, time, random     
@@ -302,7 +307,8 @@ class ChooseIndex extends Component {
     axios.post('api/studysetup/create-session',{
       booksnindexes: output,
       study_mode: this.state.key,
-      study_config:study_config
+      study_config:study_config,
+      advanced_filter_mode:advanced_filter_mode
     }).then(res=>{
       console.log(res.data)
       sessionStorage.setItem('sessionId', res.data.session_id)

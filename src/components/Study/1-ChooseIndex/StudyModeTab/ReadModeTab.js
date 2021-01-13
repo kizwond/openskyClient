@@ -150,7 +150,13 @@ class ReadModeTab extends Component {
                    <Switch size="small" />
                 </Form.Item>
               </div>
-              <div style={{textAlign:"right"}}><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button> <Switch size="small" /></div>
+              <div style={{textAlign:"right"}}> <span><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
+              <Form.Item
+                  name="advanced_filter_mode"
+                  valuePropName="checked"
+                >
+                   <Switch size="small" />
+                </Form.Item></div>
               <AdvancedFilterModal modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
             </div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
