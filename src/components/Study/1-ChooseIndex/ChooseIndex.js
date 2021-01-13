@@ -197,32 +197,70 @@ class ChooseIndex extends Component {
 
   onFinish = (values) => {
     console.log('Success:', values);
+    if(values.read_card === true){
+      var read_card = "on"
+    } else {
+      read_card = "off"
+    }
+    if(values.flip_card === true){
+      var flip_card = "on"
+    } else {
+      flip_card = "off"
+    }
+    if(values.yet === true){
+      var yet = "on"
+    } else {
+      yet = "off"
+    }
+    if(values.ing === true){
+      var ing = "on"
+      var collect_criteria = values.collect_criteria
+    } else {
+      ing = "off"
+      collect_criteria = undefined
+    }
+    if(values.hold === true){
+      var hold = "on"
+    } else {
+      hold = "off"
+    }
+    if(values.completed === true){
+      var completed = "on"
+    } else {
+      completed = "off"
+    }
+    if(values.study_quantity_use_switch === true){
+      var study_quantity_use_switch = "on"
+    } else {
+      study_quantity_use_switch = "off"
+    }
 
     const study_config = {            
-      sort_option : "standard",   //standard, time, random     
+      sort_option : values.sort_option,   //standard, time, random     
       card_on_off : {
-          read_card : "on",
-          flip_card : "on",
+          read_card : read_card,
+          flip_card : flip_card,
       },
       status_on_off : {
-          yet : "on",
-          ing : "on",            
-          hold : "on",
-          completed : "on",
+          yet : yet,
+          ing : ing,            
+          hold : hold,
+          completed : completed,
       },
-      collect_criteria : "all", //all, by_now, by_today
+      collect_criteria : collect_criteria, //all, by_now, by_today
       needstudytime_filter : {
           low : "",
           high : ""
       },
       num_cards : {            
-          on_off : "on",
-          yet : 10,
-          ing : 10,
-          hold : 10,
-          completed : 10,
+          on_off : study_quantity_use_switch,
+          yet : values.yet_card_num,
+          ing : values.ing_card_num,
+          hold : values.hold_card_num,
+          completed : values.completed_card_num,
       },
   }
+  console.log(study_config)
 
     const books = this.state.books
     const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
@@ -268,7 +306,7 @@ class ChooseIndex extends Component {
     }).then(res=>{
       console.log(res.data)
       sessionStorage.setItem('sessionId', res.data.session_id)
-      window.location.href="/start-study"
+      // window.location.href="/start-study"
     })
 
   };
