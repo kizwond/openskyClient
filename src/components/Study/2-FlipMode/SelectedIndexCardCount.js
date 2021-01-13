@@ -16,13 +16,13 @@ class SelectedIndexCardCount extends Component {
       const ingAfterTomorrow = [];
       var getYets = this.props.books.map(book => 
         book.index_info.map((item)=> {
-          yetArray.push(item.yet)
-          holdArray.push(item.hold)
-          completedArray.push(item.completed)
-          ingTotal.push(item.ing.total)
-          ingUntilNow.push(item.ing.until_now)
-          ingUntilToday.push(item.ing.until_today)
-          ingAfterTomorrow.push(item.ing.after_tomorrow)
+          yetArray.push(item.num_cards.total.yet)
+          holdArray.push(item.num_cards.total.hold)
+          completedArray.push(item.num_cards.total.completed)
+          ingTotal.push(item.num_cards.total.ing.total)
+          ingUntilNow.push(item.num_cards.total.ing.until_now)
+          ingUntilToday.push(item.num_cards.total.ing.until_today)
+          ingAfterTomorrow.push(item.num_cards.total.ing.after_tomorrow)
 
         })
         )

@@ -90,38 +90,38 @@ class IndexTree extends Component {
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                             <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                              <span style={{width:"70px"}}>{table.yet}</span> 
-                              <span style={{width:"100px"}}>{table.ing.total}</span>
-                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                              <span style={{width:"35px"}}>{table.completed}</span>
-                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
+                              <span style={{width:"100px"}}>{table.num_cards.total.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.num_cards.total.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.num_cards.total.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.num_cards.total.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
                           <div id={table.index_id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.read.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.read.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.read.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.read.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.read.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.read.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.read.hold}</span>
                               </div>
                             </div>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>뒤집기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.flip.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.flip.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.flip.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.flip.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.flip.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.flip.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.flip.hold}</span>
                               </div>
                             </div>
                           </div>
@@ -141,38 +141,38 @@ class IndexTree extends Component {
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                             <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                              <span style={{width:"70px"}}>{table.yet}</span> 
-                              <span style={{width:"100px"}}>{table.ing.total}</span>
-                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                              <span style={{width:"35px"}}>{table.completed}</span>
-                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
+                              <span style={{width:"100px"}}>{table.num_cards.total.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.num_cards.total.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.num_cards.total.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.num_cards.total.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
                           <div id={table.index_id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.read.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.read.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.read.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.read.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.read.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.read.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.read.hold}</span>
                               </div>
                             </div>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>뒤집기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.flip.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.flip.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.flip.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.flip.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.flip.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.flip.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.flip.hold}</span>
                               </div>
                             </div>
                           </div>
@@ -193,38 +193,38 @@ class IndexTree extends Component {
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                             <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                              <span style={{width:"70px"}}>{table.yet}</span> 
-                              <span style={{width:"100px"}}>{table.ing.total}</span>
-                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                              <span style={{width:"35px"}}>{table.completed}</span>
-                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
+                              <span style={{width:"100px"}}>{table.num_cards.total.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.num_cards.total.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.num_cards.total.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.num_cards.total.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
                           <div id={table.index_id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.read.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.read.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.read.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.read.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.read.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.read.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.read.hold}</span>
                               </div>
                             </div>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>뒤집기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.flip.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.flip.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.flip.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.flip.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.flip.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.flip.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.flip.hold}</span>
                               </div>
                             </div>
                           </div>
@@ -245,38 +245,38 @@ class IndexTree extends Component {
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                             <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                              <span style={{width:"70px"}}>{table.yet}</span> 
-                              <span style={{width:"100px"}}>{table.ing.total}</span>
-                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                              <span style={{width:"35px"}}>{table.completed}</span>
-                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
+                              <span style={{width:"100px"}}>{table.num_cards.total.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.num_cards.total.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.num_cards.total.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.num_cards.total.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
                           <div id={table.index_id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.read.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.read.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.read.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.read.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.read.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.read.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.read.hold}</span>
                               </div>
                             </div>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>뒤집기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.flip.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.flip.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.flip.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.flip.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.flip.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.flip.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.flip.hold}</span>
                               </div>
                             </div>
                           </div>
@@ -297,38 +297,38 @@ class IndexTree extends Component {
                           <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                             <div style={{width:"15%", display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center", marginRight:"20px"}}><span>{table.name}</span><SearchOutlined onClick={()=>this.onClickHideDetail(table.index_id)}/></div> 
                             <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                              <span style={{width:"70px"}}>{table.yet}</span> 
-                              <span style={{width:"100px"}}>{table.ing.total}</span>
-                              <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                              <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                              <span style={{width:"35px"}}>{table.completed}</span>
-                              <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                              <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.total.completed} /></span> 
+                              <span style={{width:"70px"}}>{table.num_cards.total.yet}</span> 
+                              <span style={{width:"100px"}}>{table.num_cards.total.ing.total}</span>
+                              <span style={{width:"70px"}}>{table.num_cards.total.ing.until_now}</span>
+                              <span style={{width:"60px"}}>{table.num_cards.total.ing.until_today}</span>
+                              <span style={{width:"35px"}}>{table.num_cards.total.completed}</span>
+                              <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.total.hold}</span>
                             </div>
                           </div>
                           <div id={table.index_id} className="detail_info" style={{display:"none"}}>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>읽기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.read.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.read.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.read.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.read.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.read.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.read.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.read.hold}</span>
                               </div>
                             </div>
                             <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
                               <div>뒤집기카드</div> 
                               <div style={{fontSize:"10px",width:"600px", display:"flex", flexDirection:"row",justifyContent:"space-between"}}>
-                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.completed} /></span> 
-                                <span style={{width:"70px"}}>{table.yet}</span> 
-                                <span style={{width:"100px"}}>{table.ing.total}</span>
-                                <span style={{width:"70px"}}>{table.ing.until_now}</span>
-                                <span style={{width:"60px"}}>{table.ing.until_today}</span>
-                                <span style={{width:"35px"}}>{table.completed}</span>
-                                <span style={{width:"35px", marginRight:"8px"}}>{table.hold}</span>
+                                <span style={{width:"70px"}}><Progress size="large" style={{fontSize:"10px"}} percent={table.num_cards.flip.completed} /></span> 
+                                <span style={{width:"70px"}}>{table.num_cards.flip.yet}</span> 
+                                <span style={{width:"100px"}}>{table.num_cards.flip.ing.total}</span>
+                                <span style={{width:"70px"}}>{table.num_cards.flip.ing.until_now}</span>
+                                <span style={{width:"60px"}}>{table.num_cards.flip.ing.until_today}</span>
+                                <span style={{width:"35px"}}>{table.num_cards.flip.completed}</span>
+                                <span style={{width:"35px", marginRight:"8px"}}>{table.num_cards.flip.hold}</span>
                               </div>
                             </div>
                           </div>
