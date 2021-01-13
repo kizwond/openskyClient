@@ -197,6 +197,7 @@ class ChooseIndex extends Component {
 
   onFinish = (values) => {
     console.log('Success:', values);
+    const rangeValue = values['ing_card_self_setting'];
     if(values.read_card === true){
       var read_card = "on"
     } else {
@@ -254,8 +255,8 @@ class ChooseIndex extends Component {
       },
       collect_criteria : collect_criteria, //all, by_now, by_today
       needstudytime_filter : {
-          low : "",
-          high : ""
+          low : rangeValue[0].format('YYYY-MM-DD'),
+          high : rangeValue[1].format('YYYY-MM-DD')
       },
       num_cards : {            
           on_off : study_quantity_use_switch,
