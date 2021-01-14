@@ -142,7 +142,7 @@ class AdvancedFilterModal extends Component {
       { label: '틀림', value: '틀림' },
         ]
     
-    if(this.state.userFlagGroupOnchange || this.state.makerFlagGroupOnchange){
+    if(this.state.userFlagGroupOnchange){
       var selectedCss = "#1890ff"
       var fontColor = "white"
       var fontWeight = "700"
@@ -150,6 +150,60 @@ class AdvancedFilterModal extends Component {
       selectedCss = "white"
       fontColor = "black"
       fontWeight = "400"
+    }
+    if(this.state.makerFlagGroupOnchange){
+      var selectedCss2 = "#1890ff"
+      var fontColor2 = "white"
+      var fontWeight2 = "700"
+    } else {
+      selectedCss2 = "white"
+      fontColor2 = "black"
+      fontWeight2 = "400"
+    }
+    if(this.state.recentStudyGroupOnchange){
+      var selectedCss3 = "#1890ff"
+      var fontColor3 = "white"
+      var fontWeight3 = "700"
+    } else {
+      selectedCss3 = "white"
+      fontColor3 = "black"
+      fontWeight3 = "400"
+    }
+    if(this.state.cardLevelGroupOnchange){
+      var selectedCss4 = "#1890ff"
+      var fontColor4 = "white"
+      var fontWeight4 = "700"
+    } else {
+      selectedCss4 = "white"
+      fontColor4 = "black"
+      fontWeight4 = "400"
+    }
+    if(this.state.studyTimesGroupOnchange){
+      var selectedCss5 = "#1890ff"
+      var fontColor5 = "white"
+      var fontWeight5 = "700"
+    } else {
+      selectedCss5 = "white"
+      fontColor5 = "black"
+      fontWeight5 = "400"
+    }
+    if(this.state.recentDiffcultyGroupOnchange){
+      var selectedCss6 = "#1890ff"
+      var fontColor6 = "white"
+      var fontWeight6 = "700"
+    } else {
+      selectedCss6 = "white"
+      fontColor6 = "black"
+      fontWeight6 = "400"
+    }
+    if(this.state.examResultGroupOnchange){
+      var selectedCss7 = "#1890ff"
+      var fontColor7 = "white"
+      var fontWeight7 = "700"
+    } else {
+      selectedCss7 = "white"
+      fontColor7 = "black"
+      fontWeight7 = "400"
     }
     
     
@@ -266,7 +320,7 @@ class AdvancedFilterModal extends Component {
                       name="maker_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss2}`, color:`${fontColor2}`, fontWeight:`${fontWeight2}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -294,7 +348,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_study_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss3}`, color:`${fontColor3}`, fontWeight:`${fontWeight3}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -319,7 +373,7 @@ class AdvancedFilterModal extends Component {
                       name="card_level_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss4}`, color:`${fontColor4}`, fontWeight:`${fontWeight4}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                   </Space>
                 </div>
@@ -347,7 +401,7 @@ class AdvancedFilterModal extends Component {
                       name="study_times_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss5}`, color:`${fontColor5}`, fontWeight:`${fontWeight5}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -376,7 +430,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_difficulty_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss6}`, color:`${fontColor6}`, fontWeight:`${fontWeight6}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -404,7 +458,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_exam_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss7}`, color:`${fontColor7}`, fontWeight:`${fontWeight7}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
