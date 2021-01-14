@@ -71,6 +71,7 @@ class AdvancedFilterModal extends Component {
   }
 
   userFlagGroupOnchange = () =>{
+    console.log(this.state.userFlagGroupOnchange)
     this.setState((prevState)=>({
       userFlagGroupOnchange:!prevState.userFlagGroupOnchange
     }))
@@ -140,6 +141,9 @@ class AdvancedFilterModal extends Component {
       { label: '맞음', value: '맞음' },
       { label: '틀림', value: '틀림' },
         ]
+
+
+    
     return (
       <>
         <Modal title="고급필터" width={650} className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
@@ -147,21 +151,53 @@ class AdvancedFilterModal extends Component {
             <ul style={{display:"flex", flexDirection:"column", justifyContent:"space-between", height:"100%"}}>
             <Form
             name="advanced_settings"
-            initialValues={{}}
+            initialValues={{
+              and_or_mode:"and"
+            }}
             onFinish={this.onFinish}
             size="small"
           >
               <li>
                 <span>필터계산</span>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
-                  {/* {this.state.andOr ? : } */}
-                  {this.state.userFlagOnchange && <span>사용자플래그</span>}
-                  {this.state.makerFlagOnchange && <span>제작자플래그</span>}
-                  {this.state.recentStudyOnchange && <span>최근학습시점</span>}
-                  {this.state.cardLevelOnchange && <span>카드레벨</span>}
-                  {this.state.studyTimesOnchange && <span>학습횟수</span>}
-                  {this.state.difficultyOnchange && <span>최근선택한난이도</span>}
-                  {this.state.examResultOnchange && <span>최근시험결과</span>}
+                  {/* And ON & Or Grouping */}
+                  {this.state.andOr ? <span style={{color:"blue"}}>({this.state.userFlagOnchange ? <>{this.state.userFlagGroupOnchange && <span> 사용자플래그 or </span>}</>:''}
+                                        {this.state.makerFlagOnchange ? <>{this.state.makerFlagGroupOnchange && <span> 제작자플래그 or </span>}</>:''}
+                                        {this.state.recentStudyOnchange ? <>{this.state.recentStudyGroupOnchange && <span> 최근학습시점 or </span>}</>:''}
+                                        {this.state.cardLevelOnchange ? <>{this.state.cardLevelGroupOnchange && <span> 카드레벨 or </span>}</>:''}
+                                        {this.state.studyTimesOnchange ? <>{this.state.studyTimesGroupOnchange && <span> 학습횟수 or </span>}</>:''}
+                                        {this.state.difficultyOnchange ? <>{this.state.difficultyGroupOnchange && <span> 최근선택한난이도 or </span>}</>:''}
+                                        {this.state.examResultOnchange ? <>{this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}) and
+                                        </span>:''}
+                  {/* And ON & Or Not Grouping */}
+                  {this.state.andOr ? <span style={{color:"red"}}>{this.state.userFlagOnchange ? <>{!this.state.userFlagGroupOnchange && <span> 사용자플래그 and </span>}</>:''}
+                                        {this.state.makerFlagOnchange ? <>{!this.state.makerFlagGroupOnchange && <span> 제작자플래그 and </span>}</>:''}
+                                        {this.state.recentStudyOnchange ? <>{!this.state.recentStudyGroupOnchange && <span> 최근학습시점 and </span>}</>:''}
+                                        {this.state.cardLevelOnchange ? <>{!this.state.cardLevelGroupOnchange && <span> 카드레벨 and </span>}</>:''}
+                                        {this.state.studyTimesOnchange ? <>{!this.state.studyTimesGroupOnchange && <span> 학습횟수 and </span>}</>:''}
+                                        {this.state.difficultyOnchange ? <>{!this.state.difficultyGroupOnchange && <span> 최근선택한난이도 and </span>}</>:''}
+                                        {this.state.examResultOnchange ? <>{!this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}
+                                        </span>:''}
+
+                  {/* And ON & Or Grouping */}
+                  {this.state.andOr === false ? <span style={{color:"blue"}}>({this.state.userFlagOnchange ? <>{this.state.userFlagGroupOnchange && <span> 사용자플래그 and </span>}</>:''}
+                                        {this.state.makerFlagOnchange ? <>{this.state.makerFlagGroupOnchange && <span> 제작자플래그 and </span>}</>:''}
+                                        {this.state.recentStudyOnchange ? <>{this.state.recentStudyGroupOnchange && <span> 최근학습시점 and </span>}</>:''}
+                                        {this.state.cardLevelOnchange ? <>{this.state.cardLevelGroupOnchange && <span> 카드레벨 and </span>}</>:''}
+                                        {this.state.studyTimesOnchange ? <>{this.state.studyTimesGroupOnchange && <span> 학습횟수 and </span>}</>:''}
+                                        {this.state.difficultyOnchange ? <>{this.state.difficultyGroupOnchange && <span> 최근선택한난이도 and </span>}</>:''}
+                                        {this.state.examResultOnchange ? <>{this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}) or
+                                        </span>:''}
+                  {/* And ON & Or Not Grouping */}
+                  {this.state.andOr === false ? <span style={{color:"red"}}>{this.state.userFlagOnchange ? <>{!this.state.userFlagGroupOnchange && <span> 사용자플래그 or </span>}</>:''}
+                                        {this.state.makerFlagOnchange ? <>{!this.state.makerFlagGroupOnchange && <span> 제작자플래그 or </span>}</>:''}
+                                        {this.state.recentStudyOnchange ? <>{!this.state.recentStudyGroupOnchange && <span> 최근학습시점 or </span>}</>:''}
+                                        {this.state.cardLevelOnchange ? <>{!this.state.cardLevelGroupOnchange && <span> 카드레벨 or </span>}</>:''}
+                                        {this.state.studyTimesOnchange ? <>{!this.state.studyTimesGroupOnchange && <span> 학습횟수 or </span>}</>:''}
+                                        {this.state.difficultyOnchange ? <>{!this.state.difficultyGroupOnchange && <span> 최근선택한난이도 or </span>}</>:''}
+                                        {this.state.examResultOnchange ? <>{!this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}
+                                        </span>:''}
+                  
                 </div>
                 <span>설명</span>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
@@ -189,12 +225,13 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small" onChange={this.userFlagOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.userFlagOnchange && <Form.Item
                       name="user_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.userFlagGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.userFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
+                    
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
@@ -216,12 +253,13 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small"  onChange={this.makerFlagOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.makerFlagOnchange && <Form.Item
                       name="maker_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.makerFlagGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
+                    
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
@@ -243,12 +281,13 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small" onChange={this.recentStudyOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.recentStudyOnchange && <Form.Item
                       name="recent_study_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.recentStudyGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
+                    
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
@@ -267,12 +306,12 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small" onChange={this.cardLevelOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.cardLevelOnchange && <Form.Item
                       name="card_level_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.cardLevelGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex"}}>
@@ -295,12 +334,13 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small" onChange={this.studyTimesOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.studyTimesOnchange && <Form.Item
                       name="study_times_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.studyTimesGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
+                    
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex"}}>
@@ -323,12 +363,13 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small" onChange={this.difficultyOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.difficultyOnchange && <Form.Item
                       name="recent_difficulty_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.difficultyGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
+                    
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
@@ -350,12 +391,13 @@ class AdvancedFilterModal extends Component {
                     >
                       <Switch size="small" onChange={this.examResultOnchange}/>
                     </Form.Item>
-                    <Form.Item
+                    {this.state.examResultOnchange && <Form.Item
                       name="recent_exam_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span onChange={this.examResultGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>
+                      <Checkbox onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                    </Form.Item>}
+                    
                   </Space>
                 </div>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
