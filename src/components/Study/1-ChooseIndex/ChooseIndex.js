@@ -57,6 +57,24 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
+    this.getIndex()
+    this.getStudyConfig()
+  }
+  getIndex = () =>{
+    const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    value.map((item) => {
+       axios.post('api/studysetup/get-index',{
+        selected_books:item
+      }).then(res => {
+        console.log('데이타:', res.data)
+        this.setState({
+          books:[...this.state.books, res.data.single_book_info]
+        })
+      })
+    })
+  }
+
+  getStudyConfig = () => {
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
     console.log(value)
     axios.post('api/studysetup/get-study-config',{
@@ -65,16 +83,6 @@ class ChooseIndex extends Component {
       console.log('데이타:', res.data)
       this.setState({
         study_config:res.data.study_config
-      })
-    })
-    const requestArray = value.map((item)=>{
-      axios.post('api/studysetup/get-index',{
-        selected_books:item
-      }).then(res => {
-        console.log('데이타:', res.data)
-        this.setState({
-          books:[...this.state.books, res.data.single_book_info]
-        })
       })
     })
   }
