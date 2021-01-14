@@ -36,7 +36,8 @@ class ChooseIndex extends Component {
       tab_mode: 'left',
       key:'read',
       expand:true,
-      selected_index:[]
+      selected_index:[],
+      study_config:''
      }
   }
 
@@ -57,6 +58,15 @@ class ChooseIndex extends Component {
 
   componentDidMount() {
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    console.log(value)
+    axios.post('api/studysetup/get-study-config',{
+      selected_books:value
+    }).then(res => {
+      console.log('데이타:', res.data)
+      this.setState({
+        study_config:res.data.study_config
+      })
+    })
     const requestArray = value.map((item)=>{
       axios.post('api/studysetup/get-index',{
         selected_books:item
