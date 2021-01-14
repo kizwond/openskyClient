@@ -141,8 +141,17 @@ class AdvancedFilterModal extends Component {
       { label: '맞음', value: '맞음' },
       { label: '틀림', value: '틀림' },
         ]
-
-
+    
+    if(this.state.userFlagGroupOnchange || this.state.makerFlagGroupOnchange){
+      var selectedCss = "#1890ff"
+      var fontColor = "white"
+      var fontWeight = "700"
+    } else {
+      selectedCss = "white"
+      fontColor = "black"
+      fontWeight = "400"
+    }
+    
     
     return (
       <>
@@ -229,7 +238,7 @@ class AdvancedFilterModal extends Component {
                       name="user_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.userFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.userFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -257,7 +266,7 @@ class AdvancedFilterModal extends Component {
                       name="maker_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -285,7 +294,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_study_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -310,7 +319,7 @@ class AdvancedFilterModal extends Component {
                       name="card_level_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                   </Space>
                 </div>
@@ -338,7 +347,7 @@ class AdvancedFilterModal extends Component {
                       name="study_times_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -367,7 +376,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_difficulty_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
@@ -395,7 +404,7 @@ class AdvancedFilterModal extends Component {
                       name="recent_exam_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>}
                     
                   </Space>
