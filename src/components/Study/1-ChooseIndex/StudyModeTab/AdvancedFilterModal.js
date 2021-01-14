@@ -8,7 +8,22 @@ class AdvancedFilterModal extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      andOr : true
+      andOr : true,
+      userFlagOnchange : false,
+      makerFlagOnchange : false,
+      recentStudyOnchange : false,
+      cardLevelOnchange : false,
+      studyTimesOnchange : false,
+      difficultyOnchange : false,
+      examResultOnchange : false,
+
+      userFlagGroupOnchange : false,
+      makerFlagGroupOnchange : false,
+      recentStudyGroupOnchange : false,
+      cardLevelGroupOnchange : false,
+      studyTimesGroupOnchange : false,
+      difficultyGroupOnchange : false,
+      examResultGroupOnchange : false,
      };
   }
   onFinish = (values) => {
@@ -17,6 +32,77 @@ class AdvancedFilterModal extends Component {
   andOrChange = () =>{
     this.setState((prevState)=>({
       andOr:!prevState.andOr
+    }))
+  }
+  userFlagOnchange = () =>{
+    this.setState((prevState)=>({
+      userFlagOnchange:!prevState.userFlagOnchange
+    }))
+  }
+  makerFlagOnchange = () =>{
+    this.setState((prevState)=>({
+      makerFlagOnchange:!prevState.makerFlagOnchange
+    }))
+  }
+  recentStudyOnchange = () =>{
+    this.setState((prevState)=>({
+      recentStudyOnchange:!prevState.recentStudyOnchange
+    }))
+  }
+  cardLevelOnchange = () =>{
+    this.setState((prevState)=>({
+      cardLevelOnchange:!prevState.cardLevelOnchange
+    }))
+  }
+  studyTimesOnchange = () =>{
+    this.setState((prevState)=>({
+      studyTimesOnchange:!prevState.studyTimesOnchange
+    }))
+  }
+  difficultyOnchange = () =>{
+    this.setState((prevState)=>({
+      difficultyOnchange:!prevState.difficultyOnchange
+    }))
+  }
+  examResultOnchange = () =>{
+    this.setState((prevState)=>({
+      examResultOnchange:!prevState.examResultOnchange
+    }))
+  }
+
+  userFlagGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      userFlagGroupOnchange:!prevState.userFlagGroupOnchange
+    }))
+  }
+  makerFlagGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      makerFlagGroupOnchange:!prevState.makerFlagGroupOnchange
+    }))
+  }
+  recentStudyGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      recentStudyGroupOnchange:!prevState.recentStudyGroupOnchange
+    }))
+  }
+  cardLevelGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      cardLevelGroupOnchange:!prevState.cardLevelGroupOnchange
+    }))
+  }
+  studyTimesGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      studyTimesGroupOnchange:!prevState.studyTimesGroupOnchange
+    }))
+  }
+  difficultyGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      difficultyGroupOnchange:!prevState.difficultyGroupOnchange
+    }))
+  }
+  examResultGroupOnchange = () =>{
+    this.setState((prevState)=>({
+      examResultGroupOnchange:!prevState.examResultGroupOnchange
     }))
   }
   render() {
@@ -56,7 +142,7 @@ class AdvancedFilterModal extends Component {
         ]
     return (
       <>
-        <Modal title="고급필터" className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
+        <Modal title="고급필터" width={650} className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
           <div className="advanced_filter_container" style={{fontSize:"12px"}}>
             <ul style={{display:"flex", flexDirection:"column", justifyContent:"space-between", height:"100%"}}>
             <Form
@@ -68,6 +154,14 @@ class AdvancedFilterModal extends Component {
               <li>
                 <span>필터계산</span>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
+                  {/* {this.state.andOr ? : } */}
+                  {this.state.userFlagOnchange && <span>사용자플래그</span>}
+                  {this.state.makerFlagOnchange && <span>제작자플래그</span>}
+                  {this.state.recentStudyOnchange && <span>최근학습시점</span>}
+                  {this.state.cardLevelOnchange && <span>카드레벨</span>}
+                  {this.state.studyTimesOnchange && <span>학습횟수</span>}
+                  {this.state.difficultyOnchange && <span>최근선택한난이도</span>}
+                  {this.state.examResultOnchange && <span>최근시험결과</span>}
                 </div>
                 <span>설명</span>
                 <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
@@ -93,13 +187,13 @@ class AdvancedFilterModal extends Component {
                       name="user_flag_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small" onChange={this.userFlagOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="user_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.userFlagGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -120,13 +214,13 @@ class AdvancedFilterModal extends Component {
                       name="maker_flag_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small"  onChange={this.makerFlagOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="maker_flag_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.makerFlagGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -147,13 +241,13 @@ class AdvancedFilterModal extends Component {
                       name="recent_study_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small" onChange={this.recentStudyOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="recent_study_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.recentStudyGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -171,13 +265,13 @@ class AdvancedFilterModal extends Component {
                       name="card_level_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small" onChange={this.cardLevelOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="card_level_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.cardLevelGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -199,13 +293,13 @@ class AdvancedFilterModal extends Component {
                       name="study_times_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small" onChange={this.studyTimesOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="study_times_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.studyTimesGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -227,13 +321,13 @@ class AdvancedFilterModal extends Component {
                       name="recent_difficulty_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small" onChange={this.difficultyOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="recent_difficulty_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.difficultyGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
@@ -254,13 +348,13 @@ class AdvancedFilterModal extends Component {
                       name="recent_exam_switch"
                       valuePropName="checked"
                     >
-                      <Switch size="small" />
+                      <Switch size="small" onChange={this.examResultOnchange}/>
                     </Form.Item>
                     <Form.Item
                       name="recent_exam_filtering_group"
                       valuePropName="checked"
                     >            
-                      <Checkbox><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                      <Checkbox><span onChange={this.examResultGroupOnchange} style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:"white", display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
                     </Form.Item>
                   </Space>
                 </div>
