@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Radio, Button,Switch,Form, Space, DatePicker, InputNumber } from 'antd';
+import { Radio, Button,Switch,Form, DatePicker, InputNumber } from 'antd';
 import './StudyModeTab.css'
 import AdvancedFilterModal from './AdvancedFilterModal'
 import moment from 'moment';
+import axios from 'axios'
 
 const { RangePicker } = DatePicker;
 
@@ -12,6 +13,7 @@ class ReadModeTab extends Component {
     super(props);
     this.state = { 
       modalVisible:false,
+      // study_config:''
      };
   }
   showModal = () => {
@@ -32,13 +34,27 @@ class ReadModeTab extends Component {
       modalVisible:false
     });
   };
-
-
+  componentDidMount(){
+    console.log('mounted')
+    // this.getStudyConfig()
+  }
+  // getStudyConfig = () => {
+  //   console.log('iamhere')
+  //   const value = JSON.parse(sessionStorage.getItem("book_ids"))
+  //   axios.post('api/studysetup/get-study-config',{
+  //     selected_books:value
+  //   }).then(res => {
+  //     console.log('StudyConfigData:', res.data)
+  //     this.setState({
+  //       study_config:res.data.study_config
+  //     })
+  //   })
+  // }
   render() {
     if(this.props.study_config){
+      console.log("now here fire!!!!")
       console.log(this.props.study_config)
       var options = this.props.study_config.read_mode
-      console.log(options)
       var sort_option = options.sort_option
       if(options.card_on_off.read_card === "on"){
         var read_card = true
@@ -82,8 +98,8 @@ class ReadModeTab extends Component {
       var hold_card_num = options.num_cards.hold
       var high = options.needstudytime_filter.high
       var low = options.needstudytime_filter.low
-      console.log(high)
     } else {
+      console.log("none exist")
       sort_option = "standard"
       flip_card = false
       read_card = false
@@ -102,27 +118,27 @@ class ReadModeTab extends Component {
     }
     
     const dateFormat = 'YYYY-MM-DD';
-    
+
     return (
       <>
         <div style={{fontSize:"13px", fontWeight:"700"}}>보기순서 정렬</div>
         <Form
             name="settings"
             initialValues={{
-              sort_option:sort_option,
-              read_card:read_card,
-              flip_card:flip_card,
-              yet:yet,
-              ing:ing,
-              completed:completed,
-              hold:hold,
-              collect_criteria:collect_criteria,
+              sort_option,
+              read_card,
+              flip_card,
+              yet,
+              ing,
+              completed,
+              hold,
+              collect_criteria,
               advanced_filter_mode:false,
-              study_quantity_use_switch:study_quantity_use_switch,
-              yet_card_num:yet_card_num,
-              ing_card_num:ing_card_num,
-              completed_card_num:completed_card_num,
-              hold_card_num:hold_card_num,
+              study_quantity_use_switch,
+              yet_card_num,
+              ing_card_num,
+              completed_card_num,
+              hold_card_num,
             }}
             onFinish={this.props.onFinish}
             size="small"
@@ -239,7 +255,7 @@ class ReadModeTab extends Component {
                 >
                    <Switch size="small" />
                 </Form.Item></div>
-              <AdvancedFilterModal modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+              <AdvancedFilterModal advanced_filter={this.props.study_config.advanced_filter} modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
             </div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
             <span style={{fontSize:"13px", fontWeight:"700"}}>학습량 설정 </span> 

@@ -82,11 +82,10 @@ class ExamModeTab extends Component {
       var hold_card_num = options.num_cards.hold
       var high = options.needstudytime_filter.high
       var low = options.needstudytime_filter.low
-      console.log(high)
     } else {
       sort_option = "standard"
       flip_card = false
-      read_card = false
+      // read_card = false
       yet = false
       ing = false
       completed = false

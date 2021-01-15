@@ -37,7 +37,7 @@ class ChooseIndex extends Component {
       key:'read',
       expand:true,
       selected_index:[],
-      study_config:[]
+      study_config:''
      }
   }
 
@@ -57,8 +57,8 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
-    this.getIndex()
     this.getStudyConfig()
+    
   }
   getIndex = () =>{
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
@@ -66,7 +66,7 @@ class ChooseIndex extends Component {
        axios.post('api/studysetup/get-index',{
         selected_books:item
       }).then(res => {
-        console.log('데이타:', res.data)
+        console.log('IndexData:', res.data)
         this.setState({
           books:[...this.state.books, res.data.single_book_info]
         })
@@ -76,15 +76,15 @@ class ChooseIndex extends Component {
 
   getStudyConfig = () => {
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
-    console.log(value)
     axios.post('api/studysetup/get-study-config',{
       selected_books:value
     }).then(res => {
-      console.log('데이타:', res.data)
+      console.log('StudyConfigData:', res.data)
       this.setState({
         study_config:res.data.study_config
       })
     })
+    this.getIndex()
   }
 
   startStudy = () => {

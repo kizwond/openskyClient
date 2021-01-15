@@ -206,6 +206,62 @@ class AdvancedFilterModal extends Component {
       fontWeight7 = "400"
     }
     
+    if(this.props.advanced_filter){
+      console.log(this.props.advanced_filter)
+      var options = this.props.advanced_filter
+     
+      var and_or_mode = "and"
+      var user_flag_switch =  ''
+      var user_flag_filtering_group = ''
+      var user_flag = ''
+      var maker_flag_switch =  ''
+      var maker_flag_filtering_group = ''
+      var maker_flag = ''
+      var recent_study_switch = ''
+      var recent_study_filtering_group = ''
+      var recent_study_time = ''
+      var card_level_switch = ''
+      var card_level_filtering_group = ''
+      var level_from = ''
+      var level_to = ''
+      var study_times_switch = ''
+      var study_times_filtering_group = ''
+      var study_times_from = ''
+      var study_times_to = ''
+      var recent_difficulty_switch = ''
+      var recent_difficulty_filtering_group = ''
+      var difficulty = ''
+      var recent_exam_switch = ''
+      var recent_exam_filtering_group = ''
+      var exam_result = ''
+      var setting_save = ''
+    } else {
+      and_or_mode = "and"
+      user_flag_switch =  ''
+      user_flag_filtering_group = ''
+      user_flag = ''
+      maker_flag_switch =  ''
+      maker_flag_filtering_group = ''
+      maker_flag = ''
+      recent_study_switch = ''
+      recent_study_filtering_group = ''
+      recent_study_time = ''
+      card_level_switch = ''
+      card_level_filtering_group = ''
+      level_from = ''
+      level_to = ''
+      study_times_switch = ''
+      study_times_filtering_group = ''
+      study_times_from = ''
+      study_times_to = ''
+      recent_difficulty_switch = ''
+      recent_difficulty_filtering_group = ''
+      difficulty = ''
+      recent_exam_switch = ''
+      recent_exam_filtering_group = ''
+      exam_result = ''
+      setting_save = ''
+    }
     
     return (
       <>
@@ -215,7 +271,31 @@ class AdvancedFilterModal extends Component {
             <Form
             name="advanced_settings"
             initialValues={{
-              and_or_mode:"and"
+              and_or_mode,
+              user_flag_switch,
+              user_flag_filtering_group,
+              user_flag,
+              maker_flag_switch,
+              maker_flag_filtering_group,
+              maker_flag,
+              recent_study_switch,
+              recent_study_filtering_group,
+              recent_study_time,
+              card_level_switch,
+              card_level_filtering_group,
+              level_from,
+              level_to,
+              study_times_switch,
+              study_times_filtering_group,
+              study_times_from,
+              study_times_to,
+              recent_difficulty_switch,
+              recent_difficulty_filtering_group,
+              difficulty,
+              recent_exam_switch,
+              recent_exam_filtering_group,
+              exam_result,
+              setting_save
             }}
             onFinish={this.onFinish}
             size="small"
