@@ -34,25 +34,9 @@ class ReadModeTab extends Component {
       modalVisible:false
     });
   };
-  componentDidMount(){
-    console.log('mounted')
-    // this.getStudyConfig()
-  }
-  // getStudyConfig = () => {
-  //   console.log('iamhere')
-  //   const value = JSON.parse(sessionStorage.getItem("book_ids"))
-  //   axios.post('api/studysetup/get-study-config',{
-  //     selected_books:value
-  //   }).then(res => {
-  //     console.log('StudyConfigData:', res.data)
-  //     this.setState({
-  //       study_config:res.data.study_config
-  //     })
-  //   })
-  // }
+
   render() {
     if(this.props.study_config){
-      console.log("now here fire!!!!")
       console.log(this.props.study_config)
       var options = this.props.study_config.read_mode
       var sort_option = options.sort_option
@@ -98,7 +82,8 @@ class ReadModeTab extends Component {
       var hold_card_num = options.num_cards.hold
       var high = options.needstudytime_filter.high
       var low = options.needstudytime_filter.low
-    } else {
+    } 
+    else {
       console.log("none exist")
       sort_option = "standard"
       flip_card = false
@@ -147,6 +132,7 @@ class ReadModeTab extends Component {
             <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left", display:"column", justifyContent:"start"}}>
               <Form.Item
                 name="sort_option"
+                noStyle
               >
                 <Radio.Group style={{display:"flex", flexDirection:"column"}}>
                   <Radio value="standard" style={{fontSize:"11px"}}>
