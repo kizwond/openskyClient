@@ -209,6 +209,17 @@ class AdvancedFilterModal extends Component {
     if(this.props.advanced_filter){
       console.log("고급필터:", this.props.advanced_filter)
       var options = this.props.advanced_filter
+      if(options.difficulty.on_off === "on"){
+        var diffi_on_off = true
+      } else {
+        diffi_on_off = false
+      }
+      if(options.difficulty.group === "on"){
+        var diffi_group_on_off = true
+      } else {
+        diffi_group_on_off = false
+      }
+      
       if(options.difficulty.none === "on"){
         var diffi_none = true
       } else {
@@ -224,19 +235,16 @@ class AdvancedFilterModal extends Component {
       } else {
         diffi2 = false
       }
-
       if(options.difficulty.diffi3 === "on"){
         var diffi3 = true
       } else {
         diffi3 = false
       }
-
       if(options.difficulty.diffi4 === "on"){
         var diffi4 = true
       } else {
         diffi4 = false
       }
-
       if(options.difficulty.diffi5 === "on"){
         var diffi5 = true
       } else {
@@ -262,8 +270,8 @@ class AdvancedFilterModal extends Component {
       var study_times_filtering_group = ''
       var study_times_from = ''
       var study_times_to = ''
-      var recent_difficulty_switch = ''
-      var recent_difficulty_filtering_group = ''
+      var recent_difficulty_switch = diffi_on_off
+      var recent_difficulty_filtering_group = diffi_group_on_off
       var difficulty = [diffi_none, diffi1, diffi2, diffi3, diffi4, diffi5]
       var recent_exam_switch = ''
       var recent_exam_filtering_group = ''
