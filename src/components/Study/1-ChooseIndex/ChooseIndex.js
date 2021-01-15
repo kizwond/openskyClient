@@ -34,12 +34,10 @@ class ChooseIndex extends Component {
       holdCardNum:0,
       completedCardNum:0,
       tab_mode: 'left',
-      key:'main',
+      key:'read',
       expand:true,
       selected_index:[],
       study_config:'',
-      randomkey:0,
-      hello:true
      }
   }
 
@@ -62,9 +60,7 @@ class ChooseIndex extends Component {
     this.getIndex()
     this.getStudyConfig()
   }
-  // componentDidUpdate(){
-  //   document.querySelector('.study_mode_class .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab:nth-child(2) .ant-tabs-tab-btn').onclick()
-  // }
+
 
   getIndex = () =>{
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
@@ -302,6 +298,9 @@ class ChooseIndex extends Component {
     const books = this.state.books
     const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
     const booksSlice = JSON.parse(JSON.stringify( books ))
+    if(indexes === null){
+      alert("목차를 선택하여 주십시오.")
+    }
     const value = indexes.map(index => {
       booksSlice.map(book => {
           book.index_info.map(item =>{
@@ -376,9 +375,9 @@ class ChooseIndex extends Component {
           </Col>
           <Col style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <Tabs className="study_mode_class" defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
-              <TabPane tab="필터설정" key="main" className="mainkey" style={{textAlign:"left", padding:"10px"}}>
+              {/* <TabPane tab="필터설정" key="main" className="mainkey" style={{textAlign:"left", padding:"10px"}}>
                 main
-              </TabPane>
+              </TabPane> */}
               <TabPane tab="책모드" key="read" style={{textAlign:"left", padding:"10px"}}>
                 <ReadModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
               </TabPane>
