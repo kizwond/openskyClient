@@ -207,9 +207,43 @@ class AdvancedFilterModal extends Component {
     }
     
     if(this.props.advanced_filter){
-      console.log(this.props.advanced_filter)
+      console.log("고급필터:", this.props.advanced_filter)
       var options = this.props.advanced_filter
-     
+      if(options.difficulty.none === "on"){
+        var diffi_none = true
+      } else {
+        diffi_none = false
+      }
+      if(options.difficulty.diffi1 === "on"){
+        var diffi1 = true
+      } else {
+        diffi1 = false
+      }
+      if(options.difficulty.diffi2 === "on"){
+        var diffi2 = true
+      } else {
+        diffi2 = false
+      }
+
+      if(options.difficulty.diffi3 === "on"){
+        var diffi3 = true
+      } else {
+        diffi3 = false
+      }
+
+      if(options.difficulty.diffi4 === "on"){
+        var diffi4 = true
+      } else {
+        diffi4 = false
+      }
+
+      if(options.difficulty.diffi5 === "on"){
+        var diffi5 = true
+      } else {
+        diffi5 = false
+      }
+
+
       var and_or_mode = "and"
       var user_flag_switch =  ''
       var user_flag_filtering_group = ''
@@ -230,7 +264,7 @@ class AdvancedFilterModal extends Component {
       var study_times_to = ''
       var recent_difficulty_switch = ''
       var recent_difficulty_filtering_group = ''
-      var difficulty = ''
+      var difficulty = [diffi_none, diffi1, diffi2, diffi3, diffi4, diffi5]
       var recent_exam_switch = ''
       var recent_exam_filtering_group = ''
       var exam_result = ''
@@ -264,308 +298,308 @@ class AdvancedFilterModal extends Component {
     }
     
     return (
-      <>
-        <Modal title="고급필터" width={650} className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
-          <div className="advanced_filter_container" style={{fontSize:"12px"}}>
-            <ul style={{display:"flex", flexDirection:"column", justifyContent:"space-between", height:"100%"}}>
-            <Form
-            name="advanced_settings"
-            initialValues={{
-              and_or_mode,
-              user_flag_switch,
-              user_flag_filtering_group,
-              user_flag,
-              maker_flag_switch,
-              maker_flag_filtering_group,
-              maker_flag,
-              recent_study_switch,
-              recent_study_filtering_group,
-              recent_study_time,
-              card_level_switch,
-              card_level_filtering_group,
-              level_from,
-              level_to,
-              study_times_switch,
-              study_times_filtering_group,
-              study_times_from,
-              study_times_to,
-              recent_difficulty_switch,
-              recent_difficulty_filtering_group,
-              difficulty,
-              recent_exam_switch,
-              recent_exam_filtering_group,
-              exam_result,
-              setting_save
-            }}
-            onFinish={this.onFinish}
-            size="small"
-          >
-              <li>
-                <span>필터계산</span>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
-                  {/* And ON & Or Grouping */}
-                  {this.state.andOr ? <span style={{color:"blue"}}>({this.state.userFlagOnchange ? <>{this.state.userFlagGroupOnchange && <span> 사용자플래그 or </span>}</>:''}
-                                        {this.state.makerFlagOnchange ? <>{this.state.makerFlagGroupOnchange && <span> 제작자플래그 or </span>}</>:''}
-                                        {this.state.recentStudyOnchange ? <>{this.state.recentStudyGroupOnchange && <span> 최근학습시점 or </span>}</>:''}
-                                        {this.state.cardLevelOnchange ? <>{this.state.cardLevelGroupOnchange && <span> 카드레벨 or </span>}</>:''}
-                                        {this.state.studyTimesOnchange ? <>{this.state.studyTimesGroupOnchange && <span> 학습횟수 or </span>}</>:''}
-                                        {this.state.difficultyOnchange ? <>{this.state.difficultyGroupOnchange && <span> 최근선택한난이도 or </span>}</>:''}
-                                        {this.state.examResultOnchange ? <>{this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}) and
-                                        </span>:''}
-                  {/* And ON & Or Not Grouping */}
-                  {this.state.andOr ? <span style={{color:"red"}}>{this.state.userFlagOnchange ? <>{!this.state.userFlagGroupOnchange && <span> 사용자플래그 and </span>}</>:''}
-                                        {this.state.makerFlagOnchange ? <>{!this.state.makerFlagGroupOnchange && <span> 제작자플래그 and </span>}</>:''}
-                                        {this.state.recentStudyOnchange ? <>{!this.state.recentStudyGroupOnchange && <span> 최근학습시점 and </span>}</>:''}
-                                        {this.state.cardLevelOnchange ? <>{!this.state.cardLevelGroupOnchange && <span> 카드레벨 and </span>}</>:''}
-                                        {this.state.studyTimesOnchange ? <>{!this.state.studyTimesGroupOnchange && <span> 학습횟수 and </span>}</>:''}
-                                        {this.state.difficultyOnchange ? <>{!this.state.difficultyGroupOnchange && <span> 최근선택한난이도 and </span>}</>:''}
-                                        {this.state.examResultOnchange ? <>{!this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}
-                                        </span>:''}
+      <>{this.props.advanced_filter && <><Modal title="고급필터" width={650} className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
+      <div className="advanced_filter_container" style={{fontSize:"12px"}}>
+        <ul style={{display:"flex", flexDirection:"column", justifyContent:"space-between", height:"100%"}}>
+        <Form
+        name="advanced_settings"
+        initialValues={{
+          and_or_mode,
+          user_flag_switch,
+          user_flag_filtering_group,
+          user_flag,
+          maker_flag_switch,
+          maker_flag_filtering_group,
+          maker_flag,
+          recent_study_switch,
+          recent_study_filtering_group,
+          recent_study_time,
+          card_level_switch,
+          card_level_filtering_group,
+          level_from,
+          level_to,
+          study_times_switch,
+          study_times_filtering_group,
+          study_times_from,
+          study_times_to,
+          recent_difficulty_switch,
+          recent_difficulty_filtering_group,
+          difficulty,
+          recent_exam_switch,
+          recent_exam_filtering_group,
+          exam_result,
+          setting_save
+        }}
+        onFinish={this.onFinish}
+        size="small"
+      >
+          <li>
+            <span>필터계산</span>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
+              {/* And ON & Or Grouping */}
+              {this.state.andOr ? <span style={{color:"blue"}}>({this.state.userFlagOnchange ? <>{this.state.userFlagGroupOnchange && <span> 사용자플래그 or </span>}</>:''}
+                                    {this.state.makerFlagOnchange ? <>{this.state.makerFlagGroupOnchange && <span> 제작자플래그 or </span>}</>:''}
+                                    {this.state.recentStudyOnchange ? <>{this.state.recentStudyGroupOnchange && <span> 최근학습시점 or </span>}</>:''}
+                                    {this.state.cardLevelOnchange ? <>{this.state.cardLevelGroupOnchange && <span> 카드레벨 or </span>}</>:''}
+                                    {this.state.studyTimesOnchange ? <>{this.state.studyTimesGroupOnchange && <span> 학습횟수 or </span>}</>:''}
+                                    {this.state.difficultyOnchange ? <>{this.state.difficultyGroupOnchange && <span> 최근선택한난이도 or </span>}</>:''}
+                                    {this.state.examResultOnchange ? <>{this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}) and
+                                    </span>:''}
+              {/* And ON & Or Not Grouping */}
+              {this.state.andOr ? <span style={{color:"red"}}>{this.state.userFlagOnchange ? <>{!this.state.userFlagGroupOnchange && <span> 사용자플래그 and </span>}</>:''}
+                                    {this.state.makerFlagOnchange ? <>{!this.state.makerFlagGroupOnchange && <span> 제작자플래그 and </span>}</>:''}
+                                    {this.state.recentStudyOnchange ? <>{!this.state.recentStudyGroupOnchange && <span> 최근학습시점 and </span>}</>:''}
+                                    {this.state.cardLevelOnchange ? <>{!this.state.cardLevelGroupOnchange && <span> 카드레벨 and </span>}</>:''}
+                                    {this.state.studyTimesOnchange ? <>{!this.state.studyTimesGroupOnchange && <span> 학습횟수 and </span>}</>:''}
+                                    {this.state.difficultyOnchange ? <>{!this.state.difficultyGroupOnchange && <span> 최근선택한난이도 and </span>}</>:''}
+                                    {this.state.examResultOnchange ? <>{!this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}
+                                    </span>:''}
 
-                  {/* And ON & Or Grouping */}
-                  {this.state.andOr === false ? <span style={{color:"blue"}}>({this.state.userFlagOnchange ? <>{this.state.userFlagGroupOnchange && <span> 사용자플래그 and </span>}</>:''}
-                                        {this.state.makerFlagOnchange ? <>{this.state.makerFlagGroupOnchange && <span> 제작자플래그 and </span>}</>:''}
-                                        {this.state.recentStudyOnchange ? <>{this.state.recentStudyGroupOnchange && <span> 최근학습시점 and </span>}</>:''}
-                                        {this.state.cardLevelOnchange ? <>{this.state.cardLevelGroupOnchange && <span> 카드레벨 and </span>}</>:''}
-                                        {this.state.studyTimesOnchange ? <>{this.state.studyTimesGroupOnchange && <span> 학습횟수 and </span>}</>:''}
-                                        {this.state.difficultyOnchange ? <>{this.state.difficultyGroupOnchange && <span> 최근선택한난이도 and </span>}</>:''}
-                                        {this.state.examResultOnchange ? <>{this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}) or
-                                        </span>:''}
-                  {/* And ON & Or Not Grouping */}
-                  {this.state.andOr === false ? <span style={{color:"red"}}>{this.state.userFlagOnchange ? <>{!this.state.userFlagGroupOnchange && <span> 사용자플래그 or </span>}</>:''}
-                                        {this.state.makerFlagOnchange ? <>{!this.state.makerFlagGroupOnchange && <span> 제작자플래그 or </span>}</>:''}
-                                        {this.state.recentStudyOnchange ? <>{!this.state.recentStudyGroupOnchange && <span> 최근학습시점 or </span>}</>:''}
-                                        {this.state.cardLevelOnchange ? <>{!this.state.cardLevelGroupOnchange && <span> 카드레벨 or </span>}</>:''}
-                                        {this.state.studyTimesOnchange ? <>{!this.state.studyTimesGroupOnchange && <span> 학습횟수 or </span>}</>:''}
-                                        {this.state.difficultyOnchange ? <>{!this.state.difficultyGroupOnchange && <span> 최근선택한난이도 or </span>}</>:''}
-                                        {this.state.examResultOnchange ? <>{!this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}
-                                        </span>:''}
-                  
-                </div>
-                <span>설명</span>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
-                </div>
-              </li>
-              <li>
+              {/* And ON & Or Grouping */}
+              {this.state.andOr === false ? <span style={{color:"blue"}}>({this.state.userFlagOnchange ? <>{this.state.userFlagGroupOnchange && <span> 사용자플래그 and </span>}</>:''}
+                                    {this.state.makerFlagOnchange ? <>{this.state.makerFlagGroupOnchange && <span> 제작자플래그 and </span>}</>:''}
+                                    {this.state.recentStudyOnchange ? <>{this.state.recentStudyGroupOnchange && <span> 최근학습시점 and </span>}</>:''}
+                                    {this.state.cardLevelOnchange ? <>{this.state.cardLevelGroupOnchange && <span> 카드레벨 and </span>}</>:''}
+                                    {this.state.studyTimesOnchange ? <>{this.state.studyTimesGroupOnchange && <span> 학습횟수 and </span>}</>:''}
+                                    {this.state.difficultyOnchange ? <>{this.state.difficultyGroupOnchange && <span> 최근선택한난이도 and </span>}</>:''}
+                                    {this.state.examResultOnchange ? <>{this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}) or
+                                    </span>:''}
+              {/* And ON & Or Not Grouping */}
+              {this.state.andOr === false ? <span style={{color:"red"}}>{this.state.userFlagOnchange ? <>{!this.state.userFlagGroupOnchange && <span> 사용자플래그 or </span>}</>:''}
+                                    {this.state.makerFlagOnchange ? <>{!this.state.makerFlagGroupOnchange && <span> 제작자플래그 or </span>}</>:''}
+                                    {this.state.recentStudyOnchange ? <>{!this.state.recentStudyGroupOnchange && <span> 최근학습시점 or </span>}</>:''}
+                                    {this.state.cardLevelOnchange ? <>{!this.state.cardLevelGroupOnchange && <span> 카드레벨 or </span>}</>:''}
+                                    {this.state.studyTimesOnchange ? <>{!this.state.studyTimesGroupOnchange && <span> 학습횟수 or </span>}</>:''}
+                                    {this.state.difficultyOnchange ? <>{!this.state.difficultyGroupOnchange && <span> 최근선택한난이도 or </span>}</>:''}
+                                    {this.state.examResultOnchange ? <>{!this.state.examResultGroupOnchange && <span> 최근시험결과</span>}</>:''}
+                                    </span>:''}
+              
+            </div>
+            <span>설명</span>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", minHeight:"30px", backgroundColor:"white"}}>
+            </div>
+          </li>
+          <li>
+            <Form.Item
+              name="and_or_mode"
+              valuePropName="checked"
+            >
+              <Radio.Group defaultValue="and" size="small" onChange={this.andOrChange} style={{ marginTop: 16 }}>
+                <Radio.Button value="and">AND</Radio.Button>
+                <Radio.Button value="or">OR</Radio.Button>
+              </Radio.Group>
+            </Form.Item>
+          
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+              <Space>
+                <span>사용자플래그</span> 
                 <Form.Item
-                  name="and_or_mode"
+                  name="user_flag_switch"
                   valuePropName="checked"
                 >
-                  <Radio.Group defaultValue="and" size="small" onChange={this.andOrChange} style={{ marginTop: 16 }}>
-                    <Radio.Button value="and">AND</Radio.Button>
-                    <Radio.Button value="or">OR</Radio.Button>
-                  </Radio.Group>
+                  <Switch size="small" onChange={this.userFlagOnchange}/>
                 </Form.Item>
-              
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                  <Space>
-                    <span>사용자플래그</span> 
-                    <Form.Item
-                      name="user_flag_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small" onChange={this.userFlagOnchange}/>
-                    </Form.Item>
-                    {this.state.userFlagOnchange && <Form.Item
-                      name="user_flag_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.userFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                    
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
-                  <Form.Item
-                    name="user_flag"
-                    valuePropName="checked"
-                  >            
-                    <Checkbox.Group options={user_flag_option} />
-                  </Form.Item>
-                </div>
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                  <Space>
-                    <span>제작자플래그</span> 
-                    <Form.Item
-                      name="maker_flag_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small"  onChange={this.makerFlagOnchange}/>
-                    </Form.Item>
-                    {this.state.makerFlagOnchange && <Form.Item
-                      name="maker_flag_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss2}`, color:`${fontColor2}`, fontWeight:`${fontWeight2}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                    
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
-                  <Form.Item
-                    name="maker_flag"
-                    valuePropName="checked"
-                  >            
-                    <Checkbox.Group options={maker_flag_option} />
-                  </Form.Item>
-                </div>
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                  <Space>
-                    <span>최근학습시점</span> 
-                    <Form.Item
-                      name="recent_study_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small" onChange={this.recentStudyOnchange}/>
-                    </Form.Item>
-                    {this.state.recentStudyOnchange && <Form.Item
-                      name="recent_study_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss3}`, color:`${fontColor3}`, fontWeight:`${fontWeight3}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                    
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
-                <Form.Item name="recent_study_time" >
-                  <RangePicker />
+                {this.state.userFlagOnchange && <Form.Item
+                  name="user_flag_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.userFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+                
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
+              <Form.Item
+                name="user_flag"
+                valuePropName="checked"
+              >            
+                <Checkbox.Group options={user_flag_option} />
+              </Form.Item>
+            </div>
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+              <Space>
+                <span>제작자플래그</span> 
+                <Form.Item
+                  name="maker_flag_switch"
+                  valuePropName="checked"
+                >
+                  <Switch size="small"  onChange={this.makerFlagOnchange}/>
                 </Form.Item>
-                </div>
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                <Space>
-                    <span>카드레벨</span> 
-                    <Form.Item
-                      name="card_level_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small" onChange={this.cardLevelOnchange}/>
-                    </Form.Item>
-                    {this.state.cardLevelOnchange && <Form.Item
-                      name="card_level_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss4}`, color:`${fontColor4}`, fontWeight:`${fontWeight4}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex"}}>
-                  <Form.Item name="level_from" >
-                    <InputNumber style={{ width: 100, textAlign: 'center' }} />
-                  </Form.Item>
-                  ~
-                  <Form.Item name="level_to" >
-                    <InputNumber style={{ width: 100, textAlign: 'center' }}  />
-                  </Form.Item>
-                </div>
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                <Space>
-                    <span>학습횟수</span> 
-                    <Form.Item
-                      name="study_times_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small" onChange={this.studyTimesOnchange}/>
-                    </Form.Item>
-                    {this.state.studyTimesOnchange && <Form.Item
-                      name="study_times_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss5}`, color:`${fontColor5}`, fontWeight:`${fontWeight5}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                    
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex"}}>
-                  <Form.Item name="study_times_from" >
-                    <InputNumber style={{ width: 100, textAlign: 'center' }} />
-                  </Form.Item>
-                  ~
-                  <Form.Item name="study_times_to" >
-                    <InputNumber style={{ width: 100, textAlign: 'center' }}  />
-                  </Form.Item>
-                </div>
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                <Space>
-                    <span>최근선택한난이도</span> 
-                    <Form.Item
-                      name="recent_difficulty_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small" onChange={this.difficultyOnchange}/>
-                    </Form.Item>
-                    {this.state.difficultyOnchange && <Form.Item
-                      name="recent_difficulty_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss6}`, color:`${fontColor6}`, fontWeight:`${fontWeight6}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                    
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
+                {this.state.makerFlagOnchange && <Form.Item
+                  name="maker_flag_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss2}`, color:`${fontColor2}`, fontWeight:`${fontWeight2}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+                
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
+              <Form.Item
+                name="maker_flag"
+                valuePropName="checked"
+              >            
+                <Checkbox.Group options={maker_flag_option} />
+              </Form.Item>
+            </div>
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+              <Space>
+                <span>최근학습시점</span> 
                 <Form.Item
-                    name="difficulty"
-                    valuePropName="checked"
-                  >            
-                    <Checkbox.Group options={difficulty_option} />
-                  </Form.Item>
-                </div>
-              </li>
-              <li>
-                <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-                <Space>
-                    <span>최근시험결과</span> 
-                    <Form.Item
-                      name="recent_exam_switch"
-                      valuePropName="checked"
-                    >
-                      <Switch size="small" onChange={this.examResultOnchange}/>
-                    </Form.Item>
-                    {this.state.examResultOnchange && <Form.Item
-                      name="recent_exam_filtering_group"
-                      valuePropName="checked"
-                    >            
-                      <Checkbox className="advanced_filter_checkbox" onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss7}`, color:`${fontColor7}`, fontWeight:`${fontWeight7}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
-                    </Form.Item>}
-                    
-                  </Space>
-                </div>
-                <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
+                  name="recent_study_switch"
+                  valuePropName="checked"
+                >
+                  <Switch size="small" onChange={this.recentStudyOnchange}/>
+                </Form.Item>
+                {this.state.recentStudyOnchange && <Form.Item
+                  name="recent_study_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss3}`, color:`${fontColor3}`, fontWeight:`${fontWeight3}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+                
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
+            <Form.Item name="recent_study_time" >
+              <RangePicker />
+            </Form.Item>
+            </div>
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+            <Space>
+                <span>카드레벨</span> 
                 <Form.Item
-                    name="exam_result"
-                    valuePropName="checked"
-                  >            
-                    <Checkbox.Group options={exam_option} />
-                  </Form.Item>
-                </div>
-              </li>
-              <li>
+                  name="card_level_switch"
+                  valuePropName="checked"
+                >
+                  <Switch size="small" onChange={this.cardLevelOnchange}/>
+                </Form.Item>
+                {this.state.cardLevelOnchange && <Form.Item
+                  name="card_level_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss4}`, color:`${fontColor4}`, fontWeight:`${fontWeight4}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex"}}>
+              <Form.Item name="level_from" >
+                <InputNumber style={{ width: 100, textAlign: 'center' }} />
+              </Form.Item>
+              ~
+              <Form.Item name="level_to" >
+                <InputNumber style={{ width: 100, textAlign: 'center' }}  />
+              </Form.Item>
+            </div>
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+            <Space>
+                <span>학습횟수</span> 
                 <Form.Item
-                    name="setting_save"
-                    valuePropName="checked"
-                  >            
-                    <Checkbox>다음학습에도 설정한 고급필터 사용하기(해당 책의 학습설정에 저장됩니다.)</Checkbox>
-                  </Form.Item>
-              </li>
-              <Button htmlType="submit" style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>적용</Button>
-            
-            </Form>
-            </ul>
-          </div>
-        </Modal>
+                  name="study_times_switch"
+                  valuePropName="checked"
+                >
+                  <Switch size="small" onChange={this.studyTimesOnchange}/>
+                </Form.Item>
+                {this.state.studyTimesOnchange && <Form.Item
+                  name="study_times_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss5}`, color:`${fontColor5}`, fontWeight:`${fontWeight5}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+                
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex"}}>
+              <Form.Item name="study_times_from" >
+                <InputNumber style={{ width: 100, textAlign: 'center' }} />
+              </Form.Item>
+              ~
+              <Form.Item name="study_times_to" >
+                <InputNumber style={{ width: 100, textAlign: 'center' }}  />
+              </Form.Item>
+            </div>
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+            <Space>
+                <span>최근선택한난이도</span> 
+                <Form.Item
+                  name="recent_difficulty_switch"
+                  valuePropName="checked"
+                >
+                  <Switch size="small" onChange={this.difficultyOnchange}/>
+                </Form.Item>
+                {this.state.difficultyOnchange && <Form.Item
+                  name="recent_difficulty_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss6}`, color:`${fontColor6}`, fontWeight:`${fontWeight6}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+                
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
+            <Form.Item
+                name="difficulty"
+                valuePropName="checked"
+              >            
+                <Checkbox.Group options={difficulty_option} />
+              </Form.Item>
+            </div>
+          </li>
+          <li>
+            <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+            <Space>
+                <span>최근시험결과</span> 
+                <Form.Item
+                  name="recent_exam_switch"
+                  valuePropName="checked"
+                >
+                  <Switch size="small" onChange={this.examResultOnchange}/>
+                </Form.Item>
+                {this.state.examResultOnchange && <Form.Item
+                  name="recent_exam_filtering_group"
+                  valuePropName="checked"
+                >            
+                  <Checkbox className="advanced_filter_checkbox" onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss7}`, color:`${fontColor7}`, fontWeight:`${fontWeight7}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
+                </Form.Item>}
+                
+              </Space>
+            </div>
+            <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
+            <Form.Item
+                name="exam_result"
+                valuePropName="checked"
+              >            
+                <Checkbox.Group options={exam_option} />
+              </Form.Item>
+            </div>
+          </li>
+          <li>
+            <Form.Item
+                name="setting_save"
+                valuePropName="checked"
+              >            
+                <Checkbox>다음학습에도 설정한 고급필터 사용하기(해당 책의 학습설정에 저장됩니다.)</Checkbox>
+              </Form.Item>
+          </li>
+          <Button htmlType="submit" style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>적용</Button>
+        
+        </Form>
+        </ul>
+      </div>
+    </Modal> </>}
+        
       </>
     )
   }

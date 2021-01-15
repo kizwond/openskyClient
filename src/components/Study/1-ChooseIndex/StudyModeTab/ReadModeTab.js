@@ -12,7 +12,6 @@ class ReadModeTab extends Component {
     super(props);
     this.state = { 
       modalVisible:false,
-      // study_config:''
      };
   }
   showModal = () => {
@@ -83,7 +82,6 @@ class ReadModeTab extends Component {
       var low = options.needstudytime_filter.low
     } 
     else {
-      console.log("none exist")
       sort_option = "standard"
       flip_card = false
       read_card = false
