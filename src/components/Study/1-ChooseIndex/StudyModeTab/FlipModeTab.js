@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Radio, Button,Switch,Form, Space, DatePicker, InputNumber } from 'antd';
 import './StudyModeTab.css'
 import AdvancedFilterModal from './AdvancedFilterModal'
+import moment from 'moment';
 
 const { RangePicker } = DatePicker;
 
@@ -34,27 +35,94 @@ class FlipModeTab extends Component {
 
 
   render() {
+    if(this.props.study_config){
+      console.log(this.props.study_config)
+      var options = this.props.study_config.flip_mode
+      console.log(options)
+      var sort_option = options.sort_option
+      if(options.card_on_off.read_card === "on"){
+        var read_card = true
+      } else {
+        read_card = false
+      }
+      if(options.card_on_off.flip_card === "on"){
+        var flip_card = true
+      } else {
+        flip_card = false
+      }
+      if(options.status_on_off.yet === "on"){
+        var yet = true
+      } else {
+        yet = false
+      }
+      if(options.status_on_off.ing === "on"){
+        var ing = true
+      } else {
+        ing = false
+      }
+      if(options.status_on_off.completed === "on"){
+        var completed = true
+      } else {
+        completed = false
+      }
+      if(options.status_on_off.hold === "on"){
+        var hold = true
+      } else {
+        hold = false
+      }
+      var collect_criteria = options.collect_criteria
+      if(options.num_cards.on_off === "on"){
+        var study_quantity_use_switch = true
+      } else {
+        study_quantity_use_switch = false
+      }
+      var yet_card_num = options.num_cards.yet
+      var ing_card_num = options.num_cards.ing
+      var completed_card_num = options.num_cards.completed
+      var hold_card_num = options.num_cards.hold
+      var high = options.needstudytime_filter.high
+      var low = options.needstudytime_filter.low
+      console.log(high)
+    } else {
+      sort_option = "standard"
+      flip_card = false
+      read_card = false
+      yet = false
+      ing = false
+      completed = false
+      hold = false
+      collect_criteria="all"
+      study_quantity_use_switch = false
+      yet_card_num = 0
+      ing_card_num = 0
+      completed_card_num = 0
+      hold_card_num = 0
+      high = ""
+      low = ""
+    }
+
+    const dateFormat = 'YYYY-MM-DD';
+
     return (
       <>
         <div style={{fontSize:"13px", fontWeight:"700"}}>보기순서 정렬</div>
         <Form
             name="settings"
             initialValues={{
-              sort_option: "standard",
-              read_card:false,
-              flip_card:true,
-              yet:true,
-              ing:true,
-              completed:false,
-              hold:false,
-              collect_criteria:"all",
+              sort_option:sort_option,
+              read_card:read_card,
+              flip_card:flip_card,
+              yet:yet,
+              ing:ing,
+              completed:completed,
+              hold:hold,
+              collect_criteria:collect_criteria,
               advanced_filter_mode:false,
-              study_quantity_use_switch:true,
-              yet_card_num:1,
-              ing_card_num:1,
-              completed_card_num:1,
-              hold_card_num:1,
-              
+              study_quantity_use_switch:study_quantity_use_switch,
+              yet_card_num:yet_card_num,
+              ing_card_num:ing_card_num,
+              completed_card_num:completed_card_num,
+              hold_card_num:hold_card_num,
             }}
             onFinish={this.props.onFinish}
             size="small"
@@ -140,7 +208,7 @@ class FlipModeTab extends Component {
                   
                 </Form.Item>
                 <Form.Item name="ing_card_self_setting" >
-                  <RangePicker />
+                  <RangePicker defaultValue={[moment(low, dateFormat), moment(high, dateFormat)]} format={dateFormat}/>
                 </Form.Item>
 
               </div>

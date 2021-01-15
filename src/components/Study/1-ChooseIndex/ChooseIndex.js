@@ -37,7 +37,7 @@ class ChooseIndex extends Component {
       key:'read',
       expand:true,
       selected_index:[],
-      study_config:''
+      study_config:[]
      }
   }
 
@@ -372,13 +372,13 @@ class ChooseIndex extends Component {
           <Col style={{height:"100%", backgroundColor:"whitesmoke", marginLeft:"5px", display:"flex", flexDirection:"column", justifyContent:"space-between"}} span={5}>
             <Tabs className="study_mode_class" defaultActiveKey={this.state.key} onChange={this.handleTabChange} type="card" size='small' tabPosition={this.state.tab_mode} >
               <TabPane tab="책모드" key="read" style={{textAlign:"left", padding:"10px"}}>
-                <ReadModeTab onFinish={this.onFinish}/>
+                <ReadModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="카드모드" key="flip" style={{textAlign:"left", padding:"10px"}}>
-                <FlipModeTab onFinish={this.onFinish}/>
+                <FlipModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="시험모드" key="exam" style={{textAlign:"left", padding:"10px"}}>
-                <ExamModeTab onFinish={this.onFinish}/>
+                <ExamModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
               </TabPane>
             </Tabs>
             
