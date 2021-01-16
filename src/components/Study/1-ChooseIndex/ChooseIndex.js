@@ -38,6 +38,7 @@ class ChooseIndex extends Component {
       expand:true,
       selected_index:[],
       study_config:'',
+      advanced_filter:''
      }
   }
 
@@ -83,7 +84,8 @@ class ChooseIndex extends Component {
     }).then(res => {
       console.log('StudyConfigData:', res.data)
       this.setState({
-        study_config:res.data.study_config
+        study_config:res.data.study_config,
+        advanced_filter:res.data.advanced_filter
       })
     })
   }
@@ -379,13 +381,13 @@ class ChooseIndex extends Component {
                 main
               </TabPane> */}
               <TabPane tab="책모드" key="read" style={{textAlign:"left", padding:"10px"}}>
-                <ReadModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
+                <ReadModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="카드모드" key="flip" style={{textAlign:"left", padding:"10px"}}>
-                <FlipModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
+                <FlipModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="시험모드" key="exam" style={{textAlign:"left", padding:"10px"}}>
-                <ExamModeTab study_config={this.state.study_config} onFinish={this.onFinish}/>
+                <ExamModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
             </Tabs>
             

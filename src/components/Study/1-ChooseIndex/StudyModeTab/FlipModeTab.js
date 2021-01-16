@@ -238,7 +238,7 @@ class FlipModeTab extends Component {
                 >
                    <Switch size="small" />
                 </Form.Item></div>
-              <AdvancedFilterModal advanced_filter={this.props.study_config.advanced_filter} modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+              <AdvancedFilterModal advanced_filter={this.props.advanced_filter} modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
             </div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
             <span style={{fontSize:"13px", fontWeight:"700"}}>학습량 설정 </span> 

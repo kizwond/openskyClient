@@ -24,6 +24,8 @@ class AdvancedFilterModal extends Component {
       studyTimesGroupOnchange : false,
       difficultyGroupOnchange : false,
       examResultGroupOnchange : false,
+
+      value_for_difficulty:[]
      };
   }
   onFinish = (values) => {
@@ -220,39 +222,39 @@ class AdvancedFilterModal extends Component {
         diffi_group_on_off = false
       }
       
+      var diff = []
       if(options.difficulty.none === "on"){
-        var diffi_none = true
-      } else {
-        diffi_none = false
-      }
+        diff.push('difficulty_none')
+      } 
       if(options.difficulty.diffi1 === "on"){
-        var diffi1 = true
-      } else {
-        diffi1 = false
+        diff.push('모르겠음')
       }
       if(options.difficulty.diffi2 === "on"){
-        var diffi2 = true
-      } else {
-        diffi2 = false
+        diff.push('거의모르겠음')
       }
       if(options.difficulty.diffi3 === "on"){
-        var diffi3 = true
-      } else {
-        diffi3 = false
-      }
+        diff.push('애매함')
+      } 
       if(options.difficulty.diffi4 === "on"){
-        var diffi4 = true
-      } else {
-        diffi4 = false
-      }
+        diff.push('거의알겠음')
+      } 
       if(options.difficulty.diffi5 === "on"){
-        var diffi5 = true
+        diff.push('알겠음')
+      } 
+      console.log(diff)
+
+      if(options.level.on_off === "on"){
+        var level_on_off = true
       } else {
-        diffi5 = false
+        level_on_off = false
+      }
+      if(options.level.group === "on"){
+        var level_group_on_off = true
+      } else {
+        level_group_on_off = false
       }
 
-
-      var and_or_mode = "and"
+      var and_or_mode = options.mode
       var user_flag_switch =  ''
       var user_flag_filtering_group = ''
       var user_flag = ''
@@ -262,51 +264,28 @@ class AdvancedFilterModal extends Component {
       var recent_study_switch = ''
       var recent_study_filtering_group = ''
       var recent_study_time = ''
-      var card_level_switch = ''
-      var card_level_filtering_group = ''
-      var level_from = ''
-      var level_to = ''
+      var card_level_switch = level_on_off
+      var card_level_filtering_group = level_group_on_off
+      var level_from = options.level.low
+      var level_to = options.level.high
       var study_times_switch = ''
       var study_times_filtering_group = ''
       var study_times_from = ''
       var study_times_to = ''
       var recent_difficulty_switch = diffi_on_off
       var recent_difficulty_filtering_group = diffi_group_on_off
-      var difficulty = [diffi_none, diffi1, diffi2, diffi3, diffi4, diffi5]
+      var difficulty = diff
       var recent_exam_switch = ''
       var recent_exam_filtering_group = ''
       var exam_result = ''
       var setting_save = ''
-    } else {
-      and_or_mode = "and"
-      user_flag_switch =  ''
-      user_flag_filtering_group = ''
-      user_flag = ''
-      maker_flag_switch =  ''
-      maker_flag_filtering_group = ''
-      maker_flag = ''
-      recent_study_switch = ''
-      recent_study_filtering_group = ''
-      recent_study_time = ''
-      card_level_switch = ''
-      card_level_filtering_group = ''
-      level_from = ''
-      level_to = ''
-      study_times_switch = ''
-      study_times_filtering_group = ''
-      study_times_from = ''
-      study_times_to = ''
-      recent_difficulty_switch = ''
-      recent_difficulty_filtering_group = ''
-      difficulty = ''
-      recent_exam_switch = ''
-      recent_exam_filtering_group = ''
-      exam_result = ''
-      setting_save = ''
-    }
+    } 
     
     return (
-      <>{this.props.advanced_filter && <><Modal title="고급필터" width={650} className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
+      <>
+        <Modal title="고급필터" width={650} className="advanced_filter_modal" visible={this.props.modalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
+
+      {/* {this.props.advanced_filter && <> */}
       <div className="advanced_filter_container" style={{fontSize:"12px"}}>
         <ul style={{display:"flex", flexDirection:"column", justifyContent:"space-between", height:"100%"}}>
         <Form
@@ -559,7 +538,6 @@ class AdvancedFilterModal extends Component {
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
             <Form.Item
                 name="difficulty"
-                valuePropName="checked"
               >            
                 <Checkbox.Group options={difficulty_option} />
               </Form.Item>
@@ -602,12 +580,11 @@ class AdvancedFilterModal extends Component {
               </Form.Item>
           </li>
           <Button htmlType="submit" style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>적용</Button>
-        
         </Form>
         </ul>
       </div>
-    </Modal> </>}
-        
+    {/* </>} */}
+    </Modal>
       </>
     )
   }
