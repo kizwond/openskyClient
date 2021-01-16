@@ -116,19 +116,19 @@ class AdvancedFilterModal extends Component {
     }
     const user_flag_option = [
       { label: '플래그없음', value: 'user_flag_none' },
-      { label: '플래그1', value: '플래그1' },
-      { label: '플래그2', value: '플래그2' },
-      { label: '플래그3', value: '플래그3' },
-      { label: '플래그4', value: '플래그4' },
-      { label: '플래그5', value: '플래그5' },
+      { label: '플래그1', value: 'flag1' },
+      { label: '플래그2', value: 'flag2' },
+      { label: '플래그3', value: 'flag3' },
+      { label: '플래그4', value: 'flag4' },
+      { label: '플래그5', value: 'flag5' },
         ]
     const maker_flag_option = [
       { label: '플래그없음', value: 'maker_flag_none' },
-      { label: 'X1', value: 'X1' },
-      { label: 'X2', value: 'X2' },
-      { label: 'X3', value: 'X3' },
-      { label: 'X4', value: 'X4' },
-      { label: 'X5', value: 'X5' },
+      { label: 'X1', value: 'flag1' },
+      { label: 'X2', value: 'flag2' },
+      { label: 'X3', value: 'flag3' },
+      { label: 'X4', value: 'flag4' },
+      { label: 'X5', value: 'flag5' },
         ]
     const difficulty_option = [
       { label: '결과없음', value: 'difficulty_none' },
@@ -140,8 +140,8 @@ class AdvancedFilterModal extends Component {
         ]
     const exam_option = [
       { label: '결과없음', value: 'result_none' },
-      { label: '맞음', value: '맞음' },
-      { label: '틀림', value: '틀림' },
+      { label: '맞음', value: 'right' },
+      { label: '틀림', value: 'wrong' },
         ]
     
     if(this.state.userFlagGroupOnchange){
@@ -189,7 +189,7 @@ class AdvancedFilterModal extends Component {
       fontColor5 = "black"
       fontWeight5 = "400"
     }
-    if(this.state.recentDiffcultyGroupOnchange){
+    if(this.state.difficultyGroupOnchange){
       var selectedCss6 = "#1890ff"
       var fontColor6 = "white"
       var fontWeight6 = "700"
@@ -211,6 +211,81 @@ class AdvancedFilterModal extends Component {
     if(this.props.advanced_filter){
       console.log("고급필터:", this.props.advanced_filter)
       var options = this.props.advanced_filter
+
+      if(options.recent_study_time.on_off === "on"){
+        var recent_study_time_on_off = true
+      } else {
+        recent_study_time_on_off = false
+      }
+      if(options.recent_study_time.group === "on"){
+        var recent_study_time_group_on_off = true
+      } else {
+        recent_study_time_group_on_off = false
+      }
+      
+      if(options.user_flag.on_off === "on"){
+        var user_flag_on_off = true
+      } else {
+        user_flag_on_off = false
+      }
+      if(options.user_flag.group === "on"){
+        var user_flag_group_on_off = true
+      } else {
+        user_flag_group_on_off = false
+      }
+      
+      var user_flags = []
+      if(options.user_flag.none === "on"){
+        user_flags.push('user_flag_none')
+      } 
+      if(options.user_flag.flag1 === "on"){
+        user_flags.push('flag1')
+      }
+      if(options.user_flag.flag2 === "on"){
+        user_flags.push('flag2')
+      }
+      if(options.user_flag.flag3 === "on"){
+        user_flags.push('flag3')
+      } 
+      if(options.user_flag.flag4 === "on"){
+        user_flags.push('flag4')
+      } 
+      if(options.user_flag.flag5 === "on"){
+        user_flags.push('flag5')
+      } 
+
+      if(options.maker_flag.on_off === "on"){
+        var maker_flag_on_off = true
+      } else {
+        maker_flag_on_off = false
+      }
+      if(options.maker_flag.group === "on"){
+        var maker_flag_group_on_off = true
+      } else {
+        maker_flag_group_on_off = false
+      }
+      
+      var maker_flags = []
+      if(options.maker_flag.none === "on"){
+        maker_flags.push('maker_flag_none')
+      } 
+      if(options.maker_flag.flag1 === "on"){
+        maker_flags.push('flag1')
+      }
+      if(options.maker_flag.flag2 === "on"){
+        maker_flags.push('flag2')
+      }
+      if(options.maker_flag.flag3 === "on"){
+        maker_flags.push('flag3')
+      } 
+      if(options.maker_flag.flag4 === "on"){
+        maker_flags.push('flag4')
+      } 
+      if(options.maker_flag.flag5 === "on"){
+        maker_flags.push('flag5')
+      } 
+
+
       if(options.difficulty.on_off === "on"){
         var diffi_on_off = true
       } else {
@@ -241,7 +316,6 @@ class AdvancedFilterModal extends Component {
       if(options.difficulty.diffi5 === "on"){
         diff.push('알겠음')
       } 
-      console.log(diff)
 
       if(options.level.on_off === "on"){
         var level_on_off = true
@@ -254,30 +328,64 @@ class AdvancedFilterModal extends Component {
         level_group_on_off = false
       }
 
+      if(options.study_times.on_off === "on"){
+        var study_times_on_off = true
+      } else {
+        study_times_on_off = false
+      }
+      if(options.study_times.group === "on"){
+        var study_times_group_on_off = true
+      } else {
+        study_times_group_on_off = false
+      }
+
+      if(options.test_result.on_off === "on"){
+        var test_result_on_off = true
+      } else {
+        test_result_on_off = false
+      }
+      if(options.test_result.group === "on"){
+        var test_result_group_on_off = true
+      } else {
+        test_result_group_on_off = false
+      }
+      
+      var results = []
+      if(options.test_result.none === "on"){
+        results.push('result_none')
+      } 
+      if(options.test_result.right === "on"){
+        results.push('right')
+      }
+      if(options.test_result.wrong === "on"){
+        results.push('wrong')
+      }
+
+
       var and_or_mode = options.mode
-      var user_flag_switch =  ''
-      var user_flag_filtering_group = ''
-      var user_flag = ''
-      var maker_flag_switch =  ''
-      var maker_flag_filtering_group = ''
-      var maker_flag = ''
-      var recent_study_switch = ''
-      var recent_study_filtering_group = ''
+      var user_flag_switch =  user_flag_on_off
+      var user_flag_filtering_group = user_flag_group_on_off
+      var user_flag = user_flags
+      var maker_flag_switch =  maker_flag_on_off
+      var maker_flag_filtering_group = maker_flag_group_on_off
+      var maker_flag = maker_flags
+      var recent_study_switch = recent_study_time_on_off
+      var recent_study_filtering_group = recent_study_time_group_on_off
       var recent_study_time = ''
       var card_level_switch = level_on_off
       var card_level_filtering_group = level_group_on_off
       var level_from = options.level.low
       var level_to = options.level.high
-      var study_times_switch = ''
-      var study_times_filtering_group = ''
-      var study_times_from = ''
-      var study_times_to = ''
+      var study_times_switch = study_times_on_off
+      var study_times_filtering_group = study_times_group_on_off
+      var study_times_from = options.study_times.low
+      var study_times_to = options.study_times.high
       var recent_difficulty_switch = diffi_on_off
       var recent_difficulty_filtering_group = diffi_group_on_off
       var difficulty = diff
-      var recent_exam_switch = ''
-      var recent_exam_filtering_group = ''
-      var exam_result = ''
+      var recent_exam_switch = test_result_on_off
+      var recent_exam_filtering_group = test_result_group_on_off
+      var exam_result = results
       var setting_save = ''
     } 
     
@@ -400,7 +508,6 @@ class AdvancedFilterModal extends Component {
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
               <Form.Item
                 name="user_flag"
-                valuePropName="checked"
               >            
                 <Checkbox.Group options={user_flag_option} />
               </Form.Item>
@@ -428,7 +535,6 @@ class AdvancedFilterModal extends Component {
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
               <Form.Item
                 name="maker_flag"
-                valuePropName="checked"
               >            
                 <Checkbox.Group options={maker_flag_option} />
               </Form.Item>
@@ -565,7 +671,6 @@ class AdvancedFilterModal extends Component {
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
             <Form.Item
                 name="exam_result"
-                valuePropName="checked"
               >            
                 <Checkbox.Group options={exam_option} />
               </Form.Item>
