@@ -29,7 +29,10 @@ class AdvancedFilterModal extends Component {
      };
   }
   onFinish = (values) => {
+    console.log('advanced_filter before sessionstorage', values)
+    sessionStorage.setItem('advanced_filter', JSON.stringify(values))
     this.props.handleOk(values)
+    
   }
   andOrChange = () =>{
     this.setState((prevState)=>({
@@ -115,7 +118,7 @@ class AdvancedFilterModal extends Component {
       andOr = "And그룹"
     }
     const user_flag_option = [
-      { label: '플래그없음', value: 'user_flag_none' },
+      { label: '플래그없음', value: 'none' },
       { label: '플래그1', value: 'flag1' },
       { label: '플래그2', value: 'flag2' },
       { label: '플래그3', value: 'flag3' },
@@ -123,7 +126,7 @@ class AdvancedFilterModal extends Component {
       { label: '플래그5', value: 'flag5' },
         ]
     const maker_flag_option = [
-      { label: '플래그없음', value: 'maker_flag_none' },
+      { label: '플래그없음', value: 'none' },
       { label: 'X1', value: 'flag1' },
       { label: 'X2', value: 'flag2' },
       { label: 'X3', value: 'flag3' },
@@ -131,15 +134,15 @@ class AdvancedFilterModal extends Component {
       { label: 'X5', value: 'flag5' },
         ]
     const difficulty_option = [
-      { label: '결과없음', value: 'difficulty_none' },
-      { label: '모르겠음', value: '모르겠음' },
-      { label: '거의모르겠음', value: '거의모르겠음' },
-      { label: '애매함', value: '애매함' },
-      { label: '거의알겠음', value: '거의알겠음' },
-      { label: '알겠음', value: '알겠음' },
+      { label: '결과없음', value: 'none' },
+      { label: '모르겠음', value: 'diffi1' },
+      { label: '거의모르겠음', value: 'diffi2' },
+      { label: '애매함', value: 'diffi3' },
+      { label: '거의알겠음', value: 'diffi4' },
+      { label: '알겠음', value: 'diffi5' },
         ]
     const exam_option = [
-      { label: '결과없음', value: 'result_none' },
+      { label: '결과없음', value: 'none' },
       { label: '맞음', value: 'right' },
       { label: '틀림', value: 'wrong' },
         ]
@@ -236,7 +239,7 @@ class AdvancedFilterModal extends Component {
       
       var user_flags = []
       if(options.user_flag.none === "on"){
-        user_flags.push('user_flag_none')
+        user_flags.push('none')
       } 
       if(options.user_flag.flag1 === "on"){
         user_flags.push('flag1')
@@ -267,7 +270,7 @@ class AdvancedFilterModal extends Component {
       
       var maker_flags = []
       if(options.maker_flag.none === "on"){
-        maker_flags.push('maker_flag_none')
+        maker_flags.push('none')
       } 
       if(options.maker_flag.flag1 === "on"){
         maker_flags.push('flag1')
@@ -299,22 +302,22 @@ class AdvancedFilterModal extends Component {
       
       var diff = []
       if(options.difficulty.none === "on"){
-        diff.push('difficulty_none')
+        diff.push('none')
       } 
       if(options.difficulty.diffi1 === "on"){
-        diff.push('모르겠음')
+        diff.push('diffi1')
       }
       if(options.difficulty.diffi2 === "on"){
-        diff.push('거의모르겠음')
+        diff.push('diffi2')
       }
       if(options.difficulty.diffi3 === "on"){
-        diff.push('애매함')
+        diff.push('diffi3')
       } 
       if(options.difficulty.diffi4 === "on"){
-        diff.push('거의알겠음')
+        diff.push('diffi4')
       } 
       if(options.difficulty.diffi5 === "on"){
-        diff.push('알겠음')
+        diff.push('diffi5')
       } 
 
       if(options.level.on_off === "on"){
@@ -352,7 +355,7 @@ class AdvancedFilterModal extends Component {
       
       var results = []
       if(options.test_result.none === "on"){
-        results.push('result_none')
+        results.push('none')
       } 
       if(options.test_result.right === "on"){
         results.push('right')

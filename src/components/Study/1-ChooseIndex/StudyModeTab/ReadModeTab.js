@@ -25,6 +25,8 @@ class ReadModeTab extends Component {
     this.setState({
       modalVisible:false
     });
+    const advanced_filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
+    console.log("reget", advanced_filter)
   };
 
   handleCancel = () => {

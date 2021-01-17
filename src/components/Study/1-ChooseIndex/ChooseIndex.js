@@ -350,8 +350,23 @@ class ChooseIndex extends Component {
 
   };
 
+  applyAdvancedFilter = () => {
+    const advanced_filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
+    const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    value.map((item) => {
+       axios.post('api/studysetup/get-index',{
+        selected_books:item,
+        advanced_filter:advanced_filter
+      }).then(res => {
+        console.log('IndexData:', res.data)
+        this.setState({
+          books:[...this.state.books, res.data.single_book_info]
+        })
+      })
+    })
 
-    
+  }
+
 
   updateExpandState = () => {
     this.setState((prevState)=>({expand:!prevState.expand}))
