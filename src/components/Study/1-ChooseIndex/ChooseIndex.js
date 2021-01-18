@@ -303,9 +303,11 @@ class ChooseIndex extends Component {
   console.log('study_config',study_config)
 
     const books = this.state.books
+    console.log('books',books)
     const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
     const booksSlice = JSON.parse(JSON.stringify( books ))
     console.log('indexes',indexes)
+    console.log('booksSlice',booksSlice)
     if(indexes === null){
       return alert("목차를 선택하여 주십시오.")
     }
@@ -315,10 +317,10 @@ class ChooseIndex extends Component {
     const value = indexes.map(index => {
       booksSlice.map(book => {
           book.index_info.map(item =>{
-            if(item.index_id === index){
+            if(item._id === index){
               book.index_info.push(index)
               book.index_info.filter(function (el) {
-                return el.index_id !== index;
+                return el._id !== index;
               })
             }
           })
