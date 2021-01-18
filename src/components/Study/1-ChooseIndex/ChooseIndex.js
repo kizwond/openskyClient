@@ -59,6 +59,8 @@ class ChooseIndex extends Component {
   };
 
   componentDidMount() {
+    sessionStorage.removeItem('sessionId')
+    sessionStorage.removeItem('selectedIndex')
     this.getIndex()
     this.getStudyConfig()
   }
@@ -229,6 +231,7 @@ class ChooseIndex extends Component {
       low = rangeValue[0].format('YYYY-MM-DD')
       high = rangeValue[1].format('YYYY-MM-DD')
     }
+
     if(values.read_card === true){
       var read_card = "on"
     } else {
@@ -297,13 +300,17 @@ class ChooseIndex extends Component {
           completed : values.completed_card_num,
       },
   }
-  console.log(study_config)
+  console.log('study_config',study_config)
 
     const books = this.state.books
     const indexes = JSON.parse(sessionStorage.getItem("selectedIndex"))
     const booksSlice = JSON.parse(JSON.stringify( books ))
+    console.log('indexes',indexes)
     if(indexes === null){
-      alert("목차를 선택하여 주십시오.")
+      return alert("목차를 선택하여 주십시오.")
+    }
+    if(indexes.length === 0){
+      return alert("목차를 선택하여 주십시오.")
     }
     const value = indexes.map(index => {
       booksSlice.map(book => {
@@ -344,7 +351,7 @@ class ChooseIndex extends Component {
       booksnindexes: output,
       study_mode: this.state.key,
       study_config:study_config,
-      advanced_filter_on_off:false,
+      advanced_filter_on_off:values.advanced_filter_mode,
       advanced_filter:filter
     }).then(res=>{
       console.log(res.data)
@@ -489,10 +496,10 @@ class ChooseIndex extends Component {
                 <ReadModeTab applyAdvancedFilter={this.applyAdvancedFilter} study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="카드모드" key="flip" style={{textAlign:"left", padding:"10px"}}>
-                <FlipModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
+                <FlipModeTab applyAdvancedFilter={this.applyAdvancedFilter} study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="시험모드" key="exam" style={{textAlign:"left", padding:"10px"}}>
-                <ExamModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
+                <ExamModeTab applyAdvancedFilter={this.applyAdvancedFilter} study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
             </Tabs>
             

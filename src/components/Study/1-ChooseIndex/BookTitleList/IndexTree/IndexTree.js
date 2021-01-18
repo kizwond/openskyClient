@@ -35,7 +35,7 @@ class IndexTree extends Component {
     // this.props.getSelected(info)
     console.log('info',info)
     const value = info.checkedNodes.map((item)=> item.index_id)
-    
+    console.log('value',value)
     var filtered = value.filter(function (el) {
       return el != null;
     });
@@ -60,6 +60,7 @@ class IndexTree extends Component {
         console.log(info.node.parent)
         parentIndex.push(info.node.parent)
       }
+
       const temp = resultAll.concat(parentIndex)
       
       const children = []
@@ -127,7 +128,7 @@ class IndexTree extends Component {
                           </div>
                         </div>
                       </>),
-              index_id:table.index_id,
+              index_id:table._id,
               book_id:this.props.book_id,
               key: table.seq,
               level: 1,
@@ -178,7 +179,7 @@ class IndexTree extends Component {
                           </div>
                         </div>
                       </>),
-              index_id:table.index_id,
+              index_id:table._id,
               parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
@@ -230,7 +231,7 @@ class IndexTree extends Component {
                           </div>
                         </div>
                       </>),
-              index_id:table.index_id,
+              index_id:table._id,
               parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
@@ -282,7 +283,7 @@ class IndexTree extends Component {
                           </div>
                         </div>
                       </>),
-              index_id:table.index_id,
+              index_id:table._id,
               parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,
@@ -334,7 +335,7 @@ class IndexTree extends Component {
                           </div>
                         </div>
                       </>),
-              index_id:table.index_id,
+              index_id:table._id,
               parent:table.parent,
               book_id:this.props.book_id,
               key: table.seq,

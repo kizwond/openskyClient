@@ -79,13 +79,13 @@ class ReadModeTab extends Component {
       var ing_card_num = options.num_cards.ing
       var completed_card_num = options.num_cards.completed
       var hold_card_num = options.num_cards.hold
-      var high1 = options.needstudytime_filter.high
-      var low1 = options.needstudytime_filter.low
+      var high = options.needstudytime_filter.high
+      var low = options.needstudytime_filter.low
 
-      var high = String(high1)
-      var low = String(low1)
-      console.log('low',low)
-      console.log('high',high)
+      // var high = String(high1)
+      // var low = String(low1)
+      // console.log('low',low)
+      // console.log('high',high)
     } 
     else {
       sort_option = "standard"

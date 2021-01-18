@@ -25,7 +25,9 @@ class ExamModeTab extends Component {
     this.setState({
       modalVisible:false
     });
+    this.props.applyAdvancedFilter()
   };
+
 
   handleCancel = () => {
     this.setState({
@@ -108,6 +110,7 @@ class ExamModeTab extends Component {
         <Form
             name="settings"
             initialValues={{
+              ing_card_self_setting:[moment(low, dateFormat), moment(high, dateFormat)],
               sort_option:sort_option,
               // read_card:read_card,
               flip_card:flip_card,
@@ -207,7 +210,7 @@ class ExamModeTab extends Component {
                   
                 </Form.Item>
                 <Form.Item name="ing_card_self_setting" >
-                  <RangePicker defaultValue={[moment(low, dateFormat), moment(high, dateFormat)]} format={dateFormat}/>
+                  <RangePicker format={dateFormat}/>
                 </Form.Item>
 
               </div>

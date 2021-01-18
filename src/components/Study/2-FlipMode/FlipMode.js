@@ -75,13 +75,13 @@ class FlipMode extends Component {
     console.log("here!!!!!!!!!!!!!!!!!")
     const current_seq = sessionStorage.getItem("current_seq")
     // const session_id = sessionStorage.getItem('session_id')
-    axios.post('api/studysetup/get-cardlist',{
+    axios.post('api/studyexcute/get-cardlist',{
       session_id: session_id,
       // current_seq:Number(current_seq),
       // num_request_cards:4
     }).then(res => {
       console.log("here22222222222")
-      console.log(res.data)
+      console.log("이거가지고 시작",res.data)
       // console.log('데이타:', res.data.cards_to_send.cardlist_working)
       // sessionStorage.setItem('study_setting',JSON.stringify(res.data.cards_to_send.cardlist_working));
       // this.setState({
