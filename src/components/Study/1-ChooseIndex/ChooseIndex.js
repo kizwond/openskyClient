@@ -337,12 +337,14 @@ class ChooseIndex extends Component {
       return s;
     })
     console.log('output',output)
-
+    const filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
+    console.log('befor axios advanced filter',filter)
     axios.post('api/studysetup/create-session',{
       booksnindexes: output,
       study_mode: this.state.key,
       study_config:study_config,
-      advanced_filter_mode:advanced_filter_mode
+      advanced_filter_on_off:false,
+      advanced_filter:filter
     }).then(res=>{
       console.log(res.data)
       sessionStorage.setItem('sessionId', res.data.session_id)
@@ -410,6 +412,7 @@ class ChooseIndex extends Component {
       recent_study_time_on_off : filter.recent_study_time_on_off,
       recent_study_time_group : recent_study_time_group,
       recent_study_time_value : filter.recent_study_time_value,
+      recent_study_time_gap : filter.recent_study_time_gap,
   
       level_on_off : filter.level_on_off,
       level_group : level_group,

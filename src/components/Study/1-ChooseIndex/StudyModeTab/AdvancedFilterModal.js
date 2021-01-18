@@ -32,6 +32,7 @@ class AdvancedFilterModal extends Component {
   }
   onFinish = (values) => {
     console.log('advanced_filter before sessionstorage', values)
+    values.recent_study_time_gap = this.props.advanced_filter.recent_study_time_gap
     sessionStorage.setItem('advanced_filter', JSON.stringify(values))
     // const user_flag_group = this.state.userFlagGroupOnchange
     this.props.handleOk(values)
@@ -256,7 +257,7 @@ class AdvancedFilterModal extends Component {
       var test_result_group = filter.test_result_group
       var test_result_value = filter.test_result_value
 
-
+    
     } else {
       mode = ''
 
