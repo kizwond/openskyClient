@@ -353,66 +353,99 @@ class ChooseIndex extends Component {
 
   applyAdvancedFilter = () => {
     const filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
-    const rangeValueAdvanced = filter['recent_study_time'];
-    console.log('rangeValue', rangeValueAdvanced)
-    if(rangeValueAdvanced === undefined){
-      var low = undefined
-      var high = undefined
-    } else {
-      low = rangeValueAdvanced[0]
-      high = rangeValueAdvanced[1]
-    }
-    console.log('result',low, high)
+    // const rangeValueAdvanced = filter['recent_study_time'];
+    // console.log('rangeValue', rangeValueAdvanced)
+
+    // console.log('result',low, high)
+
     console.log('filter',filter)
+
+    if(filter.user_flag_group === undefined){
+      var user_flag_group = false
+    } else {
+      user_flag_group = true
+    }
+    if(filter.maker_flag_group === undefined){
+      var maker_flag_group = false
+    } else {
+      maker_flag_group = true
+    }
+    if(filter.recent_study_time_group === undefined){
+      var recent_study_time_group = false
+    } else {
+      recent_study_time_group = true
+    }
+    if(filter.level_group === undefined){
+      var level_group = false
+    } else {
+      level_group = true
+    }
+    if(filter.study_times_group === undefined){
+      var study_times_group = false
+    } else {
+      study_times_group = true
+    }
+    if(filter.difficulty_group === undefined){
+      var difficulty_group = false
+    } else {
+      difficulty_group = true
+    }
+    if(filter.test_result_group === undefined){
+      var test_result_group = false
+    } else {
+      test_result_group = true
+    }
 
     const advanced_filter = {
       mode : filter.mode,
 
       user_flag_on_off : filter.user_flag_on_off,
-      user_flag_group : filter.user_flag_group,
+      user_flag_group : user_flag_group,
       user_flag_value : filter.user_flag_value,
   
       maker_flag_on_off : filter.maker_flag_on_off,
-      maker_flag_group : filter.maker_flag_group,
+      maker_flag_group : maker_flag_group,
       maker_flag_value : filter.maker_flag_value,
   
       recent_study_time_on_off : filter.recent_study_time_on_off,
-      recent_study_time_group : filter.recent_study_time_group,
+      recent_study_time_group : recent_study_time_group,
       recent_study_time_value : filter.recent_study_time_value,
   
       level_on_off : filter.level_on_off,
-      level_group : filter.level_group,
-      level_value : filter.level_value,
+      level_group : level_group,
+      level_value : [filter.level_from, filter.level_to],
   
       study_times_on_off : filter.study_times_on_off,
-      study_times_group : filter.study_times_group,
-      study_times_value : filter.study_times_value,
+      study_times_group : study_times_group,
+      study_times_value : [filter.study_times_from, filter.study_times_to],
   
       difficulty_on_off : filter.difficulty_on_off,
-      difficulty_group : filter.difficulty_group,
+      difficulty_group : difficulty_group,
       difficulty_value : filter.difficulty_value,
   
       test_result_on_off : filter.test_result_on_off,
-      test_result_group : filter.test_result_group,
+      test_result_group : test_result_group,
       test_result_value : filter.test_result_value,
     }
 
     console.log(advanced_filter)
-    
+    sessionStorage.setItem('advanced_filter_axios', JSON.stringify(advanced_filter))
 
-    
-    // const value = JSON.parse(sessionStorage.getItem("book_ids"))
-    // value.map((item) => {
-    //    axios.post('api/studysetup/get-index',{
-    //     selected_books:item,
-    //     advanced_filter:advanced_filter
-    //   }).then(res => {
-    //     console.log('IndexData:', res.data)
-    //     this.setState({
-    //       books:[...this.state.books, res.data.single_book_info]
-    //     })
-    //   })
-    // })
+    this.setState({
+      books:[]
+    })
+    const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    value.map((item) => {
+       axios.post('api/studysetup/get-index',{
+        selected_books:item,
+        advanced_filter:advanced_filter
+      }).then(res => {
+        console.log('IndexData:', res.data)
+        this.setState({
+          books:[...this.state.books, res.data.single_book_info]
+        })
+      })
+    })
 
   }
 
