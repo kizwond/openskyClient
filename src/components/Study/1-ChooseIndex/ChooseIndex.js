@@ -84,6 +84,7 @@ class ChooseIndex extends Component {
       selected_books:value
     }).then(res => {
       console.log('StudyConfigData:', res.data)
+      sessionStorage.setItem('advanced_filter_axios', JSON.stringify(res.data.advanced_filter))
       this.setState({
         study_config:res.data.study_config,
         advanced_filter:res.data.advanced_filter
@@ -337,7 +338,7 @@ class ChooseIndex extends Component {
       return s;
     })
     console.log('output',output)
-    const filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
+    const filter = JSON.parse(sessionStorage.getItem("advanced_filter_axios"))
     console.log('befor axios advanced filter',filter)
     axios.post('api/studysetup/create-session',{
       booksnindexes: output,
