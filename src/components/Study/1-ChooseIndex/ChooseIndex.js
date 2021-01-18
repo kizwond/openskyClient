@@ -7,6 +7,7 @@ import "./ChooseIndex.css"
 import ReadModeTab from './StudyModeTab/ReadModeTab';
 import FlipModeTab from './StudyModeTab/FlipModeTab';
 import ExamModeTab from './StudyModeTab/ExamModeTab';
+import moment from 'moment';
 
 const { TabPane } = Tabs;
 
@@ -219,7 +220,7 @@ class ChooseIndex extends Component {
   onFinish = (values) => {
     console.log('Success:', values);
     const rangeValue = values['ing_card_self_setting'];
-    console.log(rangeValue)
+    console.log('rangeValue', rangeValue)
     if(rangeValue === undefined){
       var low = undefined
       var high = undefined
@@ -351,19 +352,108 @@ class ChooseIndex extends Component {
   };
 
   applyAdvancedFilter = () => {
-    const advanced_filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
-    const value = JSON.parse(sessionStorage.getItem("book_ids"))
-    value.map((item) => {
-       axios.post('api/studysetup/get-index',{
-        selected_books:item,
-        advanced_filter:advanced_filter
-      }).then(res => {
-        console.log('IndexData:', res.data)
-        this.setState({
-          books:[...this.state.books, res.data.single_book_info]
-        })
-      })
-    })
+    const filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
+    const rangeValueAdvanced = filter['recent_study_time'];
+    console.log('rangeValue', rangeValueAdvanced)
+    if(rangeValueAdvanced === undefined){
+      var low = undefined
+      var high = undefined
+    } else {
+      low = rangeValueAdvanced[0]
+      high = rangeValueAdvanced[1]
+    }
+    console.log('result',low, high)
+    console.log('filter',filter)
+    if(filter.user_flag_switch === true){
+      var user_flag = "on"
+    } else {
+      user_flag = "off"
+    }
+    if(filter.user_flag_switch === true){
+      var user_flag = "on"
+    } else {
+      user_flag = "off"
+    }
+    
+    // const advanced_filter : {        
+    //   mode : filter.and_or_mode
+    //   user_flag : {
+    //       on_off : user_flag,
+    //       group : filter.user_flag_group_switch,
+    //       none : {type : String, default : null},
+    //       flag1 : {type : String, default : null},
+    //       flag2 : {type : String, default : null},
+    //       flag3 : {type : String, default : null},
+    //       flag4 : {type : String, default : null},
+    //       flag5 : {type : String, default : null},
+    //   },
+    //   maker_flag : {
+    //       on_off : filter.maker_flag_switch,
+    //       group : filter.maker_flag_group_switch,
+    //       none : {type : String, default : null},
+    //       flag1 : {type : String, default : null},
+    //       flag2 : {type : String, default : null},
+    //       flag3 : {type : String, default : null},
+    //       flag4 : {type : String, default : null},
+    //       flag5 : {type : String, default : null},
+    //   },
+    //   recent_study_time : {
+    //       on_off : filter.recent_study_switch,
+    //       group : filter.recent_study_group_switch,
+    //       low : {type : String, default : null},
+    //       high : {type : String, default : null},            
+    //   },                    
+    //   level : {
+    //       on_off : {type : String, default : null},
+    //       group : {type : String, default : null},
+    //       low : {type : String, default : null},
+    //       high : {type : String, default : null},            
+    //   },
+    //   study_times : {
+    //       on_off : {type : String, default : null},
+    //       group : {type : String, default : null},
+    //       low : {type : String, default : null},
+    //       high : {type : String, default : null},            
+    //   },
+    //   difficulty : {
+    //       on_off : {type : String, default : null},
+    //       group : {type : String, default : null},
+    //       none : {type : String, default : null},
+    //       diffi1 : {type : String, default : null},
+    //       diffi2 : {type : String, default : null},
+    //       diffi3 : {type : String, default : null},
+    //       diffi4 : {type : String, default : null},
+    //       diffi5 : {type : String, default : null},
+    //   },
+    //   test_result : {
+    //       on_off : {type : String, default : null},
+    //       group : {type : String, default : null},
+    //       none : {type : String, default : null},
+    //       right : {type : String, default : null},
+    //       wrong : {type : String, default : null},
+    //   },
+    //   writer : {
+    //       on_off : {type : String, default : null},
+    //       group : {type : String, default : null},
+    //       internal : {type : String, default : null}, //내가 만든 것
+    //       external : {type : String, default : null}, //원래 있던 것
+    //   }
+    // }
+
+    // const advanced_filter = ''
+    
+    // const value = JSON.parse(sessionStorage.getItem("book_ids"))
+    // value.map((item) => {
+    //    axios.post('api/studysetup/get-index',{
+    //     selected_books:item,
+    //     advanced_filter:advanced_filter
+    //   }).then(res => {
+    //     console.log('IndexData:', res.data)
+    //     this.setState({
+    //       books:[...this.state.books, res.data.single_book_info]
+    //     })
+    //   })
+    // })
 
   }
 
@@ -396,7 +486,7 @@ class ChooseIndex extends Component {
                 main
               </TabPane> */}
               <TabPane tab="책모드" key="read" style={{textAlign:"left", padding:"10px"}}>
-                <ReadModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
+                <ReadModeTab applyAdvancedFilter={this.applyAdvancedFilter} study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>
               </TabPane>
               <TabPane tab="카드모드" key="flip" style={{textAlign:"left", padding:"10px"}}>
                 <FlipModeTab study_config={this.state.study_config} advanced_filter={this.state.advanced_filter} onFinish={this.onFinish}/>

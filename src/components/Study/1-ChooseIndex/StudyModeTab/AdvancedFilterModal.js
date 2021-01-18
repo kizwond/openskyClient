@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Button, DatePicker, Select, Space, InputNumber, Switch, Form,Checkbox,Radio} from 'antd'
 import './AdvancedFilterModal.css'
+import moment from 'moment';
+
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
@@ -31,6 +33,7 @@ class AdvancedFilterModal extends Component {
   onFinish = (values) => {
     console.log('advanced_filter before sessionstorage', values)
     sessionStorage.setItem('advanced_filter', JSON.stringify(values))
+    // const user_flag_group = this.state.userFlagGroupOnchange
     this.props.handleOk(values)
     
   }
@@ -112,6 +115,8 @@ class AdvancedFilterModal extends Component {
     }))
   }
   render() {
+    const dateFormat = 'YYYY-MM-DD';
+
     if(this.state.andOr === true){
       var andOr = "Or그룹"
     } else {
@@ -213,183 +218,45 @@ class AdvancedFilterModal extends Component {
     
     if(this.props.advanced_filter){
       console.log("고급필터:", this.props.advanced_filter)
-      var options = this.props.advanced_filter
+      var filter = this.props.advanced_filter
 
-      if(options.recent_study_time.on_off === "on"){
-        var recent_study_time_on_off = true
-      } else {
-        recent_study_time_on_off = false
-      }
-      if(options.recent_study_time.group === "on"){
-        var recent_study_time_group_on_off = true
-      } else {
-        recent_study_time_group_on_off = false
-      }
-      
-      if(options.user_flag.on_off === "on"){
-        var user_flag_on_off = true
-      } else {
-        user_flag_on_off = false
-      }
-      if(options.user_flag.group === "on"){
-        var user_flag_group_on_off = true
-      } else {
-        user_flag_group_on_off = false
-      }
-      
-      var user_flags = []
-      if(options.user_flag.none === "on"){
-        user_flags.push('none')
-      } 
-      if(options.user_flag.flag1 === "on"){
-        user_flags.push('flag1')
-      }
-      if(options.user_flag.flag2 === "on"){
-        user_flags.push('flag2')
-      }
-      if(options.user_flag.flag3 === "on"){
-        user_flags.push('flag3')
-      } 
-      if(options.user_flag.flag4 === "on"){
-        user_flags.push('flag4')
-      } 
-      if(options.user_flag.flag5 === "on"){
-        user_flags.push('flag5')
-      } 
+      var mode = filter.mode
 
-      if(options.maker_flag.on_off === "on"){
-        var maker_flag_on_off = true
-      } else {
-        maker_flag_on_off = false
-      }
-      if(options.maker_flag.group === "on"){
-        var maker_flag_group_on_off = true
-      } else {
-        maker_flag_group_on_off = false
-      }
-      
-      var maker_flags = []
-      if(options.maker_flag.none === "on"){
-        maker_flags.push('none')
-      } 
-      if(options.maker_flag.flag1 === "on"){
-        maker_flags.push('flag1')
-      }
-      if(options.maker_flag.flag2 === "on"){
-        maker_flags.push('flag2')
-      }
-      if(options.maker_flag.flag3 === "on"){
-        maker_flags.push('flag3')
-      } 
-      if(options.maker_flag.flag4 === "on"){
-        maker_flags.push('flag4')
-      } 
-      if(options.maker_flag.flag5 === "on"){
-        maker_flags.push('flag5')
-      } 
+      var user_flag_on_off = filter.user_flag_on_off
+      var user_flag_group = filter.user_flag_group
+      var user_flag_value = filter.user_flag_value
+
+      var maker_flag_on_off = filter.maker_flag_on_off
+      var maker_flag_group = filter.maker_flag_group
+      var maker_flag_value = filter.maker_flag_value
+
+      var recent_study_time_on_off = filter.recent_study_time_on_off
+      var recent_study_time_group = filter.recent_study_time_group
+      var recent_study_time_value = filter.recent_study_time_value
+      var low = recent_study_time_value[0]
+      var high = recent_study_time_value[1]
+
+      var level_on_off = filter.level_on_off
+      var level_group = filter.level_group
+      var level_value = filter.level_value
+      var level_from = level_value[0]
+      var level_to = level_value[1]
+
+      var study_times_on_off = filter.study_times_on_off
+      var study_times_group = filter.study_times_group
+      var study_times_value = filter.study_times_value
+      var study_times_from = study_times_value[0]
+      var study_times_to = study_times_value[1]
+
+      var difficulty_on_off = filter.difficulty_on_off
+      var difficulty_group = filter.difficulty_group
+      var difficulty_value = filter.difficulty_value
+
+      var test_result_on_off = filter.test_result_on_off
+      var test_result_group = filter.test_result_group
+      var test_result_value = filter.test_result_value
 
 
-      if(options.difficulty.on_off === "on"){
-        var diffi_on_off = true
-      } else {
-        diffi_on_off = false
-      }
-      if(options.difficulty.group === "on"){
-        var diffi_group_on_off = true
-      } else {
-        diffi_group_on_off = false
-      }
-      
-      var diff = []
-      if(options.difficulty.none === "on"){
-        diff.push('none')
-      } 
-      if(options.difficulty.diffi1 === "on"){
-        diff.push('diffi1')
-      }
-      if(options.difficulty.diffi2 === "on"){
-        diff.push('diffi2')
-      }
-      if(options.difficulty.diffi3 === "on"){
-        diff.push('diffi3')
-      } 
-      if(options.difficulty.diffi4 === "on"){
-        diff.push('diffi4')
-      } 
-      if(options.difficulty.diffi5 === "on"){
-        diff.push('diffi5')
-      } 
-
-      if(options.level.on_off === "on"){
-        var level_on_off = true
-      } else {
-        level_on_off = false
-      }
-      if(options.level.group === "on"){
-        var level_group_on_off = true
-      } else {
-        level_group_on_off = false
-      }
-
-      if(options.study_times.on_off === "on"){
-        var study_times_on_off = true
-      } else {
-        study_times_on_off = false
-      }
-      if(options.study_times.group === "on"){
-        var study_times_group_on_off = true
-      } else {
-        study_times_group_on_off = false
-      }
-
-      if(options.test_result.on_off === "on"){
-        var test_result_on_off = true
-      } else {
-        test_result_on_off = false
-      }
-      if(options.test_result.group === "on"){
-        var test_result_group_on_off = true
-      } else {
-        test_result_group_on_off = false
-      }
-      
-      var results = []
-      if(options.test_result.none === "on"){
-        results.push('none')
-      } 
-      if(options.test_result.right === "on"){
-        results.push('right')
-      }
-      if(options.test_result.wrong === "on"){
-        results.push('wrong')
-      }
-
-
-      var and_or_mode = options.mode
-      var user_flag_switch =  user_flag_on_off
-      var user_flag_filtering_group = user_flag_group_on_off
-      var user_flag = user_flags
-      var maker_flag_switch =  maker_flag_on_off
-      var maker_flag_filtering_group = maker_flag_group_on_off
-      var maker_flag = maker_flags
-      var recent_study_switch = recent_study_time_on_off
-      var recent_study_filtering_group = recent_study_time_group_on_off
-      var recent_study_time = ''
-      var card_level_switch = level_on_off
-      var card_level_filtering_group = level_group_on_off
-      var level_from = options.level.low
-      var level_to = options.level.high
-      var study_times_switch = study_times_on_off
-      var study_times_filtering_group = study_times_group_on_off
-      var study_times_from = options.study_times.low
-      var study_times_to = options.study_times.high
-      var recent_difficulty_switch = diffi_on_off
-      var recent_difficulty_filtering_group = diffi_group_on_off
-      var difficulty = diff
-      var recent_exam_switch = test_result_on_off
-      var recent_exam_filtering_group = test_result_group_on_off
-      var exam_result = results
-      var setting_save = ''
     } 
     
     return (
@@ -402,31 +269,31 @@ class AdvancedFilterModal extends Component {
         <Form
         name="advanced_settings"
         initialValues={{
-          and_or_mode,
-          user_flag_switch,
-          user_flag_filtering_group,
-          user_flag,
-          maker_flag_switch,
-          maker_flag_filtering_group,
-          maker_flag,
-          recent_study_switch,
-          recent_study_filtering_group,
-          recent_study_time,
-          card_level_switch,
-          card_level_filtering_group,
+          mode,
+          user_flag_on_off,
+          user_flag_group,
+          user_flag_value,
+          maker_flag_on_off,
+          maker_flag_group,
+          maker_flag_value,
+          recent_study_time_on_off,
+          recent_study_time_group,
+          recent_study_time_value:[moment(low, dateFormat), moment(high, dateFormat)],
+          level_on_off,
+          level_group,
           level_from,
           level_to,
-          study_times_switch,
-          study_times_filtering_group,
+          study_times_on_off,
+          study_times_group,
           study_times_from,
           study_times_to,
-          recent_difficulty_switch,
-          recent_difficulty_filtering_group,
-          difficulty,
-          recent_exam_switch,
-          recent_exam_filtering_group,
-          exam_result,
-          setting_save
+          difficulty_on_off,
+          difficulty_group,
+          difficulty_value,
+          test_result_on_off,
+          test_result_group,
+          test_result_value,
+          
         }}
         onFinish={this.onFinish}
         size="small"
@@ -479,7 +346,7 @@ class AdvancedFilterModal extends Component {
           </li>
           <li>
             <Form.Item
-              name="and_or_mode"
+              name="mode"
               valuePropName="checked"
             >
               <Radio.Group defaultValue="and" size="small" onChange={this.andOrChange} style={{ marginTop: 16 }}>
@@ -494,13 +361,13 @@ class AdvancedFilterModal extends Component {
               <Space>
                 <span>사용자플래그</span> 
                 <Form.Item
-                  name="user_flag_switch"
+                  name="user_flag_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small" onChange={this.userFlagOnchange}/>
                 </Form.Item>
                 {this.state.userFlagOnchange && <Form.Item
-                  name="user_flag_filtering_group"
+                  name="user_flag_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.userFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss}`, color:`${fontColor}`, fontWeight:`${fontWeight}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -510,7 +377,7 @@ class AdvancedFilterModal extends Component {
             </div>
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
               <Form.Item
-                name="user_flag"
+                name="user_flag_value"
               >            
                 <Checkbox.Group options={user_flag_option} />
               </Form.Item>
@@ -521,13 +388,13 @@ class AdvancedFilterModal extends Component {
               <Space>
                 <span>제작자플래그</span> 
                 <Form.Item
-                  name="maker_flag_switch"
+                  name="maker_flag_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small"  onChange={this.makerFlagOnchange}/>
                 </Form.Item>
                 {this.state.makerFlagOnchange && <Form.Item
-                  name="maker_flag_filtering_group"
+                  name="maker_flag_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.makerFlagGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss2}`, color:`${fontColor2}`, fontWeight:`${fontWeight2}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -537,7 +404,7 @@ class AdvancedFilterModal extends Component {
             </div>
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
               <Form.Item
-                name="maker_flag"
+                name="maker_flag_value"
               >            
                 <Checkbox.Group options={maker_flag_option} />
               </Form.Item>
@@ -548,13 +415,13 @@ class AdvancedFilterModal extends Component {
               <Space>
                 <span>최근학습시점</span> 
                 <Form.Item
-                  name="recent_study_switch"
+                  name="recent_study_time_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small" onChange={this.recentStudyOnchange}/>
                 </Form.Item>
                 {this.state.recentStudyOnchange && <Form.Item
-                  name="recent_study_filtering_group"
+                  name="recent_study_time_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.recentStudyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss3}`, color:`${fontColor3}`, fontWeight:`${fontWeight3}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -563,8 +430,10 @@ class AdvancedFilterModal extends Component {
               </Space>
             </div>
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
-            <Form.Item name="recent_study_time" >
-              <RangePicker />
+            <Form.Item name="recent_study_time_value" >
+              <RangePicker 
+              // defaultValue={[moment(low, dateFormat), moment(high, dateFormat)]} 
+              format={dateFormat}/>
             </Form.Item>
             </div>
           </li>
@@ -573,13 +442,13 @@ class AdvancedFilterModal extends Component {
             <Space>
                 <span>카드레벨</span> 
                 <Form.Item
-                  name="card_level_switch"
+                  name="level_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small" onChange={this.cardLevelOnchange}/>
                 </Form.Item>
                 {this.state.cardLevelOnchange && <Form.Item
-                  name="card_level_filtering_group"
+                  name="level_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.cardLevelGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss4}`, color:`${fontColor4}`, fontWeight:`${fontWeight4}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -601,13 +470,13 @@ class AdvancedFilterModal extends Component {
             <Space>
                 <span>학습횟수</span> 
                 <Form.Item
-                  name="study_times_switch"
+                  name="study_times_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small" onChange={this.studyTimesOnchange}/>
                 </Form.Item>
                 {this.state.studyTimesOnchange && <Form.Item
-                  name="study_times_filtering_group"
+                  name="study_times_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.studyTimesGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss5}`, color:`${fontColor5}`, fontWeight:`${fontWeight5}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -630,13 +499,13 @@ class AdvancedFilterModal extends Component {
             <Space>
                 <span>최근선택한난이도</span> 
                 <Form.Item
-                  name="recent_difficulty_switch"
+                  name="difficulty_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small" onChange={this.difficultyOnchange}/>
                 </Form.Item>
                 {this.state.difficultyOnchange && <Form.Item
-                  name="recent_difficulty_filtering_group"
+                  name="difficulty_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.difficultyGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss6}`, color:`${fontColor6}`, fontWeight:`${fontWeight6}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -646,7 +515,7 @@ class AdvancedFilterModal extends Component {
             </div>
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white", display:"flex", justifyContent:"space-between"}}>
             <Form.Item
-                name="difficulty"
+                name="difficulty_value"
               >            
                 <Checkbox.Group options={difficulty_option} />
               </Form.Item>
@@ -657,13 +526,13 @@ class AdvancedFilterModal extends Component {
             <Space>
                 <span>최근시험결과</span> 
                 <Form.Item
-                  name="recent_exam_switch"
+                  name="test_result_on_off"
                   valuePropName="checked"
                 >
                   <Switch size="small" onChange={this.examResultOnchange}/>
                 </Form.Item>
                 {this.state.examResultOnchange && <Form.Item
-                  name="recent_exam_filtering_group"
+                  name="test_result_group"
                   valuePropName="checked"
                 >            
                   <Checkbox className="advanced_filter_checkbox" onChange={this.examResultGroupOnchange}><span style={{border:"1px solid lightgrey", borderRadius:"3px", fontSize:"10px", backgroundColor:`${selectedCss7}`, color:`${fontColor7}`, fontWeight:`${fontWeight7}`, display:"inline-block", width:"50px", textAlign:"center"}}>{andOr}</span></Checkbox>
@@ -673,7 +542,7 @@ class AdvancedFilterModal extends Component {
             </div>
             <div style={{border:"1px solid none", fontSize:"11px", borderRadius:"5px", width:"100%", padding:"10px", minHeight:"20px", backgroundColor:"white"}}>
             <Form.Item
-                name="exam_result"
+                name="test_result_value"
               >            
                 <Checkbox.Group options={exam_option} />
               </Form.Item>

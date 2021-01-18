@@ -25,8 +25,7 @@ class ReadModeTab extends Component {
     this.setState({
       modalVisible:false
     });
-    const advanced_filter = JSON.parse(sessionStorage.getItem("advanced_filter"))
-    console.log("reget", advanced_filter)
+    this.props.applyAdvancedFilter()
   };
 
   handleCancel = () => {
@@ -80,8 +79,13 @@ class ReadModeTab extends Component {
       var ing_card_num = options.num_cards.ing
       var completed_card_num = options.num_cards.completed
       var hold_card_num = options.num_cards.hold
-      var high = options.needstudytime_filter.high
-      var low = options.needstudytime_filter.low
+      var high1 = options.needstudytime_filter.high
+      var low1 = options.needstudytime_filter.low
+
+      var high = String(high1)
+      var low = String(low1)
+      console.log('low',low)
+      console.log('high',high)
     } 
     else {
       sort_option = "standard"
@@ -108,6 +112,7 @@ class ReadModeTab extends Component {
       <Form
           name="settings"
           initialValues={{
+            ing_card_self_setting:[moment(low, dateFormat), moment(high, dateFormat)],
             sort_option,
             read_card,
             flip_card,
@@ -208,7 +213,9 @@ class ReadModeTab extends Component {
                 
               </Form.Item>
               <Form.Item name="ing_card_self_setting" >
-                <RangePicker defaultValue={[moment(low, dateFormat), moment(high, dateFormat)]} format={dateFormat}/>
+                <RangePicker 
+                // defaultValue={[moment(low, dateFormat), moment(high, dateFormat)]} 
+                format={dateFormat}/>
               </Form.Item>
 
             </div>
@@ -239,7 +246,7 @@ class ReadModeTab extends Component {
               >
                  <Switch size="small" />
               </Form.Item></div>
-            <AdvancedFilterModal advanced_filter={this.props.advanced_filter} modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+            <AdvancedFilterModal applyAdvancedFilter={this.props.applyAdvancedFilter} advanced_filter={this.props.advanced_filter} modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
           </div>
           <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
           <span style={{fontSize:"13px", fontWeight:"700"}}>학습량 설정 </span> 
