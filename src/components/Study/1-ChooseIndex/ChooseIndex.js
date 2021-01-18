@@ -426,6 +426,10 @@ class ChooseIndex extends Component {
       test_result_on_off : filter.test_result_on_off,
       test_result_group : test_result_group,
       test_result_value : filter.test_result_value,
+
+      writer_on_off : false,
+      writer_group : null,
+      writer_value : null,
     }
 
     console.log(advanced_filter)
@@ -436,7 +440,7 @@ class ChooseIndex extends Component {
     })
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
     value.map((item) => {
-       axios.post('api/studysetup/get-index',{
+       axios.post('api/studysetup/apply-advanced-filter',{
         selected_books:item,
         advanced_filter:advanced_filter
       }).then(res => {
