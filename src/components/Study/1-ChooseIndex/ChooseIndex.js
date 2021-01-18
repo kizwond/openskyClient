@@ -364,83 +364,42 @@ class ChooseIndex extends Component {
     }
     console.log('result',low, high)
     console.log('filter',filter)
-    if(filter.user_flag_switch === true){
-      var user_flag = "on"
-    } else {
-      user_flag = "off"
-    }
-    if(filter.user_flag_switch === true){
-      var user_flag = "on"
-    } else {
-      user_flag = "off"
-    }
-    
-    // const advanced_filter : {        
-    //   mode : filter.and_or_mode
-    //   user_flag : {
-    //       on_off : user_flag,
-    //       group : filter.user_flag_group_switch,
-    //       none : {type : String, default : null},
-    //       flag1 : {type : String, default : null},
-    //       flag2 : {type : String, default : null},
-    //       flag3 : {type : String, default : null},
-    //       flag4 : {type : String, default : null},
-    //       flag5 : {type : String, default : null},
-    //   },
-    //   maker_flag : {
-    //       on_off : filter.maker_flag_switch,
-    //       group : filter.maker_flag_group_switch,
-    //       none : {type : String, default : null},
-    //       flag1 : {type : String, default : null},
-    //       flag2 : {type : String, default : null},
-    //       flag3 : {type : String, default : null},
-    //       flag4 : {type : String, default : null},
-    //       flag5 : {type : String, default : null},
-    //   },
-    //   recent_study_time : {
-    //       on_off : filter.recent_study_switch,
-    //       group : filter.recent_study_group_switch,
-    //       low : {type : String, default : null},
-    //       high : {type : String, default : null},            
-    //   },                    
-    //   level : {
-    //       on_off : {type : String, default : null},
-    //       group : {type : String, default : null},
-    //       low : {type : String, default : null},
-    //       high : {type : String, default : null},            
-    //   },
-    //   study_times : {
-    //       on_off : {type : String, default : null},
-    //       group : {type : String, default : null},
-    //       low : {type : String, default : null},
-    //       high : {type : String, default : null},            
-    //   },
-    //   difficulty : {
-    //       on_off : {type : String, default : null},
-    //       group : {type : String, default : null},
-    //       none : {type : String, default : null},
-    //       diffi1 : {type : String, default : null},
-    //       diffi2 : {type : String, default : null},
-    //       diffi3 : {type : String, default : null},
-    //       diffi4 : {type : String, default : null},
-    //       diffi5 : {type : String, default : null},
-    //   },
-    //   test_result : {
-    //       on_off : {type : String, default : null},
-    //       group : {type : String, default : null},
-    //       none : {type : String, default : null},
-    //       right : {type : String, default : null},
-    //       wrong : {type : String, default : null},
-    //   },
-    //   writer : {
-    //       on_off : {type : String, default : null},
-    //       group : {type : String, default : null},
-    //       internal : {type : String, default : null}, //내가 만든 것
-    //       external : {type : String, default : null}, //원래 있던 것
-    //   }
-    // }
 
-    // const advanced_filter = ''
+    const advanced_filter = {
+      mode : filter.mode,
+
+      user_flag_on_off : filter.user_flag_on_off,
+      user_flag_group : filter.user_flag_group,
+      user_flag_value : filter.user_flag_value,
+  
+      maker_flag_on_off : filter.maker_flag_on_off,
+      maker_flag_group : filter.maker_flag_group,
+      maker_flag_value : filter.maker_flag_value,
+  
+      recent_study_time_on_off : filter.recent_study_time_on_off,
+      recent_study_time_group : filter.recent_study_time_group,
+      recent_study_time_value : filter.recent_study_time_value,
+  
+      level_on_off : filter.level_on_off,
+      level_group : filter.level_group,
+      level_value : filter.level_value,
+  
+      study_times_on_off : filter.study_times_on_off,
+      study_times_group : filter.study_times_group,
+      study_times_value : filter.study_times_value,
+  
+      difficulty_on_off : filter.difficulty_on_off,
+      difficulty_group : filter.difficulty_group,
+      difficulty_value : filter.difficulty_value,
+  
+      test_result_on_off : filter.test_result_on_off,
+      test_result_group : filter.test_result_group,
+      test_result_value : filter.test_result_value,
+    }
+
+    console.log(advanced_filter)
+    
+
     
     // const value = JSON.parse(sessionStorage.getItem("book_ids"))
     // value.map((item) => {

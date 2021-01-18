@@ -257,7 +257,43 @@ class AdvancedFilterModal extends Component {
       var test_result_value = filter.test_result_value
 
 
-    } 
+    } else {
+      mode = ''
+
+      user_flag_on_off = ''
+      user_flag_group = ''
+      user_flag_value = ''
+
+      maker_flag_on_off = ''
+      maker_flag_group = ''
+      maker_flag_value = ''
+
+      recent_study_time_on_off = ''
+      recent_study_time_group = ''
+      recent_study_time_value = ''
+      low = ''
+      high = ''
+
+      level_on_off = ''
+      level_group = ''
+      level_value = ''
+      level_from = ''
+      level_to = ''
+
+      study_times_on_off = ''
+      study_times_group = ''
+      study_times_value = ''
+      study_times_from = ''
+      study_times_to = ''
+
+      difficulty_on_off = ''
+      difficulty_group = ''
+      difficulty_value = ''
+
+      test_result_on_off = ''
+      test_result_group = ''
+      test_result_value = ''
+    }
     
     return (
       <>
