@@ -229,17 +229,16 @@ class FlipMode extends Component {
       var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
       var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={item} model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
-      var id_of_content = this.state.contents[0].book_id
+      var id_of_content = this.state.contents[0]._id
       var book_id = this.state.contents[0].book_id
       const level_config_sessionStorage = JSON.parse(sessionStorage.getItem('level_config'))
       const nicks_handle = level_config_sessionStorage.map((item)=>{
         if(item.book_id === this.state.contents[0].book_id){
-          // console.log(item.difficulty_setting.diffi15.nick)
           nicks.push(item.difficulty_setting.diffi1.nick)
           nicks.push(item.difficulty_setting.diffi2.nick)
           nicks.push(item.difficulty_setting.diffi3.nick)
           nicks.push(item.difficulty_setting.diffi4.nick)
-          nicks.push(item.difficulty_setting.diffi5.nick)
+          nicks.push(item.difficulty_setting.diffi15.nick)
         }
       })
     } 
@@ -284,11 +283,11 @@ class FlipMode extends Component {
               </div>
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_1", id_of_content,book_id)}>{nicks[0]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_2", id_of_content,book_id)}>{nicks[1]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_3", id_of_content,book_id)}>{nicks[2]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_4", id_of_content,book_id)}>{nicks[3]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>{nicks[4]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi1", id_of_content,book_id)}>{nicks[0]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi2", id_of_content,book_id)}>{nicks[1]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi3", id_of_content,book_id)}>{nicks[2]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi4", id_of_content,book_id)}>{nicks[3]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi5", id_of_content,book_id)}>{nicks[4]}</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
