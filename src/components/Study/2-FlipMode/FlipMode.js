@@ -20,7 +20,9 @@ class FlipMode extends Component {
       time_total:0,
       isOn_total:false,
       start_total:0,
-      page_toggle:false
+      page_toggle:false,
+      level_config:[],
+      cardlist_studying:[],
      };
   }
 
@@ -49,11 +51,7 @@ class FlipMode extends Component {
   }
   stopTimerTotal = () => {
     console.log('stop timer')
-    console.log(this)
-    this.setState({isOn_total: false}, function(){
-      console.log(this)
-      
-    })
+    this.setState({isOn_total: false})
     clearInterval(this.timer_total)  
     clearInterval(this.timer)
   }
@@ -82,13 +80,15 @@ class FlipMode extends Component {
       session_id: session_id,
     }).then(res => {
       console.log("here22222222222")
+      console.log(res.data)
       console.log("카드리스트 : ",res.data.cardlist_studying)
       console.log("레벨설정값 : ",res.data.level_config)
       
       sessionStorage.setItem('level_config',JSON.stringify(res.data.level_config));
       sessionStorage.setItem('cardlist_studying',JSON.stringify(res.data.cardlist_studying));
       this.setState({
-        cardlist_studying:res.data.cardlist_studying
+        cardlist_studying:res.data.cardlist_studying,
+        level_config:res.data.level_config
       })
     })
     this.getCardContents()
@@ -223,14 +223,28 @@ class FlipMode extends Component {
         </Menu.Item>
       </Menu>
     );
+    const nicks = []
+
     if(this.state.contents.length > 0){
       var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
       var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={item} model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
       var id_of_content = this.state.contents[0].book_id
       var book_id = this.state.contents[0].book_id
+      const level_config_sessionStorage = JSON.parse(sessionStorage.getItem('level_config'))
+      const nicks_handle = level_config_sessionStorage.map((item)=>{
+        if(item.book_id === this.state.contents[0].book_id){
+          // console.log(item.difficulty_setting.diffi15.nick)
+          nicks.push(item.difficulty_setting.diffi1.nick)
+          nicks.push(item.difficulty_setting.diffi2.nick)
+          nicks.push(item.difficulty_setting.diffi3.nick)
+          nicks.push(item.difficulty_setting.diffi4.nick)
+          nicks.push(item.difficulty_setting.diffi15.nick)
+          
+        }
+      })
     } 
-
+    
     return (
       <div style={style_study_layout_container} className="study_layout_container">
         <div style={style_study_layout_top} className="study_layout_top">
@@ -271,11 +285,11 @@ class FlipMode extends Component {
               </div>
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_1", id_of_content,book_id)}>모르겠음</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_2", id_of_content,book_id)}>거의모름</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_3", id_of_content,book_id)}>애매함</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_4", id_of_content,book_id)}>거의알겠음</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>알겠음</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_1", id_of_content,book_id)}>{nicks[0]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_2", id_of_content,book_id)}>{nicks[1]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_3", id_of_content,book_id)}>{nicks[2]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_4", id_of_content,book_id)}>{nicks[3]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>eee{nicks[4]}</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
