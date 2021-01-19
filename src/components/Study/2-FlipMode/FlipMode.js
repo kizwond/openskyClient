@@ -111,55 +111,86 @@ class FlipMode extends Component {
       })
     })
   }
+  milliseconds = (h, m, s) => ((h*60*60+m*60+s)*1000);
 
-  onClickDifficulty = (lev, id, book_id)=>{
+  
+  onClickDifficulty = (lev, id, book_id, interval, time_unit)=>{
+    const now = new Date();
+    console.log('선택한 난이도', lev)
+    console.log('현재카드_id', id)
+    console.log('쳔재카드 book_id', book_id)
+    console.log('난이도 별 복습주기', interval)
+    console.log('난이도 별 복습주기 단위', time_unit)
     const current_seq = sessionStorage.getItem("current_seq")
     const next_seq = Number(current_seq)+1
     sessionStorage.setItem('current_seq',next_seq);
     const req_seq = Number(sessionStorage.getItem("current_seq"))
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    console.log('card_ids_session',card_ids_session[0].detail_status.session_study_times)
+    const prev_session_study_times = card_ids_session[0].detail_status.session_study_times
+    const prev_current_lev_study_times = card_ids_session[0].detail_status.current_lev_study_times
+    const prev_total_study_times = card_ids_session[0].detail_status.total_study_times
+    card_ids_session[0].detail_status.session_study_times = prev_session_study_times + 1
+    card_ids_session[0].detail_status.current_lev_study_times = prev_current_lev_study_times + 1
+    card_ids_session[0].detail_status.total_study_times = prev_total_study_times + 1
+    card_ids_session[0].detail_status.recent_difficulty = lev
+    card_ids_session[0].detail_status.recent_study_hour = now
+    card_ids_session[0].detail_status.recent_study_time = this.state.time
+    
+    const now_mili_convert = Date.parse(now);
+    const result = this.milliseconds(0, interval, 0);
+    const need_review_time = now_mili_convert + result
+    console.log(need_review_time)
 
-    axios.post('api/study-flip/click-difficulty',{
-      session_id: session_id,
-      difficulty: lev,
-      current_seq:Number(current_seq),
-      study_hour:this.state.time,
-      card_id:id,
-      book_id:book_id
-    }).then(res => {
-        console.log('데이타:', res.data)
-    })
+    const review_date = new Date(need_review_time);
+    card_ids_session[0].detail_status.need_study_time = review_date
+    console.log('지금', now)
+    console.log('복습',review_date)
+    console.log('card_ids_session updated!!',card_ids_session[0].detail_status)
+
+    
+    // axios.post('api/study-flip/click-difficulty',{
+    //   session_id: session_id,
+    //   difficulty: lev,
+    //   current_seq:Number(current_seq),
+    //   study_hour:this.state.time,
+    //   card_id:id,
+    //   book_id:book_id
+    // }).then(res => {
+    //     console.log('데이타:', res.data)
+    // })
 
 
-    if(this.state.contents.length === 1){
-      console.log('below',this.state.contents)
-      axios.post('api/studysetup/get-studying-cards',{
-        session_id: session_id,
-        current_seq:req_seq,
-        num_request_cards:4
-      }).then(res => {
-          console.log('데이타:', res.data)
-          const contents = this.state.contents.concat(res.data.cards_to_send.cardlist_working)
-          this.setState({
-            contents:contents
-          })
-      })
-    } else if(this.state.contents.length === 0){
-      alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
-      window.location.href="/study"
-    }
-    console.log("don't know")
-    console.log(id)
-    const list = this.state.contents.filter(item => item._id._id !== id);
-    this.setState({
-      contents:list
-    }, function(){
-      this.stopTimerTotal()
-      this.resetTimer()
-    })
-    this.setState({
-      page_toggle:false
-    })
-    console.log('here : ',this.state.contents)
+    // if(this.state.contents.length === 1){
+    //   console.log('below',this.state.contents)
+    //   axios.post('api/studysetup/get-studying-cards',{
+    //     session_id: session_id,
+    //     current_seq:req_seq,
+    //     num_request_cards:4
+    //   }).then(res => {
+    //       console.log('데이타:', res.data)
+    //       const contents = this.state.contents.concat(res.data.cards_to_send.cardlist_working)
+    //       this.setState({
+    //         contents:contents
+    //       })
+    //   })
+    // } else if(this.state.contents.length === 0){
+    //   alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
+    //   window.location.href="/study"
+    // }
+    // console.log("don't know")
+    // console.log(id)
+    // const list = this.state.contents.filter(item => item._id._id !== id);
+    // this.setState({
+    //   contents:list
+    // }, function(){
+    //   this.stopTimerTotal()
+    //   this.resetTimer()
+    // })
+    // this.setState({
+    //   page_toggle:false
+    // })
+    // console.log('here : ',this.state.contents)
     
   }
   onClickPage = () => {
@@ -224,6 +255,8 @@ class FlipMode extends Component {
       </Menu>
     );
     const nicks = []
+    const interval = []
+    const time_unit = []
 
     if(this.state.contents.length > 0){
       var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
@@ -238,7 +271,17 @@ class FlipMode extends Component {
           nicks.push(item.difficulty_setting.diffi2.nick)
           nicks.push(item.difficulty_setting.diffi3.nick)
           nicks.push(item.difficulty_setting.diffi4.nick)
-          nicks.push(item.difficulty_setting.diffi15.nick)
+          nicks.push(item.difficulty_setting.diffi5.nick)
+          interval.push(item.difficulty_setting.diffi1.interval)
+          interval.push(item.difficulty_setting.diffi2.interval)
+          interval.push(item.difficulty_setting.diffi3.interval)
+          interval.push(item.difficulty_setting.diffi4.interval)
+          interval.push(item.difficulty_setting.diffi5.interval)
+          time_unit.push(item.difficulty_setting.diffi1.time_unit)
+          time_unit.push(item.difficulty_setting.diffi2.time_unit)
+          time_unit.push(item.difficulty_setting.diffi3.time_unit)
+          time_unit.push(item.difficulty_setting.diffi4.time_unit)
+          time_unit.push(item.difficulty_setting.diffi5.time_unit)
         }
       })
     } 
@@ -283,11 +326,11 @@ class FlipMode extends Component {
               </div>
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi1", id_of_content,book_id)}>{nicks[0]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi2", id_of_content,book_id)}>{nicks[1]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi3", id_of_content,book_id)}>{nicks[2]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi4", id_of_content,book_id)}>{nicks[3]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi5", id_of_content,book_id)}>{nicks[4]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi1", id_of_content,book_id, interval[0], time_unit[0])}>{nicks[0]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi2", id_of_content,book_id, interval[1], time_unit[1])}>{nicks[1]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi3", id_of_content,book_id, interval[2], time_unit[2])}>{nicks[2]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi4", id_of_content,book_id, interval[3], time_unit[3])}>{nicks[3]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi5", id_of_content,book_id, interval[4], time_unit[4])}>{nicks[4]}</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
