@@ -239,8 +239,7 @@ class FlipMode extends Component {
           nicks.push(item.difficulty_setting.diffi2.nick)
           nicks.push(item.difficulty_setting.diffi3.nick)
           nicks.push(item.difficulty_setting.diffi4.nick)
-          nicks.push(item.difficulty_setting.diffi15.nick)
-          
+          nicks.push(item.difficulty_setting.diffi5.nick)
         }
       })
     } 
@@ -289,7 +288,7 @@ class FlipMode extends Component {
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_2", id_of_content,book_id)}>{nicks[1]}</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_3", id_of_content,book_id)}>{nicks[2]}</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_4", id_of_content,book_id)}>{nicks[3]}</Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>eee{nicks[4]}</Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("lev_5", id_of_content,book_id)}>{nicks[4]}</Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
