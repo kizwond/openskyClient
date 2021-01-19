@@ -174,24 +174,24 @@ class FlipMode extends Component {
     //         contents:contents
     //       })
     //   })
-    // } else if(this.state.contents.length === 0){
-    //   alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
-    //   window.location.href="/study"
-    // }
-    // console.log("don't know")
-    // console.log(id)
-    // const list = this.state.contents.filter(item => item._id._id !== id);
-    // this.setState({
-    //   contents:list
-    // }, function(){
-    //   this.stopTimerTotal()
-    //   this.resetTimer()
-    // })
-    // this.setState({
-    //   page_toggle:false
-    // })
-    // console.log('here : ',this.state.contents)
+    // } else 
     
+    if(this.state.contents.length === 1){
+      alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
+      window.location.href="/study"
+    }
+
+    const list = this.state.contents.filter(item => item._id !== id);
+    this.setState({
+      contents:list
+    }, function(){
+      this.stopTimerTotal()
+      this.resetTimer()
+    })
+    this.setState({
+      page_toggle:false
+    })
+    console.log('here : ',this.state.contents)
   }
   onClickPage = () => {
     console.log('page clicked to flip')
