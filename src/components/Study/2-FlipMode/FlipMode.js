@@ -74,7 +74,7 @@ class FlipMode extends Component {
   componentDidMount(){
     console.log("here!!!!!!!!!!!!!!!!!")
     this.getCardList()
-    this.getCardContents()
+    // this.getCardContents()
   }
 
   getCardList = () => {
@@ -90,13 +90,18 @@ class FlipMode extends Component {
       this.setState({
         cardlist_studying:res.data.cardlist_studying
       })
-    })
+    }).then(this.getCardContents())
   }
 
   getCardContents = () => {
-
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const ids = []
+    const card_ids = card_ids_session.map((item) => {
+      ids.push(item._id)
+    })
+    console.log('ids',ids)
     axios.post('api/studyexecute/get-studying-cards',{
-      card_ids: JSON.parse(sessionStorage.getItem('cardlist_studying'))
+      card_ids: ids
     }).then(res => {
       console.log("카드리스트 받아보자")
       console.log("카드 컨텐츠 : ",res.data)
@@ -218,8 +223,8 @@ class FlipMode extends Component {
       </Menu>
     );
     if(this.state.contents.length > 0){
-      var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView model={item}/>)
-      var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView model={item}/>)
+      var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
+      var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={item} model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
       var id_of_content = this.state.contents[0]._id
       var book_id = this.state.contents[0]._id
