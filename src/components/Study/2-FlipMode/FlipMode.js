@@ -77,8 +77,8 @@ class FlipMode extends Component {
     // this.getCardContents()
   }
 
-  getCardList = () => {
-    axios.post('api/studyexecute/get-cardlist',{
+  getCardList = async () => {
+    await axios.post('api/studyexecute/get-cardlist',{
       session_id: session_id,
     }).then(res => {
       console.log("here22222222222")
@@ -90,7 +90,8 @@ class FlipMode extends Component {
       this.setState({
         cardlist_studying:res.data.cardlist_studying
       })
-    }).then(this.getCardContents())
+    })
+    this.getCardContents()
   }
 
   getCardContents = () => {
@@ -226,9 +227,8 @@ class FlipMode extends Component {
       var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
       var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={item} model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
-      var id_of_content = this.state.contents[0]._id
-      var book_id = this.state.contents[0]._id
-      
+      var id_of_content = this.state.contents[0].book_id
+      var book_id = this.state.contents[0].book_id
     } 
 
     return (
