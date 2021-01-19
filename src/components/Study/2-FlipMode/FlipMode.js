@@ -96,7 +96,7 @@ class FlipMode extends Component {
   getCardContents = () => {
 
     axios.post('api/studyexecute/get-studying-cards',{
-      card_ids: this.state.cardlist_studying,
+      card_ids: JSON.parse(sessionStorage.getItem('cardlist_studying'))
     }).then(res => {
       console.log("카드리스트 받아보자")
       console.log("카드 컨텐츠 : ",res.data)
