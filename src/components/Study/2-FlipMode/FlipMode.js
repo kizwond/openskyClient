@@ -73,20 +73,34 @@ class FlipMode extends Component {
   // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
   componentDidMount(){
     console.log("here!!!!!!!!!!!!!!!!!")
-    const current_seq = sessionStorage.getItem("current_seq")
-    // const session_id = sessionStorage.getItem('session_id')
+    this.getCardList()
+    this.getCardContents()
+  }
+
+  getCardList = () => {
     axios.post('api/studyexecute/get-cardlist',{
       session_id: session_id,
-      // current_seq:Number(current_seq),
-      // num_request_cards:4
     }).then(res => {
       console.log("here22222222222")
-      console.log("이거가지고 시작",res.data)
-      // console.log('데이타:', res.data.cards_to_send.cardlist_working)
-      // sessionStorage.setItem('study_setting',JSON.stringify(res.data.cards_to_send.cardlist_working));
-      // this.setState({
-      //   contents:res.data.cards_to_send.cardlist_working
-      // })
+      console.log("카드리스트 : ",res.data.cardlist_studying)
+      console.log("레벨설정값 : ",res.data.level_config)
+      
+      sessionStorage.setItem('level_config',JSON.stringify(res.data.level_config));
+      sessionStorage.setItem('cardlist_studying',JSON.stringify(res.data.cardlist_studying));
+      this.setState({
+        cardlist_studying:res.data.cardlist_studying
+      })
+    })
+  }
+
+  getCardContents = () => {
+
+    axios.post('api/studyexecute/get-studying-cards',{
+      card_ids: this.state.cardlist_studying,
+    }).then(res => {
+      console.log("카드리스트 받아보자")
+      console.log("카드 컨텐츠 : ",res.data)
+      
     })
   }
 
