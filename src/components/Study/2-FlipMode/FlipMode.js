@@ -100,7 +100,9 @@ class FlipMode extends Component {
     }).then(res => {
       console.log("카드리스트 받아보자")
       console.log("카드 컨텐츠 : ",res.data)
-      
+      this.setState({
+        contents:res.data.cards
+      })
     })
   }
 
@@ -216,11 +218,11 @@ class FlipMode extends Component {
       </Menu>
     );
     if(this.state.contents.length > 0){
-      var first_face_data = this.state.contents[0]._id.content_of_first_face.map(item => <FroalaEditorView model={item}/>)
-      var second_face_data = this.state.contents[0]._id.content_of_second_face.map(item => <FroalaEditorView model={item}/>)
+      var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView model={item}/>)
+      var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
-      var id_of_content = this.state.contents[0]._id._id
-      var book_id = this.state.contents[0].book_id
+      var id_of_content = this.state.contents[0]._id
+      var book_id = this.state.contents[0]._id
       
     } 
 
