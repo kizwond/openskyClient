@@ -98,31 +98,130 @@ class FlipMode extends Component {
     const current_seq = sessionStorage.getItem("current_seq")
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
-    const testValue = card_ids_session.map(item =>{
+    const reviewExist = card_ids_session.map(item =>{
       if(item.detail_status.need_study_time !== null){
         if(new Date(item.detail_status.need_study_time) < now){
           return item._id
         }
-      } else {
-        return item._id
       }
     })
-    console.log(testValue)
-    const ids = []
-    const card_ids = card_ids_session.map((item) => {
-      ids.push(item._id)
+
+    const reviewNotExist = card_ids_session.map(item =>{
+      if(item.detail_status.need_study_time === null){
+          return item._id
+      }
     })
-    console.log('ids',ids)
-    axios.post('api/studyexecute/get-studying-cards',{
-      card_ids: ids
-    }).then(res => {
-      console.log("카드리스트 받아보자")
-      console.log("카드 컨텐츠 : ",res.data)
-      this.setState({
-        contents:res.data.cards
-      })
-    })
+    
+    console.log('reviewExist',reviewExist)
+    console.log('reviewNotExist',reviewNotExist)
+    if(reviewExist.length > 0){
+      if(reviewExist[0] === undefined){
+        var ids = reviewNotExist
+        const newIdsArray = ids.splice(current_seq, 3)
+          console.log(newIdsArray)
+          console.log('ids',ids)
+          axios.post('api/studyexecute/get-studying-cards',{
+            card_ids: newIdsArray
+          }).then(res => {
+            console.log("카드리스트 받아보자")
+            console.log("카드 컨텐츠 : ",res.data)
+            const contents = this.state.contents.concat(res.data.cards)
+            this.setState({
+              contents:contents
+            })
+          })
+      } else {
+        ids = reviewExist
+        const newIdsArray = ids.splice(current_seq, 3)
+          console.log(newIdsArray)
+          console.log('ids',ids)
+          axios.post('api/studyexecute/get-studying-cards',{
+            card_ids: newIdsArray
+          }).then(res => {
+            console.log("카드리스트 받아보자")
+            console.log("카드 컨텐츠 : ",res.data)
+            const contents = res.data.cards.concat(this.state.contents)
+            this.setState({
+              contents:contents
+            })
+          })
+      }
+    }
   }
+
+  getCardContentsAdd = () => {
+    const current_seq = sessionStorage.getItem("current_seq")
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const now = new Date();
+    const reviewExist = card_ids_session.map(item =>{
+      if(item.detail_status.need_study_time !== null){
+        if(new Date(item.detail_status.need_study_time) < now){
+          return item._id
+        }
+      }
+    })
+
+    const reviewNotExist = card_ids_session.map(item =>{
+      if(item.detail_status.need_study_time === null){
+          return item._id
+      }
+    })
+    
+    console.log('reviewExist',reviewExist)
+    console.log('reviewNotExist',reviewNotExist)
+    if(reviewExist.length > 0){
+      if(reviewExist[0] === undefined){
+        var ids = reviewNotExist
+        const newIdsArray = ids.splice(current_seq, 5)
+          console.log(newIdsArray)
+          console.log('ids',ids)
+          axios.post('api/studyexecute/get-studying-cards',{
+            card_ids: newIdsArray
+          }).then(res => {
+            console.log("카드리스트 받아보자")
+            console.log("카드 컨텐츠 : ",res.data)
+            const contents = this.state.contents.concat(res.data.cards)
+            console.log('contents review exist',contents)
+            const result = contents.filter((item, i) => {
+              return (
+                contents.findIndex((item2, j) => {
+                  return item._id === item2._id;
+                }) === i
+              );
+            });
+            console.log('uniqueArr review exist',result)
+            this.setState({
+              contents:result
+            })
+          })
+      } else {
+        ids = reviewExist
+        const newIdsArray = ids.splice(current_seq, 1)
+          console.log(newIdsArray)
+          console.log('ids',ids)
+          axios.post('api/studyexecute/get-studying-cards',{
+            card_ids: newIdsArray
+          }).then(res => {
+            console.log("카드리스트 받아보자")
+            console.log("카드 컨텐츠 : ",res.data)
+            const contents = res.data.cards.concat(this.state.contents)
+            console.log('contents review not exist',contents)
+            const result = contents.filter((item, i) => {
+              return (
+                contents.findIndex((item2, j) => {
+                  return item._id === item2._id;
+                }) === i
+              );
+            });
+            console.log('uniqueArr review not exist',result)
+            this.setState({
+              contents:result
+            })
+          })
+      }
+    }
+  }
+
 
   milliseconds = (h, m, s) => ((h*60*60+m*60+s)*1000);
 
@@ -159,6 +258,7 @@ class FlipMode extends Component {
   //  return 0;
   // }
 
+  
   
   
   onClickDifficulty = (lev, id, book_id, interval, time_unit)=>{
@@ -233,6 +333,10 @@ class FlipMode extends Component {
     //       })
     //   })
     // } else 
+    if(this.state.contents.length === 2){
+      this.getCardContentsAdd()
+    }
+    
     
     if(this.state.contents.length === 1){
       alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
@@ -249,7 +353,7 @@ class FlipMode extends Component {
     this.setState({
       page_toggle:false
     })
-    console.log('here : ',this.state.contents)
+    console.log('here : ',list)
   }
   onClickPage = () => {
     console.log('page clicked to flip')
