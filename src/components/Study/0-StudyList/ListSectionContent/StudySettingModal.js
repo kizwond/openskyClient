@@ -39,6 +39,7 @@ class StudySettingModal extends Component {
       var setting = this.props.studySetting
       var exp_setting_data = setting.exp_setting
       var difficulty_setting_data = setting.difficulty_setting
+      console.log('difficulty_setting_data:  ',difficulty_setting_data)
       var lev_setting_data = setting.lev_setting
       var initialValues = {
         book_id:this.props.info.book_id,
@@ -50,37 +51,37 @@ class StudySettingModal extends Component {
             five_times:exp_setting_data.five_times,
         },
         difficulty_setting: {
-          lev_1: {
-            time_unit:difficulty_setting_data.lev_1.time_unit,
-            nick:difficulty_setting_data.lev_1.nick,
-            hot_key:difficulty_setting_data.lev_1.hot_key,
-            interval:difficulty_setting_data.lev_1.interval,
-            on_off:difficulty_setting_data.lev_1.on_off,
+          diffi1: {
+            time_unit:difficulty_setting_data.diffi1.time_unit,
+            nick:difficulty_setting_data.diffi1.nick,
+            hot_key:difficulty_setting_data.diffi1.hot_key,
+            interval:difficulty_setting_data.diffi1.interval,
+            on_off:difficulty_setting_data.diffi1.on_off,
           },
-          lev_2: {
-            time_unit:difficulty_setting_data.lev_2.time_unit,
-            nick:difficulty_setting_data.lev_2.nick,
-            hot_key:difficulty_setting_data.lev_2.hot_key,
-            interval:difficulty_setting_data.lev_2.interval,
-            on_off:difficulty_setting_data.lev_2.on_off,
+          diffi2: {
+            time_unit:difficulty_setting_data.diffi2.time_unit,
+            nick:difficulty_setting_data.diffi2.nick,
+            hot_key:difficulty_setting_data.diffi2.hot_key,
+            interval:difficulty_setting_data.diffi2.interval,
+            on_off:difficulty_setting_data.diffi2.on_off,
           },
-          lev_3: {
-            time_unit:difficulty_setting_data.lev_3.time_unit,
-            nick:difficulty_setting_data.lev_3.nick,
-            hot_key:difficulty_setting_data.lev_3.hot_key,
-            interval:difficulty_setting_data.lev_3.interval,
-            on_off:difficulty_setting_data.lev_3.on_off,
+          diffi3: {
+            time_unit:difficulty_setting_data.diffi3.time_unit,
+            nick:difficulty_setting_data.diffi3.nick,
+            hot_key:difficulty_setting_data.diffi3.hot_key,
+            interval:difficulty_setting_data.diffi3.interval,
+            on_off:difficulty_setting_data.diffi3.on_off,
           },
-          lev_4: {
-            time_unit:difficulty_setting_data.lev_4.time_unit,
-            nick:difficulty_setting_data.lev_4.nick,
-            hot_key:difficulty_setting_data.lev_4.hot_key,
-            interval:difficulty_setting_data.lev_4.interval,
-            on_off:difficulty_setting_data.lev_4.on_off,
+          diffi4: {
+            time_unit:difficulty_setting_data.diffi4.time_unit,
+            nick:difficulty_setting_data.diffi4.nick,
+            hot_key:difficulty_setting_data.diffi4.hot_key,
+            interval:difficulty_setting_data.diffi4.interval,
+            on_off:difficulty_setting_data.diffi4.on_off,
           },
-          lev_5: {
-            nick:difficulty_setting_data.lev_5.nick,
-            hot_key:difficulty_setting_data.lev_5.hot_key,
+          diffi5: {
+            nick:difficulty_setting_data.diffi5.nick,
+            hot_key:difficulty_setting_data.diffi5.hot_key,
           }
         },
         lev_setting: {
@@ -205,21 +206,21 @@ class StudySettingModal extends Component {
                     <li><Button style={{width:"100px", fontSize:"11px"}} size="small">모르겠음</Button></li>
                     <li style={{width:"30px"}}></li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_1','nick']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi1','nick']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"120px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_1','hot_key']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi1','hot_key']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"50px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li style={{width:"50px"}}>화살표</li>
                     <li style={{width:"200px", display:"flex"}}>
-                    <Form.Item name={['difficulty_setting', 'lev_1','interval']} rules={[{ required: true }]}>
+                    <Form.Item name={['difficulty_setting', 'diffi1','interval']} rules={[{ required: true }]}>
                         <InputNumber size="small" style={{width:"50px", fontSize:"12px"}} />
                     </Form.Item> 
-                    <Form.Item name={['difficulty_setting', 'lev_1','time_unit']} rules={[{ required: true }]} >
+                    <Form.Item name={['difficulty_setting', 'diffi1','time_unit']} rules={[{ required: true }]} >
                       <Select size="small" style={{width:"80px", fontSize:"12px"}}>
                         <Option value="min">분</Option>
                         <Option value="hour">시간</Option>
@@ -233,26 +234,26 @@ class StudySettingModal extends Component {
                   <ul style={style}>
                     <li><Button style={{width:"100px", fontSize:"11px"}} size="small">거의모르겠음</Button></li>
                     <li style={{width:"30px"}}>
-                      <Form.Item name={['difficulty_setting', 'lev_2','on_off']} valuePropName="checked" rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi2','on_off']} valuePropName="checked" rules={[{ required: true }]}>
                         <Switch size="small" />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_2','nick']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi2','nick']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"120px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_2','hot_key']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi2','hot_key']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"50px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li style={{width:"50px"}}>화살표</li>
                     <li style={{width:"200px", display:"flex"}}>
-                    <Form.Item name={['difficulty_setting', 'lev_2','interval']} rules={[{ required: true }]}>
+                    <Form.Item name={['difficulty_setting', 'diffi2','interval']} rules={[{ required: true }]}>
                         <InputNumber size="small" style={{width:"50px", fontSize:"12px"}} />
                     </Form.Item> 
-                    <Form.Item name={['difficulty_setting', 'lev_2','time_unit']} rules={[{ required: true }]} >
+                    <Form.Item name={['difficulty_setting', 'diffi2','time_unit']} rules={[{ required: true }]} >
                       <Select size="small" style={{width:"80px", fontSize:"12px"}}>
                         <Option value="min">분</Option>
                         <Option value="hour">시간</Option>
@@ -266,25 +267,25 @@ class StudySettingModal extends Component {
                   <ul style={style}>
                     <li><Button style={{width:"100px", fontSize:"11px"}} size="small">애매함</Button></li>
                     <li style={{width:"30px"}}>
-                      <Form.Item name={['difficulty_setting', 'lev_3','on_off']} valuePropName="checked" rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi3','on_off']} valuePropName="checked" rules={[{ required: true }]}>
                         <Switch size="small" />
                       </Form.Item></li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_3','nick']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi3','nick']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"120px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_3','hot_key']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi3','hot_key']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"50px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li style={{width:"50px"}}>화살표</li>
                     <li style={{width:"200px", display:"flex"}}>
-                    <Form.Item name={['difficulty_setting', 'lev_3','interval']} rules={[{ required: true }]}>
+                    <Form.Item name={['difficulty_setting', 'diffi3','interval']} rules={[{ required: true }]}>
                         <InputNumber size="small" style={{width:"50px", fontSize:"12px"}} />
                     </Form.Item> 
-                    <Form.Item name={['difficulty_setting', 'lev_3','time_unit']} rules={[{ required: true }]} >
+                    <Form.Item name={['difficulty_setting', 'diffi3','time_unit']} rules={[{ required: true }]} >
                       <Select size="small" style={{width:"80px", fontSize:"12px"}}>
                         <Option value="min">분</Option>
                         <Option value="hour">시간</Option>
@@ -298,26 +299,26 @@ class StudySettingModal extends Component {
                   <ul style={style}>
                     <li><Button style={{width:"100px", fontSize:"11px"}} size="small">거의알겠음</Button></li>
                     <li style={{width:"30px"}}>
-                      <Form.Item name={['difficulty_setting', 'lev_4','on_off']} valuePropName="checked" rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi4','on_off']} valuePropName="checked" rules={[{ required: true }]}>
                         <Switch size="small" />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_4','nick']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi4','nick']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"120px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_4','hot_key']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi4','hot_key']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"50px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li style={{width:"50px"}}>화살표</li>
                     <li style={{width:"200px", display:"flex"}}>
-                    <Form.Item name={['difficulty_setting', 'lev_4','interval']} rules={[{ required: true }]}>
+                    <Form.Item name={['difficulty_setting', 'diffi4','interval']} rules={[{ required: true }]}>
                         <InputNumber size="small" style={{width:"50px", fontSize:"12px"}} />
                     </Form.Item> 
-                    <Form.Item name={['difficulty_setting', 'lev_4','time_unit']} rules={[{ required: true }]} >
+                    <Form.Item name={['difficulty_setting', 'diffi4','time_unit']} rules={[{ required: true }]} >
                       <Select size="small" style={{width:"80px", fontSize:"12px"}}>
                         <Option value="min">분</Option>
                         <Option value="hour">시간</Option>
@@ -332,12 +333,12 @@ class StudySettingModal extends Component {
                     <li><Button style={{width:"100px", fontSize:"11px"}} size="small">알겠음</Button></li>
                     <li style={{width:"30px"}}></li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_5','nick']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi5','nick']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"120px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>
                     <li>
-                      <Form.Item name={['difficulty_setting', 'lev_5','hot_key']} rules={[{ required: true }]}>
+                      <Form.Item name={['difficulty_setting', 'diffi5','hot_key']} rules={[{ required: true }]}>
                         <Input size="small" style={{width:"50px", fontSize:"12px"}} />
                       </Form.Item>
                     </li>

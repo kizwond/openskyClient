@@ -33,7 +33,7 @@ class ListSectionContent extends Component {
   };
   onFinish = values => {
     console.log(values);
-    axios.post('api/studysetup/set-study-configuration',{
+    axios.post('api/studysetup/set-level-config',{
       book_id: values.book_id,
       difficulty_setting:values.difficulty_setting,
       exp_setting:values.exp_setting,
@@ -44,15 +44,15 @@ class ListSectionContent extends Component {
   };
   getStudySetting = (value) =>{
     console.log(value)
-    axios.post('api/studysetup/get-study-configuration',{
+    axios.post('api/studysetup/get-level-config',{
       book_id: value
     }).then(res => {
-      console.log(res.data.study_configuration)
+      console.log("get-level-config", res.data.level_config)
       this.setState({
-        study_configuration:res.data.study_configuration
+        study_configuration:res.data.level_config
       })
       this.setState({
-        visible_array:{book_id:res.data.study_configuration.book_id, visible:true}
+        visible_array:{book_id:res.data.level_config.book_id, visible:true}
       })
       this.showModal()
     })
