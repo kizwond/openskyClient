@@ -95,7 +95,19 @@ class FlipMode extends Component {
   }
 
   getCardContents = () => {
+    const current_seq = sessionStorage.getItem("current_seq")
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const now = new Date();
+    const testValue = card_ids_session.map(item =>{
+      if(item.detail_status.need_study_time !== null){
+        if(new Date(item.detail_status.need_study_time) < now){
+          return item._id
+        }
+      } else {
+        return item._id
+      }
+    })
+    console.log(testValue)
     const ids = []
     const card_ids = card_ids_session.map((item) => {
       ids.push(item._id)
@@ -111,8 +123,43 @@ class FlipMode extends Component {
       })
     })
   }
+
   milliseconds = (h, m, s) => ((h*60*60+m*60+s)*1000);
 
+  leadingZeros = (n, digits) => {
+    var zero = '';
+    n = n.toString();
+  
+    if (n.length < digits) {
+      for (var i = 0; i < digits - n.length; i++)
+        zero += '0';
+    }
+    return zero + n;
+  }
+
+  getTimeStamp = (review_date) => {
+    var d = review_date;
+    var s =
+      this.leadingZeros(d.getFullYear(), 4) + '-' +
+      this.leadingZeros(d.getMonth() + 1, 2) + '-' +
+      this.leadingZeros(d.getDate(), 2) + 'T' +
+  
+      this.leadingZeros(d.getHours(), 2) + ':' +
+      this.leadingZeros(d.getMinutes(), 2) + ':' +
+      this.leadingZeros(d.getSeconds(), 2) + 'Z';
+  
+    return s;
+  }
+  
+  // compare = (first, second) => {
+  //   if (first.detail_status.need_study_time < second.detail_status.need_study_time)
+  //       return -1;
+  //   if (first.detail_status.need_study_time > second.detail_status.need_study_time)
+  //     return 1;
+  //  return 0;
+  // }
+
+  
   
   onClickDifficulty = (lev, id, book_id, interval, time_unit)=>{
     const now = new Date();
@@ -126,29 +173,40 @@ class FlipMode extends Component {
     sessionStorage.setItem('current_seq',next_seq);
     const req_seq = Number(sessionStorage.getItem("current_seq"))
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
-    console.log('card_ids_session',card_ids_session[0].detail_status.session_study_times)
-    const prev_session_study_times = card_ids_session[0].detail_status.session_study_times
-    const prev_current_lev_study_times = card_ids_session[0].detail_status.current_lev_study_times
-    const prev_total_study_times = card_ids_session[0].detail_status.total_study_times
-    card_ids_session[0].detail_status.session_study_times = prev_session_study_times + 1
-    card_ids_session[0].detail_status.current_lev_study_times = prev_current_lev_study_times + 1
-    card_ids_session[0].detail_status.total_study_times = prev_total_study_times + 1
-    card_ids_session[0].detail_status.recent_difficulty = lev
-    card_ids_session[0].detail_status.recent_study_hour = now
-    card_ids_session[0].detail_status.recent_study_time = this.state.time
+    const selectedIndex = card_ids_session.findIndex((item, index)=>{
+      return item._id === id
+    })
+
+    console.log('card_ids_session',card_ids_session[selectedIndex].detail_status.session_study_times)
+    // const prev_session_study_times = card_ids_session[selectedIndex].detail_status.session_study_times
+    const prev_current_lev_study_times = card_ids_session[selectedIndex].detail_status.current_lev_study_times
+    const prev_total_study_times = card_ids_session[selectedIndex].detail_status.total_study_times
+    const prev_total_study_hour = card_ids_session[selectedIndex].detail_status.total_study_hour
+    // card_ids_session[selectedIndex].detail_status.session_study_times = prev_session_study_times + 1
+    card_ids_session[selectedIndex].detail_status.current_lev_study_times = prev_current_lev_study_times + 1
+    card_ids_session[selectedIndex].detail_status.total_study_times = prev_total_study_times + 1
+    card_ids_session[selectedIndex].detail_status.recent_difficulty = lev
+    card_ids_session[selectedIndex].detail_status.recent_study_hour = this.state.time
+    card_ids_session[selectedIndex].detail_status.total_study_hour = prev_total_study_hour + this.state.time
+    card_ids_session[selectedIndex].detail_status.recent_study_time = String(this.getTimeStamp(now))
     
     const now_mili_convert = Date.parse(now);
     const result = this.milliseconds(0, interval, 0);
     const need_review_time = now_mili_convert + result
-    console.log(need_review_time)
 
-    const review_date = new Date(need_review_time);
-    card_ids_session[0].detail_status.need_study_time = review_date
-    console.log('지금', now)
-    console.log('복습',review_date)
+    const review_date = new Date(need_review_time)
+
+    card_ids_session[0].detail_status.need_study_time = String(this.getTimeStamp(review_date))
+
     console.log('card_ids_session updated!!',card_ids_session[0].detail_status)
 
-    
+    console.log('before saving',card_ids_session)
+    // card_ids_session.sort(this.compare)
+    // console.log('after sorting',card_ids_session)
+
+    sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
+    const updatedSession = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    console.log(updatedSession)
     // axios.post('api/study-flip/click-difficulty',{
     //   session_id: session_id,
     //   difficulty: lev,
