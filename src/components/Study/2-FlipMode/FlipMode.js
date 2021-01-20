@@ -117,7 +117,7 @@ class FlipMode extends Component {
     if(reviewExist.length > 0){
       if(reviewExist[0] === undefined){
         var ids = reviewNotExist
-        const newIdsArray = ids.splice(current_seq, 3)
+        const newIdsArray = ids.splice(current_seq, 1)
           console.log(newIdsArray)
           console.log('ids',ids)
           axios.post('api/studyexecute/get-studying-cards',{
@@ -132,7 +132,7 @@ class FlipMode extends Component {
           })
       } else {
         ids = reviewExist
-        const newIdsArray = ids.splice(current_seq, 3)
+        const newIdsArray = ids.splice(current_seq, 1)
           console.log(newIdsArray)
           console.log('ids',ids)
           axios.post('api/studyexecute/get-studying-cards',{
@@ -154,8 +154,15 @@ class FlipMode extends Component {
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
     const reviewExist = card_ids_session.map(item =>{
+      console.log("here exist")
       if(item.detail_status.need_study_time !== null){
-        if(new Date(item.detail_status.need_study_time) < now){
+        console.log("here2@@@@@@@@@@")
+        console.log('time compare',new Date(item.detail_status.need_study_time))
+        console.log('time now    ',now)
+        let a = new Date(item.detail_status.need_study_time)
+        a.setHours(a.getHours()-9)
+        console.log('a',a)
+        if(a < now){
           return item._id
         }
       }
@@ -166,60 +173,66 @@ class FlipMode extends Component {
           return item._id
       }
     })
+
     
-    console.log('reviewExist',reviewExist)
-    console.log('reviewNotExist',reviewNotExist)
-    if(reviewExist.length > 0){
-      if(reviewExist[0] === undefined){
-        var ids = reviewNotExist
-        const newIdsArray = ids.splice(current_seq, 5)
-          console.log(newIdsArray)
-          console.log('ids',ids)
-          axios.post('api/studyexecute/get-studying-cards',{
-            card_ids: newIdsArray
-          }).then(res => {
-            console.log("카드리스트 받아보자")
-            console.log("카드 컨텐츠 : ",res.data)
-            const contents = this.state.contents.concat(res.data.cards)
-            console.log('contents review exist',contents)
-            const result = contents.filter((item, i) => {
-              return (
-                contents.findIndex((item2, j) => {
-                  return item._id === item2._id;
-                }) === i
-              );
-            });
-            console.log('uniqueArr review exist',result)
-            this.setState({
-              contents:result
-            })
+    const reviewExist_filtered = reviewExist.filter(function (el) {
+      return el != null;
+    });
+    const reviewNotExist_filtered = reviewNotExist.filter(function (el) {
+      return el != null;
+    });
+    
+    console.log('reviewExist',reviewExist_filtered)
+    console.log('reviewNotExist',reviewNotExist_filtered)
+
+    if(reviewExist_filtered.length > 0){
+      const ids = reviewExist_filtered
+      const newIdsArray = ids.splice(0, 1)
+        console.log('ids',ids)
+        console.log(newIdsArray)
+        axios.post('api/studyexecute/get-studying-cards',{
+          card_ids: newIdsArray
+        }).then(res => {
+          console.log("세션 신규 카드 컨텐츠 : ",res.data.cards)
+          const contents = res.data.cards.concat(this.state.contents)
+          console.log('contents review exist',contents)
+          const result = contents.filter((item, i) => {
+            return (
+              contents.findIndex((item2, j) => {
+                return item._id === item2._id;
+              }) === i
+            );
+          });
+          console.log('uniqueArr review exist',result)
+          this.setState({
+            contents:result
           })
-      } else {
-        ids = reviewExist
+        })
+    } else {
+        const ids = reviewNotExist_filtered
         const newIdsArray = ids.splice(current_seq, 1)
-          console.log(newIdsArray)
-          console.log('ids',ids)
-          axios.post('api/studyexecute/get-studying-cards',{
-            card_ids: newIdsArray
-          }).then(res => {
-            console.log("카드리스트 받아보자")
-            console.log("카드 컨텐츠 : ",res.data)
-            const contents = res.data.cards.concat(this.state.contents)
-            console.log('contents review not exist',contents)
-            const result = contents.filter((item, i) => {
-              return (
-                contents.findIndex((item2, j) => {
-                  return item._id === item2._id;
-                }) === i
-              );
-            });
-            console.log('uniqueArr review not exist',result)
-            this.setState({
-              contents:result
-            })
+        console.log('ids',ids)
+        console.log(newIdsArray)
+        axios.post('api/studyexecute/get-studying-cards',{
+          card_ids: newIdsArray
+        }).then(res => {
+          console.log("세션 복습 카드 컨텐츠 : ",res.data.cards)
+          const contents = this.state.contents.concat(res.data.cards)
+          console.log('contents review not exist',contents)
+          const result = contents.filter((item, i) => {
+            return (
+              contents.findIndex((item2, j) => {
+                return item._id === item2._id;
+              }) === i
+            );
+          });
+          console.log('uniqueArr review not exist',result)
+          this.setState({
+            contents:result
           })
-      }
+        })
     }
+
   }
 
 
@@ -245,7 +258,7 @@ class FlipMode extends Component {
   
       this.leadingZeros(d.getHours(), 2) + ':' +
       this.leadingZeros(d.getMinutes(), 2) + ':' +
-      this.leadingZeros(d.getSeconds(), 2) + 'Z';
+      this.leadingZeros(d.getSeconds(), 2) +'.000'+ 'Z';
   
     return s;
   }
@@ -295,9 +308,9 @@ class FlipMode extends Component {
 
     const review_date = new Date(need_review_time)
 
-    card_ids_session[0].detail_status.need_study_time = String(this.getTimeStamp(review_date))
+    card_ids_session[selectedIndex].detail_status.need_study_time = String(this.getTimeStamp(review_date))
 
-    console.log('card_ids_session updated!!',card_ids_session[0].detail_status)
+    console.log('card_ids_session updated!!',card_ids_session[selectedIndex].detail_status)
 
     console.log('before saving',card_ids_session)
     // card_ids_session.sort(this.compare)
@@ -332,12 +345,12 @@ class FlipMode extends Component {
     //       })
     //   })
     // } else 
-    if(this.state.contents.length === 2){
+    if(this.state.contents.length === 1){
       this.getCardContentsAdd()
     }
     
     
-    if(this.state.contents.length === 1){
+    if(this.state.contents.length === 0){
       alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
       window.location.href="/study"
     }
