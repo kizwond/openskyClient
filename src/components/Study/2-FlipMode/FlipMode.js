@@ -162,7 +162,7 @@ class FlipMode extends Component {
         let a = new Date(item.detail_status.need_study_time)
         a.setHours(a.getHours()-9)
         console.log('a',a)
-        if(a < now){
+        if(new Date(item.detail_status.need_study_time) < now){
           return item._id
         }
       }
@@ -249,19 +249,19 @@ class FlipMode extends Component {
     return zero + n;
   }
 
-  getTimeStamp = (review_date) => {
-    var d = review_date;
-    var s =
-      this.leadingZeros(d.getFullYear(), 4) + '-' +
-      this.leadingZeros(d.getMonth() + 1, 2) + '-' +
-      this.leadingZeros(d.getDate(), 2) + 'T' +
+  // getTimeStamp = (review_date) => {
+  //   var d = review_date;
+  //   var s =
+  //     this.leadingZeros(d.getFullYear(), 4) + '-' +
+  //     this.leadingZeros(d.getMonth() + 1, 2) + '-' +
+  //     this.leadingZeros(d.getDate(), 2) + 'T' +
   
-      this.leadingZeros(d.getHours(), 2) + ':' +
-      this.leadingZeros(d.getMinutes(), 2) + ':' +
-      this.leadingZeros(d.getSeconds(), 2) +'.000'+ 'Z';
+  //     this.leadingZeros(d.getHours(), 2) + ':' +
+  //     this.leadingZeros(d.getMinutes(), 2) + ':' +
+  //     this.leadingZeros(d.getSeconds(), 2) +'.000'+'Z';
   
-    return s;
-  }
+  //   return s;
+  // }
   
   // compare = (first, second) => {
   //   if (first.detail_status.need_study_time < second.detail_status.need_study_time)
@@ -300,7 +300,8 @@ class FlipMode extends Component {
     card_ids_session[selectedIndex].detail_status.recent_difficulty = lev
     card_ids_session[selectedIndex].detail_status.recent_study_hour = this.state.time
     card_ids_session[selectedIndex].detail_status.total_study_hour = prev_total_study_hour + this.state.time
-    card_ids_session[selectedIndex].detail_status.recent_study_time = String(this.getTimeStamp(now))
+    card_ids_session[selectedIndex].detail_status.recent_study_time = now
+    // card_ids_session[selectedIndex].detail_status.recent_study_time = String(this.getTimeStamp(now))
     
     const now_mili_convert = Date.parse(now);
     const result = this.milliseconds(0, interval, 0);
@@ -308,7 +309,7 @@ class FlipMode extends Component {
 
     const review_date = new Date(need_review_time)
 
-    card_ids_session[selectedIndex].detail_status.need_study_time = String(this.getTimeStamp(review_date))
+    card_ids_session[selectedIndex].detail_status.need_study_time = review_date
 
     console.log('card_ids_session updated!!',card_ids_session[selectedIndex].detail_status)
 
