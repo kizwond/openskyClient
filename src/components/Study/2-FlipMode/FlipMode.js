@@ -385,6 +385,7 @@ class FlipMode extends Component {
       const review_date = new Date(need_review_time)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
       card_ids_session[selectedIndex].detail_status.level = gained_level
+      card_ids_session[selectedIndex].detail_status.current_lev_study_times = 0
 
     }    
 
@@ -395,8 +396,11 @@ class FlipMode extends Component {
     card_ids_session[selectedIndex].detail_status.session_study_times = prev_session_study_times + 1
 
     //해당 카드가 마지막 알겠음 버튼 클릭 후 학습횟수 (레벨설정에서 경험치 증감 기준을 위한 학습횟수 정보)
-    const prev_current_lev_study_times = card_ids_session[selectedIndex].detail_status.current_lev_study_times
-    card_ids_session[selectedIndex].detail_status.current_lev_study_times = prev_current_lev_study_times + 1
+    if(lev !== "diffi5"){
+      const prev_current_lev_study_times = card_ids_session[selectedIndex].detail_status.current_lev_study_times
+      card_ids_session[selectedIndex].detail_status.current_lev_study_times = prev_current_lev_study_times + 1
+    }
+    
 
     //해당 카드의 총 학습횟수 저장
     const prev_total_study_times = card_ids_session[selectedIndex].detail_status.total_study_times
