@@ -150,6 +150,10 @@ class FlipMode extends Component {
   }
 
   getCardContentsAdd = () => {
+    if(this.state.contents.length === 0){
+      alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
+      window.location.href="/study"
+    }
     const current_seq = sessionStorage.getItem("current_seq")
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
@@ -209,6 +213,10 @@ class FlipMode extends Component {
           })
         })
     } else {
+        const current_seq = sessionStorage.getItem("current_seq")
+        const next_seq = Number(current_seq)+1
+        sessionStorage.setItem('current_seq',next_seq);
+        
         const ids = reviewNotExist_filtered
         const newIdsArray = ids.splice(current_seq, 1)
         console.log('ids',ids)
@@ -281,10 +289,8 @@ class FlipMode extends Component {
     console.log('쳔재카드 book_id', book_id)
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
-    const current_seq = sessionStorage.getItem("current_seq")
-    const next_seq = Number(current_seq)+1
-    sessionStorage.setItem('current_seq',next_seq);
-    const req_seq = Number(sessionStorage.getItem("current_seq"))
+
+
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const selectedIndex = card_ids_session.findIndex((item, index)=>{
       return item._id === id
@@ -351,10 +357,7 @@ class FlipMode extends Component {
     }
     
     
-    if(this.state.contents.length === 0){
-      alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
-      window.location.href="/study"
-    }
+   
 
     const list = this.state.contents.filter(item => item._id !== id);
     this.setState({
