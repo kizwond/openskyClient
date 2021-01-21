@@ -86,9 +86,19 @@ class FlipMode extends Component {
       
       sessionStorage.setItem('level_config',JSON.stringify(res.data.level_config));
       sessionStorage.setItem('cardlist_studying',JSON.stringify(res.data.cardlist_studying));
+
+      const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+      const average_level = card_ids_session.map(item=>{
+        return item.detail_status.level
+      })
+      var average_processing = average_level.reduce((a, b) => a + b, 0)
+      var average_completed = average_processing / card_ids_session.length
+      sessionStorage.setItem('average_completed', average_completed)
+
       this.setState({
         cardlist_studying:res.data.cardlist_studying,
-        level_config:res.data.level_config
+        level_config:res.data.level_config,
+        average_completed:average_completed
       })
     })
     this.getCardContents()
@@ -308,6 +318,16 @@ class FlipMode extends Component {
 
       const gained_level = Math.floor(prev_exp + exp_gain / 1000)
       console.log(gained_level)
+      const average_completed_session = sessionStorage.getItem('average_completed')
+      console.log(average_completed_session)
+      const new_average_before =  ((average_completed_session*card_ids_session.length) + gained_level )/ card_ids_session.length
+      const new_average = new_average_before.toFixed(2);
+      console.log(new_average)
+      sessionStorage.setItem('average_completed', new_average)
+      console.log(new_average)
+      this.setState({
+        average_completed:new_average
+      })
 
       if(gained_level === 1 ){
         var interval_diffi5 = selected_card_book_level_config.lev_setting.lev_1.interval
@@ -418,12 +438,12 @@ class FlipMode extends Component {
     if(cardlist_to_send.length === 5){
       console.log("서버에 학습데이타를 전송할 시간이다!!!!")
 
-      axios.post('api/studyexecute/save-studyresult',{
-        cardlist_studying: cardlist_to_send
-      }).then(res => {
-        console.log("학습정보 전송완료!!!",res.data)        
-        sessionStorage.removeItem('cardlist_to_send')
-      })
+      // axios.post('api/studyexecute/save-studyresult',{
+      //   cardlist_studying: cardlist_to_send
+      // }).then(res => {
+      //   console.log("학습정보 전송완료!!!",res.data)        
+      //   sessionStorage.removeItem('cardlist_to_send')
+      // })
 
     }
 
@@ -521,6 +541,7 @@ class FlipMode extends Component {
     if(this.state.contents.length > 0){
       var id_of_content = this.state.contents[0]._id
       const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+     
       const selected_content = card_ids_session.find(item => {
         if(item._id === id_of_content){
           return item
@@ -548,20 +569,6 @@ class FlipMode extends Component {
           interval.push(item.difficulty_setting.diffi3.interval)
           interval.push(item.difficulty_setting.diffi4.interval)
           
-          // if(current_lev_study_times_selected === 0){
-          //   var exp_gain = selected_card_book_level_config[0].exp_setting.one_time
-          // } else if(current_lev_study_times_selected === 1){
-          //   exp_gain = selected_card_book_level_config[0].exp_setting.two_times
-          // } else if(current_lev_study_times_selected === 2){
-          //   exp_gain = selected_card_book_level_config[0].exp_setting.three_times
-          // } else if(current_lev_study_times_selected === 3){
-          //   exp_gain = selected_card_book_level_config[0].exp_setting.four_times
-          // } else if(current_lev_study_times_selected === 4){
-          //   exp_gain = selected_card_book_level_config[0].exp_setting.five_times
-          // } else if(current_lev_study_times_selected > 4){
-          //   exp_gain = selected_card_book_level_config[0].exp_setting.five_times
-          // }
-
           if(level_revealed === 0){
             if(current_lev_study_times_selected === 0){
               interval.push(item.lev_setting.lev_2.interval)
@@ -760,8 +767,8 @@ class FlipMode extends Component {
             <li style={{marginRight:"10px"}}><Avatar size="large" icon={<UserOutlined />} /></li>
             <li style={{marginRight:"10px", width:"320px"}}>
               <ul>
-                <li style={{display:"flex",alignItems:"center",marginBottom:"3px"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>완료율</span><ProgressBar bgcolor={"#32c41e"} completed={60} /></li>
-                <li style={{display:"flex",alignItems:"center"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>학습율</span><ProgressBar bgcolor={"#a1bbe9"} completed={80} /></li>
+                <li style={{display:"flex",alignItems:"center",marginBottom:"3px"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>완료율</span><ProgressBar bgcolor={"#32c41e"} completed={this.state.average_completed} /></li>
+                <li style={{display:"flex",alignItems:"center"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>학습율</span><ProgressBar bgcolor={"#a1bbe9"} completed={this.state.average_completed} /></li>
               </ul>
             </li>
             <li><Button style={{height:"45px", borderRadius:"10px"}}>학습카드추가</Button></li>
