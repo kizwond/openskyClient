@@ -150,22 +150,18 @@ class FlipMode extends Component {
   }
 
   getCardContentsAdd = () => {
-    if(this.state.contents.length === 0){
-      alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
-      window.location.href="/study"
-    }
     const current_seq = sessionStorage.getItem("current_seq")
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
     const reviewExist = card_ids_session.map(item =>{
-      console.log("here exist")
+      // console.log("here exist")
       if(item.detail_status.need_study_time !== null){
-        console.log("here2@@@@@@@@@@")
-        console.log('time compare',new Date(item.detail_status.need_study_time))
-        console.log('time now    ',now)
-        let a = new Date(item.detail_status.need_study_time)
-        a.setHours(a.getHours()-9)
-        console.log('a',a)
+        // console.log("here2@@@@@@@@@@")
+        // console.log('time compare',new Date(item.detail_status.need_study_time))
+        // console.log('time now    ',now)
+        // let a = new Date(item.detail_status.need_study_time)
+        // a.setHours(a.getHours()-9)
+        // console.log('a',a)
         if(new Date(item.detail_status.need_study_time) < now){
           return item._id
         }
@@ -173,21 +169,24 @@ class FlipMode extends Component {
     })
 
     const reviewNotExist = card_ids_session.map(item =>{
-      if(item.detail_status.need_study_time === null){
           return item._id
-      }
     })
+    // const reviewNotExist = card_ids_session.map(item =>{
+    //   if(item.detail_status.need_study_time === null){
+    //       return item._id
+    //   }
+    // })
 
     
     const reviewExist_filtered = reviewExist.filter(function (el) {
       return el != null;
     });
-    const reviewNotExist_filtered = reviewNotExist.filter(function (el) {
-      return el != null;
-    });
+    // const reviewNotExist_filtered = reviewNotExist.filter(function (el) {
+    //   return el != null;
+    // });
     
     console.log('reviewExist',reviewExist_filtered)
-    console.log('reviewNotExist',reviewNotExist_filtered)
+    // console.log('reviewNotExist',reviewNotExist_filtered)
 
     if(reviewExist_filtered.length > 0){
       const ids = reviewExist_filtered
@@ -216,9 +215,17 @@ class FlipMode extends Component {
         const current_seq = sessionStorage.getItem("current_seq")
         const next_seq = Number(current_seq)+1
         sessionStorage.setItem('current_seq',next_seq);
-        
-        const ids = reviewNotExist_filtered
-        const newIdsArray = ids.splice(current_seq, 1)
+        console.log('cardlist length',this.state.cardlist_studying.length)
+        console.log('current_seq', next_seq+1)
+        if(this.state.cardlist_studying.length === next_seq+1){
+          console.log("final card ")
+        }
+        if(this.state.cardlist_studying.length === next_seq){
+          alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
+          window.location.href="/study"
+        }
+        const ids = reviewNotExist
+        const newIdsArray = ids.splice(next_seq, 1)
         console.log('ids',ids)
         console.log(newIdsArray)
         axios.post('api/studyexecute/get-studying-cards',{
@@ -270,18 +277,7 @@ class FlipMode extends Component {
   
   //   return s;
   // }
-  
-  // compare = (first, second) => {
-  //   if (first.detail_status.need_study_time < second.detail_status.need_study_time)
-  //       return -1;
-  //   if (first.detail_status.need_study_time > second.detail_status.need_study_time)
-  //     return 1;
-  //  return 0;
-  // }
-
-  
-  
-  
+    
   onClickDifficulty = (lev, id, book_id, interval, time_unit)=>{
     const now = new Date();
     console.log('선택한 난이도', lev)
@@ -290,8 +286,9 @@ class FlipMode extends Component {
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
 
-
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const level_config_session = JSON.parse(sessionStorage.getItem('level_config'))
+    console.log('경험치관련 level_config : ' , level_config_session)
     const selectedIndex = card_ids_session.findIndex((item, index)=>{
       return item._id === id
     })
@@ -320,45 +317,16 @@ class FlipMode extends Component {
     console.log('card_ids_session updated!!',card_ids_session[selectedIndex].detail_status)
 
     console.log('before saving',card_ids_session)
-    // card_ids_session.sort(this.compare)
-    // console.log('after sorting',card_ids_session)
 
     sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
     const updatedSession = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     console.log(updatedSession)
-    // axios.post('api/study-flip/click-difficulty',{
-    //   session_id: session_id,
-    //   difficulty: lev,
-    //   current_seq:Number(current_seq),
-    //   study_hour:this.state.time,
-    //   card_id:id,
-    //   book_id:book_id
-    // }).then(res => {
-    //     console.log('데이타:', res.data)
-    // })
 
-
-    // if(this.state.contents.length === 1){
-    //   console.log('below',this.state.contents)
-    //   axios.post('api/studysetup/get-studying-cards',{
-    //     session_id: session_id,
-    //     current_seq:req_seq,
-    //     num_request_cards:4
-    //   }).then(res => {
-    //       console.log('데이타:', res.data)
-    //       const contents = this.state.contents.concat(res.data.cards_to_send.cardlist_working)
-    //       this.setState({
-    //         contents:contents
-    //       })
-    //   })
-    // } else 
     if(this.state.contents.length === 1){
       this.getCardContentsAdd()
     }
-    
-    
-   
 
+    //this.state.contents에서 지금 공부한 카드 제거 / 다음카드로 넘어갈때 현카드 학습시간 초기화 / 카드 뒤집기를 정방향으로 되돌리기
     const list = this.state.contents.filter(item => item._id !== id);
     this.setState({
       contents:list
@@ -371,6 +339,7 @@ class FlipMode extends Component {
     })
     console.log('here : ',list)
   }
+
   onClickPage = () => {
     console.log('page clicked to flip')
       this.setState(prevState => ({
@@ -378,6 +347,7 @@ class FlipMode extends Component {
       })
     )
   }
+
   render() {
     const style_study_layout_container ={
       display:"flex",
