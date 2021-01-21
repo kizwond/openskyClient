@@ -124,20 +124,20 @@ class AdvancedFilterModal extends Component {
       andOr = "And그룹"
     }
     const user_flag_option = [
-      { label: '플래그없음', value: 'none' },
-      { label: '플래그1', value: 'flag1' },
-      { label: '플래그2', value: 'flag2' },
-      { label: '플래그3', value: 'flag3' },
-      { label: '플래그4', value: 'flag4' },
-      { label: '플래그5', value: 'flag5' },
+      { label: '플래그없음', value: '0' },
+      { label: '플래그1', value: '1' },
+      { label: '플래그2', value: '2' },
+      { label: '플래그3', value: '3' },
+      { label: '플래그4', value: '4' },
+      { label: '플래그5', value: '5' },
         ]
     const maker_flag_option = [
-      { label: '플래그없음', value: 'none' },
-      { label: 'X1', value: 'flag1' },
-      { label: 'X2', value: 'flag2' },
-      { label: 'X3', value: 'flag3' },
-      { label: 'X4', value: 'flag4' },
-      { label: 'X5', value: 'flag5' },
+      { label: '플래그없음', value: '0' },
+      { label: 'X1', value: '1' },
+      { label: 'X2', value: '2' },
+      { label: 'X3', value: '3' },
+      { label: 'X4', value: '4' },
+      { label: 'X5', value: '5' },
         ]
     const difficulty_option = [
       { label: '결과없음', value: 'none' },
