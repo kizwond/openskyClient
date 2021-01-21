@@ -278,50 +278,171 @@ class FlipMode extends Component {
   //   return s;
   // }
     
-  onClickDifficulty = (lev, id, book_id, interval, time_unit)=>{
-    const now = new Date();
+  onClickDifficulty = (lev, id, book_id, interval, time_unit, card_level)=>{
+    console.log('현재카드 레벨', card_level)
     console.log('선택한 난이도', lev)
     console.log('현재카드_id', id)
-    console.log('쳔재카드 book_id', book_id)
+    console.log('현재카드 book_id', book_id)
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
 
+    
+
+    //현재시간 기준
+    const now = new Date();
+
+    //세션스토리지에서 카드리스트 정보 가져오기
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
-    const level_config_session = JSON.parse(sessionStorage.getItem('level_config'))
-    console.log('경험치관련 level_config : ' , level_config_session)
+
+    //해당 카드 인텍스 찾기
     const selectedIndex = card_ids_session.findIndex((item, index)=>{
       return item._id === id
     })
+    //현재카드 학습정보 조회
+    const selectedCard = card_ids_session.find((item, index)=>{
+      if(item._id === id){
+        return item
+      }
+    })
 
-    // const prev_session_study_times = card_ids_session[selectedIndex].detail_status.session_study_times
+    //세션스토리지에서 레벨설정 정보 가져오기
+    const level_config_session = JSON.parse(sessionStorage.getItem('level_config'))
+    console.log('경험치관련 level_config : ' , level_config_session)
+
+    //현재카드가 속한 책의 레벨설정 정보 가져오기 
+    const selected_card_book_level_config = level_config_session.map(item=>{
+      if(item.book_id === book_id){
+        return item
+      }
+    })
+    console.log('현재책 레벨설정', selected_card_book_level_config[0])
+
+    //current_lev_study_times 기준으로 경험치 저장
+    if(lev === "diffi5"){
+      console.log("here fired!!!")
+      const current_lev_study_times_selected = selectedCard.detail_status.current_lev_study_times
+      if(current_lev_study_times_selected === 0){
+        var exp_gain = selected_card_book_level_config[0].exp_setting.one_time
+      } else if(current_lev_study_times_selected === 1){
+        exp_gain = selected_card_book_level_config[0].exp_setting.two_times
+      } else if(current_lev_study_times_selected === 2){
+        exp_gain = selected_card_book_level_config[0].exp_setting.three_times
+      } else if(current_lev_study_times_selected === 3){
+        exp_gain = selected_card_book_level_config[0].exp_setting.four_times
+      } else if(current_lev_study_times_selected === 4){
+        exp_gain = selected_card_book_level_config[0].exp_setting.five_times
+      } else if(current_lev_study_times_selected > 4){
+        exp_gain = selected_card_book_level_config[0].exp_setting.five_times
+      }
+  
+      const prev_exp = card_ids_session[selectedIndex].detail_status.exp
+      card_ids_session[selectedIndex].detail_status.exp = prev_exp + exp_gain
+
+      const gained_level = Math.floor(prev_exp + exp_gain / 1000)
+      console.log(gained_level)
+
+      if(gained_level === 1 ){
+        var interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_1.interval
+        var time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_1.time_unit
+      } else if(gained_level === 2 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_2.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_2.time_unit
+      } else if(gained_level === 3 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_3.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_3.time_unit
+      } else if(gained_level === 4 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_4.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_4.time_unit
+      } else if(gained_level === 5 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_5.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_5.time_unit
+      } else if(gained_level === 6 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_6.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_6.time_unit
+      } else if(gained_level === 7 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_7.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_7.time_unit
+      } else if(gained_level === 8 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_8.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_8.time_unit
+      } else if(gained_level === 9 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_9.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_9.time_unit
+      } else if(gained_level > 10 ){
+        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_10.interval
+        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_10.time_unit
+      }
+
+      const now_mili_convert = Date.parse(now);
+      if(time_unit_diffi5 === "min"){
+        var result = this.milliseconds(0, interval_diffi5, 0);
+      } else if(time_unit_diffi5 === "hour"){
+        result = this.milliseconds(interval_diffi5, 0, 0);
+      } else if(time_unit_diffi5 === "day"){
+        result = this.milliseconds(interval_diffi5*24, 0, 0);
+      }
+      const need_review_time = now_mili_convert + result
+      const review_date = new Date(need_review_time)
+      card_ids_session[selectedIndex].detail_status.need_study_time = review_date
+      card_ids_session[selectedIndex].detail_status.level = gained_level
+
+    }    
+
+    //변동레벨 저장
+
+    //세션내에 해당 카드 학습횟수 저장 (해당세션내에서 학습횟수 출력위한 정보)
+    const prev_session_study_times = card_ids_session[selectedIndex].detail_status.session_study_times
+    card_ids_session[selectedIndex].detail_status.session_study_times = prev_session_study_times + 1
+
+    //해당 카드가 마지막 알겠음 버튼 클릭 후 학습횟수 (레벨설정에서 경험치 증감 기준을 위한 학습횟수 정보)
     const prev_current_lev_study_times = card_ids_session[selectedIndex].detail_status.current_lev_study_times
-    const prev_total_study_times = card_ids_session[selectedIndex].detail_status.total_study_times
-    const prev_total_study_hour = card_ids_session[selectedIndex].detail_status.total_study_hour
-    // card_ids_session[selectedIndex].detail_status.session_study_times = prev_session_study_times + 1
     card_ids_session[selectedIndex].detail_status.current_lev_study_times = prev_current_lev_study_times + 1
+
+    //해당 카드의 총 학습횟수 저장
+    const prev_total_study_times = card_ids_session[selectedIndex].detail_status.total_study_times
     card_ids_session[selectedIndex].detail_status.total_study_times = prev_total_study_times + 1
+
+    //선택한 난이도 저장 
     card_ids_session[selectedIndex].detail_status.recent_difficulty = lev
+
+    //해당카드 학습경과시간
     card_ids_session[selectedIndex].detail_status.recent_study_hour = this.state.time
+
+    //해당카드 총 학습경과시간
+    const prev_total_study_hour = card_ids_session[selectedIndex].detail_status.total_study_hour
     card_ids_session[selectedIndex].detail_status.total_study_hour = prev_total_study_hour + this.state.time
+
+    //해당카드 학습시간
     card_ids_session[selectedIndex].detail_status.recent_study_time = now
-    // card_ids_session[selectedIndex].detail_status.recent_study_time = String(this.getTimeStamp(now))
     
-    const now_mili_convert = Date.parse(now);
-    const result = this.milliseconds(0, interval, 0);
-    const need_review_time = now_mili_convert + result
+    //복습시간 저장
+    if(lev !== 'diffi5'){
+      const now_mili_convert = Date.parse(now);
+      if(time_unit === "min"){
+        var result = this.milliseconds(0, interval, 0);
+      } else if(time_unit === "hour"){
+        result = this.milliseconds(interval, 0, 0);
+      } else if(time_unit === "day"){
+        result = this.milliseconds(interval*24, 0, 0);
+      }
+      const need_review_time = now_mili_convert + result
+      const review_date = new Date(need_review_time)
+      card_ids_session[selectedIndex].detail_status.need_study_time = review_date
+    }
+    
 
-    const review_date = new Date(need_review_time)
+    
 
-    card_ids_session[selectedIndex].detail_status.need_study_time = review_date
-
+    //해당카드 최종 업데이트 콘솔로그
     console.log('card_ids_session updated!!',card_ids_session[selectedIndex].detail_status)
 
+    //세션스토리지에 최종 저장
     console.log('before saving',card_ids_session)
-
     sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
     const updatedSession = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     console.log(updatedSession)
 
+    //데이터 저장 후 서버에 새카드 요청
     if(this.state.contents.length === 1){
       this.getCardContentsAdd()
     }
@@ -407,10 +528,20 @@ class FlipMode extends Component {
     const time_unit = []
 
     if(this.state.contents.length > 0){
+      var id_of_content = this.state.contents[0]._id
+      const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+      const selected_content = card_ids_session.find(item => {
+        if(item._id === id_of_content){
+          return item
+        }
+      })
+      var level_revealed = selected_content.detail_status.level
+      var current_lev_study_times_selected = selected_content.detail_status.current_lev_study_times
+
       var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
       var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={item} model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
-      var id_of_content = this.state.contents[0]._id
+      
       var book_id = this.state.contents[0].book_id
       const level_config_sessionStorage = JSON.parse(sessionStorage.getItem('level_config'))
       const nicks_handle = level_config_sessionStorage.map((item)=>{
@@ -420,16 +551,213 @@ class FlipMode extends Component {
           nicks.push(item.difficulty_setting.diffi3.nick)
           nicks.push(item.difficulty_setting.diffi4.nick)
           nicks.push(item.difficulty_setting.diffi5.nick)
+
           interval.push(item.difficulty_setting.diffi1.interval)
           interval.push(item.difficulty_setting.diffi2.interval)
           interval.push(item.difficulty_setting.diffi3.interval)
           interval.push(item.difficulty_setting.diffi4.interval)
-          interval.push(item.difficulty_setting.diffi5.interval)
+          
+          // if(current_lev_study_times_selected === 0){
+          //   var exp_gain = selected_card_book_level_config[0].exp_setting.one_time
+          // } else if(current_lev_study_times_selected === 1){
+          //   exp_gain = selected_card_book_level_config[0].exp_setting.two_times
+          // } else if(current_lev_study_times_selected === 2){
+          //   exp_gain = selected_card_book_level_config[0].exp_setting.three_times
+          // } else if(current_lev_study_times_selected === 3){
+          //   exp_gain = selected_card_book_level_config[0].exp_setting.four_times
+          // } else if(current_lev_study_times_selected === 4){
+          //   exp_gain = selected_card_book_level_config[0].exp_setting.five_times
+          // } else if(current_lev_study_times_selected > 4){
+          //   exp_gain = selected_card_book_level_config[0].exp_setting.five_times
+          // }
+
+          if(level_revealed === 0){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_2.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_1.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_1.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_0.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_0.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_0.interval)
+            }
+          } else if(level_revealed === 1){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_3.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_2.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_1.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_1.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_0.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_0.interval)
+            }
+          } else if(level_revealed === 2){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_4.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_3.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_2.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_2.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_1.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_1.interval)
+            }
+          } else if(level_revealed === 3){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_5.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_4.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_3.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_3.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_2.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_2.interval)
+            }
+          } else if(level_revealed === 4){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_6.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_5.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_4.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_4.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_3.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_3.interval)
+            }
+          } else if(level_revealed === 5){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_7.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_6.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_5.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_5.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_4.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_4.interval)
+            }
+          } else if(level_revealed === 6){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_8.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_7.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_6.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_6.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_5.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_5.interval)
+            }
+          } else if(level_revealed === 7){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_9.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_8.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_7.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_7.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_6.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_6.interval)
+            }
+          } else if(level_revealed === 8){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_10.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_9.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_8.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_8.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_7.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_7.interval)
+            }
+          } else if(level_revealed === 9){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_11.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_10.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_9.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_9.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_8.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_8.interval)
+            }
+          } else if(level_revealed === 10){
+            if(current_lev_study_times_selected === 0){
+              interval.push(item.lev_setting.lev_12.interval)
+            } else if(current_lev_study_times_selected === 1){
+              interval.push(item.lev_setting.lev_11.interval)
+            } else if(current_lev_study_times_selected === 2){
+              interval.push(item.lev_setting.lev_10.interval)
+            } else if(current_lev_study_times_selected === 3){
+              interval.push(item.lev_setting.lev_10.interval)
+            } else if(current_lev_study_times_selected === 4){
+              interval.push(item.lev_setting.lev_9.interval)
+            } else if(current_lev_study_times_selected > 4){
+              interval.push(item.lev_setting.lev_9.interval)
+            }
+          }
+
+
           time_unit.push(item.difficulty_setting.diffi1.time_unit)
           time_unit.push(item.difficulty_setting.diffi2.time_unit)
           time_unit.push(item.difficulty_setting.diffi3.time_unit)
           time_unit.push(item.difficulty_setting.diffi4.time_unit)
-          time_unit.push(item.difficulty_setting.diffi5.time_unit)
+          
+          if(level_revealed === 0){
+            time_unit.push(item.lev_setting.lev_0.time_unit)
+          } else if(level_revealed === 1){
+            time_unit.push(item.lev_setting.lev_1.time_unit)
+          } else if(level_revealed === 2){
+            time_unit.push(item.lev_setting.lev_2.time_unit)
+          } else if(level_revealed === 3){
+            time_unit.push(item.lev_setting.lev_3.time_unit)
+          } else if(level_revealed === 4){
+            time_unit.push(item.lev_setting.lev_4.time_unit)
+          } else if(level_revealed === 5){
+            time_unit.push(item.lev_setting.lev_5.time_unit)
+          } else if(level_revealed === 6){
+            time_unit.push(item.lev_setting.lev_6.time_unit)
+          } else if(level_revealed === 7){
+            time_unit.push(item.lev_setting.lev_7.time_unit)
+          } else if(level_revealed === 8){
+            time_unit.push(item.lev_setting.lev_8.time_unit)
+          } else if(level_revealed === 9){
+            time_unit.push(item.lev_setting.lev_9.time_unit)
+          } else if(level_revealed === 10){
+            time_unit.push(item.lev_setting.lev_10.time_unit)
+          }
+          
+
         }
       })
     } 
@@ -474,11 +802,11 @@ class FlipMode extends Component {
               </div>
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi1", id_of_content,book_id, interval[0], time_unit[0])}>{nicks[0]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[0]}{time_unit[0]})</div></Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi2", id_of_content,book_id, interval[1], time_unit[1])}>{nicks[1]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[1]}{time_unit[1]})</div></Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi3", id_of_content,book_id, interval[2], time_unit[2])}>{nicks[2]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[2]}{time_unit[2]})</div></Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi4", id_of_content,book_id, interval[3], time_unit[3])}>{nicks[3]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[3]}{time_unit[3]})</div></Button>
-              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi5", id_of_content,book_id, interval[4], time_unit[4])}>{nicks[4]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[4]}{time_unit[4]})</div></Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi1", id_of_content,book_id, interval[0], time_unit[0], level_revealed)}>{nicks[0]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[0]}{time_unit[0]})</div></Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi2", id_of_content,book_id, interval[1], time_unit[1], level_revealed)}>{nicks[1]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[1]}{time_unit[1]})</div></Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi3", id_of_content,book_id, interval[2], time_unit[2], level_revealed)}>{nicks[2]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[2]}{time_unit[2]})</div></Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi4", id_of_content,book_id, interval[3], time_unit[3], level_revealed)}>{nicks[3]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[3]}{time_unit[3]})</div></Button>
+              <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi5", id_of_content,book_id, interval[4], time_unit[4], level_revealed)}>{nicks[4]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[4]}{time_unit[4]})</div></Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
