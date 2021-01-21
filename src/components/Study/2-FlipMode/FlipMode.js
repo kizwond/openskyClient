@@ -277,29 +277,30 @@ class FlipMode extends Component {
     console.log('경험치관련 level_config : ' , level_config_session)
 
     //현재카드가 속한 책의 레벨설정 정보 가져오기 
-    const selected_card_book_level_config = level_config_session.map(item=>{
+    const selected_card_book_level_config = level_config_session.find(item=>{
       if(item.book_id === book_id){
         return item
       }
     })
-    console.log('현재책 레벨설정', selected_card_book_level_config[0])
+    
+    console.log('현재책 레벨설정', selected_card_book_level_config)
 
     //current_lev_study_times 기준으로 경험치 저장
     if(lev === "diffi5"){
       console.log("here fired!!!")
       const current_lev_study_times_selected = selectedCard.detail_status.current_lev_study_times
       if(current_lev_study_times_selected === 0){
-        var exp_gain = selected_card_book_level_config[0].exp_setting.one_time
+        var exp_gain = selected_card_book_level_config.exp_setting.one_time
       } else if(current_lev_study_times_selected === 1){
-        exp_gain = selected_card_book_level_config[0].exp_setting.two_times
+        exp_gain = selected_card_book_level_config.exp_setting.two_times
       } else if(current_lev_study_times_selected === 2){
-        exp_gain = selected_card_book_level_config[0].exp_setting.three_times
+        exp_gain = selected_card_book_level_config.exp_setting.three_times
       } else if(current_lev_study_times_selected === 3){
-        exp_gain = selected_card_book_level_config[0].exp_setting.four_times
+        exp_gain = selected_card_book_level_config.exp_setting.four_times
       } else if(current_lev_study_times_selected === 4){
-        exp_gain = selected_card_book_level_config[0].exp_setting.five_times
+        exp_gain = selected_card_book_level_config.exp_setting.five_times
       } else if(current_lev_study_times_selected > 4){
-        exp_gain = selected_card_book_level_config[0].exp_setting.five_times
+        exp_gain = selected_card_book_level_config.exp_setting.five_times
       }
   
       const prev_exp = card_ids_session[selectedIndex].detail_status.exp
@@ -309,35 +310,35 @@ class FlipMode extends Component {
       console.log(gained_level)
 
       if(gained_level === 1 ){
-        var interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_1.interval
-        var time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_1.time_unit
+        var interval_diffi5 = selected_card_book_level_config.lev_setting.lev_1.interval
+        var time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_1.time_unit
       } else if(gained_level === 2 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_2.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_2.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_2.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_2.time_unit
       } else if(gained_level === 3 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_3.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_3.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_3.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_3.time_unit
       } else if(gained_level === 4 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_4.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_4.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_4.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_4.time_unit
       } else if(gained_level === 5 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_5.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_5.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_5.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_5.time_unit
       } else if(gained_level === 6 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_6.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_6.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_6.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_6.time_unit
       } else if(gained_level === 7 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_7.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_7.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_7.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_7.time_unit
       } else if(gained_level === 8 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_8.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_8.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_8.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_8.time_unit
       } else if(gained_level === 9 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_9.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_9.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_9.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_9.time_unit
       } else if(gained_level > 10 ){
-        interval_diffi5 = selected_card_book_level_config[0].lev_setting.lev_10.interval
-        time_unit_diffi5 = selected_card_book_level_config[0].lev_setting.lev_10.time_unit
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_10.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_10.time_unit
       }
 
       const now_mili_convert = Date.parse(now);
