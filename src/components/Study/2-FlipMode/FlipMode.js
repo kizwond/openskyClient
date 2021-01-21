@@ -414,8 +414,16 @@ class FlipMode extends Component {
     const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
     console.log('cardlist_to_send',cardlist_to_send)
 
-    if(cardlist_to_send.length === 3){
+    if(cardlist_to_send.length === 5){
       console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+
+      axios.post('api/studyexecute/save-studyresult',{
+        cardlist_studying: cardlist_to_send
+      }).then(res => {
+        console.log("학습정보 전송완료!!!",res.data)        
+        sessionStorage.removeItem('cardlist_to_send')
+      })
+
     }
 
     //세션스토리지에 최종 저장

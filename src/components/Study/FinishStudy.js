@@ -53,7 +53,7 @@ class FinishStudy extends Component {
                         <p>Card content</p>
                     </Card>
                     <Card title="이책의 분야(카테고리)에서 다른 유명한 책들 리스트" extra={<a href="#">More</a>} style={{ width: 300 }}>
-                        <p>Card content</p>
+                        <p>멘토가 되어줄 책들도 막 추천해주고.</p>
                         <p>Card content</p>
                         <p>Card content</p>
                     </Card>
