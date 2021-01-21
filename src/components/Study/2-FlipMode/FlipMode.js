@@ -154,14 +154,7 @@ class FlipMode extends Component {
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
     const reviewExist = card_ids_session.map(item =>{
-      // console.log("here exist")
       if(item.detail_status.need_study_time !== null){
-        // console.log("here2@@@@@@@@@@")
-        // console.log('time compare',new Date(item.detail_status.need_study_time))
-        // console.log('time now    ',now)
-        // let a = new Date(item.detail_status.need_study_time)
-        // a.setHours(a.getHours()-9)
-        // console.log('a',a)
         if(new Date(item.detail_status.need_study_time) < now){
           return item._id
         }
@@ -171,22 +164,12 @@ class FlipMode extends Component {
     const reviewNotExist = card_ids_session.map(item =>{
           return item._id
     })
-    // const reviewNotExist = card_ids_session.map(item =>{
-    //   if(item.detail_status.need_study_time === null){
-    //       return item._id
-    //   }
-    // })
-
     
     const reviewExist_filtered = reviewExist.filter(function (el) {
       return el != null;
     });
-    // const reviewNotExist_filtered = reviewNotExist.filter(function (el) {
-    //   return el != null;
-    // });
     
     console.log('reviewExist',reviewExist_filtered)
-    // console.log('reviewNotExist',reviewNotExist_filtered)
 
     if(reviewExist_filtered.length > 0){
       const ids = reviewExist_filtered
@@ -221,8 +204,8 @@ class FlipMode extends Component {
           console.log("final card ")
         }
         if(this.state.cardlist_studying.length === next_seq){
-          alert("학습할 카드가 없습니다. 스터디 메인으로 돌아갑니다.")
-          window.location.href="/study"
+          alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
+          window.location.href="/study-result"
         }
         const ids = reviewNotExist
         const newIdsArray = ids.splice(next_seq, 1)
@@ -263,20 +246,6 @@ class FlipMode extends Component {
     }
     return zero + n;
   }
-
-  // getTimeStamp = (review_date) => {
-  //   var d = review_date;
-  //   var s =
-  //     this.leadingZeros(d.getFullYear(), 4) + '-' +
-  //     this.leadingZeros(d.getMonth() + 1, 2) + '-' +
-  //     this.leadingZeros(d.getDate(), 2) + 'T' +
-  
-  //     this.leadingZeros(d.getHours(), 2) + ':' +
-  //     this.leadingZeros(d.getMinutes(), 2) + ':' +
-  //     this.leadingZeros(d.getSeconds(), 2) +'.000'+'Z';
-  
-  //   return s;
-  // }
     
   onClickDifficulty = (lev, id, book_id, interval, time_unit, card_level)=>{
     console.log('현재카드 레벨', card_level)
@@ -285,8 +254,6 @@ class FlipMode extends Component {
     console.log('현재카드 book_id', book_id)
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
-
-    
 
     //현재시간 기준
     const now = new Date();
@@ -389,8 +356,6 @@ class FlipMode extends Component {
 
     }    
 
-    //변동레벨 저장
-
     //세션내에 해당 카드 학습횟수 저장 (해당세션내에서 학습횟수 출력위한 정보)
     const prev_session_study_times = card_ids_session[selectedIndex].detail_status.session_study_times
     card_ids_session[selectedIndex].detail_status.session_study_times = prev_session_study_times + 1
@@ -433,12 +398,25 @@ class FlipMode extends Component {
       const review_date = new Date(need_review_time)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
     }
-    
-
-    
 
     //해당카드 최종 업데이트 콘솔로그
     console.log('card_ids_session updated!!',card_ids_session[selectedIndex].detail_status)
+    const updateThis = card_ids_session[selectedIndex]
+    const getUpdateThis = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+    console.log(getUpdateThis)
+    if(getUpdateThis){
+      var finalUpdate = getUpdateThis.concat(updateThis)
+    } else {
+      finalUpdate = [updateThis]
+    }
+    
+    sessionStorage.setItem('cardlist_to_send',JSON.stringify(finalUpdate));
+    const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+    console.log('cardlist_to_send',cardlist_to_send)
+
+    if(cardlist_to_send.length === 3){
+      console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+    }
 
     //세션스토리지에 최종 저장
     console.log('before saving',card_ids_session)

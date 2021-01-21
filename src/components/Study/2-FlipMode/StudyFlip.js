@@ -101,7 +101,7 @@ class StudyFlip extends Component {
                   </Dropdown>
                 </Space>
                 <Menu style={{height:'90%'}}>
-                  <Menu.Item><NavLink to="/" exact onClick={this.onMenuClick}>학습종료</NavLink></Menu.Item>
+                  <Menu.Item><NavLink to="/study-result" exact onClick={this.onMenuClick}>학습종료</NavLink></Menu.Item>
                 </Menu>
               </div>
             </div>

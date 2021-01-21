@@ -15,6 +15,7 @@ import BookEditing from './Write/BookEditing/BookEditing'
 import ChooseIndex from './Study/1-ChooseIndex/ChooseIndex'
 import StudyFlip from './Study/2-FlipMode/StudyFlip'
 import MentoringMain from './Mentoring/MentoringMain'
+import FinishStudy from './Study/FinishStudy'
 
 const { Header, Content, Footer } = Layout;
 
@@ -41,6 +42,7 @@ function App() {
             <Route exact path="/choose-index" component={ChooseIndex} />
             <Route exact path="/start-study" component={StudyFlip} />
             <Route exact path="/mentoring" component={MentoringMain} />
+            <Route exact path="/study-result" component={FinishStudy} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center',display:'block' }}><img src="img/logo.png" className="opensky_logo" alt="logo"/> Copyright © OpenSKY Corp. All Rights Reserved.</Footer>

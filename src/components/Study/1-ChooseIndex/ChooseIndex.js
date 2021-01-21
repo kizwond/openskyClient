@@ -61,6 +61,7 @@ class ChooseIndex extends Component {
   componentDidMount() {
     sessionStorage.removeItem('sessionId')
     sessionStorage.removeItem('selectedIndex')
+    sessionStorage.removeItem('cardlist_to_send')
     this.getIndex()
     this.getStudyConfig()
   }
