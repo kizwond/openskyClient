@@ -323,6 +323,7 @@ export class EditorTry extends Component {
     }
 
     const book_id = sessionStorage.getItem('book_id')
+    console.log('type :', this.props.card_type_name)
     axios.post('api/card/create-card', {
       book_id : book_id,
       cardtype_id:this.props.current_card_type,
@@ -335,7 +336,8 @@ export class EditorTry extends Component {
       selection : selection_array,
       face2 : face2_array,
       annotation : annotation_array,
-      seq_in_index:selected_card_seq
+      seq_in_index:selected_card_seq,
+      type: this.props.card_type_name
     })
     .then(res => {
       console.log('after submit:', res.data)
