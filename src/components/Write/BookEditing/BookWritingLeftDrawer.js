@@ -11,7 +11,7 @@ class LeftDrawer extends Component {
     super(props);
     this.state = {
       mode: 'right',
-      order_key:'none',
+      order_key:'목차',
       visible: false,
       level_1:[],
       level_2:[]

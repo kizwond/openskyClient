@@ -44,7 +44,7 @@ export class BookWriting extends Component {
        user : '',
        table_of_contents:[],
        hide_show_toggle:false,
-       left_drawer_toggle:false,
+       left_drawer_toggle:true,
        card_type:[],
        card_add:false,
        contents:[],
@@ -72,6 +72,9 @@ export class BookWriting extends Component {
     window.addEventListener('scroll', this.handleScroll);
     this.getIndexList()
     this.getCardTypeList()
+    const firstIndex = sessionStorage.getItem('firstIndex')
+    const value = {node:{index_id :firstIndex}}
+    this.onSelect([0], value)
   }
 
   handleScroll = (e) => {
@@ -88,6 +91,7 @@ export class BookWriting extends Component {
     })
       .then(res => {
         console.log("Index List Received : ", res.data.indexList)
+        const firstIndex = sessionStorage.setItem('firstIndex', res.data.indexList[0]._id)
         this.setState({ 
           table_of_contents:res.data.indexList,
         });
@@ -388,6 +392,8 @@ export class BookWriting extends Component {
   }
 
   async onSelect(selectedKeys, info){
+    console.log('selectedKeys', selectedKeys)
+    console.log('info',info)
     this.setState({
       index_id: info.node.index_id,
       loading : true,
