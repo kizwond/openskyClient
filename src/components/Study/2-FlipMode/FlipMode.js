@@ -316,6 +316,19 @@ class FlipMode extends Component {
       const prev_exp = card_ids_session[selectedIndex].detail_status.exp
       card_ids_session[selectedIndex].detail_status.exp = prev_exp + exp_gain
 
+      //학습종료 후 보여줄 임시 데이터
+      const exp_gained_session = sessionStorage.getItem('exp_gained')
+      console.log(exp_gained_session)
+      console.log(exp_gain)
+      const updated_exp_gained = Number(exp_gained_session) + Number(exp_gain)
+      console.log(updated_exp_gained)
+      sessionStorage.setItem('exp_gained', updated_exp_gained)
+
+      const exp_gained_card_count_session = sessionStorage.getItem('exp_gained_card_count')
+      const exp_gained_card_count = Number(exp_gained_card_count_session) + 1
+      sessionStorage.setItem('exp_gained_card_count', exp_gained_card_count)
+      //임시테이터 끝
+
       const gained_level = Math.floor(prev_exp + exp_gain / 1000)
       console.log(gained_level)
       const average_completed_session = sessionStorage.getItem('average_completed')
@@ -437,13 +450,14 @@ class FlipMode extends Component {
 
     if(cardlist_to_send.length === 5){
       console.log("서버에 학습데이타를 전송할 시간이다!!!!")
-
-      // axios.post('api/studyexecute/save-studyresult',{
-      //   cardlist_studying: cardlist_to_send
-      // }).then(res => {
-      //   console.log("학습정보 전송완료!!!",res.data)        
-      //   sessionStorage.removeItem('cardlist_to_send')
-      // })
+      const sessionId = sessionStorage.getItem('sessionId')
+      axios.post('api/studyresult/create-studyresult',{
+        cardlist_studied: cardlist_to_send,
+        session_id:sessionId
+      }).then(res => {
+        console.log("학습정보 전송완료!!!",res.data)        
+        sessionStorage.removeItem('cardlist_to_send')
+      })
 
     }
 

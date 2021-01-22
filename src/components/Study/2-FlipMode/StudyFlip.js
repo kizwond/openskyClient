@@ -20,6 +20,22 @@ class StudyFlip extends Component {
   onMenuClick = () => {
     document.getElementById("nav_bar").classList.remove('nav_bar_hidden');
     document.getElementById("nav_bar").classList.add('nav_bar');
+
+    const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+    console.log('cardlist_to_send',cardlist_to_send)
+
+    if(cardlist_to_send){
+      console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+      const sessionId = sessionStorage.getItem('sessionId')
+      axios.post('api/studyresult/create-studyresult',{
+        cardlist_studied: cardlist_to_send,
+        session_id:sessionId
+      }).then(res => {
+        console.log("학습정보 전송완료!!!",res.data)        
+        sessionStorage.removeItem('cardlist_to_send')
+      })
+    }
+
   }
   onClick = () => {
     axios('api/user/logout')
