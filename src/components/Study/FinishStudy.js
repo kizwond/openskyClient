@@ -19,7 +19,7 @@ class FinishStudy extends Component {
             exp_gained_card_count: exp_gained_card_count
         })
         const sessionId = sessionStorage.getItem('sessionId')
-        axios.post('api/studyresult/create-studyresult',{
+        axios.post('api/studyresult/req-session-studyresult',{
             session_id:sessionId
         }).then(res => {
             console.log("서버로부터 통계정보 :",res.data)
