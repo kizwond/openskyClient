@@ -18,9 +18,11 @@ const ChangeCategory = (props) => {
 
   const changeTableNameHandler = (value) => {
     console.log(value)
+    const book_id = sessionStorage.getItem("book_id")
     axios.post('api/index/change-index-name',{
       index_id : value.tableId,
-      name : value.value.newName
+      name : value.value.newName,
+      book_id: book_id
     })
     .then(res => {
       console.log(res.data)
