@@ -394,6 +394,13 @@ class FlipMode extends Component {
     const prev_session_study_times = card_ids_session[selectedIndex].detail_status.session_study_times
     card_ids_session[selectedIndex].detail_status.session_study_times = prev_session_study_times + 1
 
+    //카드 상태값 former 과 status 관리
+    const prev_session_status = card_ids_session[selectedIndex].status
+    console.log('prev_session_status',prev_session_status)
+    card_ids_session[selectedIndex].former_status = prev_session_status
+    card_ids_session[selectedIndex].status = 'ing'
+    
+
     //해당 카드가 마지막 알겠음 버튼 클릭 후 학습횟수 (레벨설정에서 경험치 증감 기준을 위한 학습횟수 정보)
     if(lev !== "diffi5"){
       const prev_current_lev_study_times = card_ids_session[selectedIndex].detail_status.current_lev_study_times
