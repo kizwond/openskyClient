@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Table, Button } from 'antd';
 import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
 import StudySettingModal from './StudySettingModal'
+import StudyData from './StudyData'
 import axios from 'axios'
 
 class ListSectionContent extends Component {
@@ -9,8 +10,11 @@ class ListSectionContent extends Component {
     super(props);
     this.state = { 
       visible:false,
+      studyDataVisible:false,
       visible_array:[{book_id:'', visible:false}],
-      study_configuration:[]
+      study_data_visible_array:[{book_id:'', studyDataVisible:false}],
+      study_configuration:[],
+      book_status:[]
     };
   }
 
@@ -57,6 +61,38 @@ class ListSectionContent extends Component {
       this.showModal()
     })
   }
+
+  getStudyData = (value) =>{
+    console.log(value)
+    axios.post('api/book/get-card-status',{
+      book_id: value
+    }).then(res => {
+      console.log("get-card-status", res.data)
+      this.setState({
+        book_status:res.data
+      })
+      this.studyDataShowModal()
+    })
+      
+  }
+
+  studyDataShowModal = () => {
+    this.setState(prevState=>({
+      study_data_visible_array:{...prevState.study_data_visible_array, studyDataVisible:true}
+    }));
+  };
+
+  studyDataHandleOk = () => {
+    this.setState(prevState=>({
+      study_data_visible_array:{...prevState.study_data_visible_array, studyDataVisible:false}
+    }));
+  };
+
+  studyDataHandleCancel = () => {
+    this.setState(prevState=>({
+      study_data_visible_array:{...prevState.study_data_visible_array, studyDataVisible:false}
+    }));
+  };
   
   render() {
     console.log('state : ',this.state.visible_array)
@@ -120,10 +156,10 @@ class ListSectionContent extends Component {
       },
       {
         title: '학습정보 상세보기',
-        dataIndex: 'key',
         render: (text, record) => {
           if(record){
-              return <Button size="small" style={{fontSize:"10px"}} >상세보기</Button>
+              return <><Button size="small" style={{fontSize:"10px"}} onClick={()=>this.getStudyData(record.book_id)} >상세보기</Button>
+              <StudyData studySetting={this.state.study_configuration} handleOk={this.studyDataHandleOk} book_status={this.state.book_status} info={record} isModalVisible={this.state.study_data_visible_array} handleCancel={this.studyDataHandleCancel}/></>
           } 
         }
       },
