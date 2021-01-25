@@ -72,7 +72,7 @@ class ListSectionContent extends Component {
         book_status:res.data
       })
       this.setState({
-        study_data_visible_array:[{book_id:value, studyDataVisible:true}]
+        study_data_visible_array:{book_id:value, studyDataVisible:true}
       })
       this.studyDataShowModal()
     })

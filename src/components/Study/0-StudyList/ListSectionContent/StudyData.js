@@ -8,10 +8,12 @@ class StudySettingModal extends Component {
   }
 
   render() {
-    if(this.props.info.book_id === this.props.studySetting.book_id){
-      var turn_on = this.props.isModalVisible.studyDataVisible
+    if(this.props.info.book_id){
+      var turn_on_modal = this.props.isModalVisible.studyDataVisible
+      console.log('turn_on_modal',turn_on_modal)
       // var book_status = JSON.stringify(this.props.book_status, null, 2)
       var book_status = JSON.stringify(this.props.book_status.cards,undefined,4)
+      // document.getElementById("show_data").textContent = JSON.stringify(this.props.book_status.cards, undefined, 2);
     }
 
     console.log("info", this.props.book_status)
@@ -20,14 +22,14 @@ class StudySettingModal extends Component {
       <Modal
         title="상세보기"
         width={800}
-        visible={turn_on}
+        visible={turn_on_modal}
         onOk={this.props.handleOk}
         onCancel={this.props.handleCancel}
         footer={null}
       >
 
         <div className="study_setting_container" style={{width:"800px"}}>
-          <div>{book_status}</div>
+        <pre><code style={{fontSize:"10px"}}> {book_status} </code></pre>
         </div>
       </Modal>
       </>
