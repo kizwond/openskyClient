@@ -7,7 +7,7 @@ class FinishStudy extends Component {
         super(props);
         this.state = { 
             exp_gained_session:0,
-            exp_gained_card_count:0
+            exp_gained_card_count:0,
          }
     }
 
@@ -23,22 +23,44 @@ class FinishStudy extends Component {
             session_id:sessionId
         }).then(res => {
             console.log("서버로부터 통계정보 :",res.data)
+            this.setState({
+                result:res.data.session.study_result
+            })
         })
 
     }
 
 
     render() { 
+        console.log(this.state.result)
+        if(this.state.result){
+            var num_cards_change_flip = this.state.result.flip.studied_cards
+            var total_flip_studied = num_cards_change_flip.total
+
+            var num_cards_change_read = this.state.result.read.studied_cards
+            var total_read_studied = num_cards_change_read.total
+
+            var total_study_hour = this.state.result.total.study_hour
+            console.log(total_study_hour)
+            var total_min = total_study_hour/60000
+            console.log(total_min)
+        } else {
+            total_flip_studied = 0
+            total_read_studied = 0
+            total_min = 0
+
+        }
+        
         return (
             <>
-            <div style={{width:'920px', margin:"auto", marginTop:"5%"}}>
+            {this.state.result ? <div style={{width:'920px', margin:"auto", marginTop:"5%"}}>
                 <div style={{textAlign:"center", marginBottom:"5px", fontSize:"14px"}}>학습이 종료되었습니다!!!</div>
                 <div style={{textAlign:"center", marginBottom:"20px", fontSize:"14px"}}>수고하셨습니다!!!</div>
                 <div style={{display:"flex",flexDirection:"row", justifyContent:"space-between", width:'100%', marginBottom:"10px"}}>
                     <Card title="오늘 학습한 카드 수" extra={<a href="#">More</a>} style={{ width: 300 }}>
-                        <p>Card content</p>
-                        <p>Card content</p>
-                        <p>Card content</p>
+                        <p>읽기카드 : {total_read_studied} </p>
+                        <p>뒤집기카드 : {total_flip_studied} </p>
+                        <p>세션학습시간 : {total_min}</p>
                     </Card>
                     <Card title="오늘 얻은 경험치" extra={<a href="#">More</a>} style={{ width: 300 }}>
                         <span>총 <span style={{color:"blue", fontWeight:"700", fontSize:'15px'}}>{this.state.exp_gained_card_count}</span>장의 카드에서</span>
@@ -84,7 +106,8 @@ class FinishStudy extends Component {
                         <p>Card content</p>
                     </Card>
                 </div>
-            </div>     
+            </div>    :'hello' }
+            
             </>
           );
     }

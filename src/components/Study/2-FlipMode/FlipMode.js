@@ -455,7 +455,7 @@ class FlipMode extends Component {
     const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
     console.log('cardlist_to_send',cardlist_to_send)
 
-    if(cardlist_to_send.length === 5){
+    if(cardlist_to_send.length > 5){
       console.log("서버에 학습데이타를 전송할 시간이다!!!!")
       const sessionId = sessionStorage.getItem('sessionId')
       axios.post('api/studyresult/create-studyresult',{

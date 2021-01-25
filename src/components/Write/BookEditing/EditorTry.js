@@ -38,8 +38,11 @@ export class EditorTry extends Component {
   }
   handleModelChangeFlag = (e) => {
     console.log(e.target.value)
+    if(e.target.value > 5){
+      var value = 5
+    }
     this.setState({
-      flag: e.target.value
+      flag: value
     })
   }
 
@@ -392,9 +395,9 @@ console.log('arrayForEditor:', this.props.arrayForEditor)
         <div style={{padding:"10px"}}>
           <div style={{display:"flex", alignItems:"center"}}>
           {this.props.card_type_name === "read"  &&  <><label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
-          <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
+          <input type="number" min="1" max="5" maxLength="1" value={this.state.flag} onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
           {this.props.card_type_name === "flip-normal"  &&  <><label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
-          <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
+          <input type="number" min="1" max="5" maxLength="1" value={this.state.flag} onChange={this.handleModelChangeFlag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5</>}
           {this.props.card_type_name === "none"  &&  ''}
           {this.props.card_type_name === "share"  &&  ''}
           </div>
