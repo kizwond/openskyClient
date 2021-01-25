@@ -10,8 +10,10 @@ class StudySettingModal extends Component {
   render() {
     if(this.props.info.book_id === this.props.studySetting.book_id){
       var turn_on = this.props.isModalVisible.studyDataVisible
-      var book_status = JSON.stringify(this.props.book_status)
+      // var book_status = JSON.stringify(this.props.book_status, null, 2)
+      var book_status = JSON.stringify(this.props.book_status.cards,undefined,4)
     }
+
     console.log("info", this.props.book_status)
     return (
       <>

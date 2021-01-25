@@ -63,13 +63,16 @@ class ListSectionContent extends Component {
   }
 
   getStudyData = (value) =>{
-    console.log(value)
+    console.log("bookID",value)
     axios.post('api/book/get-card-status',{
       book_id: value
     }).then(res => {
       console.log("get-card-status", res.data)
       this.setState({
         book_status:res.data
+      })
+      this.setState({
+        study_data_visible_array:[{book_id:value, studyDataVisible:true}]
       })
       this.studyDataShowModal()
     })
