@@ -168,7 +168,7 @@ class ListContent extends Component {
             <li>{info.type}</li>
             <li>{info.owner}</li>
             <li>{info.num_pages}</li>
-            <li>{info.num_cards.read}</li>
+            <li>{info.num_cards.read.total}</li>
             <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
             <li>{date}</li>
             <li>{update_date}</li>
@@ -196,7 +196,7 @@ class ListContent extends Component {
                   <li>{info.type}</li>
                   <li>{info.owner}</li>
                   <li>{info.num_pages}</li>
-                  <li>{info.num_cards.read}</li>
+                  <li>{info.num_cards.read.total}</li>
                   <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
                   <li>{date}</li>
                   <li>{update_date}</li>
