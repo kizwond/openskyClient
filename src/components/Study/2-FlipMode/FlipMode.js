@@ -160,13 +160,21 @@ class FlipMode extends Component {
   }
 
   getCardContentsAdd = () => {
-    const current_seq = sessionStorage.getItem("current_seq")
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
-    const reviewExist = card_ids_session.map(item => {
-      if(item.detail_status.need_study_time !== null){
-        if(new Date(item.detail_status.need_study_time) < now){
-          return item._id
+
+    // const reviewExist = card_ids_session.map(item => {
+    //   if(item.detail_status.need_study_time_tmp !== null){
+    //     if(new Date(item.detail_status.need_study_time_tmp) < now){
+    //       return item._id
+    //     }
+    //   }
+    // })
+
+    const reviewExist_data = card_ids_session.map(item => {
+      if(item.detail_status.need_study_time_tmp !== null){
+        if(new Date(item.detail_status.need_study_time_tmp) < now){
+          return item
         }
       }
     })
@@ -175,19 +183,33 @@ class FlipMode extends Component {
           return item._id
     })
     
-    const reviewExist_filtered = reviewExist.filter(function (el) {
+    // const reviewExist_filtered = reviewExist.filter(function (el) {
+    //   return el != null;
+    // });
+
+    const reviewExist_filtered_data = reviewExist_data.filter(function (el) {
       return el != null;
     });
-    
-    console.log('reviewExist',reviewExist_filtered)
 
-    if(reviewExist_filtered.length > 0){
-      const ids = reviewExist_filtered
-      const newIdsArray = ids.splice(0, 1)
-        console.log('ids',ids)
-        console.log(newIdsArray)
+    const sortValue = reviewExist_filtered_data.slice()
+    if(sortValue){
+      sortValue.sort(function(a, b) { 
+        return a.detail_status.need_study_time_tmp > b.detail_status.need_study_time_tmp ? 1 : a.detail_status.need_study_time_tmp < b.detail_status.need_study_time_tmp ? -1 : 0;
+      });
+      console.log("after sort:", sortValue)
+    }
+    
+    
+    // console.log('reviewExist_filtered_data',reviewExist_filtered_data)
+    // console.log('reviewExist',reviewExist_filtered)
+
+    if(sortValue.length > 0){
+      // const ids = reviewExist_filtered
+      // const newIdsArray = ids.splice(0, 1)
+        // console.log('ids',ids)
+
         axios.post('api/studyexecute/get-studying-cards',{
-          card_ids: newIdsArray
+          card_ids: [sortValue[0]._id]
         }).then(res => {
           console.log("세션 신규 카드 컨텐츠 : ",res.data.cards)
           const contents = res.data.cards.concat(this.state.contents)
@@ -401,6 +423,7 @@ class FlipMode extends Component {
       const need_review_time = now_mili_convert + result
       const review_date = new Date(need_review_time)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
+      card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
       card_ids_session[selectedIndex].detail_status.level = gained_level
       card_ids_session[selectedIndex].detail_status.current_lev_study_times = 0
 
@@ -454,6 +477,7 @@ class FlipMode extends Component {
       const need_review_time = now_mili_convert + result
       const review_date = new Date(need_review_time)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
+      card_ids_session[selectedIndex].detail_status.need_study_time_tmp = review_date
     }
 
     //해당카드 최종 업데이트 콘솔로그
