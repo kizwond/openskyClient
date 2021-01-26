@@ -327,6 +327,7 @@ export class EditorTry extends Component {
 
     const book_id = sessionStorage.getItem('book_id')
     console.log('type :', this.props.card_type_name)
+    console.log('this.state.flag',this.state.flag)
     axios.post('api/card/create-card', {
       book_id : book_id,
       cardtype_id:this.props.current_card_type,

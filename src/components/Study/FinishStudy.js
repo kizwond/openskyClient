@@ -12,12 +12,12 @@ class FinishStudy extends Component {
     }
 
     componentDidMount(){
-        const exp_gained_session = sessionStorage.getItem('exp_gained')
-        const exp_gained_card_count = sessionStorage.getItem('exp_gained_card_count')
-        this.setState({
-            exp_gained_session: exp_gained_session,
-            exp_gained_card_count: exp_gained_card_count
-        })
+        // const exp_gained_session = sessionStorage.getItem('exp_gained')
+        // const exp_gained_card_count = sessionStorage.getItem('exp_gained_card_count')
+        // this.setState({
+        //     exp_gained_session: exp_gained_session,
+        //     exp_gained_card_count: exp_gained_card_count
+        // })
         const sessionId = sessionStorage.getItem('sessionId')
         axios.post('api/studyresult/req-session-studyresult',{
             session_id:sessionId
@@ -63,8 +63,8 @@ class FinishStudy extends Component {
                         <p>세션학습시간 : {total_min}</p>
                     </Card>
                     <Card title="오늘 얻은 경험치" extra={<a href="#">More</a>} style={{ width: 300 }}>
-                        <span>총 <span style={{color:"blue", fontWeight:"700", fontSize:'15px'}}>{this.state.exp_gained_card_count}</span>장의 카드에서</span>
-                        <span><span style={{color:"blue", fontWeight:"700", fontSize:'15px'}}>{this.state.exp_gained_session}</span>점의 경험치를 획득하셨습니다.</span>
+                        {/* <span>총 <span style={{color:"blue", fontWeight:"700", fontSize:'15px'}}>{this.state.exp_gained_card_count}</span>장의 카드에서</span>
+                        <span><span style={{color:"blue", fontWeight:"700", fontSize:'15px'}}>{this.state.exp_gained_session}</span>점의 경험치를 획득하셨습니다.</span> */}
                     </Card>
                     <Card title="학습이 가장 오래걸린 카드 상위 10개" extra={<a href="#">More</a>} style={{ width: 300 }}>
                         <p>Card content</p>

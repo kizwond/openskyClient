@@ -215,7 +215,20 @@ class FlipMode extends Component {
         }
         if(this.state.cardlist_studying.length === next_seq){
           alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
-          window.location.href="/study-result"
+          const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+            if(cardlist_to_send){
+              console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+              const sessionId = sessionStorage.getItem('sessionId')
+              axios.post('api/studyresult/create-studyresult',{
+                cardlist_studied: cardlist_to_send,
+                session_id:sessionId,
+                status:"finished"
+              }).then(res => {
+                console.log("학습정보 전송완료!!!",res.data)        
+                sessionStorage.removeItem('cardlist_to_send')
+                window.location.href = '/study-result'
+              })
+            }
         }
         const ids = reviewNotExist
         const newIdsArray = ids.splice(next_seq, 1)
@@ -313,20 +326,21 @@ class FlipMode extends Component {
         exp_gain = selected_card_book_level_config.exp_setting.five_times
       }
   
-      const prev_exp = card_ids_session[selectedIndex].detail_status.exp
-      card_ids_session[selectedIndex].detail_status.exp = prev_exp + exp_gain
+      const prev_exp = card_ids_session[selectedIndex].detail_status.exp_stacked
+      card_ids_session[selectedIndex].detail_status.exp_stacked = prev_exp + exp_gain
+      card_ids_session[selectedIndex].detail_status.exp_gained = exp_gain
 
       //학습종료 후 보여줄 임시 데이터
-      const exp_gained_session = sessionStorage.getItem('exp_gained')
-      console.log(exp_gained_session)
-      console.log(exp_gain)
-      const updated_exp_gained = Number(exp_gained_session) + Number(exp_gain)
-      console.log(updated_exp_gained)
-      sessionStorage.setItem('exp_gained', updated_exp_gained)
+      // const exp_gained_session = sessionStorage.getItem('exp_gained')
+      // console.log(exp_gained_session)
+      // console.log(exp_gain)
+      // const updated_exp_gained = Number(exp_gained_session) + Number(exp_gain)
+      // console.log(updated_exp_gained)
+      // sessionStorage.setItem('exp_gained', updated_exp_gained)
 
-      const exp_gained_card_count_session = sessionStorage.getItem('exp_gained_card_count')
-      const exp_gained_card_count = Number(exp_gained_card_count_session) + 1
-      sessionStorage.setItem('exp_gained_card_count', exp_gained_card_count)
+      // const exp_gained_card_count_session = sessionStorage.getItem('exp_gained_card_count')
+      // const exp_gained_card_count = Number(exp_gained_card_count_session) + 1
+      // sessionStorage.setItem('exp_gained_card_count', exp_gained_card_count)
       //임시테이터 끝
 
       const gained_level = Math.floor(prev_exp + exp_gain / 1000)

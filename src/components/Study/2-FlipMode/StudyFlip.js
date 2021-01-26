@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink} from 'react-router-dom';
-import { Layout, Menu, Dropdown, Space } from 'antd';
+import { Layout, Menu, Dropdown, Space, Button } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import './Study.css'
@@ -29,10 +29,12 @@ class StudyFlip extends Component {
       const sessionId = sessionStorage.getItem('sessionId')
       axios.post('api/studyresult/create-studyresult',{
         cardlist_studied: cardlist_to_send,
-        session_id:sessionId
+        session_id:sessionId,
+        status:"finished"
       }).then(res => {
         console.log("학습정보 전송완료!!!",res.data)        
         sessionStorage.removeItem('cardlist_to_send')
+        window.location.href = '/study-result'
       })
     }
 
@@ -43,7 +45,7 @@ class StudyFlip extends Component {
          console.log('logout from location study:',res.data)
         document.getElementById("nav_bar").classList.remove('nav_bar_hidden');
         document.getElementById("nav_bar").classList.add('nav_bar');
-        window.location.href = '/'
+        
        });
   }
   render() {
@@ -117,7 +119,7 @@ class StudyFlip extends Component {
                   </Dropdown>
                 </Space>
                 <Menu style={{height:'90%'}}>
-                  <Menu.Item><NavLink to="/study-result" exact onClick={this.onMenuClick}>학습종료</NavLink></Menu.Item>
+                  <Menu.Item><Button exact onClick={this.onMenuClick}>학습종료</Button></Menu.Item>
                 </Menu>
               </div>
             </div>

@@ -150,9 +150,8 @@ class ReadModeTab extends Component {
               </Radio.Group>
             </Form.Item>
           </div>
-          <div style={{fontSize:"13px", fontWeight:"700"}}>필터 설정</div>
+          <div style={{fontSize:"13px", fontWeight:"700"}}>카드타입설정</div>
           <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
-            <div style={{fontSize:"13px", fontWeight:"700"}}>카드종류</div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
             <span  style={{fontSize:"11px", marginLeft:"20px"}}>읽기카드 </span> 
               <Form.Item
@@ -171,6 +170,9 @@ class ReadModeTab extends Component {
                 <Switch size="small" />
               </Form.Item>
             </div>
+          </div>
+          <div style={{fontSize:"13px", fontWeight:"700"}}>필터 설정</div>
+          <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
             <div style={{fontSize:"13px", fontWeight:"700"}}>학습상태</div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
             <span style={{fontSize:"11px", marginLeft:"20px"}}>미학습카드 </span>
@@ -239,6 +241,49 @@ class ReadModeTab extends Component {
                  <Switch size="small" />
               </Form.Item>
             </div>
+            <div style={{marginTop:"10px", display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
+              <span style={{fontSize:"13px", fontWeight:"700"}}>학습량 설정 </span> 
+                <Form.Item
+                    name="study_quantity_use_switch"
+                    valuePropName="checked"
+                  >
+                    <Switch size="small" />
+                </Form.Item>
+            </div>
+            <div style={{fontSize:"11px", marginLeft:"20px"}}>
+              <div style={{width:"180px",display:"flex",justifyContent:"space-between", alignItems:"center"}}> 
+                <span>미학습카드</span>
+                <Form.Item
+                      name="yet_card_num"
+                    >
+                      <InputNumber></InputNumber>
+                </Form.Item>
+              </div>
+              <div style={{width:"180px",display:"flex",justifyContent:"space-between", alignItems:"center"}}> 
+                <span>학습중카드</span>
+                <Form.Item
+                    name="ing_card_num"
+                  >
+                    <InputNumber></InputNumber>
+                </Form.Item>
+              </div>
+              <div style={{width:"180px",display:"flex",justifyContent:"space-between", alignItems:"center"}}> 
+                <span>학습완료카드</span>
+                <Form.Item
+                    name="completed_card_num"
+                  >
+                    <InputNumber></InputNumber>
+                </Form.Item>
+              </div>
+              <div style={{width:"180px",display:"flex",justifyContent:"space-between", alignItems:"center"}}> 
+                <span>학습보류카드</span>
+                <Form.Item
+                    name="hold_card_num"
+                  >
+                    <InputNumber></InputNumber>
+                </Form.Item>
+              </div>
+            </div>
             <div style={{textAlign:"right"}}> <span><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
             <Form.Item
                 name="advanced_filter_mode"
@@ -247,41 +292,6 @@ class ReadModeTab extends Component {
                  <Switch size="small" />
               </Form.Item></div>
             <AdvancedFilterModal applyAdvancedFilter={this.props.applyAdvancedFilter} advanced_filter={this.props.advanced_filter} modalVisible={this.state.modalVisible} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
-          </div>
-          <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
-          <span style={{fontSize:"13px", fontWeight:"700"}}>학습량 설정 </span> 
-            <Form.Item
-                name="study_quantity_use_switch"
-                valuePropName="checked"
-              >
-                <Switch size="small" />
-            </Form.Item>
-          </div>
-          <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
-            <Form.Item
-                  name="yet_card_num"
-                  label="미학습카드"
-                >
-                  <InputNumber></InputNumber>
-            </Form.Item>
-            <Form.Item
-                  name="ing_card_num"
-                  label="학습중카드"
-                >
-                  <InputNumber></InputNumber>
-            </Form.Item>
-            <Form.Item
-                  name="completed_card_num"
-                  label="학습완료카드"
-                >
-                  <InputNumber></InputNumber>
-            </Form.Item>
-            <Form.Item
-                  name="hold_card_num"
-                  label="학습보류카드"
-                >
-                  <InputNumber></InputNumber>
-            </Form.Item>
           </div>
           <Form.Item>
           <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px", marginTop:"10px", textAlign:"center"}}>
