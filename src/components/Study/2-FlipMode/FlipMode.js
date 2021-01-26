@@ -228,6 +228,8 @@ class FlipMode extends Component {
                 sessionStorage.removeItem('cardlist_to_send')
                 window.location.href = '/study-result'
               })
+            } else {
+              window.location.href = '/study-result'
             }
         }
         const ids = reviewNotExist
