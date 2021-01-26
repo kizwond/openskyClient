@@ -36,10 +36,13 @@ export class EditorTry extends Component {
       editor16: '',
     }
   }
+
   handleModelChangeFlag = (e) => {
     console.log(e.target.value)
     if(e.target.value > 5){
       var value = 5
+    } else {
+      value = e.target.value
     }
     this.setState({
       flag: value

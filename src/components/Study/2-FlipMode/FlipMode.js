@@ -101,7 +101,7 @@ class FlipMode extends Component {
         average_completed:average_completed
       })
     })
-    this.getCardContents()
+    this.getCardContentsAdd()
   }
 
   getCardContents = () => {
@@ -163,7 +163,7 @@ class FlipMode extends Component {
     const current_seq = sessionStorage.getItem("current_seq")
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
-    const reviewExist = card_ids_session.map(item =>{
+    const reviewExist = card_ids_session.map(item => {
       if(item.detail_status.need_study_time !== null){
         if(new Date(item.detail_status.need_study_time) < now){
           return item._id

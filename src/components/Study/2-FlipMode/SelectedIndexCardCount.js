@@ -32,7 +32,7 @@ class SelectedIndexCardCount extends Component {
       const completedNum = completedArray.reduce((a, b) => a + b, 0)
       const ingTotalNum = ingTotal.reduce((a, b) => a + b, 0)
       const ingUntilNowNum = ingUntilNow.reduce((a, b) => a + b, 0)
-      const ingUntilTodayNum = ingUntilToday.reduce((a, b) => a + b, 0)
+      const ingUntilTodayNum = ingUntilToday.reduce((a, b) => a + b, 0) + ingUntilNowNum
       const ingAfterTomorrowNum = ingAfterTomorrow.reduce((a, b) => a + b, 0)
         const columns = [
             {

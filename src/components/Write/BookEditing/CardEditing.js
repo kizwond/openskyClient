@@ -308,13 +308,14 @@ export class CardEditing extends Component {
     console.log(face1_array)
     console.log(face2_array)
     console.log(this.props.card_type)
+    console.log(this.state.flag)
     const book_id = sessionStorage.getItem('book_id')
     axios.post('api/card/update-card', {
       book_id : book_id,
       card_id : this.props.card_id,
       cardtype_id:this.props.content.cardtype_id._id,
       index_id:this.props.index_id,
-      flag_of_maker : [this.state.flag],
+      flag_of_maker : [Number(this.state.flag)],
       share : share_array,
       face1 : face1_array,
       selection : selection_array,
@@ -396,6 +397,7 @@ export class CardEditing extends Component {
                 this.setState({ [`editor${i+faceLength_1+selectionLength+faceLength_2}`]:content.contents.annotation[i-1] });
               }
               console.log(face_array)
+              
               this.setState({
                 current_card: {'face1':faceLength_1,'selection':selectionLength,'face2':faceLength_2,'annot':annotLength},
                 current_card_type:content._id,
@@ -421,6 +423,7 @@ export class CardEditing extends Component {
                 this.setState({ [`editor${i+faceLength_1+faceLength_2}`]:content.contents.annotation[i-1] });
               }
               console.log(face_array)
+              console.log('where?',content.contents.maker_flag[0])
               this.setState({
                 current_card: {'face1':faceLength_1,'face2':faceLength_2,'annot':annotLength},
                 current_card_type:content._id,
@@ -529,7 +532,7 @@ export class CardEditing extends Component {
           <div className='toolbarcontainer'></div>
           <div style={{padding:"10px"}}>
             <div style={{display:"flex", alignItems:"center"}}>
-              {this.state.flag.length > 0 ? <> <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
+              {this.state.flag ? <> <label className="editor_label" style={{width:"80px"}}>사용자플래그  </label>
               <input type="number" maxLength="1" onChange={this.handleModelChangeFlag} value={this.state.flag} style={{border:"1px solid lightgrey", borderRadius:"5px", width:"50px"}}/>숫자 1 ~ 5 </>: ''}
             </div>
             {editorList}
