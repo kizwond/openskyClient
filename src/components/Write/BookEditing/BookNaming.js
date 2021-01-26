@@ -22,7 +22,7 @@ const HorizontalLoginForm = () => {
     let completed = false; 
 
     async function get() {
-      const result = await axios.get('api/book/get-categorylist')
+      const result = await axios.get('api/category/get-categorylist')
       if (!completed) setData(result.data.categories);
       console.log('category_list :',result.data.categories)
     }

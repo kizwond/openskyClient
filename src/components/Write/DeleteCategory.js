@@ -36,7 +36,7 @@ class DeleteCategory extends Component {
     if(value.moveTo === ""){
       value.moveTo = 'none'
     }
-    axios.post('api/book/delete-category',{
+    axios.post('api/category/delete-category',{
       category_id : value.value.categoryId,
       target_category : value.moveTo,
     }).then(res => {

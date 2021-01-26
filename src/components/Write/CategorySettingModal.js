@@ -22,7 +22,7 @@ class CategoryList extends Component {
   };
 
   addCategory = (value) => {
-    axios.post('api/book/create-category',{
+    axios.post('api/category/create-category',{
       prev_category_id : this.props.category.category_id,
       prev_category_seq : this.props.category.seq,
       new_category : value.newCategory,
@@ -42,7 +42,7 @@ class CategoryList extends Component {
     console.log('category_id:',value.categoryId)
     console.log('action:',value.action)
     console.log('seq:',value.categorySeq)
-    axios.post('api/book/change-category-order',{
+    axios.post('api/category/change-category-order',{
       category_id : value.categoryId,
       action : value.action,
       seq:value.categorySeq

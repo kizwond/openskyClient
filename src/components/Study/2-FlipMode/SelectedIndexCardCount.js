@@ -14,6 +14,7 @@ class SelectedIndexCardCount extends Component {
       const ingUntilNow = [];
       const ingUntilToday = [];
       const ingAfterTomorrow = [];
+      const total = [];
       var getYets = this.props.books.map(book => 
         book.index_info.map((item)=> {
           yetArray.push(item.num_cards.total.yet)
@@ -23,6 +24,7 @@ class SelectedIndexCardCount extends Component {
           ingUntilNow.push(item.num_cards.total.ing.until_now)
           ingUntilToday.push(item.num_cards.total.ing.until_today)
           ingAfterTomorrow.push(item.num_cards.total.ing.after_tomorrow)
+          total.push(item.num_cards.total.total)
 
         })
         )
@@ -34,6 +36,7 @@ class SelectedIndexCardCount extends Component {
       const ingUntilNowNum = ingUntilNow.reduce((a, b) => a + b, 0)
       const ingUntilTodayNum = ingUntilToday.reduce((a, b) => a + b, 0) + ingUntilNowNum
       const ingAfterTomorrowNum = ingAfterTomorrow.reduce((a, b) => a + b, 0)
+      const totalNum = total.reduce((a, b) => a + b, 0)
         const columns = [
             {
               title: '영역',
@@ -52,6 +55,19 @@ class SelectedIndexCardCount extends Component {
               key : 'key',
               dataIndex: 'completedRatio',
               align :'center',
+            },
+            {
+              title: '전체',
+              key : 'key',
+              dataIndex: 'total',
+              align :'center',
+              render: (text,key) => {
+                if(key.key === "1"){
+                  return <span style={{fontWeight:"700", fontSize:"12px", color:"blue"}}>{text}</span>
+                } else {
+                  return <span>{text}</span>
+                }
+              }
             },
             {
                 title: '미학습카드',
@@ -120,6 +136,7 @@ class SelectedIndexCardCount extends Component {
               selection:'00개의 책중',
               indexSelected:'목차 총 00개가 성택됨',
               completedRatio: '31%',
+              total:totalNum,
               yet:yetNum,
               ingTotal:ingTotalNum,
               ingByNow:ingUntilNowNum,

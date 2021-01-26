@@ -15,7 +15,7 @@ const ChangeCategory = (props) => {
     console.log(props.vi)
   }
   const changeCategoryHandler = (value) => {
-    axios.post('api/book/change-category-name',{
+    axios.post('api/category/change-category-name',{
       category_id : value.categoryId,
       name : value.value.newName
     })
