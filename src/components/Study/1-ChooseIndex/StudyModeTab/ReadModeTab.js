@@ -81,11 +81,6 @@ class ReadModeTab extends Component {
       var hold_card_num = options.num_cards.hold
       var high = options.needstudytime_filter.high
       var low = options.needstudytime_filter.low
-
-      // var high = String(high1)
-      // var low = String(low1)
-      // console.log('low',low)
-      // console.log('high',high)
     } 
     else {
       sort_option = "standard"
@@ -132,7 +127,7 @@ class ReadModeTab extends Component {
           size="small"
           className="read_setting"
         >
-          <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left", display:"column", justifyContent:"start"}}>
+          <div style={{border:"1px solid lightgrey", marginBottom:"10px",background:"white", borderRadius:"5px", padding:"5px", textAlign:"left", display:"column", justifyContent:"start"}}>
             <Form.Item
               name="sort_option"
               noStyle
@@ -151,15 +146,17 @@ class ReadModeTab extends Component {
             </Form.Item>
           </div>
           <div style={{fontSize:"13px", fontWeight:"700"}}>카드타입설정</div>
-          <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left"}}>
+          <div style={{border:"1px solid lightgrey", background:"white", borderRadius:"5px", padding:"5px", textAlign:"left", marginBottom:"10px"}}>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
             <span  style={{fontSize:"11px", marginLeft:"20px"}}>읽기카드 </span> 
+            <span>
               <Form.Item
                 name="read_card"
                 valuePropName="checked"
               >
                 <Switch size="small" />
               </Form.Item>
+              </span>
             </div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
             <span  style={{fontSize:"11px", marginLeft:"20px"}}>뒤집기카드 </span> 
@@ -215,11 +212,8 @@ class ReadModeTab extends Component {
                 
               </Form.Item>
               <Form.Item name="ing_card_self_setting" >
-                <RangePicker 
-                // defaultValue={[moment(low, dateFormat), moment(high, dateFormat)]} 
-                format={dateFormat}/>
+                <RangePicker format={dateFormat}/>
               </Form.Item>
-
             </div>
 
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", fontSize:"11px"}}>
@@ -284,7 +278,7 @@ class ReadModeTab extends Component {
                 </Form.Item>
               </div>
             </div>
-            <div style={{textAlign:"right"}}> <span><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
+            <div style={{display:"flex",justifyContent:"flex-end", alignItems:"center", marginTop:"10px"}}> <span style={{marginRight:"5px"}}><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
             <Form.Item
                 name="advanced_filter_mode"
                 valuePropName="checked"
@@ -299,7 +293,6 @@ class ReadModeTab extends Component {
           </div>
         </Form.Item>
       </Form></>}
-        
       </>
     );
   }
