@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Modal,Table, Tag, Space} from 'antd'
 import './StudyData.css'
+import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
+
 class StudySettingModal extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +25,12 @@ class StudySettingModal extends Component {
         title: 'Card ID',
         dataIndex: 'card_id',
         key: 'card_id',
+      },
+      {
+        title: 'Content',
+        dataIndex: 'content',
+        key: 'content',
+        render: (text, record) => <FroalaEditorView model={text}/> 
       },
       {
         title: '학습상태',
@@ -90,6 +98,7 @@ class StudySettingModal extends Component {
       console.log(this.props.book_status)
       var data = this.props.book_status.cards.map(item =>({
         key: item._id,
+        content: item.contents.face1[0], 
         card_id: item._id,
         status : item.status,
         card_type : item.type,
