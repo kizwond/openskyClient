@@ -127,7 +127,7 @@ class FinishStudy extends Component {
         if(this.state.by_book){
             var byBook = this.state.by_book.map(item=>{
                 const study_date = item.study_date
-                const book_id = item.book_id
+                const book_id = item.book_id.title
                 const total_exp_gained = item.total.exp_gained
                 const total_study_hour = item.total.study_hour / 1000 / 60;
                 console.log(total_study_hour)
@@ -177,7 +177,7 @@ class FinishStudy extends Component {
                 return <>
                     <div key={book_id} style={{fontSize:"11px", marginBottom:"20px", display:"flex", justifyContent:"space-between"}}>
                         <ul>
-                            <li style={{marginTop:"5px"}}>책 제목 : {book_id}</li>
+                            <li style={{marginTop:"5px", fontWeight:"700"}}>책 제목 : {book_id}</li>
                             <li style={{marginTop:"5px"}}>학습날짜 : {study_date}</li>
                             <li style={{marginTop:"5px"}}>획득 경험치총합 : {total_exp_gained}exp</li>
                             <li style={{marginTop:"5px"}}>학습시간 총합 : {total_study_hour}분</li>
