@@ -426,7 +426,7 @@ class FlipMode extends Component {
       // sessionStorage.setItem('exp_gained_card_count', exp_gained_card_count)
       //임시테이터 끝
 
-      const gained_level = Math.floor(prev_exp + exp_gain / 1000)
+      const gained_level = Math.floor((prev_exp + exp_gain) / 1000)
       console.log("획득 레벨 : ",gained_level)
       const average_completed_session = sessionStorage.getItem('average_completed')
       console.log(average_completed_session)
