@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Modal,Table, Tag, Space} from 'antd'
-
+import './StudyData.css'
 class StudySettingModal extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ class StudySettingModal extends Component {
       var turn_on_modal = this.props.isModalVisible.studyDataVisible
       console.log('turn_on_modal',turn_on_modal)
       // var book_status = JSON.stringify(this.props.book_status, null, 2)
-      var book_status = JSON.stringify(this.props.book_status.cards,undefined,4)
+      // var book_status = JSON.stringify(this.props.book_status.cards,undefined,4)
       // document.getElementById("show_data").textContent = JSON.stringify(this.props.book_status.cards, undefined, 2);
     }
 
@@ -21,109 +21,110 @@ class StudySettingModal extends Component {
     const columns = [
       {
         title: 'Card ID',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <a>{text}</a>,
+        dataIndex: 'card_id',
+        key: 'card_id',
       },
       {
         title: '학습상태',
-        dataIndex: 'age',
-        key: 'age',
+        dataIndex: 'status',
+        key: 'status',
       },
       {
         title: 'Card Type',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'card_type',
+        key: 'card_type',
       },
       {
         title: '최근학습시간',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'recent_study_time',
+        key: 'recent_study_time',
       },
       {
         title: '다음복습시간',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'need_study_time',
+        key: 'need_study_time',
       },
       {
         title: '마지막선택난이도',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'recent_difficulty',
+        key: 'recent_difficulty',
       },
       {
         title: '총학습횟수',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'total_study_times',
+        key: 'total_study_times',
       },
       {
         title: '알겠음이후 학습횟수',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'current_lev_study_times',
+        key: 'current_lev_study_times',
       },
       {
         title: '총학습시간',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'total_study_hour',
+        key: 'total_study_hour',
       },
       {
         title: '최근학습시간',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'recent_study_hour',
+        key: 'recent_study_hour',
       },
       {
         title: '획득경험치',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'exp_gained',
+        key: 'exp_gained',
       },
       {
         title: '누적경험치',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'exp_stacked',
+        key: 'exp_stacked',
       },
       {
         title: '현재레벨',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'level',
+        key: 'level',
       },
     ];
-    const data = [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-      },
-    ];
+
+    if(this.props.book_status){
+      var data = this.props.book_status.cards.map(item =>({
+        key: item._id,
+        card_id: item._id,
+        status : item.status,
+        card_type : item.type,
+        recent_study_time: item.detail_status.recent_study_time,
+        need_study_time: item.detail_status.need_study_time,
+        recent_difficulty: item.detail_status.recent_difficulty,
+        total_study_times: item.detail_status.total_study_times,
+        current_lev_study_times: item.detail_status.current_lev_study_times,
+        total_study_hour: item.detail_status.total_study_hour,
+        recent_study_hour: item.detail_status.recent_study_hour,
+        exp_gained: item.detail_status.exp_gained,
+        exp_stacked: item.detail_status.exp_stacked,
+        level: item.detail_status.level,
+      }))
+      console.log(data)
+    }
 
     return (
       <>
       <Modal
         title="상세보기"
-        width={1000}
+        width={1200}
         visible={turn_on_modal}
         onOk={this.props.handleOk}
         onCancel={this.props.handleCancel}
         footer={null}
       >
 
-        <div className="study_setting_container" style={{width:"800px"}}>
-        <Table columns={columns} dataSource={data} />
-        <pre><code style={{fontSize:"10px"}}> {book_status} </code></pre>
+        <div className="study_setting_container" style={{fontSize:"11px"}}>
+        <Table 
+            size='small' 
+            pagination={false} 
+            columns={columns} 
+            dataSource={data} 
+        />
+        {/* <pre><code style={{fontSize:"10px"}}> {book_status} </code></pre> */}
         </div>
       </Modal>
       </>
