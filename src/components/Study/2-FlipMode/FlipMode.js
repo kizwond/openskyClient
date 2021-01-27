@@ -483,7 +483,13 @@ class FlipMode extends Component {
       const review_date = new Date(need_review_time)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
       card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
-      card_ids_session[selectedIndex].detail_status.level = gained_level
+      const final_level = gained_level
+      if(final_level < 0){
+        var level_save = 0
+      } else {
+        level_save = final_level
+      }
+      card_ids_session[selectedIndex].detail_status.level = level_save
       card_ids_session[selectedIndex].detail_status.current_lev_study_times = 0
 
     }    
