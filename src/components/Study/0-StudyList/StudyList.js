@@ -18,6 +18,7 @@ class WriteMain extends Component {
   componentDidMount() {
     sessionStorage.removeItem("book_ids")
     sessionStorage.setItem('current_seq',0);
+    
     this.showTitle()
   }
   showTitle() {

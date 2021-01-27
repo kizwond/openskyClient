@@ -341,7 +341,13 @@ class FlipMode extends Component {
       }
   
       const prev_exp = card_ids_session[selectedIndex].detail_status.exp_stacked
-      card_ids_session[selectedIndex].detail_status.exp_stacked = prev_exp + exp_gain
+      const exp_will_add = prev_exp + exp_gain
+      if(exp_will_add < 0 ) {
+        var exp_final = 0
+      } else {
+        exp_final = exp_will_add
+      }
+      card_ids_session[selectedIndex].detail_status.exp_stacked = exp_final
       card_ids_session[selectedIndex].detail_status.exp_gained = exp_gain
 
       //학습종료 후 보여줄 임시 데이터
@@ -358,7 +364,7 @@ class FlipMode extends Component {
       //임시테이터 끝
 
       const gained_level = Math.floor(prev_exp + exp_gain / 1000)
-      console.log(gained_level)
+      console.log("획득 레벨 : ",gained_level)
       const average_completed_session = sessionStorage.getItem('average_completed')
       console.log(average_completed_session)
       const new_average_before =  ((average_completed_session*card_ids_session.length) + gained_level )/ card_ids_session.length
