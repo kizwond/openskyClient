@@ -225,6 +225,7 @@ class ChooseIndex extends Component {
   }
 
   onFinish = (values) => {
+    sessionStorage.setItem('current_seq',0);
     console.log('Success:', values);
     const rangeValue = values['ing_card_self_setting'];
     console.log('rangeValue', rangeValue)
