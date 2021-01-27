@@ -24,8 +24,12 @@ class FlipMode extends Component {
       level_config:[],
       cardlist_studying:[],
      };
+    this.keyCount = 0;
+    this.getKey = this.getKey.bind(this);
   }
-
+  getKey(){
+    return this.keyCount++;
+  }
   startTimer = () => {
     console.log('starttimer')
     this.setState({
@@ -83,7 +87,10 @@ class FlipMode extends Component {
       console.log(res.data)
       console.log("카드리스트 : ",res.data.cardlist_studying)
       console.log("레벨설정값 : ",res.data.level_config)
-      
+
+      // res.data.cardlist_studying.map(item=>{
+      //   item.detail_status.need_study_time_tmp = null
+      // })
       sessionStorage.setItem('level_config',JSON.stringify(res.data.level_config));
       sessionStorage.setItem('cardlist_studying',JSON.stringify(res.data.cardlist_studying));
 
@@ -162,14 +169,7 @@ class FlipMode extends Component {
   getCardContentsAdd = () => {
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
-
-    // const reviewExist = card_ids_session.map(item => {
-    //   if(item.detail_status.need_study_time_tmp !== null){
-    //     if(new Date(item.detail_status.need_study_time_tmp) < now){
-    //       return item._id
-    //     }
-    //   }
-    // })
+    const current_seq = sessionStorage.getItem("current_seq")
 
     const reviewExist_data = card_ids_session.map(item => {
       if(item.detail_status.need_study_time_tmp !== null){
@@ -182,10 +182,6 @@ class FlipMode extends Component {
     const reviewNotExist = card_ids_session.map(item =>{
           return item._id
     })
-    
-    // const reviewExist_filtered = reviewExist.filter(function (el) {
-    //   return el != null;
-    // });
 
     const reviewExist_filtered_data = reviewExist_data.filter(function (el) {
       return el != null;
@@ -198,16 +194,8 @@ class FlipMode extends Component {
       });
       console.log("after sort:", sortValue)
     }
-    
-    
-    // console.log('reviewExist_filtered_data',reviewExist_filtered_data)
-    // console.log('reviewExist',reviewExist_filtered)
 
     if(sortValue.length > 0){
-      // const ids = reviewExist_filtered
-      // const newIdsArray = ids.splice(0, 1)
-        // console.log('ids',ids)
-
         axios.post('api/studyexecute/get-studying-cards',{
           card_ids: [sortValue[0]._id]
         }).then(res => {
@@ -227,19 +215,21 @@ class FlipMode extends Component {
           })
         })
     } else {
-        const current_seq = sessionStorage.getItem("current_seq")
+        
+        console.log('current_seq', current_seq)
         const next_seq = Number(current_seq)+1
         sessionStorage.setItem('current_seq',next_seq);
         console.log('cardlist length',this.state.cardlist_studying.length)
-        console.log('current_seq', next_seq+1)
-        if(this.state.cardlist_studying.length === next_seq+1){
-          console.log("final card ")
+        console.log('current_seq', current_seq)
+        if(this.state.cardlist_studying.length === Number(current_seq)-1){
+          console.log(" next card is a final card !!!!!!")
         }
-        if(this.state.cardlist_studying.length === next_seq){
+        if(this.state.cardlist_studying.length === Number(current_seq)){
           alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
           const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
             if(cardlist_to_send){
               console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+              sessionStorage.setItem('current_seq',0);
               const sessionId = sessionStorage.getItem('sessionId')
               axios.post('api/studyresult/create-studyresult',{
                 cardlist_studied: cardlist_to_send,
@@ -255,7 +245,7 @@ class FlipMode extends Component {
             }
         }
         const ids = reviewNotExist
-        const newIdsArray = ids.splice(next_seq, 1)
+        const newIdsArray = ids.splice(current_seq, 1)
         console.log('ids',ids)
         console.log(newIdsArray)
         axios.post('api/studyexecute/get-studying-cards',{
@@ -497,6 +487,7 @@ class FlipMode extends Component {
 
     if(cardlist_to_send.length > 5){
       console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+      
       const sessionId = sessionStorage.getItem('sessionId')
       axios.post('api/studyresult/create-studyresult',{
         cardlist_studied: cardlist_to_send,
@@ -611,8 +602,8 @@ class FlipMode extends Component {
       var level_revealed = selected_content.detail_status.level
       var current_lev_study_times_selected = selected_content.detail_status.current_lev_study_times
 
-      var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={item} model={item}/>)
-      var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={item} model={item}/>)
+      var first_face_data = this.state.contents[0].contents.face1.map(item => <FroalaEditorView key={this.getKey()} model={item}/>)
+      var second_face_data = this.state.contents[0].contents.face2.map(item => <FroalaEditorView key={this.getKey()} model={item}/>)
       // var annotation_data = this.state.contents[0]._id.content_of_annot.map(item => <FroalaEditorView model={item}/>)
       
       var book_id = this.state.contents[0].book_id

@@ -17,6 +17,7 @@ class WriteMain extends Component {
   }
   componentDidMount() {
     sessionStorage.removeItem("book_ids")
+    sessionStorage.setItem('current_seq',0);
     this.showTitle()
   }
   showTitle() {
@@ -42,7 +43,6 @@ class WriteMain extends Component {
 
   sessionSaveBookIds = () => {
     sessionStorage.setItem("book_ids", JSON.stringify(this.state.selected_book));
-    sessionStorage.setItem('current_seq','0');
     window.location.href ="/choose-index"    
   }
   render() { 
