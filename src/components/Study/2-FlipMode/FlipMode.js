@@ -224,48 +224,111 @@ class FlipMode extends Component {
         if(this.state.cardlist_studying.length === Number(current_seq)-1){
           console.log(" next card is a final card !!!!!!")
         }
-        if(this.state.cardlist_studying.length === Number(current_seq)){
-          alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
-          const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
-            if(cardlist_to_send){
-              console.log("서버에 학습데이타를 전송할 시간이다!!!!")
-              sessionStorage.setItem('current_seq',0);
-              const sessionId = sessionStorage.getItem('sessionId')
-              axios.post('api/studyresult/create-studyresult',{
-                cardlist_studied: cardlist_to_send,
-                session_id:sessionId,
-                status:"finished"
-              }).then(res => {
-                console.log("학습정보 전송완료!!!",res.data)        
-                sessionStorage.removeItem('cardlist_to_send')
-                window.location.href = '/study-result'
-              })
-            } else {
-              window.location.href = '/study-result'
+        if(this.state.cardlist_studying.length <= Number(current_seq)){
+          
+          // alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
+          // const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+          //   if(cardlist_to_send){
+          //     console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+          //     sessionStorage.setItem('current_seq',0);
+          //     const sessionId = sessionStorage.getItem('sessionId')
+          //     axios.post('api/studyresult/create-studyresult',{
+          //       cardlist_studied: cardlist_to_send,
+          //       session_id:sessionId,
+          //       status:"finished"
+          //     }).then(res => {
+          //       console.log("학습정보 전송완료!!!",res.data)        
+          //       sessionStorage.removeItem('cardlist_to_send')
+          //       window.location.href = '/study-result'
+          //     })
+          //   } else {
+          //     window.location.href = '/study-result'
+          //   }
+
+          const resume_study_with_review_cards = card_ids_session.map(item => {
+            if(item.detail_status.need_study_time_tmp !== null){
+              if(new Date(item.detail_status.need_study_time_tmp) > now){
+                return item
+              }
             }
-        }
-        const ids = reviewNotExist
-        const newIdsArray = ids.splice(current_seq, 1)
-        console.log('ids',ids)
-        console.log(newIdsArray)
-        axios.post('api/studyexecute/get-studying-cards',{
-          card_ids: newIdsArray
-        }).then(res => {
-          console.log("세션 복습 카드 컨텐츠 : ",res.data.cards)
-          const contents = this.state.contents.concat(res.data.cards)
-          console.log('contents review not exist',contents)
-          const result = contents.filter((item, i) => {
-            return (
-              contents.findIndex((item2, j) => {
-                return item._id === item2._id;
-              }) === i
-            );
-          });
-          console.log('uniqueArr review not exist',result)
-          this.setState({
-            contents:result
           })
-        })
+
+          const resume_study_filtered_data = resume_study_with_review_cards.filter(function (el) {
+            return el != null;
+          });
+
+          const resume_sortValue = resume_study_filtered_data.slice()
+          if(resume_sortValue){
+            resume_sortValue.sort(function(a, b) { 
+              return a.detail_status.need_study_time_tmp > b.detail_status.need_study_time_tmp ? 1 : a.detail_status.need_study_time_tmp < b.detail_status.need_study_time_tmp ? -1 : 0;
+            });
+            console.log("after sort:", resume_sortValue)
+          }
+
+          if(resume_sortValue.length > 0){
+            axios.post('api/studyexecute/get-studying-cards',{
+              card_ids: [resume_sortValue[0]._id]
+            }).then(res => {
+              console.log("세션 신규 카드 컨텐츠 : ",res.data.cards)
+              const contents = res.data.cards.concat(this.state.contents)
+              console.log('contents review exist',contents)
+              const result = contents.filter((item, i) => {
+                return (
+                  contents.findIndex((item2, j) => {
+                    return item._id === item2._id;
+                  }) === i
+                );
+              });
+              console.log('uniqueArr review exist',result)
+              this.setState({
+                contents:result
+              })
+            })
+          } else {
+            alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
+            const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+              if(cardlist_to_send){
+                console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+                sessionStorage.setItem('current_seq',0);
+                const sessionId = sessionStorage.getItem('sessionId')
+                axios.post('api/studyresult/create-studyresult',{
+                  cardlist_studied: cardlist_to_send,
+                  session_id:sessionId,
+                  status:"finished"
+                }).then(res => {
+                  console.log("학습정보 전송완료!!!",res.data)        
+                  sessionStorage.removeItem('cardlist_to_send')
+                  window.location.href = '/study-result'
+                })
+              } else {
+                window.location.href = '/study-result'
+              }
+          }
+        } else {
+          const ids = reviewNotExist
+          const newIdsArray = ids.splice(current_seq, 1)
+          console.log('ids',ids)
+          console.log(newIdsArray)
+          axios.post('api/studyexecute/get-studying-cards',{
+            card_ids: newIdsArray
+          }).then(res => {
+            console.log("세션 복습 카드 컨텐츠 : ",res.data.cards)
+            const contents = this.state.contents.concat(res.data.cards)
+            console.log('contents review not exist',contents)
+            const result = contents.filter((item, i) => {
+              return (
+                contents.findIndex((item2, j) => {
+                  return item._id === item2._id;
+                }) === i
+              );
+            });
+            console.log('uniqueArr review not exist',result)
+            this.setState({
+              contents:result
+            })
+          })
+        }
+       
     }
 
   }
