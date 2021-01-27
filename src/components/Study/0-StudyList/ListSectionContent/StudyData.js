@@ -86,7 +86,8 @@ class StudySettingModal extends Component {
       },
     ];
 
-    if(this.props.book_status){
+    if(this.props.book_status.cards){
+      console.log(this.props.book_status)
       var data = this.props.book_status.cards.map(item =>({
         key: item._id,
         card_id: item._id,
