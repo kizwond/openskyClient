@@ -364,7 +364,7 @@ export class EditorTry extends Component {
       saveParam: 'content',
       width: 'auto',
       theme: "gray",
-      tabSpaces: 4,
+      tabSpaces: 0,
       toolbarContainer: '#toolbarContainer',
       attribution: false,
       charCounterCount: false,
