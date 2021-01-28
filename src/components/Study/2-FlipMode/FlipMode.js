@@ -469,6 +469,9 @@ class FlipMode extends Component {
       } else if(gained_level > 10 ){
         interval_diffi5 = selected_card_book_level_config.lev_setting.lev_10.interval
         time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_10.time_unit
+      } else if(gained_level === 0){
+        interval_diffi5 = selected_card_book_level_config.lev_setting.lev_1.interval
+        time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_1.time_unit
       }
 
       const now_mili_convert = Date.parse(now);
@@ -481,6 +484,7 @@ class FlipMode extends Component {
       }
       const need_review_time = now_mili_convert + result
       const review_date = new Date(need_review_time)
+      console.log('---------------review_date------------------',review_date)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
       card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
       const final_level = gained_level
@@ -533,13 +537,13 @@ class FlipMode extends Component {
     if(lev !== 'diffi5'){
       const now_mili_convert = Date.parse(now);
       if(time_unit === "min"){
-        var result = this.milliseconds(0, interval, 0);
+        var result2 = this.milliseconds(0, interval, 0);
       } else if(time_unit === "hour"){
-        result = this.milliseconds(interval, 0, 0);
+        result2 = this.milliseconds(interval, 0, 0);
       } else if(time_unit === "day"){
-        result = this.milliseconds(interval*24, 0, 0);
+        result2 = this.milliseconds(interval*24, 0, 0);
       }
-      const need_review_time = now_mili_convert + result
+      const need_review_time = now_mili_convert + result2
       const review_date = new Date(need_review_time)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
       card_ids_session[selectedIndex].detail_status.need_study_time_tmp = review_date

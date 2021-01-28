@@ -166,10 +166,10 @@ class ListContent extends Component {
                                                             onClick={this.titleChangeHandleClick}/> : <><span onClick={()=>this.saveBookIdSession({book_id:info._id})} >{info.title}/순서 : {info.seq_in_category}</span></>}</li>
             <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
             <li>{info.type}</li>
-            <li>{info.user_id}</li>
+            <li>{info.author}</li>
             <li>{info.num_pages}</li>
             <li>{info.num_cards.read.total}</li>
-            <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
+            <li>read {info.num_cards.read.total}장<br/>flip {info.num_cards.flip.total}장</li>
             <li>{date}</li>
             <li>{update_date}</li>
             <li><CategoryMoveModal updateState={this.props.updateState} category={this.props.categoryTotal} bookTitle={info} /></li>
@@ -194,10 +194,10 @@ class ListContent extends Component {
                                                                    onClick={this.titleChangeHandleClick}/> : <><span onClick={()=>this.saveBookIdSession({book_id:info._id})} >{info.title}/순서 : {info.seq_in_category}</span></>}</li>
                   <li><EditOutlined onClick={this.editBookTitleHandler} style={{fontSize:'14px'}}/></li>
                   <li>{info.type}</li>
-                  <li>{info.user_id}</li>
+                  <li>{info.author}</li>
                   <li>{info.num_pages}</li>
                   <li>{info.num_cards.read.total}</li>
-                  <li>단면 {info.single_cards}장<br/>양면 {info.dual_cards}장</li>
+                  <li>read {info.num_cards.read.total}장<br/>flip {info.num_cards.flip.total}장</li>
                   <li>{date}</li>
                   <li>{update_date}</li>
                   <li><CategoryMoveModal updateState={this.props.updateState} category={this.props.categoryTotal} bookTitle={info} /></li>
