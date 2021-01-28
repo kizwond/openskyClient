@@ -196,6 +196,7 @@ class FlipMode extends Component {
     }
 
     if(sortValue.length > 0){
+      //복습카드를 뿌린다
         axios.post('api/studyexecute/get-studying-cards',{
           card_ids: [sortValue[0]._id]
         }).then(res => {
@@ -222,7 +223,7 @@ class FlipMode extends Component {
         console.log('cardlist length',this.state.cardlist_studying.length)
         console.log('current_seq', current_seq)
         if(this.state.cardlist_studying.length === Number(current_seq)-1){
-          console.log(" next card is a final card !!!!!!")
+          console.log("next card is a final card !!!!!!")
         }
         if(this.state.cardlist_studying.length <= Number(current_seq)){
           
@@ -495,6 +496,7 @@ class FlipMode extends Component {
       }
       card_ids_session[selectedIndex].detail_status.level = level_save
       card_ids_session[selectedIndex].detail_status.current_lev_study_times = 0
+      card_ids_session[selectedIndex].detail_status.status_in_session = "off"
 
     }    
 

@@ -72,9 +72,7 @@ export class BookWriting extends Component {
     window.addEventListener('scroll', this.handleScroll);
     this.getIndexList()
     this.getCardTypeList()
-    const firstIndex = sessionStorage.getItem('firstIndex')
-    const value = {node:{index_id :firstIndex}}
-    this.onSelect([0], value)
+    
   }
 
   handleScroll = (e) => {
@@ -95,6 +93,9 @@ export class BookWriting extends Component {
         this.setState({ 
           table_of_contents:res.data.indexList,
         });
+        const getfirstIndex = sessionStorage.getItem('firstIndex')
+        const value = {node:{index_id :getfirstIndex}}
+        this.onSelect([0], value)
       })
   }
   getCardTypeList = () => {
