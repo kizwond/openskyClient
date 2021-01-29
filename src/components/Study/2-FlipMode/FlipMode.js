@@ -25,7 +25,8 @@ class FlipMode extends Component {
       level_config:[],
       cardlist_studying:[],
       continue_study:false,
-      average_completed:0
+      average_completed:0,
+      study_ratio:0
      };
     this.keyCount = 0;
     this.getKey = this.getKey.bind(this);
@@ -83,7 +84,6 @@ class FlipMode extends Component {
   }
 
   getCardList = async () => {
-    sessionStorage.setItem('difficulty_stacked',JSON.stringify([]));
     sessionStorage.setItem('diffi5_stacked', 0);
     await axios.post('api/studyexecute/get-cardlist',{
       session_id: session_id,
@@ -101,6 +101,16 @@ class FlipMode extends Component {
         level_config:res.data.level_config,
       })
     })
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying')) 
+    const cardIds = card_ids_session.map(item=>{
+      return item._id
+    })
+    const diffStackedObject = []
+    cardIds.map(item => {
+      console.log(item)
+      diffStackedObject.push({id:item, diff:''})
+    })
+    sessionStorage.setItem('cardlist_progress',JSON.stringify(diffStackedObject));
     this.getCardContentsAdd()
   }
 
@@ -475,10 +485,29 @@ class FlipMode extends Component {
       diff_ratio = 1
     }
 
-    const difficulty_stacked = JSON.parse(sessionStorage.getItem('difficulty_stacked'))
-    const addDifficulty = difficulty_stacked.concat([diff_ratio])
-    sessionStorage.setItem('difficulty_stacked',JSON.stringify(addDifficulty));
-
+    const difficulty_stacked = JSON.parse(sessionStorage.getItem('cardlist_progress'))
+    const difficulty_stacked_length = difficulty_stacked.length
+    difficulty_stacked.find(item => {
+      if(item.id === id){
+        console.log(item.id)
+        console.log(id)
+        item.diff = diff_ratio;
+        console.log(item.diff)
+      }
+    })
+    console.log("CARDLIST PROGRESS", difficulty_stacked)
+    sessionStorage.setItem('cardlist_progress',JSON.stringify(difficulty_stacked));
+    const diffRatioArray = []
+    difficulty_stacked.map(item => {
+      diffRatioArray.push(item.diff)
+    })
+    const diffRatioSum = diffRatioArray.reduce((a, b) => a + b, 0)
+    console.log(diffRatioSum)
+    const averageStudyRatio = Number(diffRatioSum) / Number(difficulty_stacked_length) * 100
+    const averageStudy = averageStudyRatio.toFixed(2);
+    this.setState({
+      study_ratio:averageStudy
+    })
 
     //현재시간 기준
     const now = new Date();
@@ -1039,7 +1068,7 @@ class FlipMode extends Component {
             <li style={{marginRight:"10px", width:"320px"}}>
               <ul>
                 <li style={{display:"flex",alignItems:"center",marginBottom:"3px"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>완료율</span><ProgressBar bgcolor={"#32c41e"} completed={this.state.average_completed} /></li>
-                <li style={{display:"flex",alignItems:"center"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>학습율</span><ProgressBar bgcolor={"#a1bbe9"} completed={this.state.average_completed} /></li>
+                <li style={{display:"flex",alignItems:"center"}}><span style={{marginRight:"10px", width:"40px", fontSize:"11px"}}>학습율</span><ProgressBar bgcolor={"#a1bbe9"} completed={this.state.study_ratio} /></li>
               </ul>
             </li>
             <li><Button style={{height:"45px", borderRadius:"10px"}}>학습카드추가</Button></li>
