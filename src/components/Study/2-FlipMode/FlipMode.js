@@ -129,7 +129,7 @@ class FlipMode extends Component {
     const reviewNotExist = card_ids_session.map(item =>{
           return item._id
     })
-
+    console.log("전부다 알겠음했을때 더이상 공부할게 없을때 아이디가 존재할까?", reviewNotExist)
     // const getCardId_session_current_seq = card_ids_session.slice(current_seq, 5+Number(current_seq))
     // const reviewNotExist_tmp = getCardId_session_current_seq.map(item =>{
     //   return item._id
@@ -205,7 +205,7 @@ class FlipMode extends Component {
         // if(this.state.cardlist_studying.length - 1 === Number(current_seq)){
         //   alert("다음카드가 마지막카드입니다.")
         // }
-        if(this.state.cardlist_studying.length <= Number(current_seq)){
+        if(this.state.cardlist_studying.length < Number(current_seq)){
           if(this.state.continue_study === false) {
             this.showConfirm(this.continueStudy)
           } else {
@@ -307,40 +307,63 @@ class FlipMode extends Component {
           const newIdsArray = ids.slice(current_seq, 6+Number(current_seq))
           console.log('ids',ids)
           console.log('newIdsArray',newIdsArray)
-          axios.post('api/studyexecute/get-studying-cards',{
-            card_ids: newIdsArray
-          }).then(res => {
-            console.log("세션 복습 카드 컨텐츠 : ",res.data.cards)
-            
-            const contents = this.state.contents.concat(res.data.cards)
-            console.log('contents review not exist',contents)
-            const result = contents.filter((item, i) => {
-              return (
-                contents.findIndex((item2, j) => {
-                  return item._id === item2._id;
-                }) === i
-              );
-            });
-            //지금공부할 카드를 찾아서 지금스터디 통으로 저장하기
-            const nowCard = result.find(item=>{
-              console.log(item._id)
-              if(readyToStudyId === item._id){
-                return item
-              }
+          if(newIdsArray.length === 0){
+            alert("학습이 종료되었습니다.")
+            const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+                if(cardlist_to_send){
+                  console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+                  sessionStorage.setItem('current_seq',0);
+                  const sessionId = sessionStorage.getItem('sessionId')
+                  axios.post('api/studyresult/create-studyresult',{
+                    cardlist_studied: cardlist_to_send,
+                    session_id:sessionId,
+                    status:"finished"
+                  }).then(res => {
+                    console.log("학습정보 전송완료!!!",res.data)        
+                    sessionStorage.removeItem('cardlist_to_send')
+                    window.location.href = '/study-result'
+                  })
+                } else {
+                  window.location.href = '/study-result'
+                }
+
+          } else {
+            axios.post('api/studyexecute/get-studying-cards',{
+              card_ids: newIdsArray
+            }).then(res => {
+              console.log("세션 복습 카드 컨텐츠 : ",res.data.cards)
+              
+              const contents = this.state.contents.concat(res.data.cards)
+              console.log('contents review not exist',contents)
+              const result = contents.filter((item, i) => {
+                return (
+                  contents.findIndex((item2, j) => {
+                    return item._id === item2._id;
+                  }) === i
+                );
+              });
+              //지금공부할 카드를 찾아서 지금스터디 통으로 저장하기
+              const nowCard = result.find(item=>{
+                console.log(item._id)
+                if(readyToStudyId === item._id){
+                  return item
+                }
+              })
+              //컨텐츠통에서 지금 공부할카드 삭제하기
+              const removeNowCard = result.findIndex(function(item){
+                return item._id === readyToStudyId
+              })
+              result.splice(removeNowCard, 1)
+              console.log(removeNowCard)
+              console.log('지금공부할 카드 컨텐츠',nowCard)
+              console.log('시쿼스대로 통',result)
+              this.setState({
+                contents:result,
+                now_study:nowCard
+              })
             })
-            //컨텐츠통에서 지금 공부할카드 삭제하기
-            const removeNowCard = result.findIndex(function(item){
-              return item._id === readyToStudyId
-            })
-            result.splice(removeNowCard, 1)
-            console.log(removeNowCard)
-            console.log('지금공부할 카드 컨텐츠',nowCard)
-            console.log('시쿼스대로 통',result)
-            this.setState({
-              contents:result,
-              now_study:nowCard
-            })
-          })
+          }
+          
         }
        
     }
@@ -498,10 +521,10 @@ class FlipMode extends Component {
       } else if(gained_level === 9 ){
         interval_diffi5 = selected_card_book_level_config.lev_setting.lev_9.interval
         time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_9.time_unit
-      } else if(gained_level > 10 ){
+      } else if(gained_level >= 10 ){
         interval_diffi5 = selected_card_book_level_config.lev_setting.lev_10.interval
         time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_10.time_unit
-      } else if(gained_level === 0){
+      } else if(gained_level <= 0){
         interval_diffi5 = selected_card_book_level_config.lev_setting.lev_1.interval
         time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_1.time_unit
       }
@@ -514,6 +537,7 @@ class FlipMode extends Component {
       } else if(time_unit_diffi5 === "day"){
         result = this.milliseconds(interval_diffi5*24, 0, 0);
       }
+
       const need_review_time = now_mili_convert + result
       const review_date = new Date(need_review_time)
       console.log('---------------review_date------------------',review_date)
@@ -522,9 +546,12 @@ class FlipMode extends Component {
       const final_level = gained_level
       if(final_level < 0){
         var level_save = 0
+      } else if(final_level > 10) {
+        level_save = 10
       } else {
         level_save = final_level
       }
+      
       card_ids_session[selectedIndex].detail_status.level = level_save
       card_ids_session[selectedIndex].detail_status.current_lev_study_times = 0
       card_ids_session[selectedIndex].detail_status.status_in_session = "off"
@@ -860,7 +887,7 @@ class FlipMode extends Component {
             }
           } else if(level_revealed === 9){
             if(current_lev_study_times_selected === 0){
-              interval.push(item.lev_setting.lev_11.interval)
+              interval.push(item.lev_setting.lev_10.interval)
             } else if(current_lev_study_times_selected === 1){
               interval.push(item.lev_setting.lev_10.interval)
             } else if(current_lev_study_times_selected === 2){
@@ -874,9 +901,9 @@ class FlipMode extends Component {
             }
           } else if(level_revealed === 10){
             if(current_lev_study_times_selected === 0){
-              interval.push(item.lev_setting.lev_12.interval)
+              interval.push(item.lev_setting.lev_10.interval)
             } else if(current_lev_study_times_selected === 1){
-              interval.push(item.lev_setting.lev_11.interval)
+              interval.push(item.lev_setting.lev_10.interval)
             } else if(current_lev_study_times_selected === 2){
               interval.push(item.lev_setting.lev_10.interval)
             } else if(current_lev_study_times_selected === 3){
