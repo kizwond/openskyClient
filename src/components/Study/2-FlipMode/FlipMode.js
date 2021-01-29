@@ -110,6 +110,19 @@ class FlipMode extends Component {
         average_completed:average_completed
       })
     })
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const averageValue = card_ids_session.map(item=>{
+      return item.detail_status.level
+    })
+    const level_average = averageValue.reduce((a, b) => a + b, 0)
+    const sessionLength = card_ids_session.length
+    const new_average = level_average * 10 / sessionLength
+    const average = new_average.toFixed(2);
+    console.log(new_average)
+    this.setState({
+      average_completed:average
+    })
+
     this.getCardContentsAdd()
   }
 
@@ -483,15 +496,27 @@ class FlipMode extends Component {
 
       const gained_level = Math.floor((prev_exp + exp_gain) / 1000)
       console.log("획득 레벨 : ",gained_level)
-      const average_completed_session = sessionStorage.getItem('average_completed')
-      console.log(average_completed_session)
-      const new_average_before =  ((average_completed_session*card_ids_session.length) + gained_level )/ card_ids_session.length
-      const new_average = new_average_before.toFixed(2);
-      console.log(new_average)
-      sessionStorage.setItem('average_completed', new_average)
+
+      // const average_completed_session = sessionStorage.getItem('average_completed')
+      // console.log(average_completed_session)
+      // const new_average_before =  ((average_completed_session*card_ids_session.length) + gained_level )/ card_ids_session.length
+      // const new_average = new_average_before.toFixed(2);
+      // console.log(new_average)
+      // sessionStorage.setItem('average_completed', new_average)
+      // console.log(new_average)
+      
+
+      // const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+      const averageValue = card_ids_session.map(item=>{
+        return item.detail_status.level
+      })
+      const level_average = averageValue.reduce((a, b) => a + b, 0)
+      const sessionLength = card_ids_session.length
+      const new_average = level_average * 10 / sessionLength
+      const average = new_average.toFixed(2);
       console.log(new_average)
       this.setState({
-        average_completed:new_average
+        average_completed:average
       })
 
       if(gained_level === 1 ){
