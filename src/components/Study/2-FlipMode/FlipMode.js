@@ -24,7 +24,8 @@ class FlipMode extends Component {
       page_toggle:false,
       level_config:[],
       cardlist_studying:[],
-      continue_study:false
+      continue_study:false,
+      average_completed:0
      };
     this.keyCount = 0;
     this.getKey = this.getKey.bind(this);
@@ -83,6 +84,7 @@ class FlipMode extends Component {
 
   getCardList = async () => {
     sessionStorage.setItem('difficulty_stacked',JSON.stringify([]));
+    sessionStorage.setItem('diffi5_stacked', 0);
     await axios.post('api/studyexecute/get-cardlist',{
       session_id: session_id,
     }).then(res => {
@@ -91,39 +93,14 @@ class FlipMode extends Component {
       console.log("카드리스트 : ",res.data.cardlist_studying)
       console.log("레벨설정값 : ",res.data.level_config)
 
-      // res.data.cardlist_studying.map(item=>{
-      //   item.detail_status.need_study_time_tmp = null
-      // })
       sessionStorage.setItem('level_config',JSON.stringify(res.data.level_config));
       sessionStorage.setItem('cardlist_studying',JSON.stringify(res.data.cardlist_studying));
-
-      const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
-      const average_level = card_ids_session.map(item=>{
-        return item.detail_status.level
-      })
-      var average_processing = average_level.reduce((a, b) => a + b, 0)
-      var average_completed = average_processing / card_ids_session.length
-      sessionStorage.setItem('average_completed', average_completed)
 
       this.setState({
         cardlist_studying:res.data.cardlist_studying,
         level_config:res.data.level_config,
-        average_completed:average_completed
       })
     })
-    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
-    const averageValue = card_ids_session.map(item=>{
-      return item.detail_status.level
-    })
-    const level_average = averageValue.reduce((a, b) => a + b, 0)
-    const sessionLength = card_ids_session.length
-    const new_average = level_average * 10 / sessionLength
-    const average = new_average.toFixed(2);
-    console.log(new_average)
-    this.setState({
-      average_completed:average
-    })
-
     this.getCardContentsAdd()
   }
 
@@ -585,14 +562,13 @@ class FlipMode extends Component {
       // sessionStorage.setItem('average_completed', new_average)
       // console.log(new_average)
       
-
-      // const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
-      const averageValue = card_ids_session.map(item=>{
-        return item.detail_status.level
-      })
-      const level_average = averageValue.reduce((a, b) => a + b, 0)
+      //알겠음 카운팅하기
+      
+      const diffi5_stacked = sessionStorage.getItem('diffi5_stacked')
+      const addDiff5 = Number(diffi5_stacked)+1
+      sessionStorage.setItem('diffi5_stacked', addDiff5);
       const sessionLength = card_ids_session.length
-      const new_average = level_average * 10 / sessionLength
+      const new_average = (addDiff5 / sessionLength) * 100
       const average = new_average.toFixed(2);
       console.log(new_average)
       this.setState({
@@ -1054,7 +1030,7 @@ class FlipMode extends Component {
         }
       })
     } 
-    console.log("study more?!!!!!!!!!", this.state.continue_study)
+
     return (
       <div style={style_study_layout_container} className="study_layout_container">
         <div style={style_study_layout_top} className="study_layout_top">
