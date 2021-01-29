@@ -82,6 +82,7 @@ class FlipMode extends Component {
   }
 
   getCardList = async () => {
+    sessionStorage.setItem('difficulty_stacked',JSON.stringify([]));
     await axios.post('api/studyexecute/get-cardlist',{
       session_id: session_id,
     }).then(res => {
@@ -126,6 +127,28 @@ class FlipMode extends Component {
     this.getCardContentsAdd()
   }
 
+  finishStudy = () =>{
+    alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
+    const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+      if(cardlist_to_send){
+        console.log("서버에 학습데이타를 전송할 시간이다!!!!")
+        sessionStorage.setItem('current_seq',0);
+        const sessionId = sessionStorage.getItem('sessionId')
+        axios.post('api/studyresult/create-studyresult',{
+          cardlist_studied: cardlist_to_send,
+          session_id:sessionId,
+          status:"finished"
+        }).then(res => {
+          console.log("학습정보 전송완료!!!",res.data)        
+          sessionStorage.removeItem('cardlist_to_send')
+          window.location.href = '/study-result'
+        })
+      } else {
+        window.location.href = '/study-result'
+      }
+  }
+
+  
   getCardContentsAdd = () => {
     const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
     const now = new Date();
@@ -220,7 +243,7 @@ class FlipMode extends Component {
         // }
         if(this.state.cardlist_studying.length < Number(current_seq)){
           if(this.state.continue_study === false) {
-            this.showConfirm(this.continueStudy)
+            this.showConfirm(this.continueStudy, this.finishStudy)
           } else {
             console.log("공부를 이어가기로 함")
             const resume_study_with_review_cards = card_ids_session.map(item => {
@@ -288,24 +311,7 @@ class FlipMode extends Component {
                 })
               })
             } else {
-              alert("학습할 카드가 없습니다. 학습결과 화면으로 이동합니다.")
-              const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
-                if(cardlist_to_send){
-                  console.log("서버에 학습데이타를 전송할 시간이다!!!!")
-                  sessionStorage.setItem('current_seq',0);
-                  const sessionId = sessionStorage.getItem('sessionId')
-                  axios.post('api/studyresult/create-studyresult',{
-                    cardlist_studied: cardlist_to_send,
-                    session_id:sessionId,
-                    status:"finished"
-                  }).then(res => {
-                    console.log("학습정보 전송완료!!!",res.data)        
-                    sessionStorage.removeItem('cardlist_to_send')
-                    window.location.href = '/study-result'
-                  })
-                } else {
-                  window.location.href = '/study-result'
-                }
+              this.finishStudy()
             }
 
 
@@ -321,24 +327,80 @@ class FlipMode extends Component {
           console.log('ids',ids)
           console.log('newIdsArray',newIdsArray)
           if(newIdsArray.length === 0){
-            alert("학습이 종료되었습니다.")
-            const cardlist_to_send = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
-                if(cardlist_to_send){
-                  console.log("서버에 학습데이타를 전송할 시간이다!!!!")
-                  sessionStorage.setItem('current_seq',0);
-                  const sessionId = sessionStorage.getItem('sessionId')
-                  axios.post('api/studyresult/create-studyresult',{
-                    cardlist_studied: cardlist_to_send,
-                    session_id:sessionId,
-                    status:"finished"
-                  }).then(res => {
-                    console.log("학습정보 전송완료!!!",res.data)        
-                    sessionStorage.removeItem('cardlist_to_send')
-                    window.location.href = '/study-result'
-                  })
-                } else {
-                  window.location.href = '/study-result'
+            if(this.state.continue_study === false) {
+              this.showConfirm(this.continueStudy, this.finishStudy)
+            } else {
+              console.log("공부를 이어가기로 함")
+              const resume_study_with_review_cards = card_ids_session.map(item => {
+                if(item.detail_status.need_study_time_tmp !== null){
+                  if(new Date(item.detail_status.need_study_time_tmp) > now){
+                    return item
+                  }
                 }
+              })
+    
+              const resume_study_filtered_data = resume_study_with_review_cards.filter(function (el) {
+                return el != null;
+              });
+    
+              const resume_sortValue = resume_study_filtered_data.slice()
+              if(resume_sortValue){
+                resume_sortValue.sort(function(a, b) { 
+                  return a.detail_status.need_study_time_tmp > b.detail_status.need_study_time_tmp ? 1 : a.detail_status.need_study_time_tmp < b.detail_status.need_study_time_tmp ? -1 : 0;
+                });
+                console.log("after sort:", resume_sortValue)
+              }
+              const getReviewCardIds = resume_sortValue.map(item =>{
+                return item._id
+              })
+    
+              if(resume_sortValue.length > 0){
+                const ids = getReviewCardIds
+                const readyToStudyId = ids[0]
+                console.log('지금공부할 복습카드 아이디',readyToStudyId)
+                const newIdsArray = ids.slice(0, 6)
+                console.log('ids',ids)
+                console.log('newIdsArray',newIdsArray)
+  
+                axios.post('api/studyexecute/get-studying-cards',{
+                  card_ids: newIdsArray
+                }).then(res => {
+                  console.log("세션 신규 카드 컨텐츠 : ",res.data.cards)
+                  const contents = res.data.cards.concat(this.state.contents)
+                  console.log('contents review exist',contents)
+                  const result = contents.filter((item, i) => {
+                    return (
+                      contents.findIndex((item2, j) => {
+                        return item._id === item2._id;
+                      }) === i
+                    );
+                  });
+                  //지금공부할 카드를 찾아서 지금스터디 통으로 저장하기
+                  const nowCard = result.find(item=>{
+                    console.log(item._id)
+                    if(readyToStudyId === item._id){
+                      return item
+                    }
+                  })
+                  //컨텐츠통에서 지금 공부할카드 삭제하기
+                  const removeNowCard = result.findIndex(function(item){
+                    return item._id === readyToStudyId
+                  })
+                  result.splice(removeNowCard, 1)
+                  console.log(removeNowCard)
+  
+                  console.log('uniqueArr review exist',result)
+                  this.setState({
+                    contents:result,
+                    now_study:nowCard
+                  })
+                })
+              } else {
+                this.finishStudy()
+              }
+  
+  
+            }
 
           } else {
             axios.post('api/studyexecute/get-studying-cards',{
@@ -387,16 +449,17 @@ class FlipMode extends Component {
       continue_study:value
     })
   }
-  showConfirm = (event) => {
+  showConfirm = (event, event2) => {
     confirm({
       title: '학습이 끝났습니다. 복습시간전인 다음카드를 계속해서 보시겠습니까?',
       icon: <ExclamationCircleOutlined />,
-      content: [<Checkbox onChange={event(true)}>이 메세지창 더이상 보지않기(계속해서 복습시간전인 카드들 공부하기)</Checkbox>],
+      okText: '학습계속하기',
+      cancelText: '학습종료하기',
       onOk() {
-        console.log('OK');
+        event()
       },
       onCancel() {
-        event(false)
+        event2()
       },
     });
   }
@@ -422,6 +485,23 @@ class FlipMode extends Component {
     console.log('현재카드 book_id', book_id)
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
+
+    if(lev === "diffi1"){
+      var diff_ratio = 0.2
+    } else if(lev === "diffi2"){
+      diff_ratio = 0.4
+    } else if(lev === "diffi3"){
+      diff_ratio = 0.6
+    } else if(lev === "diffi4"){
+      diff_ratio = 0.8
+    } else if(lev === "diffi5"){
+      diff_ratio = 1
+    }
+
+    const difficulty_stacked = JSON.parse(sessionStorage.getItem('difficulty_stacked'))
+    const addDifficulty = difficulty_stacked.concat([diff_ratio])
+    sessionStorage.setItem('difficulty_stacked',JSON.stringify(addDifficulty));
+
 
     //현재시간 기준
     const now = new Date();
@@ -974,7 +1054,7 @@ class FlipMode extends Component {
         }
       })
     } 
-    
+    console.log("study more?!!!!!!!!!", this.state.continue_study)
     return (
       <div style={style_study_layout_container} className="study_layout_container">
         <div style={style_study_layout_top} className="study_layout_top">
