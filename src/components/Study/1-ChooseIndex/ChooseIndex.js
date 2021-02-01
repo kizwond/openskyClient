@@ -93,6 +93,7 @@ class ChooseIndex extends Component {
     }).then(res => {
       console.log('StudyConfigData:', res.data)
       sessionStorage.setItem('advanced_filter_axios', JSON.stringify(res.data.advanced_filter))
+      sessionStorage.setItem('study_config_axios', JSON.stringify(res.data.study_config))
       this.setState({
         study_config:res.data.study_config,
         advanced_filter:res.data.advanced_filter

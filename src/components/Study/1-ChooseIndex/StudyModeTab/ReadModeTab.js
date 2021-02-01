@@ -3,7 +3,7 @@ import { Radio, Button,Switch,Form, DatePicker, InputNumber } from 'antd';
 import './StudyModeTab.css'
 import AdvancedFilterModal from './AdvancedFilterModal'
 import moment from 'moment';
-
+import axios from 'axios'
 const { RangePicker } = DatePicker;
 
 
@@ -12,6 +12,8 @@ class ReadModeTab extends Component {
     super(props);
     this.state = { 
       modalVisible:false,
+      study_quantity_change: false,
+      first:false
      };
   }
   showModal = () => {
@@ -33,6 +35,43 @@ class ReadModeTab extends Component {
       modalVisible:false
     });
   };
+
+  componentDidMount() {
+    console.log("hello ------------------------>")
+    
+  }
+  componentDidUpdate(){
+    if(this.props.study_config) {
+      if(this.state.first === false){
+        if(this.state.study_quantity_change === this.props.study_config.read_mode.num_cards.on_off){
+          return;
+        } else {
+            console.log('-------------------------',this.props.study_config)
+            this.setState({
+              study_quantity_change:this.props.study_config.read_mode.num_cards.on_off
+            })
+        }
+        this.setState({
+          first:true
+        })
+      } else {
+        return;
+      }
+      
+    }
+  }
+  study_quantity_change =(value) =>{
+    console.log(value)
+    if(value === true){
+      this.setState({
+        study_quantity_change : "on"
+      })
+    } else {
+      this.setState({
+        study_quantity_change : "off"
+      })
+    }
+  }
 
   render() {
     if(this.props.study_config){
@@ -241,10 +280,11 @@ class ReadModeTab extends Component {
                     name="study_quantity_use_switch"
                     valuePropName="checked"
                   >
-                    <Switch size="small" />
+                    <Switch onChange={this.study_quantity_change} size="small" />
                 </Form.Item>
             </div>
-            <div style={{fontSize:"11px", marginLeft:"20px"}}>
+
+            {this.state.study_quantity_change === "on" && <div style={{fontSize:"11px", marginLeft:"20px"}}>
               <div style={{width:"180px",display:"flex",justifyContent:"space-between", alignItems:"center"}}> 
                 <span>미학습카드</span>
                 <Form.Item
@@ -277,7 +317,10 @@ class ReadModeTab extends Component {
                     <InputNumber></InputNumber>
                 </Form.Item>
               </div>
-            </div>
+            </div> }
+            
+
+
             <div style={{display:"flex",justifyContent:"flex-end", alignItems:"center", marginTop:"10px"}}> <span style={{marginRight:"5px"}}><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
             <Form.Item
                 name="advanced_filter_mode"

@@ -12,6 +12,7 @@ class ExamModeTab extends Component {
     super(props);
     this.state = { 
       modalVisible:false,
+      study_quantity_change:this.props.study_config.exam_mode.num_cards.on_off
      };
   }
   showModal = () => {
@@ -35,6 +36,18 @@ class ExamModeTab extends Component {
     });
   };
 
+  study_quantity_change =(value) =>{
+    console.log(value)
+    if(value === true){
+      this.setState({
+        study_quantity_change : "on"
+      })
+    } else {
+      this.setState({
+        study_quantity_change : "off"
+      })
+    }
+  }
 
   render() {
     if(this.props.study_config){
@@ -242,10 +255,10 @@ class ExamModeTab extends Component {
                     name="study_quantity_use_switch"
                     valuePropName="checked"
                   >
-                    <Switch size="small" />
+                    <Switch onChange={this.study_quantity_change} size="small" />
                 </Form.Item>
             </div>
-            <div style={{fontSize:"11px", marginLeft:"20px"}}>
+            {this.state.study_quantity_change === "on" && <div style={{fontSize:"11px", marginLeft:"20px"}}>
               <div style={{width:"180px",display:"flex",justifyContent:"space-between", alignItems:"center"}}> 
                 <span>미학습카드</span>
                 <Form.Item
@@ -278,7 +291,7 @@ class ExamModeTab extends Component {
                     <InputNumber></InputNumber>
                 </Form.Item>
               </div>
-            </div>
+            </div> }
             <div style={{display:"flex",justifyContent:"flex-end", alignItems:"center", marginTop:"10px"}}> <span style={{marginRight:"5px"}}><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
             <Form.Item
                 name="advanced_filter_mode"
