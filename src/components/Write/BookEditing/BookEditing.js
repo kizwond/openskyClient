@@ -209,6 +209,7 @@ export class BookWriting extends Component {
   }
 
   addCardHandler = (key) => {
+    console.log('------------------->',key)
     console.log("check 1", this.state.card_type)
     const contentsList = this.state.card_type.map((content)=>{
       console.log(content.name)
@@ -413,6 +414,7 @@ export class BookWriting extends Component {
   };
   
   onClickCardHandler = (value, seq) => {
+    console.log(value, seq)
     var elemClass = document.getElementsByClassName("card_class");
     var elemBtnsClass = document.getElementsByClassName("card_edit_btns");
     
@@ -641,6 +643,7 @@ export class BookWriting extends Component {
 
     if(contentsList){
       var list = contentsList.map((content)=>{
+        
           if(content[0].flag == "1"){
             var star = <StarTwoTone />
           } else if(content[0].flag == "2"){
@@ -660,6 +663,7 @@ export class BookWriting extends Component {
             childStyle = {cursor:"pointer", backgroundColor:"white", padding:"5px"}
           }
           if(content[0].type === 'read'){
+            console.log(content[0].content.cardtype_id.name)
             return <> <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
                         id={content[0].card_id} 
                         className="card_class"
@@ -672,7 +676,10 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div></div> 
+                      <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button></div> 
                       <div>  
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -776,6 +783,7 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
+                     
                       <div>
                       {content[0].content.parent_card_id && <>
                         <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
@@ -839,6 +847,11 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
+                      <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>
                         {content[0].content.parent_card_id && <>
                         <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
