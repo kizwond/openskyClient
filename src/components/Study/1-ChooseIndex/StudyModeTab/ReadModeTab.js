@@ -36,17 +36,12 @@ class ReadModeTab extends Component {
     });
   };
 
-  componentDidMount() {
-    console.log("hello ------------------------>")
-    
-  }
   componentDidUpdate(){
     if(this.props.study_config) {
       if(this.state.first === false){
         if(this.state.study_quantity_change === this.props.study_config.read_mode.num_cards.on_off){
           return;
         } else {
-            console.log('-------------------------',this.props.study_config)
             this.setState({
               study_quantity_change:this.props.study_config.read_mode.num_cards.on_off
             })
