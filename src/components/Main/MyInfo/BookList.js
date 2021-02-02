@@ -98,6 +98,7 @@ class BookList extends Component {
         render: (text, record) => {
           if(record){
               return (<RequestModal 
+                        book_id={record.book_id}
                         isModalVisible={this.state.isModalVisible}
                         showModal={this.showModal}
                         handleCancel={this.handleCancel}
