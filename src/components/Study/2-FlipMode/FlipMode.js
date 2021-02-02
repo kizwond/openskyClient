@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Avatar, Button,  Menu, Dropdown, Modal, Checkbox } from 'antd';
-import { UserOutlined, DownOutlined } from '@ant-design/icons';
+import { Avatar, Button,  Menu, Dropdown, Modal, Popover } from 'antd';
+import { UserOutlined, DownOutlined, FlagFilled,SettingOutlined } from '@ant-design/icons';
 import ProgressBar from "./progressBar";
 import axios from 'axios'
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
@@ -779,6 +779,17 @@ class FlipMode extends Component {
       })
     )
   }
+  userFlagChange =(flag, id) =>{
+    console.log(flag, id)
+      // axios.post('api/studyexecute/save-userflag',{
+      //   card_id: id,
+      //   flag: flag
+      // }).then(res => {
+      //   console.log("세션 신규 카드 컨텐츠 : ",res.data)
+      //   const contents = res.data.cards.concat(this.state.contents)
+      //   console.log('contents review exist',contents)
+      // })
+    }
 
   render() {
     const style_study_layout_container ={
@@ -816,7 +827,7 @@ class FlipMode extends Component {
       display:"flex",
       flexDirection:"row",
       justifyContent:"space-between",
-      width:"1440px",
+      width:"1410px",
       margin:"auto",
       marginTop:"10px"
     }
@@ -840,6 +851,21 @@ class FlipMode extends Component {
 
     if(this.state.now_study){
       var id_of_content = this.state.now_study._id
+
+      if(this.state.now_study.contents.user_flag[0] === "flag_1"){
+        var user_flag = <FlagFilled style={{cursor:"pointer", fontSize:"15px",color:"red"}}/>
+      } else if(this.state.now_study.contents.user_flag[0] === "flag_2") {
+        user_flag = <FlagFilled style={{cursor:"pointer", fontSize:"15px",color:"orange"}}/>
+      } else if(this.state.now_study.contents.user_flag[0] === "flag_3") {
+        user_flag = <FlagFilled style={{cursor:"pointer", fontSize:"15px",color:"yello"}}/>
+      } else if(this.state.now_study.contents.user_flag[0] === "flag_4") {
+        user_flag = <FlagFilled style={{cursor:"pointer", fontSize:"15px",color:"green"}}/>
+      } else if(this.state.now_study.contents.user_flag[0] === "flag_5") {
+        user_flag = <FlagFilled style={{cursor:"pointer", fontSize:"15px",color:"blue"}}/>
+      } else {
+        user_flag = <FlagFilled style={{border:"1px dashed lightgrey",color:"white"}}/>
+      }
+      
       const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
      
       const selected_content = card_ids_session.find(item => {
@@ -1089,7 +1115,31 @@ class FlipMode extends Component {
           </div>
         </div>
         <div style={style_study_layout_bottom} className="study_layout_middle">
-          <div style={{width:"200px", border:"1px solid lightgrey", borderRadius:"10px", textAlign:"right"}}>플래그 영역</div>
+          <div style={{width:"200px", textAlign:"right", display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+            <div></div>
+            <div style={{width:'30px', height:"30px", textAlign:"center"}}>          
+              <Popover
+                content={[<div style={{display:"flex", flexDirection:"column", height:"200px", justifyContent:"space-around"}}>
+                            <FlagFilled onClick={() => this.userFlagChange("flag_1", id_of_content)} style={{cursor:"pointer", fontSize:"15px",color:"red"}}/>
+                            <FlagFilled onClick={() => this.userFlagChange("flag_2", id_of_content)} style={{cursor:"pointer", fontSize:"15px",color:"orange"}}/>
+                            <FlagFilled onClick={() => this.userFlagChange("flag_3", id_of_content)} style={{cursor:"pointer", fontSize:"15px",color:"yello"}}/>
+                            <FlagFilled onClick={() => this.userFlagChange("flag_4", id_of_content)} style={{cursor:"pointer", fontSize:"15px",color:"green"}}/>
+                            <FlagFilled onClick={() => this.userFlagChange("flag_5", id_of_content)} style={{cursor:"pointer", fontSize:"15px",color:"blue"}}/>
+                            <SettingOutlined style={{cursor:"pointer", fontSize:"15px",color:"black"}}/>
+                          </div>]}
+                trigger="click"
+                placement="bottom"
+                // visible={this.state.visible}
+                onVisibleChange={this.handleVisibleChange}
+              >
+                <div style={{border:"1px solid lightgrey", 
+                            cursor:"pointer",height:"30px", width:'30px',
+                            lineHeight:"30px", borderRadius:"5px"}} 
+                            type="primary">{user_flag}</div>
+              </Popover>
+          </div>
+          
+          </div>
           <div style={{width:"1000px", border:"1px solid lightgrey", borderRadius:"10px"}}>
             <div onClick={this.onClickPage} style={{ height:"600px", backgroundColor:"white", padding:"10px", borderRadius:"10px 10px 0 0", display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}}>
               <div style={{position:"relative", height:"50%", width:"100%", border:"1px dashed lightgrey", borderRadius:"5px"}}>

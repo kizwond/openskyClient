@@ -649,7 +649,7 @@ class FlipMode extends Component {
       display:"flex",
       flexDirection:"row",
       justifyContent:"space-between",
-      width:"1440px",
+      width:"1410px",
       margin:"auto",
       marginTop:"10px"
     }

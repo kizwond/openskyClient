@@ -670,6 +670,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                    <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
@@ -679,7 +680,8 @@ export class BookWriting extends Component {
                       <div><Button 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button></div> 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>  
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -713,6 +715,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
@@ -720,6 +723,11 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
+                    <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>
                       {content[0].content.parent_card_id && <>
                         <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
@@ -773,6 +781,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> 
@@ -783,7 +792,11 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                     
+                    <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>
                       {content[0].content.parent_card_id && <>
                         <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
@@ -838,6 +851,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -906,6 +920,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -916,6 +931,11 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
+                    <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>
                       {content[0].content.parent_card_id && <>
                         <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
@@ -970,12 +990,17 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].none}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div></div>
+                    <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>
                       <Space>
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -1009,11 +1034,17 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].share}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
+                    <div><Button 
+                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  size="small" 
+                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                      </div> 
                       <div>
                       <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
                         <Option value="default">카드타입선택</Option>
