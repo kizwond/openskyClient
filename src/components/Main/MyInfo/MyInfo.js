@@ -3,6 +3,7 @@ import { Space, Tabs, Button } from 'antd';
 import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
 import './MyInfo.css'
 import BookList from './BookList'
+import ReqBookList from './ReqBookList'
 
 const { TabPane } = Tabs;
 
@@ -10,7 +11,6 @@ class MyInfo extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-        key:'1'
      };
   }
   changeTab(key) {
@@ -20,7 +20,7 @@ class MyInfo extends Component {
 
     return (
         <div style={{width:"100%", marginTop:"30px"}}> 
-            <Tabs  defaultActiveKey="1" onChange={this.changeTab} style={{height:"100%"}} className="my_info_tabs" tabPosition="left">
+            <Tabs  defaultActiveKey="2" onChange={this.changeTab} style={{height:"100%"}} className="my_info_tabs" tabPosition="left">
                 <TabPane key="1" tab={<span>개인정보관리</span>}>
                     <div style={{fontSize:"11px"}}>
                         개인정보들
@@ -33,7 +33,7 @@ class MyInfo extends Component {
                 </TabPane>
                 <TabPane key="3" tab={<span>판매요청승인</span>}>
                     <div style={{fontSize:"11px"}}>
-                        판매요청승인
+                    <ReqBookList/>
                     </div>
                 </TabPane>
             </Tabs>
