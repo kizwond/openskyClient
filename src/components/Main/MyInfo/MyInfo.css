@@ -1,0 +1,29 @@
+.my_info_tabs .ant-tabs-tab-btn {
+    writing-mode: horizontal-tb;
+    vertical-align: middle;
+  }
+  
+  .my_info_tabs .ant-tabs-nav-wrap{
+    width:250px;
+  }
+  
+  .my_info_tabs > .ant-tabs-nav .ant-tabs-tab{
+    margin: 0;
+    padding: 8px 24px;
+    font-size:12px;
+    text-align: center;
+    background: white;
+  }
+  
+  
+  .my_info_tabs > .ant-tabs-nav .ant-tabs-tab-active{
+    background:#dfecf6;
+  }
+
+  .my_info_tabs > .ant-tabs-nav .ant-tabs-tab:nth-child(odd):not(.ant-tabs-tab-active){
+    margin: 0;
+    padding: 8px 24px;
+    text-align: center;
+    background:#fbfbfb;
+  }
+  

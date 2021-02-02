@@ -16,6 +16,7 @@ import ChooseIndex from './Study/1-ChooseIndex/ChooseIndex'
 import StudyFlip from './Study/2-FlipMode/StudyFlip'
 import MentoringMain from './Mentoring/MentoringMain'
 import FinishStudy from './Study/FinishStudy'
+import MyInfo from './Main/MyInfo/MyInfo'
 
 const { Header, Content, Footer } = Layout;
 
@@ -32,6 +33,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/myinfo" component={MyInfo} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/study" component={StudyMain} />
             <Route exact path="/write" component={Write} />
