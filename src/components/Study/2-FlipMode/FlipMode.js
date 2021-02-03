@@ -838,14 +838,17 @@ class FlipMode extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="0">
-          단기
+          <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>이전</span><span style={{fontSize:"9px"}}>(이전학습카드로 이동)</span></Button>
         </Menu.Item>
         <Menu.Item key="1">
-          장기
+        <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>통과</span><span style={{fontSize:"9px"}}>(이번세션에서 제외)</span></Button>
         </Menu.Item>
-        <Menu.Divider />
+        {/* <Menu.Divider /> */}
         <Menu.Item key="3">
-          졸업
+        <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>보류</span><span style={{fontSize:"9px"}}>(복구 시까지 학습보류)</span></Button>
+        </Menu.Item>
+        <Menu.Item key="4">
+        <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>졸업</span><span style={{fontSize:"9px"}}>(만렙찍고 향후 학습제외)</span></Button>
         </Menu.Item>
       </Menu>
     );
