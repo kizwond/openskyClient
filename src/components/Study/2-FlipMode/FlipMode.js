@@ -26,7 +26,8 @@ class FlipMode extends Component {
       cardlist_studying:[],
       continue_study:false,
       average_completed:0,
-      study_ratio:0
+      study_ratio:0,
+      clickCount:1
      };
     this.keyCount = 0;
     this.getKey = this.getKey.bind(this);
@@ -472,6 +473,9 @@ class FlipMode extends Component {
     console.log('현재카드 book_id', book_id)
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
+    this.setState(prevState=>({
+      clickCount:prevState.clickCount + 1
+    }))
 
     if(lev === "diffi1"){
       var diff_ratio = 0.2
@@ -814,7 +818,7 @@ class FlipMode extends Component {
     const style_study_layout_top_right ={
       display:"flex",
       flexDirection:"row",
-      width:"50%",
+      width:"40%",
       justifyContent:"space-between",
       border:"1px solid lightgrey",
       borderRadius:"10px",
@@ -1099,6 +1103,7 @@ class FlipMode extends Component {
             </li>
             <li><Button style={{height:"45px", borderRadius:"10px"}}>학습카드추가</Button></li>
           </ul>
+          <div style={{flex:1, border:"1px solid lightgrey", marginRight:"10px", borderRadius:"10px",lineHeight:"45px", textAlign:'center', fontSize:"30px", backgroundColor:"white"}}>{this.state.clickCount}</div>
           <div style={style_study_layout_top_right} className="study_layout_top_right">
             <Timer 
                   startTimer={this.startTimer} 
