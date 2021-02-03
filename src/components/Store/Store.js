@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { Card,List, Typography, Divider } from 'antd';
 import axios from 'axios'
-
-const { Meta } = Card;
+import { Route, Switch,NavLink } from "react-router-dom";
+import CategoryList from './CategoryList'
 
 class Store extends Component {
   constructor(props) {
     super(props);
-    this.state = {  };
+    this.state = { 
+      book_list: [
+        {book_id: 'book1', title:"책1", description:"블라블라1", img:"/img/seaview.jpg"},
+        {book_id: 'book2', title:"책2", description:"블라블라2", img:"/img/mountains.jpeg"},
+        {book_id: 'book3', title:"책3", description:"블라블라3", img:"/img/mountaintrees.jpeg"},
+        {book_id: 'book4', title:"책4", description:"블라블라4", img:"/img/books.jpg"},
+        {book_id: 'book5', title:"책5", description:"블라블라5", img:"/img/seaview.jpg"},
+      ]
+     };
   }
 
   componentDidMount(){
@@ -20,58 +28,41 @@ class Store extends Component {
     //   })
     // })
   }
-  onClickBook = () =>{
-    console.log("book clicked")
+ 
+  onClickBook = (value) =>{
+    console.log(`${value} clicked`)
+    // window.location.href="/bookdetail"
   }
   onClickCategory = (item) =>{
     console.log(`${item} clicked`)
   }
-  render() {
-    const data = [
-      '카테고리1',
-      '카테고리2',
-      '카테고리3',
-      '카테고리4',
-      '카테고리5',
-      '카테고리6',
-      '카테고리7',
-      '카테고리8',
-      '카테고리9',
+  render() {  
+    
+    const book_list = this.state.book_list.map(book =>{
+      return (
+          <Card
+            key={book.book_id}
+            style={{ width: 240, height:'100%' }}
+            onClick={() =>this.onClickBook(book.book_id)}
+            cover={<img alt="책표지" width="200px" height="250px" src={book.img} />}
+          >
+            <NavLink to={{
+                pathname:'/bookdetail',
+                aboutProps:{
+                  book_id:book.book_id
+                 }
+              }}>{book.title}</NavLink>
+          </Card>
+      )
+    })
 
-    ];
-
-    // const book_list = this.state.book_list.map(book =>{
-    //   return (
-    //       <Card
-    //         hoverable
-    //         style={{ width: 240 }}
-    //         cover={<img alt="example" src="" />}
-    //       >
-    //         <Meta title={book.title} description={book.description}/>
-    //       </Card>
-    //   )
-    // })
     return (
       <div className="store_page_container" style={{display:"flex", flexDirection:"row", marginTop:"20px"}}>
         <div style={{width:"200px"}}>
-          <List
-            size="small"
-            header={<div>카테고리</div>}
-            bordered
-            dataSource={data}
-            renderItem={item => <List.Item><span style={{cursor:"pointer"}} onClick={() =>this.onClickCategory(item)}>{item}</span></List.Item>}
-          />
+        <CategoryList/>
         </div>
-        <div>
-          <Card
-            hoverable
-            style={{ width: 240 }}
-            cover={<img alt="책표지 썸네일" src="" width="200px"/>}
-            onClick={this.onClickBook}
-          >
-            <Meta title="책제목" description="책설명"/>
-          </Card>
-          {/* {book_list} */}
+        <div style={{display:"flex", flexWrap:"wrap", width:"100%", justifyContent:"space-around"}}>
+          {book_list}
         </div>
       </div>
     );
