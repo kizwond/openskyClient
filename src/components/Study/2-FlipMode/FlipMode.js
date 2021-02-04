@@ -474,8 +474,27 @@ class FlipMode extends Component {
     console.log('난이도 별 복습주기', interval)
     console.log('난이도 별 복습주기 단위', time_unit)
     this.setState(prevState=>({
-      clickCount:prevState.clickCount + 1
-    }))
+          clickCount:prevState.clickCount + 1
+        }))
+
+    const study_log_session = JSON.parse(sessionStorage.getItem('study_log'))
+
+    const study_log = {seq:this.state.clickCount, card_id: id}
+    if(study_log_session){
+      study_log_session.push(study_log)
+      sessionStorage.setItem('study_log',JSON.stringify(study_log_session));
+      const back_seq = study_log_session[study_log_session.length - 1].seq
+      sessionStorage.setItem('back_seq',back_seq+1);
+    } else {
+      sessionStorage.setItem('study_log',JSON.stringify([]));
+      const study_log_session = JSON.parse(sessionStorage.getItem('study_log'))
+      study_log_session.push(study_log)
+      sessionStorage.setItem('study_log',JSON.stringify(study_log_session));
+    }
+
+    
+
+
 
     if(lev === "diffi1"){
       var diff_ratio = 0.2
@@ -794,7 +813,44 @@ class FlipMode extends Component {
       //   console.log('contents review exist',contents)
       // })
     }
+  onClickBack = () =>{
+    console.log("back clicked!!!")
+    const current_seq = sessionStorage.getItem("current_seq")
+    console.log('--------> current_sep',current_seq)
+    const study_log_session = JSON.parse(sessionStorage.getItem('study_log'))
+    console.log('--------> study_log_session',study_log_session)
+    console.log('------> now_study',this.state.now_study)
+    const back_seq = sessionStorage.getItem('back_seq')
+    if(back_seq){
+      const new_back_seq = back_seq -1
+      sessionStorage.setItem('back_seq',new_back_seq);
+    } else {
+      console.log(study_log_session)
+      const back_seq = study_log_session[study_log_session.length - 1].seq
+      sessionStorage.setItem('back_seq',back_seq);
+    }
 
+    const current_back_seq = sessionStorage.getItem('back_seq')
+    console.log('--------> current_back_seq',current_back_seq)
+
+    const back_card = study_log_session.find(item=>{
+      if(item.seq === Number(current_back_seq)){
+        return item
+      }
+    })
+    console.log(back_card.card_id)
+
+    axios.post('api/studyexecute/get-studying-cards',{
+      card_ids:[back_card.card_id]
+    }).then(res => {
+      console.log("이전카드 컨텐츠 : ",res.data.cards)
+      this.setState({
+        now_study:res.data.cards[0]
+      })
+    })
+
+
+  }
   render() {
     const style_study_layout_container ={
       display:"flex",
@@ -838,7 +894,7 @@ class FlipMode extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="0">
-          <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>이전</span><span style={{fontSize:"9px"}}>(이전학습카드로 이동)</span></Button>
+          <Button size="small" onClick={this.onClickBack} style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>이전</span><span style={{fontSize:"9px"}}>(이전학습카드로 이동)</span></Button>
         </Menu.Item>
         <Menu.Item key="1">
         <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>통과</span><span style={{fontSize:"9px"}}>(이번세션에서 제외)</span></Button>

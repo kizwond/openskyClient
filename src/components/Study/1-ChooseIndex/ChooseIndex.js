@@ -67,6 +67,7 @@ class ChooseIndex extends Component {
     sessionStorage.removeItem('cardlist_studying')
     sessionStorage.removeItem('diffi5_stacked');
     sessionStorage.removeItem('cardlist_progress');
+    sessionStorage.removeItem('study_log')
     this.getIndex()
     this.getStudyConfig()
   }
