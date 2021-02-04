@@ -845,9 +845,9 @@ class FlipMode extends Component {
     console.log('--------> current_back_seq',current_back_seq)
     if(study_log_session){
 
-      // const current_seq = sessionStorage.getItem("current_seq")
-      // const next_seq = Number(current_seq)-1
-      // sessionStorage.setItem('current_seq',next_seq);
+      const current_seq = sessionStorage.getItem("current_seq")
+      const next_seq = Number(current_seq) -1
+      sessionStorage.setItem('current_seq',next_seq);
 
       const back_card = study_log_session.find(item=>{
         if(item.seq === Number(current_back_seq)){
