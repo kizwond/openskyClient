@@ -150,10 +150,16 @@ class FlipMode extends Component {
       }
     })
 
-    const reviewNotExist = card_ids_session.map(item =>{
-          return item._id
+    const reviewNotExist_temp = card_ids_session.map(item =>{
+          if(item.detail_status.status_in_session === "on"){
+            return item._id
+          }
     })
-    console.log("전부다 알겠음했을때 더이상 공부할게 없을때 아이디가 존재할까?", reviewNotExist)
+    const reviewNotExist = reviewNotExist_temp.filter(function (el) {
+      return el != null;
+    });
+
+    // console.log("전부다 알겠음했을때 더이상 공부할게 없을때 아이디가 존재할까?", reviewNotExist)
     // const getCardId_session_current_seq = card_ids_session.slice(current_seq, 5+Number(current_seq))
     // const reviewNotExist_tmp = getCardId_session_current_seq.map(item =>{
     //   return item._id
@@ -848,9 +854,38 @@ class FlipMode extends Component {
         now_study:res.data.cards[0]
       })
     })
-
-
   }
+
+  onClickNext = () =>{
+    console.log("Next clicked!!!!")
+    console.log(this.state.now_study)
+    const current_card_id = this.state.now_study._id
+    //세션스토리지에서 카드리스트 정보 가져오기
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+
+    //해당 카드 인텍스 찾기
+    const selectedIndex = card_ids_session.findIndex((item, index)=>{
+      return item._id === current_card_id
+    })
+    //현재카드 학습정보 조회
+    const selectedCard = card_ids_session.find((item, index)=>{
+      if(item._id === current_card_id){
+        return item
+      }
+    })
+    console.log(selectedIndex)
+    console.log(selectedCard)
+
+    card_ids_session[selectedIndex].detail_status.status_in_session = "off"
+    card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
+
+    sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
+    const current_seq = sessionStorage.getItem("current_seq")
+    const next_seq = Number(current_seq)-1
+        sessionStorage.setItem('current_seq',next_seq);
+    this.getCardContentsAdd()
+  }
+
   render() {
     const style_study_layout_container ={
       display:"flex",
@@ -897,7 +932,7 @@ class FlipMode extends Component {
           <Button size="small" onClick={this.onClickBack} style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>이전</span><span style={{fontSize:"9px"}}>(이전학습카드로 이동)</span></Button>
         </Menu.Item>
         <Menu.Item key="1">
-        <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>통과</span><span style={{fontSize:"9px"}}>(이번세션에서 제외)</span></Button>
+        <Button size="small" onClick={this.onClickNext} style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>통과</span><span style={{fontSize:"9px"}}>(이번세션에서 제외)</span></Button>
         </Menu.Item>
         {/* <Menu.Divider /> */}
         <Menu.Item key="3">
