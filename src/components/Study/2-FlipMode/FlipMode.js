@@ -832,28 +832,41 @@ class FlipMode extends Component {
       sessionStorage.setItem('back_seq',new_back_seq);
     } else {
       console.log(study_log_session)
-      const back_seq = study_log_session[study_log_session.length - 1].seq
-      sessionStorage.setItem('back_seq',back_seq);
+      if(study_log_session){
+        const back_seq = study_log_session[study_log_session.length - 1].seq
+        sessionStorage.setItem('back_seq',back_seq);
+      } else {
+        return alert("이전카드가 없습니다.")
+      }
+      
     }
 
     const current_back_seq = sessionStorage.getItem('back_seq')
     console.log('--------> current_back_seq',current_back_seq)
+    if(study_log_session){
 
-    const back_card = study_log_session.find(item=>{
-      if(item.seq === Number(current_back_seq)){
-        return item
-      }
-    })
-    console.log(back_card.card_id)
+      // const current_seq = sessionStorage.getItem("current_seq")
+      // const next_seq = Number(current_seq)-1
+      // sessionStorage.setItem('current_seq',next_seq);
 
-    axios.post('api/studyexecute/get-studying-cards',{
-      card_ids:[back_card.card_id]
-    }).then(res => {
-      console.log("이전카드 컨텐츠 : ",res.data.cards)
-      this.setState({
-        now_study:res.data.cards[0]
+      const back_card = study_log_session.find(item=>{
+        if(item.seq === Number(current_back_seq)){
+          return item
+        }
       })
-    })
+      axios.post('api/studyexecute/get-studying-cards',{
+        card_ids:[back_card.card_id]
+      }).then(res => {
+        console.log("이전카드 컨텐츠 : ",res.data.cards)
+        this.setState({
+          now_study:res.data.cards[0]
+        })
+      })
+    } else {
+      alert("이전카드가 없습니다.")
+      // return this.getCardContentsAdd()
+    }
+    
   }
 
   onClickNext = () =>{
@@ -882,7 +895,8 @@ class FlipMode extends Component {
     sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
     const current_seq = sessionStorage.getItem("current_seq")
     const next_seq = Number(current_seq)-1
-        sessionStorage.setItem('current_seq',next_seq);
+    sessionStorage.setItem('current_seq',next_seq);
+
     this.getCardContentsAdd()
   }
 
