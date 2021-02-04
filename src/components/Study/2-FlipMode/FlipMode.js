@@ -880,14 +880,6 @@ class FlipMode extends Component {
     const selectedIndex = card_ids_session.findIndex((item, index)=>{
       return item._id === current_card_id
     })
-    //현재카드 학습정보 조회
-    const selectedCard = card_ids_session.find((item, index)=>{
-      if(item._id === current_card_id){
-        return item
-      }
-    })
-    console.log(selectedIndex)
-    console.log(selectedCard)
 
     card_ids_session[selectedIndex].detail_status.status_in_session = "off"
     card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
@@ -899,6 +891,121 @@ class FlipMode extends Component {
 
     this.getCardContentsAdd()
   }
+
+  onClickHold = () =>{
+    console.log("Hold clicked!!!!!")
+    console.log(this.state.now_study)
+    const current_card_id = this.state.now_study._id
+    //세션스토리지에서 카드리스트 정보 가져오기
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+
+    //해당 카드 인텍스 찾기
+    const selectedIndex = card_ids_session.findIndex((item, index)=>{
+      return item._id === current_card_id
+    })
+
+    card_ids_session[selectedIndex].detail_status.status_in_session = "off"
+    card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
+    card_ids_session[selectedIndex].status = "hold"
+
+    sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
+    const current_seq = sessionStorage.getItem("current_seq")
+    const next_seq = Number(current_seq)-1
+    sessionStorage.setItem('current_seq',next_seq);
+
+
+    const updateThis = card_ids_session[selectedIndex]
+    const getUpdateThis = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+    console.log(getUpdateThis)
+    if(getUpdateThis){
+      var finalUpdate = getUpdateThis.concat(updateThis)
+    } else {
+      finalUpdate = [updateThis]
+    }
+    
+    sessionStorage.setItem('cardlist_to_send',JSON.stringify(finalUpdate));
+    this.getCardContentsAdd()
+  }
+
+  onClickCompleted = () =>{
+    console.log("Complete clicked!!!!!")
+    console.log(this.state.now_study)
+    const current_card_id = this.state.now_study._id
+    //세션스토리지에서 카드리스트 정보 가져오기
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+
+    //해당 카드 인텍스 찾기
+    const selectedIndex = card_ids_session.findIndex((item, index)=>{
+      return item._id === current_card_id
+    })
+
+    card_ids_session[selectedIndex].detail_status.status_in_session = "off"
+    card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
+    card_ids_session[selectedIndex].status = "completed"
+
+    sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
+    const current_seq = sessionStorage.getItem("current_seq")
+    const next_seq = Number(current_seq)-1
+    sessionStorage.setItem('current_seq',next_seq);
+
+
+    const updateThis = card_ids_session[selectedIndex]
+    const getUpdateThis = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
+    console.log(getUpdateThis)
+    if(getUpdateThis){
+      var finalUpdate = getUpdateThis.concat(updateThis)
+    } else {
+      finalUpdate = [updateThis]
+    }
+    
+    sessionStorage.setItem('cardlist_to_send',JSON.stringify(finalUpdate));
+
+    this.getCardContentsAdd()
+  }
+
+  reStateHold = (id_of_content) => {
+    console.log('reStateHold clicked!!!')
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const selectedIndex = card_ids_session.findIndex((item, index)=>{
+      return item._id === id_of_content
+    })
+
+    card_ids_session[selectedIndex].detail_status.status_in_session = "on"
+    card_ids_session[selectedIndex].detail_status.need_study_time_tmp = new Date()
+    card_ids_session[selectedIndex].status = "ing"
+    sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
+
+    const selected_content = this.state.now_study
+    console.log(selected_content)
+    selected_content['status_change'] = true
+    console.log(selected_content)
+    this.setState({
+      now_study:selected_content
+    })
+
+  }
+  
+  reStateCompleted = (id_of_content) => {
+    console.log('reStateCompleted clicked!!!')
+    const card_ids_session = JSON.parse(sessionStorage.getItem('cardlist_studying'))
+    const selectedIndex = card_ids_session.findIndex((item, index)=>{
+      return item._id === id_of_content
+    })
+
+    card_ids_session[selectedIndex].detail_status.status_in_session = "on"
+    card_ids_session[selectedIndex].detail_status.need_study_time_tmp = new Date()
+    card_ids_session[selectedIndex].status = "ing"
+    sessionStorage.setItem('cardlist_studying',JSON.stringify(card_ids_session));
+
+    const selected_content = this.state.now_study
+    console.log(selected_content)
+    selected_content['status_change'] = true
+    console.log(selected_content)
+    this.setState({
+      now_study:selected_content
+    })
+  }
+
 
   render() {
     const style_study_layout_container ={
@@ -950,10 +1057,10 @@ class FlipMode extends Component {
         </Menu.Item>
         {/* <Menu.Divider /> */}
         <Menu.Item key="3">
-        <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>보류</span><span style={{fontSize:"9px"}}>(복구 시까지 학습보류)</span></Button>
+        <Button size="small" onClick={this.onClickHold} style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>보류</span><span style={{fontSize:"9px"}}>(복구 시까지 학습보류)</span></Button>
         </Menu.Item>
         <Menu.Item key="4">
-        <Button size="small" style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>졸업</span><span style={{fontSize:"9px"}}>(만렙찍고 향후 학습제외)</span></Button>
+        <Button size="small" onClick={this.onClickCompleted} style={{fontSize:"11px", width:"200px"}}><span style={{fontWeight:"bold"}}>졸업</span><span style={{fontSize:"9px"}}>(만렙찍고 향후 학습제외)</span></Button>
         </Menu.Item>
       </Menu>
     );
@@ -985,6 +1092,9 @@ class FlipMode extends Component {
           return item
         }
       })
+      var card_status = selected_content.status
+      
+
       var level_revealed = selected_content.detail_status.level
       var current_lev_study_times_selected = selected_content.detail_status.current_lev_study_times
 
@@ -1263,11 +1373,15 @@ class FlipMode extends Component {
               </div>
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", height:"70px", alignItems:"center", backgroundColor:"#e9e9e9", padding:"10px 90px", borderRadius:"0 0 10px 10px"}}>
+              {card_status === "hold" && <Button size="large" onClick={()=>this.reStateHold(id_of_content)} style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", flex:1, marginRight:"20px"}}>학습중카드로 복구하기</Button>}
+              {card_status === "completed" && <Button size="large" onClick={()=>this.reStateCompleted(id_of_content)} style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", flex:1, marginRight:"20px"}}>학습중카드로 복구하기</Button>}
+              {card_status === "hold" ? '' : card_status === "completed" ? '' : <>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi1", id_of_content,book_id, interval[0], time_unit[0], level_revealed)}>{nicks[0]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[0]}{time_unit[0]})</div></Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi2", id_of_content,book_id, interval[1], time_unit[1], level_revealed)}>{nicks[1]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[1]}{time_unit[1]})</div></Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi3", id_of_content,book_id, interval[2], time_unit[2], level_revealed)}>{nicks[2]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[2]}{time_unit[2]})</div></Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi4", id_of_content,book_id, interval[3], time_unit[3], level_revealed)}>{nicks[3]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[3]}{time_unit[3]})</div></Button>
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px"}} onClick={()=>this.onClickDifficulty("diffi5", id_of_content,book_id, interval[4], time_unit[4], level_revealed)}>{nicks[4]}<div style={{marginTop:"-5px", fontSize:"9px"}}>({interval[4]}{time_unit[4]})</div></Button>
+              </>} 
               <Button size="large" style={{fontSize:"13px", fontWeight:"500", border:"1px solid #bababa",borderRadius:"7px", width:"120px", backgroundColor:"#7dbde1"}}>
                 <Dropdown overlay={menu} trigger={['click']}>
                   <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>패스 <DownOutlined /></span>
