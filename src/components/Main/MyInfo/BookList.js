@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Table, Button } from 'antd';
 import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
 import RequestModal from './RequestModal'
+import axiosGetBookList from '../../../axiosController/axiosGetBookList'
 
 import axios from 'axios'
 
@@ -37,7 +38,10 @@ class BookList extends Component {
         
         this.showTitle()
     }
+
     showTitle() {
+
+        // axiosGetBookList( 'api/book/get-booklist', 'category', this.setState)
         axios.get('api/book/get-booklist')
         .then(res => {
             this.setState({
@@ -45,6 +49,8 @@ class BookList extends Component {
             })
         })
     }
+
+    // 'api/book/get-booklist'
 
   
   render() {

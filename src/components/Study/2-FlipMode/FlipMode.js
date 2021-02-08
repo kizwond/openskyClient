@@ -596,31 +596,8 @@ class FlipMode extends Component {
       card_ids_session[selectedIndex].detail_status.exp_stacked = exp_final
       card_ids_session[selectedIndex].detail_status.exp_gained = exp_gain
 
-      //학습종료 후 보여줄 임시 데이터
-      // const exp_gained_session = sessionStorage.getItem('exp_gained')
-      // console.log(exp_gained_session)
-      // console.log(exp_gain)
-      // const updated_exp_gained = Number(exp_gained_session) + Number(exp_gain)
-      // console.log(updated_exp_gained)
-      // sessionStorage.setItem('exp_gained', updated_exp_gained)
-
-      // const exp_gained_card_count_session = sessionStorage.getItem('exp_gained_card_count')
-      // const exp_gained_card_count = Number(exp_gained_card_count_session) + 1
-      // sessionStorage.setItem('exp_gained_card_count', exp_gained_card_count)
-      //임시테이터 끝
-
       const gained_level = Math.floor((prev_exp + exp_gain) / 1000)
       console.log("획득 레벨 : ",gained_level)
-
-      // const average_completed_session = sessionStorage.getItem('average_completed')
-      // console.log(average_completed_session)
-      // const new_average_before =  ((average_completed_session*card_ids_session.length) + gained_level )/ card_ids_session.length
-      // const new_average = new_average_before.toFixed(2);
-      // console.log(new_average)
-      // sessionStorage.setItem('average_completed', new_average)
-      // console.log(new_average)
-      
-      //알겠음 카운팅하기
       
       const diffi5_stacked = sessionStorage.getItem('diffi5_stacked')
       const addDiff5 = Number(diffi5_stacked)+1
