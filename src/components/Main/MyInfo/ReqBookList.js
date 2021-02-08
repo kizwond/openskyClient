@@ -41,7 +41,7 @@ class ReqBookList extends Component {
         axios.get('api/bookstore/show-sellbooklist')
         .then(res => {
             this.setState({
-            category:res.data.categorybooklist
+            category:res.data.sellbooklist
             })
         })
     }
