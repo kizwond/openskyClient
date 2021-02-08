@@ -21,6 +21,9 @@ class RequestModal extends Component {
         }).then(res => {
           console.log(res.data)
         })
+        this.props.showCandiBookList()
+        this.props.handleOk()
+        
       };
       //permit-book-sell
     

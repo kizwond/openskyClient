@@ -109,6 +109,7 @@ class BookList extends Component {
                         showModal={this.showModal}
                         handleCancel={this.handleCancel}
                         handleOk={this.handleOk}
+                        showCandiBookList={this.props.showCandiBookList}
                     />)
           } 
         }

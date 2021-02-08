@@ -34,17 +34,6 @@ class ReqBookList extends Component {
     componentDidMount() {
         sessionStorage.removeItem("book_ids")
         sessionStorage.setItem('current_seq',0);
-        
-        this.showTitle()
-    }
-    showTitle() {
-        axios.get('api/bookstore/show-candibooklist')
-        .then(res => {
-            console.log(res.data.candibooklist)
-            this.setState({
-            category:res.data.candibooklist
-            })
-        })
     }
 
     permitSellClick(book_id) {
@@ -57,8 +46,7 @@ class ReqBookList extends Component {
 
   
   render() {
-    console.log('state : ',this.state.visible_array)
-    console.log('really?', this.props.category)
+    console.log('really?', this.props.candibooklist)
     const columns = [
       {
         title: '카테고리',
@@ -113,11 +101,11 @@ class ReqBookList extends Component {
     ];
 
 
-    if(this.state.category){
+    if(this.props.candibooklist){
       console.log("here?")
       var plz = []
     //   var categoryArray = this.state.category.map(book => book.book_ids.map((item)=> plz.push(item)))
-      var categoryArray = this.state.category.map(book =>  plz.push(book) )
+      var categoryArray = this.props.candibooklist.map(book =>  plz.push(book) )
       console.log(plz)
       var data = plz.map(book =>{
         //   if(book.type === "self"){
@@ -141,10 +129,6 @@ class ReqBookList extends Component {
         })
       console.log(data)
       
-    }
-    
-    if(this.state.selected_book) {
-      console.log('state value:',this.state.selected_book)
     }
 
     return (

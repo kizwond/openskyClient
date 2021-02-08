@@ -4,6 +4,7 @@ import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
 import './MyInfo.css'
 import BookList from './BookList'
 import ReqBookList from './ReqBookList'
+import axios from 'axios'
 
 const { TabPane } = Tabs;
 
@@ -11,11 +12,24 @@ class MyInfo extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+        candibooklist:[],
      };
   }
   changeTab(key) {
     console.log(key);
   }
+  componentDidMount(){
+      this.showCandiBookList()
+  }
+  showCandiBookList = () => {
+    axios.get('api/bookstore/show-candibooklist')
+    .then(res => {
+        console.log(res.data.candibooklist)
+        this.setState({
+            candibooklist:res.data.candibooklist
+        })
+    })
+}
   render() {
 
     return (
@@ -28,12 +42,12 @@ class MyInfo extends Component {
                 </TabPane>
                 <TabPane key="2" tab={<span>책판매등록</span>}>
                     <div style={{fontSize:"11px"}}>
-                    <BookList/>
+                    <BookList showCandiBookList={this.showCandiBookList}/>
                     </div>
                 </TabPane>
                 <TabPane key="3" tab={<span>판매요청승인</span>}>
                     <div style={{fontSize:"11px"}}>
-                    <ReqBookList/>
+                    <ReqBookList candibooklist={this.state.candibooklist}/>
                     </div>
                 </TabPane>
             </Tabs>
