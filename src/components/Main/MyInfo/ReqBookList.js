@@ -47,6 +47,14 @@ class ReqBookList extends Component {
         })
     }
 
+    permitSellClick(book_id) {
+        axios.post('api/bookstore/permit-book-sell',{
+            book_id: book_id,
+          }).then(res => {
+            console.log(res.data)
+          })
+    }
+
   
   render() {
     console.log('state : ',this.state.visible_array)
@@ -98,7 +106,7 @@ class ReqBookList extends Component {
         dataIndex: 'key',
         render: (text, record) => {
           if(record){
-              return <Button size="small" style={{fontSize:"12px"}}>판매승인</Button>
+              return <Button size="small" onClick={()=>this.permitSellClick(record.book_id)} style={{fontSize:"12px"}}>판매승인</Button>
           } 
         }
       },
