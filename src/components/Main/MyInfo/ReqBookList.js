@@ -40,6 +40,7 @@ class ReqBookList extends Component {
     showTitle() {
         axios.get('api/bookstore/show-sellbooklist')
         .then(res => {
+            console.log(res.data.sellbooklist)
             this.setState({
             category:res.data.sellbooklist
             })
@@ -107,24 +108,26 @@ class ReqBookList extends Component {
     if(this.state.category){
       console.log("here?")
       var plz = []
-      var categoryArray = this.state.category.map(book => book.book_ids.map((item)=> plz.push(item)))
+    //   var categoryArray = this.state.category.map(book => book.book_ids.map((item)=> plz.push(item)))
+      var categoryArray = this.state.category.map(book =>  plz.push(book) )
       console.log(plz)
       var data = plz.map(book =>{
-          if(book.type === "self"){
+        //   if(book.type === "self"){
+          if(book){
             return ({
                 key: book._id,
                 book_id: book._id,
-                category: book.category_id.name,
+                category: '카테고리', //book.category_id.name,
                 book_title : book.title,
-                origin:book.type,
-                author:book.author,
+                origin: '정보'           ,//book.type,
+                author: '정보'           ,//book.author,
                 total_page:'00장',
-                total_cards:book.num_cards.total.total,
+                total_cards:'정보',  //book.num_cards.total.total,
                 time_created:book.time_created,
                 recent_edit:book.time_created,
                 submit_progress:'',
-                flip_card_total:book.num_cards.flip.total,
-                read_card_total:book.num_cards.read.total,
+                flip_card_total:'정보',  //book.num_cards.flip.total,
+                read_card_total:'정보',  //book.num_cards.read.total,
             })
         }
         })
