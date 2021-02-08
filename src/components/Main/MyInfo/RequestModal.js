@@ -28,7 +28,7 @@ class RequestModal extends Component {
         return (
             <>
                 <Button size="small" onClick={this.props.showModal} style={{fontSize:"12px"}}>판매요청</Button>
-                <Modal title="책 판매 등록" visible={this.props.isModalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
+                <Modal footer={null} title="책 판매 등록" visible={this.props.isModalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
                     <Form
                         name="basic"
                         initialValues={{ remember: true }}
