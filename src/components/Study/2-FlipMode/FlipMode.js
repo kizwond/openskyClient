@@ -845,6 +845,7 @@ class FlipMode extends Component {
     console.log('--------> current_back_seq',current_back_seq)
     if(study_log_session){
 
+      //한번이상 이전카드보기 버튼을 클릭시 current_seq가 -1씩 감소하는 문제.
       const current_seq = sessionStorage.getItem("current_seq")
       const next_seq = Number(current_seq) -1
       sessionStorage.setItem('current_seq',next_seq);
