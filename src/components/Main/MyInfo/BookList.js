@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Table } from 'antd';
 import RequestModal from './RequestModal'
-
+import DefaultButton from '../../../styledComponents/defaultButton'
 import axios from 'axios'
 
 class BookList extends Component {
@@ -9,27 +9,36 @@ class BookList extends Component {
         super(props);
         this.state = { 
           category : [],
-          isModalVisible:false
+          isModalVisible:false,
+          visible_array:[{book_id:'', visible:false}],
          }
       }
     
     showModal = () => {
-        this.setState({
-            isModalVisible:true
-        })
-      }
-    
+      this.setState(prevState=>({
+        visible_array:{...prevState.visible_array, isModalVisible:true}
+      }));
+    };
+  
     handleOk = () => {
-        this.setState({
-            isModalVisible:false
-        })
-      }
-    
+      this.setState(prevState=>({
+        visible_array:{...prevState.visible_array, isModalVisible:false}
+      }));
+    };
+  
     handleCancel = () => {
+      this.setState(prevState=>({
+        visible_array:{...prevState.visible_array, isModalVisible:false}
+      }));
+    };
+
+    getStudyData = (value) =>{
         this.setState({
-            isModalVisible:false
+          visible_array:{book_id:value, isModalVisible:true}
         })
-      }
+        this.showModal()        
+    }
+
     componentDidMount() {
         sessionStorage.removeItem("book_ids")
         sessionStorage.setItem('current_seq',0);
@@ -49,7 +58,6 @@ class BookList extends Component {
   
   render() {
     console.log('state : ',this.state.visible_array)
-    console.log('really?', this.props.category)
     const columns = [
       {
         title: '카테고리',
@@ -97,14 +105,15 @@ class BookList extends Component {
         dataIndex: 'key',
         render: (text, record) => {
           if(record){
-              return (<RequestModal 
+              return (<><DefaultButton size="small" onClick={()=>this.getStudyData(record.book_id)} >판매요청</DefaultButton>
+                      <RequestModal 
                         book_id={record.book_id}
-                        isModalVisible={this.state.isModalVisible}
+                        isModalVisible={this.state.visible_array}
                         showModal={this.showModal}
                         handleCancel={this.handleCancel}
                         handleOk={this.handleOk}
                         showCandiBookList={this.props.showCandiBookList}
-                    />)
+                    /></>)
           } 
         }
       },

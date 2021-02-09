@@ -30,10 +30,16 @@ class RequestModal extends Component {
       //permit-book-sell
     
     render() { 
+        if(this.props.book_id === this.props.isModalVisible.book_id){
+            console.log('---->',this.props.book_id)
+            var turn_on = this.props.isModalVisible.isModalVisible
+            console.log(turn_on)
+          }
+
         return (
             <>
-                <DefaultButton size="small" onClick={this.props.showModal} >판매요청</DefaultButton>
-                <Modal footer={null} title="책 판매 등록" visible={this.props.isModalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
+               
+                <Modal footer={null} title="책 판매 등록" visible={turn_on} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
                     <Form
                         name="basic"
                         initialValues={{ remember: true }}
