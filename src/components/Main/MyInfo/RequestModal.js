@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import {Form, Modal, Button,Input,InputNumber } from 'antd';
+import {Form, Modal, Input,InputNumber } from 'antd';
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
+
 
 const { TextArea } = Input;
 
@@ -30,7 +32,7 @@ class RequestModal extends Component {
     render() { 
         return (
             <>
-                <Button size="small" onClick={this.props.showModal} style={{fontSize:"12px"}}>판매요청</Button>
+                <DefaultButton size="small" onClick={this.props.showModal} >판매요청</DefaultButton>
                 <Modal footer={null} title="책 판매 등록" visible={this.props.isModalVisible} onOk={this.props.handleOk} onCancel={this.props.handleCancel}>
                     <Form
                         name="basic"
@@ -74,13 +76,13 @@ class RequestModal extends Component {
                                 </Form.Item>
                             </li>
                             <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                                <span><Button size="small" style={{fontSize:"12px"}}>임시저장</Button></span>
+                                <span><DefaultButton width="100px" type="primary" size="small">임시저장</DefaultButton></span>
                                 <span>
                                     <Form.Item>
-                                            <Button htmlType="submit" size="small" style={{fontSize:"12px"}} >등록</Button>
+                                            <DefaultButton width="100px" type="primary" htmlType="submit" size="small" >등록</DefaultButton>
                                     </Form.Item>
                                 </span>
-                                <span><Button size="small" style={{fontSize:"12px"}}>취소</Button></span>
+                                <span><DefaultButton width="100px" type="primary" size="small" onClick={this.props.handleOk}>취소</DefaultButton></span>
                             </li>
                         </ul>
                     </div>

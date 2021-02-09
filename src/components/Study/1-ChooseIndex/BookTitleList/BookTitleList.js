@@ -4,6 +4,7 @@ import "./BookTitleList.css"
 import IndexTree from "./IndexTree/IndexTree"
 import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
 import SelectedIndexCardCount from '../../2-FlipMode/SelectedIndexCardCount'
+import DefaultButton from '../../../../styledComponents/defaultButton'
 
 const { TabPane } = Tabs;
 
@@ -43,7 +44,7 @@ class BookTitleList extends Component {
               <span>※ 괄호안 숫자는 현재시각 기준으로 산출한 복습 필요 카드 수량입니다.</span>
             </div>
             <div style={{float:"right", marginBottom:"10px"}}>
-              {this.state.toggle === true ? <Button size="small" onClick={this.onClickDetailHide} style={{fontSize:"11px"}}>간략보기</Button>: <Button size="small" onClick={this.onClickDetailHide} style={{fontSize:"11px"}}>상세보기</Button>}
+              {this.state.toggle === true ? <DefaultButton size="small" onClick={this.onClickDetailHide}>간략보기</DefaultButton>: <DefaultButton size="small" onClick={this.onClickDetailHide}>상세보기</DefaultButton>}
             </div>
             <SelectedIndexCardCount books={this.props.books} />
           </div>

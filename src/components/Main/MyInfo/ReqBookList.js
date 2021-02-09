@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Table, Button } from 'antd';
-
+import { Table } from 'antd';
+import DefaultButton from '../../../styledComponents/defaultButton'
 import axios from 'axios'
 
 class ReqBookList extends Component {
@@ -92,7 +92,7 @@ class ReqBookList extends Component {
         dataIndex: 'key',
         render: (text, record) => {
           if(record){
-              return <Button size="small" onClick={()=>this.permitSellClick(record.book_id)} style={{fontSize:"12px"}}>판매승인</Button>
+              return <DefaultButton size="small" onClick={()=>this.permitSellClick(record.book_id)} >판매승인</DefaultButton>
           } 
         }
       },

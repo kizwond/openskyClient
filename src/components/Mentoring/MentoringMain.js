@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import MenteeList from "./MenteeList"
 import MentorList from "./MentorList"
-import { Layout,Button,Badge,Select,Modal } from 'antd';
+import { Layout,Badge,Select,Modal } from 'antd';
 import "./StudyList.css"
 import {UserSwitchOutlined,UsergroupAddOutlined} from '@ant-design/icons';
 import MentoringWaiting from './MentoringWaiting'
 import MentoringAsk from './MentoringAsk'
 import MentoringPending from './MentoringPending'
+import DefaultButton from '../../styledComponents/defaultButton'
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -163,7 +164,7 @@ class MentoringMain extends Component {
       <div className="study_page_booklist_container">
           <Layout>
             <Content className="study_page_content_padding">
-              <div className="study_page_list_title"><Button size="small" onClick={this.showRequestModal} style={{fontSize:"11px", width:"100px"}}><UserSwitchOutlined /> 멘토링 요청</Button>
+              <div className="study_page_list_title"><DefaultButton size="small" onClick={this.showRequestModal} width="100px"><UserSwitchOutlined /> 멘토링 요청</DefaultButton>
                 <Modal
                   title="멘토링 요청"
                   visible={this.state.isRequestModalVisible}
@@ -187,7 +188,7 @@ class MentoringMain extends Component {
                 </Modal>
               </div>
               <MentorList my_study_result={this.state.my_study_result}/>
-              <div className="study_page_list_title study_page_bottom_title"><Badge count={this.state.mentoring_pending.length} size="small"><Button size="small" onClick={this.showAcceptModal} style={{fontSize:"11px", width:"100px"}}><UsergroupAddOutlined /> 멘토링 수락</Button></Badge></div>
+              <div className="study_page_list_title study_page_bottom_title"><Badge count={this.state.mentoring_pending.length} size="small"><DefaultButton size="small" onClick={this.showAcceptModal} width="100px"><UsergroupAddOutlined /> 멘토링 수락</DefaultButton></Badge></div>
               <Modal
                   title="멘토링 수락"
                   visible={this.state.isAcceptModalVisible}
@@ -207,8 +208,8 @@ class MentoringMain extends Component {
                     </Select>
                   </div>
                   <div>
-                    <Button size="small" style={{fontSize:"11px", width:"100px", marginRight:"5px"}}>학습정보 내려받기</Button>
-                    <Button size="small" style={{fontSize:"11px", width:"100px"}}>멘토링 관리</Button>
+                    <DefaultButton size="small" width="100px" style={{marginRight:"5px"}}>학습정보 내려받기</DefaultButton>
+                    <DefaultButton size="small" width="100px">멘토링 관리</DefaultButton>
                   </div>
                 </div>
                 <MenteeList/>

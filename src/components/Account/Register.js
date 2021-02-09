@@ -1,18 +1,12 @@
 import axios from 'axios'
 import React, { useState } from 'react';
-import {
-  Form,
-  Input,
-  Button,
-  Modal
-} from 'antd';
+import { Form, Input, Modal} from 'antd';
 import Login from './Login'
+import DefaultButton from '../../styledComponents/defaultButton'
 import './Register.css'
 
 const RegistrationForm = (props) => {
-  const msg = "중복된 아이디가 있습니다."
   const [visible, setVisible] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -24,10 +18,9 @@ const RegistrationForm = (props) => {
     .then(res => {
       console.log(res.data)
       if(res.data.msg === "중복된 아이디가 있습니다."){
-          alert(msg)
+          alert("중복된 아이디가 있습니다.")
       } else {
         alert('회원가입에 성공하셨습니다. 로그인 페이지로 이동합니다.')
-        // props.history.push('/login')
         document.getElementById("register_form").innerHTML='';
         document.getElementById("register_title").innerHTML='';
         showModal()
@@ -124,9 +117,9 @@ const RegistrationForm = (props) => {
           <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <DefaultButton size="small" width="60px" type="primary" htmlType="submit">
             Register
-          </Button>
+          </DefaultButton>
         </Form.Item>
       </Form>
       <Modal

@@ -1,8 +1,9 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './Login.css'
 import { NavLink} from 'react-router-dom';
 import axios from 'axios'
+import DefaultButton from '../../styledComponents/defaultButton'
 
 const NormalLoginForm = (props) => {
   const onFinish = (values) => {
@@ -64,9 +65,9 @@ const NormalLoginForm = (props) => {
         </Form.Item>
         
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <DefaultButton type="primary" htmlType="submit" className="login-form-button">
             Log in
-          </Button>
+          </DefaultButton>
         </Form.Item>
         <div className="find_my_info_container">
             <a className="login-form-forgot" href="/">아이디 찾기 / </a>

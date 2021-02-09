@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CategoryList from './CategoryList'
-import { Button } from 'antd'
+import DefaultButton from '../../styledComponents/defaultButton'
 
 class BookDetail extends Component {
     constructor(props) {
@@ -26,8 +26,8 @@ class BookDetail extends Component {
                                 <div>가격 : ₩ 000,000</div>
                             </div>
                             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
-                                <Button size="small" style={{fontSize:'11px', width:"200px", borderRadius:"5px"}}>장바구니담기</Button>
-                                <Button size="small" style={{fontSize:'11px', width:"200px", borderRadius:"5px"}}>구매하기</Button>
+                                <DefaultButton size="small" width="200px" style={{borderRadius:"5px"}}>장바구니담기</DefaultButton>
+                                <DefaultButton size="small" width="200px" style={{borderRadius:"5px"}}>구매하기</DefaultButton>
                             </div>
                         </div>
                     </div>

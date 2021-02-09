@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Table, Button } from 'antd';
+import { Table } from 'antd';
 import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
 import StudySettingModal from './StudySettingModal'
 import StudyData from './StudyData'
+import DefaultButton from '../../../../styledComponents/defaultButton'
 import axios from 'axios'
 
 class ListSectionContent extends Component {
@@ -161,7 +162,7 @@ class ListSectionContent extends Component {
         title: '학습정보 상세보기',
         render: (text, record) => {
           if(record){
-              return <><Button size="small" style={{fontSize:"10px"}} onClick={()=>this.getStudyData(record.book_id)} >상세보기</Button>
+              return <><DefaultButton size="small" onClick={()=>this.getStudyData(record.book_id)} >상세보기</DefaultButton>
               <StudyData studySetting={this.state.study_configuration} handleOk={this.studyDataHandleOk} book_status={this.state.book_status} info={record} isModalVisible={this.state.study_data_visible_array} handleCancel={this.studyDataHandleCancel}/></>
           } 
         }
@@ -171,7 +172,7 @@ class ListSectionContent extends Component {
         dataIndex: 'key',
         render: (text, record) => {
           if(record){
-          return <><Button size="small" onClick={()=>this.getStudySetting(record.book_id)}   style={{fontSize:"10px"}} >학습설정</Button>
+          return <><DefaultButton size="small" onClick={()=>this.getStudySetting(record.book_id)} >학습설정</DefaultButton>
               <StudySettingModal studySetting={this.state.study_configuration} handleOk={this.handleOk} info={record} onFinish={this.onFinish} isModalVisible={this.state.visible_array} handleCancel={this.handleCancel}/></>
           } 
         }

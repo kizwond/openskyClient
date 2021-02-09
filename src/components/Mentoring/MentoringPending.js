@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Table, Modal, Space,Button,Avatar } from 'antd';
+import { Table, Modal, Space,Avatar } from 'antd';
 import { LinkOutlined,UserOutlined} from '@ant-design/icons';
+import DefaultButton from '../../styledComponents/defaultButton'
 import axios from 'axios'
 
 const { confirm } = Modal;
@@ -95,8 +96,8 @@ class MentoringWaiting extends Component {
         render: (text, record) => (
           <div style={{display:"flex"}}>
             <Space>
-                <Button size="small" onClick={() => showConfirm(record.mentoring_id, this.props.updatePendingList)} style={{fontSize:"11px"}}>요청수락</Button>
-                <Button size="small" onClick={() => showDenyConfirm(record.mentoring_id, this.props.updatePendingList)} style={{fontSize:"11px"}}>거절</Button>
+                <DefaultButton size="small" onClick={() => showConfirm(record.mentoring_id, this.props.updatePendingList)} >요청수락</DefaultButton>
+                <DefaultButton size="small" onClick={() => showDenyConfirm(record.mentoring_id, this.props.updatePendingList)} >거절</DefaultButton>
             </Space>
           </div>
         ),

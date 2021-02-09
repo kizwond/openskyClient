@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Modal, InputNumber, Button, Input, Switch,Select } from 'antd';
+import { Form, Modal, InputNumber, Input, Switch,Select } from 'antd';
+import DefaultButton from '../../../../styledComponents/defaultButton'
 const { Option } = Select;
 
 class StudySettingModal extends Component {
@@ -203,7 +204,7 @@ class StudySettingModal extends Component {
 
                 <div>
                   <ul style={style}>
-                    <li><Button style={{width:"100px", fontSize:"11px"}} size="small">모르겠음</Button></li>
+                    <li><DefaultButton width="100px" size="small">모르겠음</DefaultButton></li>
                     <li style={{width:"30px"}}></li>
                     <li>
                       <Form.Item name={['difficulty_setting', 'diffi1','nick']} rules={[{ required: true }]}>
@@ -232,7 +233,7 @@ class StudySettingModal extends Component {
 
                 <div>
                   <ul style={style}>
-                    <li><Button style={{width:"100px", fontSize:"11px"}} size="small">거의모르겠음</Button></li>
+                    <li><DefaultButton width="100px" size="small">거의모르겠음</DefaultButton></li>
                     <li style={{width:"30px"}}>
                       <Form.Item name={['difficulty_setting', 'diffi2','on_off']} valuePropName="checked" rules={[{ required: true }]}>
                         <Switch size="small" />
@@ -265,7 +266,7 @@ class StudySettingModal extends Component {
 
                 <div>
                   <ul style={style}>
-                    <li><Button style={{width:"100px", fontSize:"11px"}} size="small">애매함</Button></li>
+                    <li><DefaultButton width="100px" size="small">애매함</DefaultButton></li>
                     <li style={{width:"30px"}}>
                       <Form.Item name={['difficulty_setting', 'diffi3','on_off']} valuePropName="checked" rules={[{ required: true }]}>
                         <Switch size="small" />
@@ -297,7 +298,7 @@ class StudySettingModal extends Component {
 
                 <div>
                   <ul style={style}>
-                    <li><Button style={{width:"100px", fontSize:"11px"}} size="small">거의알겠음</Button></li>
+                    <li><DefaultButton width="100px" size="small">거의알겠음</DefaultButton></li>
                     <li style={{width:"30px"}}>
                       <Form.Item name={['difficulty_setting', 'diffi4','on_off']} valuePropName="checked" rules={[{ required: true }]}>
                         <Switch size="small" />
@@ -330,7 +331,7 @@ class StudySettingModal extends Component {
 
                 <div>
                   <ul style={style}>
-                    <li><Button style={{width:"100px", fontSize:"11px"}} size="small">알겠음</Button></li>
+                    <li><DefaultButton width="100px" size="small">알겠음</DefaultButton></li>
                     <li style={{width:"30px"}}></li>
                     <li>
                       <Form.Item name={['difficulty_setting', 'diffi5','nick']} rules={[{ required: true }]}>
@@ -479,12 +480,12 @@ class StudySettingModal extends Component {
               </li>
             </ul>
             <Form.Item >
-              <Button type="primary" onClick={this.props.handleCancel}>
+              <DefaultButton type="primary" onClick={this.props.handleCancel}>
                 취소
-              </Button>
-              <Button type="primary" onClick={this.props.handleOk} htmlType="submit">
+              </DefaultButton>
+              <DefaultButton type="primary" onClick={this.props.handleOk} htmlType="submit">
                 적용
-              </Button>
+              </DefaultButton>
             </Form.Item>
           </Form>
         </div>

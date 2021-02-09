@@ -1,7 +1,8 @@
 import React from 'react';
-import { Table, Avatar,Progress, Button } from 'antd';
+import { Table, Avatar,Progress } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Chart } from 'react-charts'
+import DefaultButton from '../../styledComponents/defaultButton'
 
 function MyChart() {
   const data = React.useMemo(
@@ -48,7 +49,7 @@ function MenteeList() {
       { dataIndex: 'completed', align: 'right', },
       { dataIndex: 'card_total', align: 'right', },
       { dataIndex: 'card_added', align: 'right', },
-      { dataIndex: 'detail', align: 'right', render: (text) => <Button size="small" style={{fontSize:'11px'}}>상세보기</Button>  },
+      { dataIndex: 'detail', align: 'right', render: (text) => <DefaultButton size="small">상세보기</DefaultButton>  },
     ];
 
     const data = [];
@@ -81,7 +82,7 @@ function MenteeList() {
     { title: '일일평균 완료카드수', align: 'right'},
     { title: '카드총합(미학습/복습/완료/보류/졸업)', align: 'right'},
     { title: '추가한카드수', align: 'right'},
-    { title: '학습정보 상세보기', align: 'right', render: (text) => <Button size="small" style={{fontSize:'11px'}}>상세보기</Button>},
+    { title: '학습정보 상세보기', align: 'right', render: (text) => <DefaultButton size="small">상세보기</DefaultButton>},
   ];
 
   const data = [];

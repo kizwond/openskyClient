@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, Button, DatePicker } from 'antd';
+import { Modal, DatePicker } from 'antd';
 import { StarTwoTone } from '@ant-design/icons';
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 class StudyFiltering extends Component {
   constructor(props) {
@@ -24,10 +25,6 @@ class StudyFiltering extends Component {
       justifyContent:'space-between',
       width:'280px'
     }
-    const buttonStyle ={
-      fontSize:"10px",
-      width:'50px'
-    }
     const settingTitle ={
       width:'100px'
     }
@@ -39,33 +36,33 @@ class StudyFiltering extends Component {
           onOk={this.props.handleOk}
           onCancel={this.props.handleCancel}
           footer={[
-            <Button key="back" onClick={this.props.handleCancel}>
+            <DefaultButton key="back" onClick={this.props.handleCancel}>
               취소
-            </Button>,
-            <Button key="submit" type="primary" onClick={this.props.handleOk}>
+            </DefaultButton>,
+            <DefaultButton key="submit" type="primary" onClick={this.props.handleOk}>
               적용
-            </Button>,
+            </DefaultButton>,
           ]}
         >
           <div>
             <div style={flexStyle}>
               <span style={settingTitle}>플래그</span>
               <ul style={flexStyle2}>
-                <li><Button style={buttonStyle} size="small">플래그1</Button></li>
-                <li><Button style={buttonStyle} size="small">플래그2</Button></li>
-                <li><Button style={buttonStyle} size="small">플래그3</Button></li>
-                <li><Button style={buttonStyle} size="small">플래그4</Button></li>
-                <li><Button style={buttonStyle} size="small">플래그5</Button></li>
+                <li><DefaultButton width='50px' size="small">플래그1</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small">플래그2</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small">플래그3</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small">플래그4</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small">플래그5</DefaultButton></li>
               </ul>
             </div>
             <div style={flexStyle}>
               <span style={settingTitle}>중요도</span>
               <ul style={flexStyle2}>
-                <li><Button style={buttonStyle} size="small"><StarTwoTone/> x 1</Button></li>
-                <li><Button style={buttonStyle} size="small"><StarTwoTone/> x 2</Button></li>
-                <li><Button style={buttonStyle} size="small"><StarTwoTone/> x 3</Button></li>
-                <li><Button style={buttonStyle} size="small"><StarTwoTone/> x 4</Button></li>
-                <li><Button style={buttonStyle} size="small"><StarTwoTone/> x 5</Button></li>
+                <li><DefaultButton width='50px' size="small"><StarTwoTone/> x 1</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small"><StarTwoTone/> x 2</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small"><StarTwoTone/> x 3</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small"><StarTwoTone/> x 4</DefaultButton></li>
+                <li><DefaultButton width='50px' size="small"><StarTwoTone/> x 5</DefaultButton></li>
               </ul>
             </div>
             <div style={flexStyle}>

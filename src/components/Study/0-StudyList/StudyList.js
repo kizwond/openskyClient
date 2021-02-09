@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import LikeSectionContent from "../0-StudyList/LikeSectionContent/LikeSectionContent"
 import ListSectionContent from "../0-StudyList/ListSectionContent/ListSectionContent"
-import { Layout,Button } from 'antd';
+import { Layout } from 'antd';
+import DefaultButton from '../../../styledComponents/defaultButton'
 import "./StudyList.css"
 
 const { Sider, Content } = Layout;
@@ -60,8 +61,8 @@ class WriteMain extends Component {
               <ListSectionContent selectBook={this.selectBook} category={this.state.category}/>
             </Content>
             <Sider style={{ padding:"10px",borderLeft:"1px solid grey", background:'#f5f5f5'}}>
-              <Button size="small" style={{fontSize:'10px'}}>플래그설정</Button> <Button size="small" style={{fontSize:'10px'}}>즐겨찾기 설정</Button>
-              <Button size="large" style={{width:'100px'}} onClick={this.sessionSaveBookIds}>다음</Button>
+              {/* <DefaultButton size="small" style={{fontSize:'10px'}}>플래그설정</DefaultButton> <DefaultButton size="small" style={{fontSize:'10px'}}>즐겨찾기 설정</DefaultButton> */}
+              <DefaultButton size="large" width="100px" fontSize="20px" onClick={this.sessionSaveBookIds}>다음</DefaultButton>
             </Sider>
           </Layout>
       </div>
