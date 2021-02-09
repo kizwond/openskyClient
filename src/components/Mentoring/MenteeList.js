@@ -9,7 +9,6 @@ function MyChart() {
     () => [
       {
         label: 'Series 1',
-        
         data: [{ x: 1, y: 10 }, { x: 2, y: 30 }, { x: 3, y: 20 },{ x: 4, y: 10 }, { x: 5, y: 70 }, { x: 6, y: 40 },{ x: 7, y: 90 }, { x: 8, y: 60 }, { x: 9, y: 20 },{ x: 10, y: 60 }, { x: 11, y: 40 }, { x: 12, y: 90 },{ x: 13, y: 10 }, { x: 14, y: 60 }, { x: 15, y: 70 },{ x: 16, y: 10 }, { x: 17, y: 60 }, { x: 18, y: 70 },{ x: 19, y: 10 }, { x: 20, y: 60 }, { x: 21, y: 70 }]
       }
     ],
@@ -25,12 +24,7 @@ function MyChart() {
   )
 
   return (
-    <div
-      style={{
-        width: '150px',
-        height: '30px'
-      }}
-    >
+    <div style={{ width: '150px', height: '30px' }} >
       <Chart data={data} axes={axes}  />
     </div>
   )

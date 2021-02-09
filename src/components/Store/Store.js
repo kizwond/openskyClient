@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card} from 'antd';
-// import axios from 'axios'
+import axios from 'axios'
 import { NavLink } from "react-router-dom";
 import CategoryList from './CategoryList'
 
@@ -8,30 +8,24 @@ class Store extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      book_list: [
-        {book_id: 'book1', title:"책1", description:"블라블라1", img:"/img/seaview.jpg"},
-        {book_id: 'book2', title:"책2", description:"블라블라2", img:"/img/mountains.jpeg"},
-        {book_id: 'book3', title:"책3", description:"블라블라3", img:"/img/mountaintrees.jpeg"},
-        {book_id: 'book4', title:"책4", description:"블라블라4", img:"/img/books.jpg"},
-        {book_id: 'book5', title:"책5", description:"블라블라5", img:"/img/seaview.jpg"},
-      ]
+      book_list: [ ]
      };
   }
 
   componentDidMount(){
-    // axios.post('api/bookstore/req-book-sell',{
-    //   book_id: '',
-    // }).then(res => {
-    //   console.log(res.data.book_list)
-    //   this.setState({
-    //     book_list: res.data.book_list
-    //   })
-    // })
+    axios.get('api/bookstore/get-sellbooklist')
+    .then(res => {
+      console.log(res.data.sellbooklist)
+      this.setState({
+        book_list: res.data.sellbooklist
+      })
+    })
   }
  
-  onClickBook = (value) =>{
-    console.log(`${value} clicked`)
+  onClickBook = (book) =>{
+    console.log(`${book.book_info.title} clicked`)
     // window.location.href="/bookdetail"
+    sessionStorage.setItem('selectedBuyBook', JSON.stringify(book))
   }
   onClickCategory = (item) =>{
     console.log(`${item} clicked`)
@@ -39,19 +33,23 @@ class Store extends Component {
   render() {  
     
     const book_list = this.state.book_list.map(book =>{
+      console.log(book)
+      
       return (
           <Card
-            key={book.book_id}
+            key={book._id}
             style={{ width: 240, height:'100%' }}
-            onClick={() =>this.onClickBook(book.book_id)}
-            cover={<img alt="책표지" width="200px" height="250px" src={book.img} />}
+            onClick={() =>this.onClickBook(book)}
+            cover={<img alt="책표지" width="200px" height="250px" src="img/books.jpg" />}
           >
             <NavLink to={{
                 pathname:'/bookdetail',
                 aboutProps:{
-                  book_id:book.book_id
+                  book_id:book._id,
                  }
-              }}>{book.title}</NavLink>
+              }}>{book.book_info.title}</NavLink>
+              <div>{book.book_info.author}</div>
+              <div>{book.book_info.price}원</div>
           </Card>
       )
     })

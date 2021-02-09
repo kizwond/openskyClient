@@ -40,12 +40,11 @@ class NavBar extends React.Component {
       console.log(error);
     });
   }
-  onClick = () => {
-    axios.get('api/user/logout')
+  onClick = async () => {
+    await axios.get('api/user/logout')
        .then(res => {
-         console.log('logout', res.data.isLoggedIn)
+         console.log('logout', res.data)
          this.setState({isLoggedIn:res.data.isLoggedIn})
-        
         })
         window.location.href = '/'
   }
