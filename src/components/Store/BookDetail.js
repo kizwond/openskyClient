@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import CategoryList from './CategoryList'
 import DefaultButton from '../../styledComponents/defaultButton'
+import axios from 'axios'
 
 class BookDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
+    }
+    buyBookClick = (id) => {
+        axios.post('api/bookstore/add-sellbook-to-mybook',{
+            sellbook_id : id
+        })
+        .then(res => {
+            console.log(res.data)
+        })
     }
     render() { 
         const bookDetail = JSON.parse(sessionStorage.getItem("selectedBuyBook"))
@@ -29,7 +38,7 @@ class BookDetail extends Component {
                             </div>
                             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
                                 <DefaultButton size="small" width="200px" style={{borderRadius:"5px"}}>장바구니담기</DefaultButton>
-                                <DefaultButton size="small" width="200px" style={{borderRadius:"5px"}}>구매하기</DefaultButton>
+                                <DefaultButton size="small" onClick={() => this.buyBookClick(bookDetail._id)} width="200px" style={{borderRadius:"5px"}}>구매하기</DefaultButton>
                             </div>
                         </div>
                     </div>

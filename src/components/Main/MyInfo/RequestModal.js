@@ -13,12 +13,12 @@ class RequestModal extends Component {
          }
     }
 
-    onFinish = values => {
+    onFinish = async values => {
         console.log(values);
         console.log(this.props.book_id)
         values.book_id = this.props.book_id;
         console.log(values)
-        axios.post('api/bookstore/req-book-sell',{
+        await axios.post('api/bookstore/req-book-sell',{
           book_id: values,
         }).then(res => {
           console.log(res.data)

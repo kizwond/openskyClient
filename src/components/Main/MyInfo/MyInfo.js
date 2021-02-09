@@ -20,8 +20,8 @@ class MyInfo extends Component {
   componentDidMount(){
       this.showCandiBookList()
   }
-  showCandiBookList = () => {
-    axios.get('api/bookstore/show-candibooklist')
+  showCandiBookList = async () => {
+    await axios.get('api/bookstore/show-candibooklist')
     .then(res => {
         console.log(res.data.candibooklist)
         this.setState({
