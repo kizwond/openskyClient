@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button,Select, Space } from 'antd';
+import { Form, Input, Select, Space } from 'antd';
 import { BookOutlined } from '@ant-design/icons';
 import './BookNaming.css'
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 const { Option } = Select;
 const HorizontalLoginForm = () => {
@@ -110,23 +111,23 @@ const HorizontalLoginForm = () => {
           <div className="naming_buttons">
             <Space>
               <Form.Item>
-                  <Button
+                  <DefaultButton
                     className="naming_submit_button"
                     type="primary"
                     htmlType="submit"
                   >
                     취소
-                  </Button>
+                  </DefaultButton>
               </Form.Item>
             
               <Form.Item>
-                  <Button
+                  <DefaultButton
                     className="naming_submit_button"
                     type="primary"
                     htmlType="submit"
                   >
                     시작
-                  </Button>
+                  </DefaultButton>
               </Form.Item>
             </Space>
           </div>

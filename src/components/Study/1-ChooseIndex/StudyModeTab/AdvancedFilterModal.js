@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, DatePicker, Space, InputNumber, Switch, Form,Checkbox,Radio} from 'antd'
 import './AdvancedFilterModal.css'
+import DefaultButton from '../../../../styledComponents/defaultButton'
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
@@ -592,7 +593,7 @@ class AdvancedFilterModal extends Component {
                 <Checkbox>다음학습에도 설정한 고급필터 사용하기(해당 책의 학습설정에 저장됩니다.)</Checkbox>
               </Form.Item>
           </li>
-          <Button htmlType="submit" style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>적용</Button>
+          <DefaultButton htmlType="submit" width="200px" style={{color:"white", fontWeight:"700", background:"#69d316", height:"50px"}}>적용</DefaultButton>
         </Form>
         </ul>
       </div>

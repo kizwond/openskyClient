@@ -1,6 +1,8 @@
 import React from 'react';
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Space } from 'antd';
 import axios from 'axios'
+import DefaultButton from '../../styledComponents/defaultButton'
+
 const ChangeBookTitle = (props) => {
   const [form] = Form.useForm();
 
@@ -41,8 +43,8 @@ const ChangeBookTitle = (props) => {
           <Input placeholder={props.bookTitle.book_title} />
         </Form.Item>
         <Form.Item className="change_book_title_buttons">
-          <Button type="primary" htmlType="submit">완료</Button>
-          <Button type="primary" onClick={props.onClick}>취소</Button>
+          <DefaultButton type="primary" htmlType="submit">완료</DefaultButton>
+          <DefaultButton type="primary" onClick={props.onClick}>취소</DefaultButton>
         </Form.Item>
         </Space>
       </Form>

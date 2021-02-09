@@ -5,6 +5,7 @@ import { AppstoreOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import './Study.css'
 import FlipMode from './FlipMode';
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;
@@ -121,7 +122,7 @@ class StudyFlip extends Component {
                   </Dropdown>
                 </Space>
                 <Menu style={{height:'90%'}}>
-                  <Menu.Item><Button onClick={this.onMenuClick}>세션종료</Button></Menu.Item>
+                  <Menu.Item><DefaultButton onClick={this.onMenuClick}>세션종료</DefaultButton></Menu.Item>
                 </Menu>
               </div>
             </div>

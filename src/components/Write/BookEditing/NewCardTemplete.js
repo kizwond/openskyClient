@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Tooltip, Modal, Input, Radio, InputNumber, Space } from 'antd';
+import { Tooltip, Modal, Input, Radio, InputNumber, Space } from 'antd';
 import axios from 'axios'
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 class NewCardTemplete extends Component {
   constructor(props) {
@@ -147,7 +148,7 @@ class NewCardTemplete extends Component {
     
     return (
       <>
-        <Button size={'small'} style={{fontSize:"11px"}} onClick={this.showModal} >새 카드 템플릿 추가</Button>
+        <DefaultButton size={'small'} onClick={this.showModal} >새 카드 템플릿 추가</DefaultButton>
         <Modal
           title="새카드 템플릿"
           visible={this.state.visible}

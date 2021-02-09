@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Modal, Popover,Form, Input, Button, Space } from 'antd';
+import { Modal, Popover,Form, Input, Space } from 'antd';
 import { PlusCircleOutlined,SettingOutlined,EditOutlined,StepBackwardOutlined,StepForwardOutlined } from '@ant-design/icons';
 import './ContentsTable.css'
 import ContentsTableChangeName from './ContentsTableChangeName'
 import DeleteTable from './DeleteTable'
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 class ContentsTableList extends Component {
   constructor(props) {
@@ -93,8 +94,8 @@ class ContentsTableList extends Component {
             <Input placeholder='' />
           </Form.Item>
           <Form.Item className="change_book_title_buttons">
-            <Button type="primary" htmlType="submit">완료</Button>
-            <Button type="primary" onClick={this.newInputVisible}>취소</Button>
+            <DefaultButton type="primary" htmlType="submit">완료</DefaultButton>
+            <DefaultButton type="primary" onClick={this.newInputVisible}>취소</DefaultButton>
           </Form.Item>
           </Space>
         </Form>

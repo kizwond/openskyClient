@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Radio, Button,Switch,Form, DatePicker, InputNumber } from 'antd';
+import { Radio, Switch,Form, DatePicker, InputNumber } from 'antd';
 import './StudyModeTab.css'
 import AdvancedFilterModal from './AdvancedFilterModal'
 import moment from 'moment';
+import DefaultButton from '../../../../styledComponents/defaultButton'
 
 const { RangePicker } = DatePicker;
 
@@ -292,7 +293,7 @@ class FlipModeTab extends Component {
                 </Form.Item>
               </div>
             </div> }
-            <div style={{display:"flex",justifyContent:"flex-end", alignItems:"center", marginTop:"10px"}}> <span style={{marginRight:"5px"}}><Button size="small" style={{fontSize:"11px"}} onClick={this.showModal}>고급필터</Button></span>
+            <div style={{display:"flex",justifyContent:"flex-end", alignItems:"center", marginTop:"10px"}}> <span style={{marginRight:"5px"}}><DefaultButton size="small" onClick={this.showModal}>고급필터</DefaultButton></span>
             <Form.Item
                 name="advanced_filter_mode"
                 valuePropName="checked"
@@ -303,7 +304,7 @@ class FlipModeTab extends Component {
           </div>
           <Form.Item>
           <div style={{height:"100px", backgroundColor:"#dfecf6", lineHeight:"100px", marginTop:"10px", textAlign:"center"}}>
-            <Button htmlType="submit" onClick={this.startStudy} style={{color:"white", fontWeight:"700", background:"#69d316", width:"200px", height:"50px"}}>세션 시작하기</Button>
+            <DefaultButton htmlType="submit" onClick={this.startStudy} width="200px" style={{color:"white", fontWeight:"700", background:"#69d316", height:"50px"}}>세션 시작하기</DefaultButton>
           </div>
         </Form.Item>
       </Form>

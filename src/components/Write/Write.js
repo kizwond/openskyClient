@@ -3,9 +3,9 @@ import './Write.css'
 import LikeSectionContent from './LikeSectionContent'
 import ListSectionContent from './ListSectionContent'
 import {NavLink} from 'react-router-dom'
-import { Button } from 'antd';
 import { DownCircleTwoTone,UpCircleTwoTone } from '@ant-design/icons';
 import axios from 'axios'
+import DefaultButton from '../../styledComponents/defaultButton'
 
 class WriteMain extends Component {
   constructor(props) {
@@ -81,7 +81,7 @@ class WriteMain extends Component {
                                   </div>
                                 </div>}
         </div>
-        <NavLink to="/naming" exact><Button type="primary" className="make_new_book" size="small">새로만들기</Button></NavLink> 
+        <NavLink to="/naming" exact><DefaultButton type="primary" className="make_new_book" size="small">새로만들기</DefaultButton></NavLink> 
         <div className="book_list_container_in_write">
           <ListSectionContent updateState={this.updateState}
                               category={this.state.category} 

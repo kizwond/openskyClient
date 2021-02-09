@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tree,Progress,Button } from 'antd';
 import { CarryOutOutlined,SearchOutlined } from '@ant-design/icons';
+import DefaultButton from '../../../../../styledComponents/defaultButton'
 import "./IndexTree.css"
 
 
@@ -645,7 +646,7 @@ class IndexTree extends Component {
 
     return (
       <>
-      <span><Button size="small" style={{fontSize:"11px"}} onClick={this.expandTree}>목차펼치기/접기</Button></span>
+      <span><DefaultButton size="small" onClick={this.expandTree}>목차펼치기/접기</DefaultButton></span>
         <Tree
           checkable
           key={this.state.key}

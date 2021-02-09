@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 class NewPageTemplete extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class NewPageTemplete extends Component {
   render() {
     return (
       <>
-        <Button size={'small'} style={{fontSize:"11px"}} onClick={this.showModal} >새 페이지 템플릿 추가</Button>
+        <DefaultButton size={'small'} onClick={this.showModal} >새 페이지 템플릿 추가</DefaultButton>
         <Modal
           title="새 페이지 템플릿"
           visible={this.state.visible}

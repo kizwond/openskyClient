@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import './CategoryMoveModal.css'
-import { Modal, Select,Button } from 'antd';
+import { Modal, Select } from 'antd';
 import axios from 'axios'
+import DefaultButton from '../../styledComponents/defaultButton'
 
 const { Option } = Select;
 
@@ -94,9 +95,9 @@ class CategoryMoveModal extends Component {
           </Select>
             <span> 카테고리로 </span>
             <span>  
-              <Button size="small" key="submit" type="primary" loading={confirmLoading} onClick={()=>this.handleOk(this.props.bookTitle, this.bookCategoryMove)}>
+              <DefaultButton size="small" key="submit" type="primary" loading={confirmLoading} onClick={()=>this.handleOk(this.props.bookTitle, this.bookCategoryMove)}>
               이동
-              </Button>
+              </DefaultButton>
             </span>
           </div>
         </Modal>

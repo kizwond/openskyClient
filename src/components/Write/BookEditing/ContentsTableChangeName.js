@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Space } from 'antd';
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 const ChangeCategory = (props) => {
   const [form] = Form.useForm();
@@ -44,8 +45,8 @@ const ChangeCategory = (props) => {
           <Input placeholder={props.table.table_name}/>
         </Form.Item>
         <Form.Item className="change_book_title_buttons">
-          <Button type="primary" htmlType="submit">완료</Button>
-          <Button type="primary" onClick={cancel}>취소</Button>
+          <DefaultButton type="primary" htmlType="submit">완료</DefaultButton>
+          <DefaultButton type="primary" onClick={cancel}>취소</DefaultButton>
         </Form.Item>
         </Space>
       </Form>

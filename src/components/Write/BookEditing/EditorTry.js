@@ -11,6 +11,8 @@ import 'froala-editor//css/themes/gray.min.css'
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
+
 // import { InputNumber } from 'antd'
 
 export class EditorTry extends Component {
@@ -407,7 +409,7 @@ console.log('arrayForEditor:', this.props.arrayForEditor)
           </div>
           {editorList}
         </div>
-        <button onClick={this.handleSubmit} id="saveButton">저장</button><button onClick={this.props.cardAddStateHandler} id="cancelButton">취소</button>
+        <DefaultButton onClick={this.handleSubmit} id="saveButton">저장</DefaultButton><DefaultButton onClick={this.props.cardAddStateHandler} id="cancelButton">취소</DefaultButton>
       </div>
       </>
     )

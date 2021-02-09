@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 class ImportModal extends Component {
     constructor(props) {
@@ -47,9 +48,9 @@ class ImportModal extends Component {
     render() { 
         return ( 
             <>
-            <Button type="default" size="small" style={{fontSize:"10px"}}onClick={this.showModal}>
+            <DefaultButton type="default" size="small" onClick={this.showModal}>
                 import <DownloadOutlined />
-            </Button>
+            </DefaultButton>
             <Modal title="Basic Modal" width={800} visible={this.state.visiable} onOk={this.handleOk} onCancel={this.handleCancel}>
                 <form action="#">
                     <input type="file" name="import_file" onChange={(event)=>{
@@ -59,7 +60,7 @@ class ImportModal extends Component {
                         })
                     }}/>
                 </form>
-              <Button size='small' onClick={this.uplodeFile}>파일업로드</Button>
+              <DefaultButton size='small' onClick={this.uplodeFile}>파일업로드</DefaultButton>
             </Modal>
           </>
          );

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
-import { Button, Tree } from 'antd';
+import { Tree } from 'antd';
 import { UnorderedListOutlined, DoubleLeftOutlined,CarryOutOutlined } from '@ant-design/icons';
 import ContentsTable from './ContentsTable'
+import DefaultButton from '../../../styledComponents/defaultButton'
+
 const { TabPane } = Tabs;
 
 
@@ -372,7 +374,7 @@ class LeftDrawer extends Component {
           <TabPane tab={toggle} key="none">
           </TabPane>
           <TabPane className="left_drawer_mokcha" tab="목차" key="목차">
-            <div><Button onClick={this.showModal} size="small">목차편집</Button> </div>
+            <div><DefaultButton onClick={this.showModal} size="small">목차편집</DefaultButton> </div>
             <ContentsTable updateContentsTable={this.props.updateContentsTable} 
                            table_of_contents={this.props.table_of_contents} 
                            handleOk={this.handleOk} 

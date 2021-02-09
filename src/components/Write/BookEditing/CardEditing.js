@@ -12,8 +12,10 @@ import FroalaEditorComponent from 'react-froala-wysiwyg';
 // import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import axios from 'axios'
-import { Button, Modal } from 'antd'
+import { Modal } from 'antd'
 import { EditOutlined } from '@ant-design/icons';
+import DefaultButton from '../../../styledComponents/defaultButton'
+
 export class CardEditing extends Component {
   constructor(props) {
     super(props)
@@ -526,7 +528,7 @@ export class CardEditing extends Component {
 
     return (
       <>
-      <Button size="small" onClick={this.addCardHandler} style={{fontSize:'10px'}} icon={<EditOutlined />}>내용 편집</Button>
+      <DefaultButton size="small" onClick={this.addCardHandler} icon={<EditOutlined />}>내용 편집</DefaultButton>
       <Modal title="카드 편집" visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel} width={900}>
         <div id="editor" style={{border:"1px solid black", borderRadius:"10px"}}>
           <div className='toolbarcontainer'></div>
@@ -537,7 +539,7 @@ export class CardEditing extends Component {
             </div>
             {editorList}
           </div>
-          <button onClick={this.handleSubmit} id="saveButton">Save</button>
+          <DefaultButton onClick={this.handleSubmit} id="saveButton">Save</DefaultButton>
         </div>
       </Modal>
       

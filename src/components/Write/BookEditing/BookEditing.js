@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import LeftDrawer from './BookWritingLeftDrawer'
 import './BookWriting.css'
-import {Button, Select,Modal,Space, Divider,Spin } from 'antd';
+import { Select,Modal,Space, Divider,Spin } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
 import {StarTwoTone} from '@ant-design/icons';
@@ -26,6 +26,7 @@ import CardTempleteEditing from './CardTempleteEditing'
 import CardDelete from './CardDelete'
 import CardEditing from './CardEditing'
 import ImportModal from './ImportModal'
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 // import FroalaEditor from 'react-froala-wysiwyg';
 
@@ -633,7 +634,7 @@ export class BookWriting extends Component {
 
     if(this.state.card_type){
       var optionList = this.state.card_type.map((type)=>(
-          <Button size="small" onClick={() => this.updateCardSelectedState(type.name)} style={{cursor:"pointer", marginBottom:"5px", fontSize:"10px"}} key={type._id} > {type.name}</Button>
+          <DefaultButton size="small" onClick={() => this.updateCardSelectedState(type.name)} style={{cursor:"pointer", marginBottom:"5px", fontSize:"10px"}} key={type._id} > {type.name}</DefaultButton>
       ))
       var optionShareList = this.state.card_type.map((type, index)=>{
         if(type.type === "flip-normal"){
@@ -678,10 +679,10 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div><Button 
+                      <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>  
                       <Space>
@@ -724,18 +725,18 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                    <div><Button 
+                    <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>
                       {content[0].content.parent_card_id && <>
-                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                        <Select size="small" defaultValue="default" width="120px" onChange={this.handleShareChildAddChange}>
                           <Option value="default">카드타입선택</Option>
                           {optionShareList}
                         </Select>
-                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}</div> 
+                        <DefaultButton size="small" onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</DefaultButton></>}</div> 
                       <div> 
                       <Space>   
                         <CardEditing arrayForEditor={this.state.arrayForEditor}
@@ -793,18 +794,18 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                    <div><Button 
+                    <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>
                       {content[0].content.parent_card_id && <>
-                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                        <Select size="small" defaultValue="default" width="120px" onChange={this.handleShareChildAddChange}>
                           <Option value="default">카드타입선택</Option>
                           {optionShareList}
                         </Select>
-                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}
+                        <DefaultButton size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</DefaultButton></>}
                       </div>
                       <div>
                       <Space>
@@ -862,18 +863,18 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                      <div><Button 
+                      <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>
                         {content[0].content.parent_card_id && <>
-                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                        <Select size="small" defaultValue="default" width="120px" onChange={this.handleShareChildAddChange}>
                           <Option value="default">카드타입선택</Option>
                           {optionShareList}
                         </Select>
-                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}
+                        <DefaultButton size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</DefaultButton></>}
                       </div>
                       <div>
                       <Space>
@@ -932,18 +933,18 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                    <div><Button 
+                    <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>
                       {content[0].content.parent_card_id && <>
-                        <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
+                        <Select size="small" defaultValue="default" width="120px" onChange={this.handleShareChildAddChange}>
                           <Option value="default">카드타입선택</Option>
                           {optionShareList}
                         </Select>
-                        <Button size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</Button></>}
+                        <DefaultButton size="small" style={{fontSize:'10px'}} onClick={()=>this.addSiblingCard(content[0].content.parent_card_id)}>형제카드추가</DefaultButton></>}
                       </div>
                       <div>
                       <Space>
@@ -997,10 +998,10 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                    <div><Button 
+                    <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>
                       <Space>
@@ -1041,17 +1042,17 @@ export class BookWriting extends Component {
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
-                    <div><Button 
+                    <div><DefaultButton 
                                   onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
                                   size="small" 
-                                  style={{fontSize:"11px"}}>다음카드추가</Button>
+                                  >다음카드추가</DefaultButton>
                       </div> 
                       <div>
                       <Select size="small" defaultValue="default" style={{ width: 120, fontSize:"11px" }} onChange={this.handleShareChildAddChange}>
                         <Option value="default">카드타입선택</Option>
                         {optionShareList}
                       </Select>
-                      <Button size="small" style={{fontSize:'10px'}} onClick={this.addChildCard}>자식카드추가</Button>
+                      <DefaultButton size="small"onClick={this.addChildCard}>자식카드추가</DefaultButton>
                       </div>
                       <div>
                       <Space>
@@ -1063,7 +1064,7 @@ export class BookWriting extends Component {
                                      content={content[0].content}
                                      handleSubmit={this.handleSubmit}
                                      updateContentsState={this.updateContentsState} />
-                        {/* <Button size="small" style={{fontSize:'10px'}} icon={<DeleteOutlined />}>카드 삭제</Button> */}
+                        {/* <DefaultButton size="small" icon={<DeleteOutlined />}>카드 삭제</DefaultButton> */}
                         <CardDelete updateCardListState={this.updateCardListState} card_id={content[0].card_id} index_id={this.state.index_id} seq_in_index={content[0].seq_in_index} />
                       </Space>
                       </div>
@@ -1117,7 +1118,7 @@ export class BookWriting extends Component {
                 <NewPageTemplete updateCardTypeState={this.updateCardTypeState}/>
                 <NewCardTemplete updateCardTypeState={this.updateCardTypeState}/>
                 <CardTempleteEditing updateCardTypeState={this.updateCardTypeState} card_type={this.state.card_type}/>
-                <Button size='small' style={{fontSize:"11px"}} onClick={this.showModal}>카드 이동/삭제</Button>
+                <DefaultButton size='small' onClick={this.showModal}>카드 이동/삭제</DefaultButton>
               </Space>
               <Modal
                 title="카드 이동 및 삭제"

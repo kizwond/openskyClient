@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 const { confirm } = Modal;
 
@@ -44,7 +45,7 @@ class CardDelete extends Component {
   render() { 
     return ( 
       <>
-      <Button size="small" onClick={()=>this.showPromiseConfirm(this.deleteThis)} style={{fontSize:'10px'}} icon={<DeleteOutlined />}>카드 삭제</Button>
+      <DefaultButton size="small" onClick={()=>this.showPromiseConfirm(this.deleteThis)} icon={<DeleteOutlined />}>카드 삭제</DefaultButton>
       </>
       // <Space>
       //   <DeleteOutlined onClick={()=>this.showPromiseConfirm(this.props.table, this.deleteThis)} style={{fontSize:'14px'}} />

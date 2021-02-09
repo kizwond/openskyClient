@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import DefaultButton from '../../../styledComponents/defaultButton'
+
 const ms = require('pretty-ms')
 
 class Timer extends Component {
@@ -19,11 +20,11 @@ class Timer extends Component {
 
     let stop_total = (this.props.time_total  === 0 || !this.props.isOn_total ) ?
       null :
-      <Button onClick={this.props.stopTimerTotal} type="primary" danger style={{ width:"80px", borderRadius:"10px"}}>일시정지</Button>
+      <DefaultButton onClick={this.props.stopTimerTotal} type="primary" danger style={{ width:"80px", borderRadius:"10px"}}>일시정지</DefaultButton>
 
     let resume_total = (this.props.time_total  === 0 || this.props.isOn_total ) ?
       null :
-      <Button onClick={this.props.startTimerResume} type="primary" style={{ width:"80px", borderRadius:"10px", backgroundColor:"#1ce400", border:"none"}}>재개</Button>
+      <DefaultButton onClick={this.props.startTimerResume} type="primary" style={{ width:"80px", borderRadius:"10px", backgroundColor:"#1ce400", border:"none"}}>재개</DefaultButton>
 
     return(
       <>

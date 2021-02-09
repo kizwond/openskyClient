@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Affix, Button, Collapse, Switch, Select, Input, Upload, message } from 'antd';
+import { Affix, Collapse, Switch, Select, Input, Upload, message } from 'antd';
 import { BoldOutlined,ItalicOutlined,UnderlineOutlined,UploadOutlined  } from '@ant-design/icons';
+import DefaultButton from '../../../styledComponents/defaultButton'
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -50,9 +51,9 @@ class RowSetting extends Component {
         </Collapse>
         <Affix offsetBottom={0}>
           <div className="save_page_setting">
-            <Button type="primary" shape="round" size="small">적용</Button>
-            <Button type="primary" shape="round" size="small">취소</Button>
-            <Button type="primary" shape="round" size="small">설정초기화</Button>
+            <DefaultButton type="primary" shape="round" size="small">적용</DefaultButton>
+            <DefaultButton type="primary" shape="round" size="small">취소</DefaultButton>
+            <DefaultButton type="primary" shape="round" size="small">설정초기화</DefaultButton>
           </div>
         </Affix>
       </div>
@@ -310,7 +311,7 @@ class PageTop extends Component {
               <div>이미지입력</div>
               <div>
                 <Upload className='upload_img' {...props}>
-                  <Button size='small' icon={<UploadOutlined />}>그림삽입</Button>
+                  <DefaultButton size='small' icon={<UploadOutlined />}>그림삽입</DefaultButton>
                 </Upload></div>
                 <div style={{paddingLeft:30, fontSize:'10px', fontStyle: 'italic', marginTop:6, color:'grey'}}>※ 최대크기 595px X 40px </div>
             </div>
@@ -432,7 +433,7 @@ class PageBottom extends Component {
               <div>이미지입력</div>
               <div>
                 <Upload className='upload_img' {...props}>
-                  <Button size='small' icon={<UploadOutlined />}>그림삽입</Button>
+                  <DefaultButton size='small' icon={<UploadOutlined />}>그림삽입</DefaultButton>
                 </Upload></div>
                 <div style={{paddingLeft:30, fontSize:'10px', fontStyle: 'italic', marginTop:6, color:'grey'}}>※ 최대크기 595px X 40px </div>
             </div>

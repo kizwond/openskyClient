@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Modal, Popover,Form, Input, Button, Space  } from 'antd';
+import { Modal, Popover,Form, Input, Space  } from 'antd';
 import './CategorySettingModal.css'
 import { SettingOutlined, PlusOutlined,ArrowUpOutlined,ArrowDownOutlined,EditOutlined} from '@ant-design/icons';
 import ChangeCategoryName from './ChangeCategoryName'
 import DeleteCategory from './DeleteCategory'
 import axios from 'axios'
+import DefaultButton from '../../styledComponents/defaultButton'
+
 // const [form] = Form.useForm();
 
 class CategoryList extends Component {
@@ -78,8 +80,8 @@ class CategoryList extends Component {
             <Input placeholder='' />
           </Form.Item>
           <Form.Item className="change_book_title_buttons">
-            <Button type="primary" htmlType="submit">완료</Button>
-            <Button type="primary" onClick={this.newInputVisible}>취소</Button>
+            <DefaultButton type="primary" htmlType="submit">완료</DefaultButton>
+            <DefaultButton type="primary" onClick={this.newInputVisible}>취소</DefaultButton>
           </Form.Item>
           </Space>
         </Form>
