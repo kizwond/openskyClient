@@ -3,11 +3,9 @@ import axios from "axios"
 import {Row, Col, Tabs } from 'antd';
 import BookTitleList from './BookTitleList/BookTitleList'
 import "./ChooseIndex.css"
-// import SelectedIndexTotal from '../2-FlipMode/SelectedIndexTotal'
 import ReadModeTab from './StudyModeTab/ReadModeTab';
 import FlipModeTab from './StudyModeTab/FlipModeTab';
 import ExamModeTab from './StudyModeTab/ExamModeTab';
-import moment from 'moment';
 
 const { TabPane } = Tabs;
 
@@ -76,7 +74,7 @@ class ChooseIndex extends Component {
 
   getIndex = () =>{
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
-    value.map((item) => {
+    value.forEach((item) => {
        axios.post('api/studysetup/get-index',{
         selected_books:item
       }).then(res => {
@@ -280,11 +278,12 @@ class ChooseIndex extends Component {
     } else {
       study_quantity_use_switch = "off"
     }
-    if(values.advanced_filter_mode === true){
-      var advanced_filter_mode = "on"
-    } else {
-      advanced_filter_mode = "off"
-    }
+
+    // if(values.advanced_filter_mode === true){
+    //   var advanced_filter_mode = "on"
+    // } else {
+    //   advanced_filter_mode = "off"
+    // }
 
     const study_config = {            
       sort_option : values.sort_option,   //standard, time, random     
@@ -310,8 +309,8 @@ class ChooseIndex extends Component {
           hold : values.hold_card_num,
           completed : values.completed_card_num,
       },
-  }
-  console.log('study_config',study_config)
+    }
+    console.log('study_config',study_config)
 
     const books = this.state.books
     console.log('books',books)
@@ -325,9 +324,9 @@ class ChooseIndex extends Component {
     if(indexes.length === 0){
       return alert("목차를 선택하여 주십시오.")
     }
-    const value = indexes.map(index => {
-      booksSlice.map(book => {
-          book.index_info.map(item =>{
+    indexes.forEach(index => {
+      booksSlice.forEach(book => {
+          book.index_info.forEach(item =>{
             if(item._id === index){
               book.index_info.push(index)
               book.index_info.filter(function (el) {
@@ -337,9 +336,9 @@ class ChooseIndex extends Component {
           })
       })
     })
-    const final = booksSlice.map(book=>{
+    booksSlice.forEach(book=>{
         const indexGet = []
-        book.index_info.map((element)=>{
+        book.index_info.forEach((element)=>{
           if(typeof(element) === 'object'){
             const index = book.index_info.indexOf(element)
             indexGet.push(index)
@@ -463,7 +462,7 @@ class ChooseIndex extends Component {
       books:[]
     })
     const value = JSON.parse(sessionStorage.getItem("book_ids"))
-    value.map((item) => {
+    value.forEach((item) => {
        axios.post('api/studysetup/apply-advanced-filter',{
         selected_books:item,
         advanced_filter:advanced_filter

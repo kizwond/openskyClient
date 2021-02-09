@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Button, DatePicker, Select, Space, InputNumber, Switch, Form,Checkbox,Radio} from 'antd'
+import { Modal, Button, DatePicker, Space, InputNumber, Switch, Form,Checkbox,Radio} from 'antd'
 import './AdvancedFilterModal.css'
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
-const { Option } = Select;
 
 class AdvancedFilterModal extends Component {
   constructor(props) {

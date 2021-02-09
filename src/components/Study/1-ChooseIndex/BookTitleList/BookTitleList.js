@@ -27,25 +27,6 @@ class BookTitleList extends Component {
 
   }
   render() {
-    // console.log('from :', this.props.books)
-
-    // booksnindexes : [{    
-    //   book_id: {type:mongoose.ObjectId, ref:'Book'},
-    //   title : String,
-    //   index_ids : [{type:mongoose.ObjectId, ref:'Index'}],
-    // }],
-
-    // const valueToSave = booksnindexes :[{}]
-
-    
-    // const savebooks = this.props.books.map((book)=> {
-    //   return {book_id : book.book_id, title:book.title, index_ids:[]}
-    // })
-    // sessionStorage.setItem("booksnindexes", JSON.stringify(savebooks))
-
-    // const testget = JSON.parse(sessionStorage.getItem("booksnindexes"))
-    // console.log(testget)
-
     const bookList = this.props.books.map((book)=> 
       <TabPane tab={
         <span>
@@ -67,10 +48,8 @@ class BookTitleList extends Component {
             <SelectedIndexCardCount books={this.props.books} />
           </div>
           <IndexTree book_id={book.book_id} 
-                  //  onSelect={this.props.onSelect}
                      book={book.index_info}
                      expand={this.props.expand}
-                    //  getSelected={this.props.getSelected}
                      updateExpandState={this.props.updateExpandState}/>
       </TabPane>
       )

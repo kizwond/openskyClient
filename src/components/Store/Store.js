@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Card,List, Typography, Divider } from 'antd';
-import axios from 'axios'
-import { Route, Switch,NavLink } from "react-router-dom";
+import { Card} from 'antd';
+// import axios from 'axios'
+import { NavLink } from "react-router-dom";
 import CategoryList from './CategoryList'
 
 class Store extends Component {

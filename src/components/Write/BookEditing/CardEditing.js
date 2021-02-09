@@ -9,7 +9,7 @@ import 'froala-editor/js/languages/ko'
 import 'froala-editor//css/themes/gray.min.css'
 
 import FroalaEditorComponent from 'react-froala-wysiwyg';
-import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
+// import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
 import axios from 'axios'
 import { Button, Modal } from 'antd'

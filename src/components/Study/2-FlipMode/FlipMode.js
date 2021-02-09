@@ -1082,7 +1082,7 @@ class FlipMode extends Component {
       
       var book_id = this.state.now_study.book_id
       const level_config_sessionStorage = JSON.parse(sessionStorage.getItem('level_config'))
-      const nicks_handle = level_config_sessionStorage.map((item)=>{
+      level_config_sessionStorage.map((item)=>{
         if(item.book_id === this.state.now_study.book_id){
           nicks.push(item.difficulty_setting.diffi1.nick)
           nicks.push(item.difficulty_setting.diffi2.nick)

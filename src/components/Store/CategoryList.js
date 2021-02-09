@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import { Card,List, Typography, Divider } from 'antd';
-import axios from 'axios'
-import { Route, Switch,NavLink } from "react-router-dom";
-
-
-const { Meta } = Card;
+import { List } from 'antd';
 
 class Store extends Component {
   constructor(props) {

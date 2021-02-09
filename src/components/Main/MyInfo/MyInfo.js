@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Space, Tabs, Button } from 'antd';
-import {ArrowUpOutlined,ArrowDownOutlined} from '@ant-design/icons';
+import { Tabs } from 'antd';
 import './MyInfo.css'
 import BookList from './BookList'
 import ReqBookList from './ReqBookList'

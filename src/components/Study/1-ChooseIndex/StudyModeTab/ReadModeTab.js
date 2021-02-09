@@ -3,7 +3,7 @@ import { Radio, Button,Switch,Form, DatePicker, InputNumber } from 'antd';
 import './StudyModeTab.css'
 import AdvancedFilterModal from './AdvancedFilterModal'
 import moment from 'moment';
-import axios from 'axios'
+
 const { RangePicker } = DatePicker;
 
 

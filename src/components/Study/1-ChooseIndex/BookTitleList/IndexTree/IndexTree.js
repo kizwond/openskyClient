@@ -64,11 +64,11 @@ class IndexTree extends Component {
       const temp = resultAll.concat(parentIndex)
       
       const children = []
-      const childrenIndex1 = info.node.children.map((item)=> children.push(item.index_id))
-      const childrenIndex2 = info.node.children.map((item)=> item.children.map(item => children.push(item.index_id)))
-      const childrenIndex3 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>children.push(item.index_id))))
-      const childrenIndex4 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>children.push(item.index_id)))))
-      const childrenIndex5 = info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>item.children.map(children.push(item.index))))))
+      info.node.children.map((item)=> children.push(item.index_id))
+      info.node.children.map((item)=> item.children.map(item => children.push(item.index_id)))
+      info.node.children.map((item)=> item.children.map(item => item.children.map(item=>children.push(item.index_id))))
+      info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>children.push(item.index_id)))))
+      info.node.children.map((item)=> item.children.map(item => item.children.map(item=>item.children.map(item=>item.children.map(children.push(item.index))))))
 
       const deleteThis = temp.concat(children)
       const sessionData = JSON.parse(sessionStorage.getItem("selectedIndex"))
@@ -82,7 +82,7 @@ class IndexTree extends Component {
   render() {
     // const onSelect = this.props.onSelect 
     let level_all =[];
-    const contentsTableList = this.props.book.map((table, index)=>{
+    this.props.book.map((table, index)=>{
       // 여기서 인덱스별 total 값을 가져와서 외부 array에 넣고 (ex. cards_total_in_book = []; array안에 값을 전부 더한다음 전체선택 treeData에 넣어주기)
         if(table){
           if(table.level === 1){

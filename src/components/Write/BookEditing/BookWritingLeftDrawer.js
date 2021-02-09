@@ -48,7 +48,7 @@ class LeftDrawer extends Component {
       toggle = <DoubleLeftOutlined />
     }
     let level_all =[];
-    const contentsTableList = this.props.table_of_contents.map((table, index)=>{
+    this.props.table_of_contents.forEach((table, index)=>{
         if(table){
           if(table.level === 1){
             let level = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Radio, Button,Switch,Form, Space, DatePicker, InputNumber } from 'antd';
+import { Radio, Button,Switch,Form, DatePicker, InputNumber } from 'antd';
 import './StudyModeTab.css'
 import AdvancedFilterModal from './AdvancedFilterModal'
 import moment from 'moment';
@@ -55,11 +55,11 @@ class ExamModeTab extends Component {
       var options = this.props.study_config.exam_mode
       console.log(options)
       var sort_option = options.sort_option
-      if(options.card_on_off.read_card === "on"){
-        var read_card = true
-      } else {
-        read_card = false
-      }
+      // if(options.card_on_off.read_card === "on"){
+      //   var read_card = true
+      // } else {
+      //   read_card = false
+      // }
       if(options.card_on_off.flip_card === "on"){
         var flip_card = true
       } else {

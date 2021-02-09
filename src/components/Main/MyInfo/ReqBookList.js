@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import { Table, Button } from 'antd';
-import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
-
 
 import axios from 'axios'
 
@@ -105,7 +103,7 @@ class ReqBookList extends Component {
       console.log("here?")
       var plz = []
     //   var categoryArray = this.state.category.map(book => book.book_ids.map((item)=> plz.push(item)))
-      var categoryArray = this.props.candibooklist.map(book =>  plz.push(book) )
+      this.props.candibooklist.map(book =>  plz.push(book) )
       console.log(plz)
       var data = plz.map(book =>{
         //   if(book.type === "self"){
@@ -125,7 +123,9 @@ class ReqBookList extends Component {
                 flip_card_total:'정보',  //book.num_cards.flip.total,
                 read_card_total:'정보',  //book.num_cards.read.total,
             })
-        }
+          } else {
+            return null
+          }
         })
       console.log(data)
       

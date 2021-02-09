@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Tooltip, Modal, Input, Radio, Divider, InputNumber, Space } from 'antd';
+import { Button, Tooltip, Modal, Input, Radio, InputNumber, Space } from 'antd';
 import axios from 'axios'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 

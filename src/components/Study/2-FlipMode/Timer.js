@@ -14,45 +14,6 @@ class Timer extends Component {
     this.props.startTimer()
     this.props.startTimerTotal()
   }
-
-  // startTimer = () => {
-  //   this.setState({
-  //     isOn: true,
-  //     time: this.state.time,
-  //     start: Date.now() - this.state.time
-  //   })
-  //   this.timer = setInterval(() => this.setState({
-  //     time: Date.now() - this.state.start
-  //   }), 1);
-  // }
-
-
-  // startTimerTotal = () => {
-  //   this.setState({
-  //     isOn_total: true,
-  //     time_total: this.state.time_total,
-  //     start_total: Date.now() - this.state.time_total
-  //   })
-  //   this.timer_total = setInterval(() => this.setState({
-  //     time_total: Date.now() - this.state.start_total
-  //   }), 1);
-  // }
-  // stopTimerTotal = () => {
-  //   this.setState({isOn: false})
-  //   clearInterval(this.timer)
-  //   this.setState({isOn_total: false})
-  //   clearInterval(this.timer_total)  
-  // }
-
-  // startTimerResume = () => {
-  //   this.startTimer()
-  //   this.startTimerTotal()
-  // }
-
-
-  // resetTimer() {
-  //   this.setState({time: 0, isOn: false})
-  // }
   
   render() {
 

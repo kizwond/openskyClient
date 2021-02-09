@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import { Table, Button } from 'antd';
-import { StarTwoTone,StarOutlined,EyeOutlined,EyeInvisibleOutlined,ArrowUpOutlined,ArrowDownOutlined,CopyOutlined,DeleteOutlined} from '@ant-design/icons';
+import { Table } from 'antd';
 import RequestModal from './RequestModal'
-import axiosGetBookList from '../../../axiosController/axiosGetBookList'
 
 import axios from 'axios'
 
@@ -40,8 +38,6 @@ class BookList extends Component {
     }
 
     showTitle() {
-
-        // axiosGetBookList( 'api/book/get-booklist', 'category', this.setState)
         axios.get('api/book/get-booklist')
         .then(res => {
             this.setState({
@@ -49,8 +45,6 @@ class BookList extends Component {
             })
         })
     }
-
-    // 'api/book/get-booklist'
 
   
   render() {
@@ -120,9 +114,9 @@ class BookList extends Component {
     if(this.state.category){
       console.log("here?")
       var plz = []
-      var categoryArray = this.state.category.map(book => book.book_ids.map((item)=> plz.push(item)))
+      this.state.category.map(book => book.book_ids.map((item)=> plz.push(item)))
       console.log(plz)
-      var data = plz.map(book =>{
+      var data = plz.map(book => {
           if(book.type === "self"){
             return ({
                 key: book._id,
@@ -139,7 +133,9 @@ class BookList extends Component {
                 flip_card_total:book.num_cards.flip.total,
                 read_card_total:book.num_cards.read.total,
             })
-        }
+          } else {
+            return null
+          }
         })
       console.log(data)
       

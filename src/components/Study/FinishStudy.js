@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+// import { Card } from 'antd';
 import axios from 'axios'
 
 class FinishStudy extends Component {

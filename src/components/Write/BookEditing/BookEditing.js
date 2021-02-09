@@ -5,7 +5,7 @@ import './BookWriting.css'
 import {Button, Select,Modal,Space, Divider,Spin } from 'antd';
 import SettingTabs from './SettingTabs'
 import EditorTry from './EditorTry'
-import {StarTwoTone,LoadingOutlined,EditOutlined} from '@ant-design/icons';
+import {StarTwoTone} from '@ant-design/icons';
 
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/css/froala_style.min.css'
@@ -89,7 +89,7 @@ export class BookWriting extends Component {
     })
       .then(res => {
         console.log("Index List Received : ", res.data.indexList)
-        const firstIndex = sessionStorage.setItem('firstIndex', res.data.indexList[0]._id)
+        sessionStorage.setItem('firstIndex', res.data.indexList[0]._id)
         this.setState({ 
           table_of_contents:res.data.indexList,
         });
@@ -320,20 +320,21 @@ export class BookWriting extends Component {
             })
             return face_array
           }
-
         }
-      })
+      }
+    )
 
     var filtered = contentsList.filter(function(x) {
       return x !== undefined;
     });
     const finalArray = filtered[0]
     console.log('finalArray: ',finalArray)
-      this.setState({
-        card_add: true,
-        arrayForEditor:finalArray
-      })
+    this.setState({
+      card_add: true,
+      arrayForEditor:finalArray
+    })
   }
+
   cardAddStateHandler = () => {
     this.setState({
       card_add: false,

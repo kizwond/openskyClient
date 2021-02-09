@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal,Table, Tag, Space} from 'antd'
+import {Modal,Table} from 'antd'
 import './StudyData.css'
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 

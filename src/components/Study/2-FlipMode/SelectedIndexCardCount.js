@@ -15,8 +15,8 @@ class SelectedIndexCardCount extends Component {
       const ingUntilToday = [];
       const ingAfterTomorrow = [];
       const total = [];
-      var getYets = this.props.books.map(book => 
-        book.index_info.map((item)=> {
+      this.props.books.map(book => 
+        book.index_info.forEach((item) => {
           yetArray.push(item.num_cards.total.yet)
           holdArray.push(item.num_cards.total.hold)
           completedArray.push(item.num_cards.total.completed)
@@ -25,9 +25,8 @@ class SelectedIndexCardCount extends Component {
           ingUntilToday.push(item.num_cards.total.ing.until_today)
           ingAfterTomorrow.push(item.num_cards.total.ing.after_tomorrow)
           total.push(item.num_cards.total.total)
-
         })
-        )
+      )
 
       const yetNum = yetArray.reduce((a, b) => a + b, 0)
       const holdNum = holdArray.reduce((a, b) => a + b, 0)
