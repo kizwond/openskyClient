@@ -43,9 +43,11 @@ class NavBar extends React.Component {
   onClick = () => {
     axios.get('api/user/logout')
        .then(res => {
+         console.log('logout', res.data.isLoggedIn)
          this.setState({isLoggedIn:res.data.isLoggedIn})
-         window.location.href = '/'
-        });
+        
+        })
+        window.location.href = '/'
   }
 
   showModal = () => {
@@ -100,7 +102,7 @@ class NavBar extends React.Component {
             {this.state.isLoggedIn
                 ? <>
                     <Menu.Item key="logout" icon={<ShoppingCartOutlined />}>
-                      <NavLink to="/" onClick={this.onClick}>로그아웃</NavLink>
+                      <NavLink to="#" onClick={this.onClick}>로그아웃</NavLink>
                     </Menu.Item>
                     <Menu.Item key="basket" icon={<ShoppingCartOutlined />}>
                       <NavLink to="/basket" exact>장바구니</NavLink>
