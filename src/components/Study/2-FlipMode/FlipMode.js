@@ -38,7 +38,6 @@ class FlipMode extends Component {
     return this.keyCount++;
   }
   startTimer = () => {
-    console.log('starttimer')
     this.setState({
       isOn: true,
       time: this.state.time,
@@ -61,7 +60,6 @@ class FlipMode extends Component {
     }), 1);
   }
   stopTimerTotal = () => {
-    console.log('stop timer')
     this.setState({isOn_total: false})
     clearInterval(this.timer_total)  
     clearInterval(this.timer)
@@ -79,11 +77,8 @@ class FlipMode extends Component {
     })
   }
 
-  // console.log('data:', JSON.parse(sessionStorage.getItem('study_setting')))
   componentDidMount(){
-    console.log("here!!!!!!!!!!!!!!!!!")
     this.getCardList()
-    // this.getCardContents()
   }
 
   getCardList = async () => {
@@ -91,11 +86,6 @@ class FlipMode extends Component {
     await axios.post('api/studyexecute/get-cardlist',{
       session_id: session_id,
     }).then(res => {
-      console.log("here22222222222")
-      console.log(res.data)
-      console.log("카드리스트 : ",res.data.cardlist_studying)
-      console.log("레벨설정값 : ",res.data.level_config)
-
       sessionStorage.setItem('level_config',JSON.stringify(res.data.level_config));
       sessionStorage.setItem('cardlist_studying',JSON.stringify(res.data.cardlist_studying));
 
@@ -161,13 +151,6 @@ class FlipMode extends Component {
       return el != null;
     });
 
-    // console.log("전부다 알겠음했을때 더이상 공부할게 없을때 아이디가 존재할까?", reviewNotExist)
-    // const getCardId_session_current_seq = card_ids_session.slice(current_seq, 5+Number(current_seq))
-    // const reviewNotExist_tmp = getCardId_session_current_seq.map(item =>{
-    //   return item._id
-    // })
-    // console.log('원래 카드리스트에서 시퀀스 기준으로 이후 5개 찾기',reviewNotExist_tmp)
-
     const reviewExist_filtered_data = reviewExist_data.filter(function (el) {
       return el != null;
     });
@@ -228,15 +211,9 @@ class FlipMode extends Component {
           })
         })
     } else {
-        
-        console.log('current_seq', current_seq)
         const next_seq = Number(current_seq)+1
         sessionStorage.setItem('current_seq',next_seq);
-        console.log('cardlist length',this.state.cardlist_studying.length)
-        console.log('current_seq', current_seq)
-        // if(this.state.cardlist_studying.length - 1 === Number(current_seq)){
-        //   alert("다음카드가 마지막카드입니다.")
-        // }
+
         if(this.state.cardlist_studying.length < Number(current_seq)){
           if(this.state.continue_study === false) {
             this.showConfirm(this.continueStudy, this.finishStudy)
@@ -288,7 +265,6 @@ class FlipMode extends Component {
                 });
                 //지금공부할 카드를 찾아서 지금스터디 통으로 저장하기
                 const nowCard = result.find(item=>{
-                  console.log(item._id)
                   if(readyToStudyId === item._id){
                     return item
                   }
@@ -298,9 +274,7 @@ class FlipMode extends Component {
                   return item._id === readyToStudyId
                 })
                 result.splice(removeNowCard, 1)
-                console.log(removeNowCard)
 
-                console.log('uniqueArr review exist',result)
                 this.setState({
                   contents:result,
                   now_study:nowCard
@@ -317,11 +291,7 @@ class FlipMode extends Component {
         } else {
           const ids = reviewNotExist
           const readyToStudyId = ids[current_seq]
-          console.log('지금공부할카드 아이디',readyToStudyId)
-          console.log('current_seq : ',current_seq)
           const newIdsArray = ids.slice(current_seq, 6+Number(current_seq))
-          console.log('ids',ids)
-          console.log('newIdsArray',newIdsArray)
           if(newIdsArray.length === 0){
             if(this.state.continue_study === false) {
               this.showConfirm(this.continueStudy, this.finishStudy)
@@ -353,11 +323,7 @@ class FlipMode extends Component {
               if(resume_sortValue.length > 0){
                 const ids = getReviewCardIds
                 const readyToStudyId = ids[0]
-                console.log('지금공부할 복습카드 아이디',readyToStudyId)
                 const newIdsArray = ids.slice(0, 6)
-                console.log('ids',ids)
-                console.log('newIdsArray',newIdsArray)
-  
                 axios.post('api/studyexecute/get-studying-cards',{
                   card_ids: newIdsArray
                 }).then(res => {
@@ -383,9 +349,7 @@ class FlipMode extends Component {
                     return item._id === readyToStudyId
                   })
                   result.splice(removeNowCard, 1)
-                  console.log(removeNowCard)
-  
-                  console.log('uniqueArr review exist',result)
+
                   this.setState({
                     contents:result,
                     now_study:nowCard
@@ -402,10 +366,7 @@ class FlipMode extends Component {
             axios.post('api/studyexecute/get-studying-cards',{
               card_ids: newIdsArray
             }).then(res => {
-              console.log("세션 복습 카드 컨텐츠 : ",res.data.cards)
-              
               const contents = this.state.contents.concat(res.data.cards)
-              console.log('contents review not exist',contents)
               const result = contents.filter((item, i) => {
                 return (
                   contents.findIndex((item2, j) => {
@@ -415,7 +376,6 @@ class FlipMode extends Component {
               });
               //지금공부할 카드를 찾아서 지금스터디 통으로 저장하기
               const nowCard = result.find(item=>{
-                console.log(item._id)
                 if(readyToStudyId === item._id){
                   return item
                 }
@@ -425,9 +385,6 @@ class FlipMode extends Component {
                 return item._id === readyToStudyId
               })
               result.splice(removeNowCard, 1)
-              console.log(removeNowCard)
-              console.log('지금공부할 카드 컨텐츠',nowCard)
-              console.log('시쿼스대로 통',result)
               this.setState({
                 contents:result,
                 now_study:nowCard
@@ -475,12 +432,6 @@ class FlipMode extends Component {
   }
     
   onClickDifficulty = (lev, id, book_id, interval, time_unit, card_level)=>{
-    console.log('현재카드 레벨', card_level)
-    console.log('선택한 난이도', lev)
-    console.log('현재카드_id', id)
-    console.log('현재카드 book_id', book_id)
-    console.log('난이도 별 복습주기', interval)
-    console.log('난이도 별 복습주기 단위', time_unit)
     this.setState(prevState=>({
           clickCount:prevState.clickCount + 1
         }))
@@ -499,10 +450,6 @@ class FlipMode extends Component {
       study_log_session.push(study_log)
       sessionStorage.setItem('study_log',JSON.stringify(study_log_session));
     }
-
-    
-
-
 
     if(lev === "diffi1"){
       var diff_ratio = 0.2
@@ -526,14 +473,13 @@ class FlipMode extends Component {
         console.log(item.diff)
       }
     })
-    console.log("CARDLIST PROGRESS", difficulty_stacked)
+
     sessionStorage.setItem('cardlist_progress',JSON.stringify(difficulty_stacked));
     const diffRatioArray = []
     difficulty_stacked.map(item => {
       diffRatioArray.push(item.diff)
     })
     const diffRatioSum = diffRatioArray.reduce((a, b) => a + b, 0)
-    console.log(diffRatioSum)
     const averageStudyRatio = Number(diffRatioSum) / Number(difficulty_stacked_length) * 100
     const averageStudy = averageStudyRatio.toFixed(2);
     this.setState({
@@ -567,12 +513,9 @@ class FlipMode extends Component {
         return item
       }
     })
-    
-    console.log('현재책 레벨설정', selected_card_book_level_config)
 
     //current_lev_study_times 기준으로 경험치 저장
     if(lev === "diffi5"){
-      console.log("here fired!!!")
       const current_lev_study_times_selected = selectedCard.detail_status.current_lev_study_times
       if(current_lev_study_times_selected === 0){
         var exp_gain = selected_card_book_level_config.exp_setting.one_time
@@ -607,7 +550,6 @@ class FlipMode extends Component {
       const sessionLength = card_ids_session.length
       const new_average = (addDiff5 / sessionLength) * 100
       const average = new_average.toFixed(2);
-      console.log(new_average)
       this.setState({
         average_completed:average
       })
@@ -658,7 +600,6 @@ class FlipMode extends Component {
 
       const need_review_time = now_mili_convert + result
       const review_date = new Date(need_review_time)
-      console.log('---------------review_date------------------',review_date)
       card_ids_session[selectedIndex].detail_status.need_study_time = review_date
       card_ids_session[selectedIndex].detail_status.need_study_time_tmp = null
       const final_level = gained_level
@@ -682,7 +623,6 @@ class FlipMode extends Component {
 
     //카드 상태값 former 과 status 관리
     const prev_session_status = card_ids_session[selectedIndex].status
-    console.log('prev_session_status',prev_session_status)
     card_ids_session[selectedIndex].former_status = prev_session_status
     card_ids_session[selectedIndex].status = 'ing'
     
@@ -731,7 +671,7 @@ class FlipMode extends Component {
     console.log('card_ids_session updated!!',card_ids_session[selectedIndex].detail_status)
     const updateThis = card_ids_session[selectedIndex]
     const getUpdateThis = JSON.parse(sessionStorage.getItem('cardlist_to_send'))
-    console.log(getUpdateThis)
+
     if(getUpdateThis){
       var finalUpdate = getUpdateThis.concat(updateThis)
     } else {
@@ -799,12 +739,8 @@ class FlipMode extends Component {
       // })
     }
   onClickBack = () =>{
-    console.log("back clicked!!!")
     const current_seq = sessionStorage.getItem("current_seq")
-    console.log('--------> current_sep',current_seq)
     const study_log_session = JSON.parse(sessionStorage.getItem('study_log'))
-    console.log('--------> study_log_session',study_log_session)
-    console.log('------> now_study',this.state.now_study)
     const back_seq = sessionStorage.getItem('back_seq')
     if(back_seq){
       const new_back_seq = back_seq -1
@@ -821,9 +757,7 @@ class FlipMode extends Component {
     }
 
     const current_back_seq = sessionStorage.getItem('back_seq')
-    console.log('--------> current_back_seq',current_back_seq)
     if(study_log_session){
-
       //한번이상 이전카드보기 버튼을 클릭시 current_seq가 -1씩 감소하는 문제.
       const current_seq = sessionStorage.getItem("current_seq")
       const next_seq = Number(current_seq) -1
@@ -837,7 +771,6 @@ class FlipMode extends Component {
       axios.post('api/studyexecute/get-studying-cards',{
         card_ids:[back_card.card_id]
       }).then(res => {
-        console.log("이전카드 컨텐츠 : ",res.data.cards)
         this.setState({
           now_study:res.data.cards[0]
         })
