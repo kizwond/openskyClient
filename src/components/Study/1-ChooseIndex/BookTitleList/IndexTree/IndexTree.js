@@ -169,20 +169,11 @@ class IndexTree extends Component {
           if(table.level === 1){
             let level = this.tableLevelInfoHandler1(1,table)
               level_all.push(level)
-          } else if(table.level === 2){
-            let level = this.tableLevelInfoHandler2(2,table)
-              level_all.push(level)
-          } else if(table.level === 3){
-            let level = this.tableLevelInfoHandler2(3,table)
-              level_all.push(level)
-          } else if(table.level === 4){
-            let level = this.tableLevelInfoHandler2(4,table)
-              level_all.push(level)
-          } else if(table.level === 5){
-            let level = this.tableLevelInfoHandler2(5,table)
-              level_all.push(level)
-          }     
-        } 
+          } else {
+            let level = this.tableLevelInfoHandler2(table.level,table)
+              level_all.push(level)  
+          } 
+        }
         return null
       }
     )
@@ -193,6 +184,7 @@ class IndexTree extends Component {
     const level_3 = obj => obj.level === 3;
     const level_2 = obj => obj.level === 2;
     if(level_all.length > 0){
+      //목차 레벨 존재여부 검사
       let level_5_exist = level_all.some(level_5)
       let level_4_exist = level_all.some(level_4)
       let level_3_exist = level_all.some(level_3)
