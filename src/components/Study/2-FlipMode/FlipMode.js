@@ -538,6 +538,7 @@ class FlipMode extends Component {
       } else {
         exp_final = exp_will_add
       }
+      console.log(exp_gain)
       card_ids_session[selectedIndex].detail_status.exp_stacked = exp_final
       card_ids_session[selectedIndex].detail_status.exp_gained = exp_gain
 
@@ -553,6 +554,17 @@ class FlipMode extends Component {
       this.setState({
         average_completed:average
       })
+
+      // if(gained_level === 1 || gained_level <= 0) {
+      //   var interval_diffi5 = selected_card_book_level_config.lev_setting.lev_1.interval
+      //   var time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_1.time_unit
+      // } else if(gained_level >= 10){
+      //   interval_diffi5 = selected_card_book_level_config.lev_setting.lev_10.interval
+      //   time_unit_diffi5 = selected_card_book_level_config.lev_setting.lev_10.time_unit
+      // } else {
+      //   interval_diffi5 = selected_card_book_level_config.lev_setting['lev_'+gained_level].interval
+      //   time_unit_diffi5 = selected_card_book_level_config.lev_setting['lev_'+gained_level].time_unit
+      // }
 
       if(gained_level === 1 ){
         var interval_diffi5 = selected_card_book_level_config.lev_setting.lev_1.interval
