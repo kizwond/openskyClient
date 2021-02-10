@@ -981,6 +981,9 @@ class FlipMode extends Component {
     const interval = []
     const time_unit = []
 
+    const timeUnitPushByLevel = (time_unit,item, level_revealed) => {
+      return time_unit.push(item.lev_setting['lev_'+level_revealed].time_unit)
+    }
     if(this.state.now_study){
       var id_of_content = this.state.now_study._id
 
@@ -1186,35 +1189,41 @@ class FlipMode extends Component {
             }
           }
 
-
-          time_unit.push(item.difficulty_setting.diffi1.time_unit)
-          time_unit.push(item.difficulty_setting.diffi2.time_unit)
-          time_unit.push(item.difficulty_setting.diffi3.time_unit)
-          time_unit.push(item.difficulty_setting.diffi4.time_unit)
-          
-          if(level_revealed === 0){
-            time_unit.push(item.lev_setting.lev_0.time_unit)
-          } else if(level_revealed === 1){
-            time_unit.push(item.lev_setting.lev_1.time_unit)
-          } else if(level_revealed === 2){
-            time_unit.push(item.lev_setting.lev_2.time_unit)
-          } else if(level_revealed === 3){
-            time_unit.push(item.lev_setting.lev_3.time_unit)
-          } else if(level_revealed === 4){
-            time_unit.push(item.lev_setting.lev_4.time_unit)
-          } else if(level_revealed === 5){
-            time_unit.push(item.lev_setting.lev_5.time_unit)
-          } else if(level_revealed === 6){
-            time_unit.push(item.lev_setting.lev_6.time_unit)
-          } else if(level_revealed === 7){
-            time_unit.push(item.lev_setting.lev_7.time_unit)
-          } else if(level_revealed === 8){
-            time_unit.push(item.lev_setting.lev_8.time_unit)
-          } else if(level_revealed === 9){
-            time_unit.push(item.lev_setting.lev_9.time_unit)
-          } else if(level_revealed === 10){
-            time_unit.push(item.lev_setting.lev_10.time_unit)
-          }
+          //일반난이도 시간 단위 
+          for(var i=0;i<4;i++){
+            time_unit.push(item.difficulty_setting['diffi'+(i+1)].time_unit)
+        }
+          // time_unit.push(item.difficulty_setting.diffi1.time_unit)
+          // time_unit.push(item.difficulty_setting.diffi2.time_unit)
+          // time_unit.push(item.difficulty_setting.diffi3.time_unit)
+          // time_unit.push(item.difficulty_setting.diffi4.time_unit)
+          // console.log("----------------", time_unit)
+          //알겠음 난이도 시간단위
+          timeUnitPushByLevel(time_unit,item, level_revealed) 
+          // console.log(time_unit)
+          // if(level_revealed === 0){
+          //   time_unit.push(item.lev_setting.lev_0.time_unit)
+          // } else if(level_revealed === 1){
+          //   time_unit.push(item.lev_setting.lev_1.time_unit)
+          // } else if(level_revealed === 2){
+          //   time_unit.push(item.lev_setting.lev_2.time_unit)
+          // } else if(level_revealed === 3){
+          //   time_unit.push(item.lev_setting.lev_3.time_unit)
+          // } else if(level_revealed === 4){
+          //   time_unit.push(item.lev_setting.lev_4.time_unit)
+          // } else if(level_revealed === 5){
+          //   time_unit.push(item.lev_setting.lev_5.time_unit)
+          // } else if(level_revealed === 6){
+          //   time_unit.push(item.lev_setting.lev_6.time_unit)
+          // } else if(level_revealed === 7){
+          //   time_unit.push(item.lev_setting.lev_7.time_unit)
+          // } else if(level_revealed === 8){
+          //   time_unit.push(item.lev_setting.lev_8.time_unit)
+          // } else if(level_revealed === 9){
+          //   time_unit.push(item.lev_setting.lev_9.time_unit)
+          // } else if(level_revealed === 10){
+          //   time_unit.push(item.lev_setting.lev_10.time_unit)
+          // }
           
 
         }

@@ -362,7 +362,7 @@ export class EditorTry extends Component {
     const config={
       editorClass:"editor_try",
       quickInsertEnabled: false,
-      imageUploadURL: 'api/create/upload_image',
+      imageUploadURL: 'api/card/upload_image',
       saveParam: 'content',
       width: 'auto',
       theme: "gray",
