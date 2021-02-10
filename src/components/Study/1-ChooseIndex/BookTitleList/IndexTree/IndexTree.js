@@ -137,74 +137,56 @@ class IndexTree extends Component {
     console.log('get item : ',JSON.parse(sessionStorage.getItem("selectedIndex")))
   };
 
+  tableLevelInfoHandler1 = (level, table) => {
+    return ({
+      title: (<><IndexComponent table={table}/></>),
+      index_id:table._id,
+      book_id:this.props.book_id,
+      key: table.seq,
+      level: level,
+      icon: <CarryOutOutlined />,
+      children: [],})
+  }
+
+  tableLevelInfoHandler2 = (level, table) => {
+    return ({
+      title: (<><IndexComponent table={table}/></>),
+      index_id:table._id,
+      parent:table.parent,
+      book_id:this.props.book_id,
+      key: table.seq,
+      level: level,
+      icon: <CarryOutOutlined />,
+      children: [],})
+  }
   render() {
+
     // const onSelect = this.props.onSelect 
     let level_all =[];
     this.props.book.map((table, index)=>{
       // 여기서 인덱스별 total 값을 가져와서 외부 array에 넣고 (ex. cards_total_in_book = []; array안에 값을 전부 더한다음 전체선택 treeData에 넣어주기)
         if(table){
-
-        
-
           if(table.level === 1){
-            let level = {
-              title: (<><IndexComponent table={table}/></>),
-              index_id:table._id,
-              book_id:this.props.book_id,
-              key: table.seq,
-              level: 1,
-              icon: <CarryOutOutlined />,
-              children: [],}
+            let level = this.tableLevelInfoHandler1(1,table)
               level_all.push(level)
           } else if(table.level === 2){
-            let level = {
-              title: (<><IndexComponent table={table}/></>),
-              index_id:table._id,
-              parent:table.parent,
-              book_id:this.props.book_id,
-              key: table.seq,
-              level: 2,
-              icon: <CarryOutOutlined />,
-              children: [],}
+            let level = this.tableLevelInfoHandler2(2,table)
               level_all.push(level)
           } else if(table.level === 3){
-            let level = {
-              title: (<><IndexComponent table={table}/></>),
-              index_id:table._id,
-              parent:table.parent,
-              book_id:this.props.book_id,
-              key: table.seq,
-              level: 3,
-              icon: <CarryOutOutlined />,
-              children: [],}
+            let level = this.tableLevelInfoHandler2(3,table)
               level_all.push(level)
           } else if(table.level === 4){
-            let level = {
-              title: (<><IndexComponent table={table}/></>),
-              index_id:table._id,
-              parent:table.parent,
-              book_id:this.props.book_id,
-              key: table.seq,
-              level: 4,
-              icon: <CarryOutOutlined />,
-              children: [],}
+            let level = this.tableLevelInfoHandler2(4,table)
               level_all.push(level)
           } else if(table.level === 5){
-            let level = {
-              title: (<><IndexComponent table={table}/></>),
-              index_id:table._id,
-              parent:table.parent,
-              book_id:this.props.book_id,
-              key: table.seq,
-              level: 5,
-              icon: <CarryOutOutlined />,
-              children: [],}
+            let level = this.tableLevelInfoHandler2(5,table)
               level_all.push(level)
           }     
         } 
         return null
       }
     )
+
 
     const level_5 = obj => obj.level === 5;
     const level_4 = obj => obj.level === 4;
