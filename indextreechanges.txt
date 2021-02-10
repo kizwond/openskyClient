@@ -1,0 +1,49 @@
+tableLevelInfoHandler1 = (level, table) => {
+    return ({
+      title: (<><IndexComponent table={table}/></>),
+      index_id:table._id,
+      book_id:this.props.book_id,
+      key: table.seq,
+      level: level,
+      icon: <CarryOutOutlined />,
+      children: [],})
+  }
+
+  tableLevelInfoHandler2 = (level, table) => {
+    return ({
+      title: (<><IndexComponent table={table}/></>),
+      index_id:table._id,
+      parent:table.parent,
+      book_id:this.props.book_id,
+      key: table.seq,
+      level: level,
+      icon: <CarryOutOutlined />,
+      children: [],})
+  }
+  render() {
+
+    // const onSelect = this.props.onSelect 
+    let level_all =[];
+    this.props.book.map((table, index)=>{
+      // 여기서 인덱스별 total 값을 가져와서 외부 array에 넣고 (ex. cards_total_in_book = []; array안에 값을 전부 더한다음 전체선택 treeData에 넣어주기)
+        if(table){
+          if(table.level === 1){
+            let level = this.tableLevelInfoHandler1(1,table)
+              level_all.push(level)
+          } else if(table.level === 2){
+            let level = this.tableLevelInfoHandler2(2,table)
+              level_all.push(level)
+          } else if(table.level === 3){
+            let level = this.tableLevelInfoHandler2(3,table)
+              level_all.push(level)
+          } else if(table.level === 4){
+            let level = this.tableLevelInfoHandler2(4,table)
+              level_all.push(level)
+          } else if(table.level === 5){
+            let level = this.tableLevelInfoHandler2(5,table)
+              level_all.push(level)
+          }     
+        } 
+        return null
+      }
+    )
