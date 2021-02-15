@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Affix, Collapse, Switch, Select, Input } from 'antd';
+import { Affix, Collapse, Form, Switch, Select, Input } from 'antd';
 import { BoldOutlined,ItalicOutlined,UnderlineOutlined,AlignCenterOutlined,AlignLeftOutlined,AlignRightOutlined } from '@ant-design/icons';
 import DefaultButton from '../../../styledComponents/defaultButton'
 
@@ -19,42 +19,167 @@ class CardSetting extends Component {
       }}
     />
   );
+  onFinish = (values) => {
+    console.log(values)
+  }
   render() {
-   
+    const direction = []
+    const margin = []
+    console.log(this.props.card_selected)
+    if(this.props.card_selected){
+      this.props.cardType.map((value)=>{
+        if(value._id === this.props.card_selected){
+          direction.push(value.card_direction)
+          margin.push(value.outer_margin)
+        }
+      })
+    }
+
+    if(margin.length > 0){
+      var top = margin[0].top
+      var bottom = margin[0].bottom
+      var left = margin[0].left
+      var right = margin[0].right
+    } else {
+      top = ''
+      bottom = ''
+      left = ''
+      right = ''
+    }
+
+    var initialValues = {
+      card_direction: direction[0],
+      outer_margin:{
+        top,
+        right,
+        left,
+        bottom
+      }
+    }
+    
+    console.log( direction[0])
+    console.log(top, bottom, left, right)
+    
     return (
       <div className="page_setting_container">
-        <Collapse defaultActiveKey={['1','2','3','4','5','6','7']} >
-          <Panel header="템플릿 선택" key="1" className="data_collapse_panel"> 
-            <SelectTemplete card_selected={this.props.card_selected} cardType={this.props.cardType} onCardChangeHandler={this.props.onCardChangeHandler} />
-          </Panel>
-          <Panel header="레이아웃" key="2" className="data_collapse_panel">
-            <LayoutSetting card_selected={this.props.card_selected} cardType={this.props.cardType} />
-          </Panel>
-          <Panel header="카드 배경색" key="3" className="data_collapse_panel">
-            <CardBackgroundColor card_selected={this.props.card_selected} cardType={this.props.cardType} />
-          </Panel>
-          <Panel header="카드 테두리 바깥쪽 여백" key="4" className="data_collapse_panel">
-            <CardMargin card_selected={this.props.card_selected} cardType={this.props.cardType} />
-          </Panel>
-          <Panel header="카드 테두리 안쪽 여백" key="5" className="data_collapse_panel_numbering">
-            <CardPadding card_selected={this.props.card_selected} cardType={this.props.cardType} />
-          </Panel>
-          <Panel header="카드 테두리" key="6" className="data_collapse_panel_page_top">
-            <Switch size="small" className="page_top_toggle" />
-            <CardBorder card_selected={this.props.card_selected} cardType={this.props.cardType} />
-          </Panel>
-          <Panel header="폰트 일괄 변경" key="7" className="data_collapse_panel_page_bottom">
-            <Switch size="small" className="page_bottom_toggle" />
-            <FontChange card_selected={this.props.card_selected} cardType={this.props.cardType} />
-          </Panel>
-        </Collapse>
-        <Affix offsetBottom={0}>
-          <div className="save_page_setting">
-            <DefaultButton type="primary" shape="round" size="small">적용</DefaultButton>
-            <DefaultButton type="primary" shape="round" size="small">취소</DefaultButton>
-            <DefaultButton type="primary" shape="round" size="small">설정초기화</DefaultButton>
-          </div>
-        </Affix>
+        <Form
+          name="settings"
+          initialValues={initialValues}
+          onFinish={this.onFinish}
+          size="small"
+        >
+          <Collapse defaultActiveKey={['1','2','3','4','5','6','7']} >
+            <Panel header="템플릿 선택" key="1" className="data_collapse_panel"> 
+              <SelectTemplete card_selected={this.props.card_selected} cardType={this.props.cardType} onCardChangeHandler={this.props.onCardChangeHandler} />
+            </Panel>
+            <Panel header="레이아웃" key="2" className="data_collapse_panel">
+              <div className="layout_container">
+                <div className='select_mode_container'>
+                  <div>방향</div>
+                  <div>
+                    <Form.Item name='card_direction'>
+                      <Select size='small'>
+                        <Option value="left-right">좌우</Option>
+                        <Option value="top-bottom">상하</Option>
+                      </Select>
+                    </Form.Item>
+                  </div>
+                </div>
+                <div className='select_mode_container'>
+                  <div></div>
+                  <div className='layout_example_img'>
+                    <img src="img/leftright.png" width='90px' alt="좌우"/>
+                    <img src="img/updown.png" width='90px'  alt="상하"/>
+                  </div>
+                </div>
+                <div className='select_mode_container'>
+                  <div>면간 비율</div>
+                  <div className='layout_ratio'>
+                    <div>
+                    <Form.Item name={['left_right_ratio', 'face1']}>
+                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='1면' suffix='%' type="number"/>
+                    </Form.Item>
+                      
+                    </div>
+                    <div>
+                    <Form.Item name={['left_right_ratio', 'face2']}>
+                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='2면' suffix='%' type="text"/>
+                    </Form.Item>
+                    </div>
+                    {/* <div>
+                    <Form.Item name={['left_right_ratio', 'face1']}>
+                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='주석' suffix='%' type="text"/>
+                    </Form.Item>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </Panel>
+            <Panel header="카드 배경색" key="3" className="data_collapse_panel">
+              <div className="select_card_bg_color_container">
+                <div className="select_card_bg_color">
+                  <div>배경색</div>
+                  <div className="select_card_bg_color_right">
+                    <div>
+                      <Form.Item name='background_color'>
+                        <Input type="color" size='small' style={{ width: 125 }} type="color"/>
+                      </Form.Item>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Panel>
+            <Panel header="카드 테두리 바깥쪽 여백" key="4" className="data_collapse_panel">
+              <div className="select_card_margin">
+                <div className="card_margin_top">
+                  <Form.Item name={['outer_margin', 'top']}>
+                    <Input size='small' style={{ width: 70,fontSize:10 }} prefix='상' suffix='px' type="number"/>
+                  </Form.Item>
+                </div>
+                <div className="card_margin_mid_container">
+                  <div>
+                    <Form.Item name={['outer_margin', 'left']}>
+                      <Input size='small' style={{ width: 70,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
+                    </Form.Item>
+                  </div>
+                  <div className="">
+                    <img src="img/cardmargin.png" width="100" alt="cardmargin_img"/>
+                  </div>
+                  <div>
+                    <Form.Item name={['outer_margin', 'right']}>
+                      <Input size='small' style={{ width: 70,fontSize:10 }}prefix='우' suffix='px' type="number"/>
+                    </Form.Item>
+                  </div>
+                </div>
+                <div className="card_margin_bottom">
+                  <Form.Item name={['outer_margin', 'bottom']}>
+                    <Input size='small' style={{ width: 70,fontSize:10 }} prefix='하' suffix='px' type="number"/>
+                  </Form.Item>
+                </div>
+              </div>
+            </Panel>
+            <Panel header="카드 테두리 안쪽 여백" key="5" className="data_collapse_panel_numbering">
+              <CardPadding card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            </Panel>
+            <Panel header="카드 테두리" key="6" className="data_collapse_panel_page_top">
+              <Switch size="small" className="page_top_toggle" />
+              <CardBorder card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            </Panel>
+            <Panel header="폰트 일괄 변경" key="7" className="data_collapse_panel_page_bottom">
+              <Switch size="small" className="page_bottom_toggle" />
+              <FontChange card_selected={this.props.card_selected} cardType={this.props.cardType} />
+            </Panel>
+          </Collapse>
+          <Affix offsetBottom={0}>
+            <div className="save_page_setting">
+            <Form.Item>
+              <DefaultButton htmlType="submit" type="primary" shape="round" size="small">적용</DefaultButton>
+            </Form.Item>
+              <DefaultButton type="primary" shape="round" size="small">취소</DefaultButton>
+              <DefaultButton type="primary" shape="round" size="small">설정초기화</DefaultButton>
+            </div>
+          </Affix>
+        </Form>
       </div>
     );
   }
@@ -79,15 +204,17 @@ class SelectTemplete extends Component {
     }
 
     const cardTypeListOption = this.props.cardType.map((card_type)=>(
-      <Option key={card_type._id} value={card_type._id}>{card_type.nick} - ({card_type.type} 카드)</Option>
+      <Option key={card_type._id} value={card_type._id}>{card_type.name} - ({card_type.type} 카드)</Option>
     ))
     const cardFaceListOption = this.props.cardType.map((card_type)=>{
-      if(card_type.card_nick === this.props.card_selected){
-        if(card_type.card_type === '1면'){
+      console.log(this.props.card_selected)
+      if(card_type._id === this.props.card_selected){
+        console.log("-------------here--------------",card_type)
+        if(card_type.type === 'read'){
           return <><Option key={1} value='1면'>1면</Option></>
-        } else if(card_type.card_type === '2면'){
+        } else if(card_type.type === 'flip-normal'){
           return <><Option key={1} value='1면'>1면</Option><Option key={2} value='2면'>2면</Option></>
-        } else if(card_type.card_type === '3면'){
+        } else if(card_type.type === '3면'){
           return <><Option key={1} value='1면'>1면</Option><Option key={2} value='2면'>2면</Option><Option key={3} value='3면'>3면</Option></>
         }
       }
@@ -260,12 +387,10 @@ class CardPadding extends Component {
     const padding = []
     const layoutSettingValue = this.props.cardType.map((value)=>{
         if(value._id === this.props.card_selected){
-          console.log(value.inner_padding)
           padding.push(value.inner_padding)
         }
         return null
     })
-    console.log(layoutSettingValue)
     if(padding.length > 0){
       var top = padding[0].top
       var bottom = padding[0].bottom
