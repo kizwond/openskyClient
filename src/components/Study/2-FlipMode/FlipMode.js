@@ -419,17 +419,6 @@ class FlipMode extends Component {
   
 
   milliseconds = (h, m, s) => ((h*60*60+m*60+s)*1000);
-
-  leadingZeros = (n, digits) => {
-    var zero = '';
-    n = n.toString();
-  
-    if (n.length < digits) {
-      for (var i = 0; i < digits - n.length; i++)
-        zero += '0';
-    }
-    return zero + n;
-  }
     
   onClickDifficulty = (lev, id, book_id, interval, time_unit, card_level)=>{
     this.setState(prevState=>({
