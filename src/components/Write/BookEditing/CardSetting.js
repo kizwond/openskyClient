@@ -29,24 +29,27 @@ class CardSetting extends Component {
     if(this.props.card_selected){
       this.props.cardType.map((value)=>{
         if(value._id === this.props.card_selected){
-          direction.push(value.card_direction)
-          margin.push(value.outer_margin)
+          direction.push(value.card_style.card_direction)
+          margin.push(value.card_style.outer_margin)
         }
       })
     }
-
-    if(margin.length > 0){
-      var top = margin[0].top
-      var bottom = margin[0].bottom
-      var left = margin[0].left
-      var right = margin[0].right
-    } else {
-      top = ''
-      bottom = ''
-      left = ''
-      right = ''
+    if(this.props.card_selected) {
+      if(margin.length > 0){
+        console.log(margin)
+        var top = margin[0].top
+        var bottom = margin[0].bottom
+        var left = margin[0].left
+        var right = margin[0].right
+      } else {
+        top = ''
+        bottom = ''
+        left = ''
+        right = ''
+      }
+  
     }
-
+    
     var initialValues = {
       card_direction: direction[0],
       outer_margin:{
@@ -387,7 +390,7 @@ class CardPadding extends Component {
     const padding = []
     const layoutSettingValue = this.props.cardType.map((value)=>{
         if(value._id === this.props.card_selected){
-          padding.push(value.inner_padding)
+          padding.push(value.card_style.inner_padding)
         }
         return null
     })
