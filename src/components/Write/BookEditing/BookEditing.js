@@ -526,6 +526,7 @@ export class BookWriting extends Component {
     
     if(this.state.contents){
       var contentsList = this.state.contents.map((content)=>{
+        console.log('----------------',content)
         const flag_column_num = content.cardtype_id.num_of_row.maker_flag;
         const face1_column_num = content.cardtype_id.num_of_row.face1;
         const selection_column_num = content.cardtype_id.num_of_row.selection;
@@ -534,7 +535,7 @@ export class BookWriting extends Component {
         const none_column_num = content.cardtype_id.num_of_row.none;
         const share_column_num = content.cardtype_id.num_of_row.share;
 
-        const direction = content.cardtype_id.card_direction;
+        const direction = content.cardtype_id.card_style.card_direction;
         // const annotation_on = content.cardtype_id.annotation;
 
         // 읽기카드
@@ -645,7 +646,11 @@ export class BookWriting extends Component {
 
     if(contentsList){
       var list = contentsList.map((content)=>{
-        
+        console.log("why?1111111111111111111111",content[0])
+        const borderTopType = content[0].content.cardtype_id.card_style.border.package.type
+        const borderTopThickness = content[0].content.cardtype_id.card_style.border.package.thickness
+        const borderTopColor = content[0].content.cardtype_id.card_style.border.package.color
+
           if(content[0].flag == "1"){
             var star = <StarTwoTone />
           } else if(content[0].flag == "2"){
@@ -666,7 +671,7 @@ export class BookWriting extends Component {
           }
           if(content[0].type === 'read'){
             console.log(content[0].content.cardtype_id.name)
-            return <> <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px"}} 
+            return <> <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px", border:`${borderTopType} ${borderTopThickness}px ${borderTopColor}`}} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
