@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Affix, Collapse, Form, Switch, Select, Input } from 'antd';
+import { Affix, Collapse, Form, Switch, Select, Input, InputNumber } from 'antd';
 import { BoldOutlined,ItalicOutlined,UnderlineOutlined,AlignCenterOutlined,AlignLeftOutlined,AlignRightOutlined } from '@ant-design/icons';
 import DefaultButton from '../../../styledComponents/defaultButton'
 import axios from 'axios'
@@ -132,13 +132,13 @@ class CardSetting extends Component {
                   <div className='layout_ratio'>
                     <div>
                     <Form.Item name={['left_right_ratio', 'face1']}>
-                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='1면' suffix='%' type="number"/>
+                      <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='1면' suffix='%' type="number"/>
                     </Form.Item>
                       
                     </div>
                     <div>
                     <Form.Item name={['left_right_ratio', 'face2']}>
-                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='2면' suffix='%' type="text"/>
+                      <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='2면' suffix='%' type="number"/>
                     </Form.Item>
                     </div>
                     {/* <div>
@@ -168,13 +168,13 @@ class CardSetting extends Component {
               <div className="select_card_margin">
                 <div className="card_margin_top">
                   <Form.Item name={['outer_margin', 'top']}>
-                    <Input size='small' style={{ width: 100,fontSize:10 }} prefix='상' suffix='px' type="number"/>
+                    <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='상' suffix='px' type="number"/>
                   </Form.Item>
                 </div>
                 <div className="card_margin_mid_container">
                   <div>
                     <Form.Item name={['outer_margin', 'left']}>
-                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
+                      <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
                     </Form.Item>
                   </div>
                   <div className="">
@@ -182,13 +182,13 @@ class CardSetting extends Component {
                   </div>
                   <div>
                     <Form.Item name={['outer_margin', 'right']}>
-                      <Input size='small' style={{ width: 100,fontSize:10 }}prefix='우' suffix='px' type="number"/>
+                      <InputNumber size='small' style={{ width: 100,fontSize:10 }}prefix='우' suffix='px' type="number"/>
                     </Form.Item>
                   </div>
                 </div>
                 <div className="card_margin_bottom">
                   <Form.Item name={['outer_margin', 'bottom']}>
-                    <Input size='small' style={{ width: 100,fontSize:10 }} prefix='하' suffix='px' type="number"/>
+                    <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='하' suffix='px' type="number"/>
                   </Form.Item>
                 </div>
               </div>
@@ -197,13 +197,13 @@ class CardSetting extends Component {
               <div className="select_card_margin">
                   <div className="card_margin_top">
                     <Form.Item name={['inner_padding', 'top']}>
-                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='상' suffix='px' type="number"/>
+                      <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='상' suffix='px' type="number"/>
                     </Form.Item>
                   </div>
                   <div className="card_margin_mid_container">
                     <div>
                       <Form.Item name={['inner_padding', 'left']}>
-                        <Input size='small' style={{ width: 100,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
+                        <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
                       </Form.Item>
                     </div>
                     <div className="">
@@ -211,13 +211,13 @@ class CardSetting extends Component {
                     </div>
                     <div>
                       <Form.Item name={['inner_padding', 'right']}>
-                        <Input size='small' style={{ width: 100,fontSize:10 }} prefix='우' suffix='px' type="number"/>
+                        <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='우' suffix='px' type="number"/>
                       </Form.Item>
                       </div>
                   </div>
                   <div className="card_margin_bottom">
                     <Form.Item name={['inner_padding', 'bottom']}>
-                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='하' suffix='px' type="number"/>
+                      <InputNumber size='small' style={{ width: 100,fontSize:10 }} prefix='하' suffix='px' type="number"/>
                     </Form.Item>
                   </div>
               </div>
@@ -239,7 +239,7 @@ class CardSetting extends Component {
                     <div><Form.Item name={['border','package', 'color']}><Input size='small' type="color" style={{width:20}}/></Form.Item></div>
                     <div>
                       <Form.Item name={['border','package', 'thickness']}>
-                        <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
+                        <InputNumber size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
                       </Form.Item>
                     </div>
                   </div>
