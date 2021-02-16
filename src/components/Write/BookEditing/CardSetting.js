@@ -137,7 +137,7 @@ class CardSetting extends Component {
         <><div className="page_setting_container">
         <Form
           name="settings"
-          initialValues={{}}
+          initialValues={initialValues}
           onFinish={this.onFinish}
           size="small"
         >
@@ -151,7 +151,7 @@ class CardSetting extends Component {
                   <div>방향(on)</div>
                   <div>
                     <Form.Item name='card_direction'>
-                      <Select value={direction[0]} size='small' >
+                      <Select size='small' >
                         <Option value="left-right">좌우</Option>
                         <Option value="top-bottom">상하</Option>
                       </Select>
