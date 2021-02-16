@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Affix, Collapse, Form, Switch, Select, Input } from 'antd';
 import { BoldOutlined,ItalicOutlined,UnderlineOutlined,AlignCenterOutlined,AlignLeftOutlined,AlignRightOutlined } from '@ant-design/icons';
 import DefaultButton from '../../../styledComponents/defaultButton'
+import axios from 'axios'
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -21,16 +22,26 @@ class CardSetting extends Component {
   );
   onFinish = (values) => {
     console.log(values)
+    values.border.mode = "package"
+    console.log(values)
+    axios.post('api/cardtype/update-cardstyle',{
+      cardtype_id: this.props.card_selected,
+      card_style:values
+    }).then(res => {
+      console.log(res.data)
+    })
   }
   render() {
     const direction = []
     const margin = []
+    const padding = []
     console.log(this.props.card_selected)
     if(this.props.card_selected){
       this.props.cardType.map((value)=>{
         if(value._id === this.props.card_selected){
           direction.push(value.card_style.card_direction)
           margin.push(value.card_style.outer_margin)
+          padding.push(value.card_style.inner_padding)
         }
       })
     }
@@ -47,18 +58,39 @@ class CardSetting extends Component {
         left = ''
         right = ''
       }
+
+      if(padding.length > 0){
+        console.log(padding)
+        var innerPaddingTop = padding[0].top
+        var innerPaddingBottom = padding[0].bottom
+        var innerPaddingLeft = padding[0].left
+        var innerPaddingRight = padding[0].right
+      } else {
+        innerPaddingTop = ''
+        innerPaddingBottom = ''
+        innerPaddingLeft = ''
+        innerPaddingRight = ''
+      }
+
+      var initialValues = {
+        card_direction: direction[0],
+        outer_margin:{
+          top,
+          right,
+          left,
+          bottom
+        },
+        inner_padding:{
+          top:innerPaddingTop,
+          bottom:innerPaddingBottom,
+          left:innerPaddingLeft,
+          right:innerPaddingRight
+        },
+      }
   
     }
-    
-    var initialValues = {
-      card_direction: direction[0],
-      outer_margin:{
-        top,
-        right,
-        left,
-        bottom
-      }
-    }
+
+   
     
     console.log( direction[0])
     console.log(top, bottom, left, right)
@@ -136,13 +168,13 @@ class CardSetting extends Component {
               <div className="select_card_margin">
                 <div className="card_margin_top">
                   <Form.Item name={['outer_margin', 'top']}>
-                    <Input size='small' style={{ width: 70,fontSize:10 }} prefix='상' suffix='px' type="number"/>
+                    <Input size='small' style={{ width: 100,fontSize:10 }} prefix='상' suffix='px' type="number"/>
                   </Form.Item>
                 </div>
                 <div className="card_margin_mid_container">
                   <div>
                     <Form.Item name={['outer_margin', 'left']}>
-                      <Input size='small' style={{ width: 70,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
+                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
                     </Form.Item>
                   </div>
                   <div className="">
@@ -150,23 +182,151 @@ class CardSetting extends Component {
                   </div>
                   <div>
                     <Form.Item name={['outer_margin', 'right']}>
-                      <Input size='small' style={{ width: 70,fontSize:10 }}prefix='우' suffix='px' type="number"/>
+                      <Input size='small' style={{ width: 100,fontSize:10 }}prefix='우' suffix='px' type="number"/>
                     </Form.Item>
                   </div>
                 </div>
                 <div className="card_margin_bottom">
                   <Form.Item name={['outer_margin', 'bottom']}>
-                    <Input size='small' style={{ width: 70,fontSize:10 }} prefix='하' suffix='px' type="number"/>
+                    <Input size='small' style={{ width: 100,fontSize:10 }} prefix='하' suffix='px' type="number"/>
                   </Form.Item>
                 </div>
               </div>
             </Panel>
             <Panel header="카드 테두리 안쪽 여백" key="5" className="data_collapse_panel_numbering">
-              <CardPadding card_selected={this.props.card_selected} cardType={this.props.cardType} />
+              <div className="select_card_margin">
+                  <div className="card_margin_top">
+                    <Form.Item name={['inner_padding', 'top']}>
+                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='상' suffix='px' type="number"/>
+                    </Form.Item>
+                  </div>
+                  <div className="card_margin_mid_container">
+                    <div>
+                      <Form.Item name={['inner_padding', 'left']}>
+                        <Input size='small' style={{ width: 100,fontSize:10 }} prefix='좌' suffix='px' type="number"/>
+                      </Form.Item>
+                    </div>
+                    <div className="">
+                      <img src="img/cardpadding.png" width="100" alt="cardpadding_img"/>
+                    </div>
+                    <div>
+                      <Form.Item name={['inner_padding', 'right']}>
+                        <Input size='small' style={{ width: 100,fontSize:10 }} prefix='우' suffix='px' type="number"/>
+                      </Form.Item>
+                      </div>
+                  </div>
+                  <div className="card_margin_bottom">
+                    <Form.Item name={['inner_padding', 'bottom']}>
+                      <Input size='small' style={{ width: 100,fontSize:10 }} prefix='하' suffix='px' type="number"/>
+                    </Form.Item>
+                  </div>
+              </div>
             </Panel>
             <Panel header="카드 테두리" key="6" className="data_collapse_panel_page_top">
               <Switch size="small" className="page_top_toggle" />
-              <CardBorder card_selected={this.props.card_selected} cardType={this.props.cardType} />
+              <div className="card_border_container">
+                <div className="select_card_bg_color">
+                  <div>전체테두리</div>
+                  <div className="card_border_total">
+                    <div>
+                      <Form.Item name={['border','package', 'type']}>
+                        <Select size='small' style={{ width: 100 }}>
+                          <Option value="solid">solid</Option>
+                          <Option value="dashed">dashed</Option>
+                        </Select>
+                      </Form.Item>
+                    </div>
+                    <div><Form.Item name={['border','package', 'color']}><Input size='small' type="color" style={{width:20}}/></Form.Item></div>
+                    <div>
+                      <Form.Item name={['border','package', 'thickness']}>
+                        <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
+                      </Form.Item>
+                    </div>
+                  </div>
+                </div>
+                <div style={{paddingLeft:50}}>
+                  <Collapse className="border_detail" >
+                    <Panel header="테두리 상세 설정" key="1" className="data_collapse_panel"> 
+                      <div className="select_card_bg_color">
+                        <div>상</div>
+                        <div className="card_border_total">
+                          <div>
+                            <Select size='small' style={{ width: 50 }}>
+                              <Option value="선택">선택</Option>
+                              <Option value="선택">선택</Option>
+                            </Select>
+                          </div>
+                          <div><Input size='small' type="color" style={{width:20}}/></div>
+                          <div><Input size='small' style={{ width: 60 }} type="text"/></div>
+                          <div>
+                            <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="select_card_bg_color">
+                        <div>하</div>
+                        <div className="card_border_total">
+                          <div>
+                            <Select size='small' style={{ width: 50 }}>
+                              <Option value="선택">선택</Option>
+                              <Option value="선택">선택</Option>
+                            </Select>
+                          </div>
+                          <div><Input size='small' type="color" style={{width:20}}/></div>
+                          <div><Input size='small' style={{ width: 60 }} type="text"/></div>
+                          <div>
+                            <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="select_card_bg_color">
+                        <div>좌</div>
+                        <div className="card_border_total">
+                          <div>
+                            <Select size='small' style={{ width: 50 }}>
+                              <Option value="선택">선택</Option>
+                              <Option value="선택">선택</Option>
+                            </Select>
+                          </div>
+                          <div><Input size='small' type="color" style={{width:20}}/></div>
+                          <div><Input size='small' style={{ width: 60 }} type="text"/></div>
+                          <div>
+                            <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="select_card_bg_color">
+                        <div>우</div>
+                        <div className="card_border_total">
+                          <div>
+                            <Select size='small' style={{ width: 50 }}>
+                              <Option value="선택">선택</Option>
+                              <Option value="선택">선택</Option>
+                            </Select>
+                          </div>
+                          <div><Input size='small' type="color" style={{width:20}}/></div>
+                          <div><Input size='small' style={{ width: 60 }} type="text"/></div>
+                          <div>
+                            <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/>
+                          </div>
+                        </div>
+                      </div>
+                    </Panel>
+                  </Collapse>
+                </div>
+                <div className="card_border_radius_container">
+                  <div>라운드</div>
+                  <div className="card_border_radius">
+                    <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/> 
+                  </div>
+                </div>
+                <div className="card_border_radius_container">
+                  <div>그림자</div>
+                  <div className="card_border_radius">
+                    <Input size='small' style={{ width: 60,fontSize:10, lineHeight: '22px' }} suffix='px' type="number"/> 
+                  </div>
+                </div>
+              </div>
             </Panel>
             <Panel header="폰트 일괄 변경" key="7" className="data_collapse_panel_page_bottom">
               <Switch size="small" className="page_bottom_toggle" />
@@ -206,8 +366,8 @@ class SelectTemplete extends Component {
       console.log(this.props.cardType)
     }
 
-    const cardTypeListOption = this.props.cardType.map((card_type)=>(
-      <Option key={card_type._id} value={card_type._id}>{card_type.name} - ({card_type.type} 카드)</Option>
+    const cardTypeListOption = this.props.cardType.map((card_type, index)=>(
+      <Option key={card_type._id+index} value={card_type._id}>{card_type.name} - ({card_type.type} 카드)</Option>
     ))
     const cardFaceListOption = this.props.cardType.map((card_type)=>{
       console.log(this.props.card_selected)
