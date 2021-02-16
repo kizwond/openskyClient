@@ -11,8 +11,12 @@ class CardSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {  };
+    this.keyCount = 0;
+    this.getKey = this.getKey.bind(this);
   }
-
+  getKey(){
+    return this.keyCount++;
+  }
   genExtra = () => (
     <Switch size="small"
       onClick={event => {
@@ -23,10 +27,15 @@ class CardSetting extends Component {
   onFinish = (values) => {
     console.log(values)
     values.border.mode = "package"
+    values.border.top = {type:null, thickness:null, color:null}
+    values.border.bottom = {type:null, thickness:null, color:null}
+    values.border.left = {type:null, thickness:null, color:null}
+    values.border.right = {type:null, thickness:null, color:null}
     console.log(values)
     axios.post('api/cardtype/update-cardstyle',{
       cardtype_id: this.props.card_selected,
-      updated_card_style:values
+      updated_card_style:values,
+      book_id:this.props.cardType[0].book_id
     }).then(res => {
       console.log(res.data)
     })
@@ -354,6 +363,11 @@ class SelectTemplete extends Component {
     this.state = { 
       card_selected:''
      };
+    this.keyCount = 0;
+    this.getKey = this.getKey.bind(this);
+  }
+  getKey(){
+    return this.keyCount++;
   }
   onCardChangeHandler = (value) => {
     console.log(value)
@@ -367,18 +381,18 @@ class SelectTemplete extends Component {
     }
 
     const cardTypeListOption = this.props.cardType.map((card_type, index)=>(
-      <Option key={card_type._id+index} value={card_type._id}>{card_type.name} - ({card_type.type} 카드)</Option>
+      <Option key={this.getKey()} value={card_type._id}>{card_type.name} - ({card_type.type} 카드)</Option>
     ))
     const cardFaceListOption = this.props.cardType.map((card_type)=>{
       console.log(this.props.card_selected)
       if(card_type._id === this.props.card_selected){
         console.log("-------------here--------------",card_type)
         if(card_type.type === 'read'){
-          return <><Option key={1} value='1면'>1면</Option></>
+          return <><Option key={this.getKey()} value='1면'>1면</Option></>
         } else if(card_type.type === 'flip-normal'){
-          return <><Option key={1} value='1면'>1면</Option><Option key={2} value='2면'>2면</Option></>
+          return <><Option key={this.getKey()} value='1면'>1면</Option><Option key={this.getKey()} value='2면'>2면</Option></>
         } else if(card_type.type === '3면'){
-          return <><Option key={1} value='1면'>1면</Option><Option key={2} value='2면'>2면</Option><Option key={3} value='3면'>3면</Option></>
+          return <><Option key={this.getKey()} value='1면'>1면</Option><Option key={this.getKey()} value='2면'>2면</Option><Option key={this.getKey()} value='3면'>3면</Option></>
         }
       }
       return null
