@@ -26,7 +26,6 @@ class CardSetting extends Component {
     console.log(values)
     axios.post('api/cardtype/update-cardstyle',{
       cardtype_id: this.props.card_selected,
-      updated_card_style_name: 'card_style',
       updated_card_style:values
     }).then(res => {
       console.log(res.data)
