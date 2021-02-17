@@ -161,9 +161,9 @@ export class EditorTry extends Component {
 
 
   handleSubmit = () => {
-    console.log('111:',this.props.current_card)
+    console.log('1111111111111111111111111111111111:',this.props.current_card)
     const current = this.props.current_card
-    console.log(current)
+
     if(current){
       if(current.face1){
         var face1 = current.face1
@@ -174,32 +174,25 @@ export class EditorTry extends Component {
       if(current.face2){
         var face2 = current.face2
       }
-      if(current.share){
-        var share = current.share
-      }
       if(current.annot){
         var annot = current.annot
-      }
-      if(current.none){
-        var none = current.none
       }
     }
     const face1_array = [];
     const selection_array = [];
     const face2_array = [];
-    const share_array = [];
     const annotation_array = [];
-    const none_array = [];
 
     //읽기카드만 있을때
-    if (face1 && !face2 && !annot && !selection && !share && !none){
+    if (face1 && !face2 && !annot && !selection){
       for (var i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
     }
     
+    
     //읽기카드랑 주석이 있을때
-    if (face1 && annot && !face2 && !selection && !share && !none){
+    if (face1 && annot && !face2 && !selection ){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -211,7 +204,7 @@ export class EditorTry extends Component {
     }
     
     //뒤집기카드만 있을때
-    if (face1 && face2 && !annot && !selection && !share && !none){
+    if (face1 && face2 && !annot && !selection ){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -223,7 +216,7 @@ export class EditorTry extends Component {
     }
 
     //뒤집기카드랑 주석이 있을때
-    if (face1 && face2 && annot && !selection && !share && !none){
+    if (face1 && face2 && annot && !selection){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -239,7 +232,7 @@ export class EditorTry extends Component {
       }
     }
     //뒤집기카드랑 보기가 있을때
-    if (face1 && face2 && !annot && selection && !share && !none){
+    if (face1 && face2 && !annot && selection ){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -256,7 +249,7 @@ export class EditorTry extends Component {
     }
 
     //뒤집기카드랑 보기랑 주석이 있을때
-    if (face1 && face2 && annot && selection && !share && !none){
+    if (face1 && face2 && annot && selection){
       for ( i = 1; i < face1+1; i++) {
         face1_array.push(this.state['editor'+i])
       }
@@ -276,45 +269,6 @@ export class EditorTry extends Component {
         }
       }
     }
-
-    //공통지문카드만 있을때
-    if (share && !face1 && !face2 && !annot && !selection && !none){
-      for ( i = 1; i < share+1; i++) {
-        share_array.push(this.state['editor'+i])
-      }
-    }
-
-    //공통지문카드와 주석이 있을때
-    if (share && !face1 && !face2 && annot && !selection && !none){
-      for ( i = 1; i < share+1; i++) {
-        share_array.push(this.state['editor'+i])
-      }
-      if(annot){
-        for ( i = share+1; i < share+annot+1; i++) {
-          annotation_array.push(this.state['editor'+i])
-        }
-      }
-    }
-
-    //비학습카드만 있을때
-    if (none && !share && !face1 && !face2 && !annot && !selection){
-      for ( i = 1; i < none+1; i++) {
-        none_array.push(this.state['editor'+i])
-      }
-    }
-
-    //비학습카드와 주석이 있을때
-    if (none && !share && !face1 && !face2 && annot && !selection){
-      for ( i = 1; i < none+1; i++) {
-        none_array.push(this.state['editor'+i])
-      }
-      if(annot){
-        for ( i = none+1; i < none+annot+1; i++) {
-          annotation_array.push(this.state['editor'+i])
-        }
-      }
-    }
-
 
     console.log('seq_in_index',this.props.selected_card_seq)
     
@@ -338,15 +292,15 @@ export class EditorTry extends Component {
       cardtype_id:this.props.current_card_type,
       parent_card_id : parent_card_id,
       index_id:this.props.index_id,
-      flag_of_maker : [this.state.flag],
-      share : share_array,
-      none : none_array, 
-      face1 : face1_array,
-      selection : selection_array,
-      face2 : face2_array,
-      annotation : annotation_array,
       seq_in_index:selected_card_seq,
-      type: this.props.card_type_name
+      type: this.props.card_type_name,
+      contents : {
+        face1:face1_array,
+        face2:face2_array,
+        annotation:annotation_array,
+        maker_flag:[this.state.flag],
+        selection:selection_array
+        }
     })
     .then(res => {
       console.log('after submit:', res.data)

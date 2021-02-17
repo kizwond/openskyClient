@@ -25,35 +25,25 @@ class NewCardTemplete extends Component {
 
   handleOk = e => {
     if(this.state.type === "read") {
-      var share = 0
       var face1 = this.state.face1Num
       var selection = 0
       var face2 = 0
-      var none = 0
     } else if(this.state.type === "flip-normal" && this.state.onChangeFlipMode === "normal") {
-      share = 0
       face1 = this.state.face1Num
       selection = 0
       face2 = this.state.face2Num
-      none = 0
     } else if(this.state.type === "flip-normal" && this.state.onChangeFlipMode === "selection") {
-      share = 0
       face1 = this.state.face1Num
       selection = this.state.selection
       face2 = this.state.face2Num
-      none = 0
     } else if(this.state.type === "none") {
-      share = 0
-      face1 = 0
+      face1 = this.state.face1Num
       selection = 0
       face2 = 0
-      none = this.state.face1Num
     } else if(this.state.type === "share") {
-      share = this.state.face1Num
-      face1 = 0
+      face1 =  this.state.face1Num
       selection = 0
       face2 = 0
-      none = 0
     }
 
     console.log('name:', this.state.name)
@@ -62,11 +52,9 @@ class NewCardTemplete extends Component {
     console.log('face1:',face1)
     console.log('selection:',selection)
     console.log('face2:', face2)
-    console.log('share:',share)
-    console.log('none:',none)
 
 
-    this.addCardType({name:this.state.name, type:this.state.type, face1:face1, face2:face2, selection:selection, share:share, none:none})
+    this.addCardType({name:this.state.name, type:this.state.type, face1:face1, face2:face2, selection:selection})
 
     this.setState({
       visible: false,
@@ -79,7 +67,7 @@ class NewCardTemplete extends Component {
   };
 
   addCardType =(value) => {
-    console.log(value)
+    console.log('---------------------????',value)
     const book_id = sessionStorage.getItem("book_id")
     axios.post('api/cardtype/create-cardtype',{
       book_id:book_id,
@@ -88,8 +76,6 @@ class NewCardTemplete extends Component {
       face1: value.face1,
       face2: value.face2,
       selection: value.selection,
-      share: value.share,
-      none:value.none
     }).then(res => {
       console.log(res.data)
       this.props.updateCardTypeState(res.data.cardtypes)
@@ -98,6 +84,20 @@ class NewCardTemplete extends Component {
 
   onChange = e => {
     console.log('radio checked', e.target.value);
+    this.setState({
+      type: e.target.value,
+    });
+  };
+
+  noneStudyOnchange = e => {
+    console.log('noneStudyOnchange checked', e.target.value);
+    this.setState({
+      type: e.target.value,
+    });
+  };
+
+  shareStudyOnchange = e => {
+    console.log('shareStudyOnchange checked', e.target.value);
     this.setState({
       type: e.target.value,
     });
@@ -198,13 +198,13 @@ class NewCardTemplete extends Component {
                           </Radio.Group>
                       </div>}
                 </Radio>
-                <Radio style={{...radioStyle, marginTop:"-25px"}} value='none'>
+                <Radio style={{...radioStyle, marginTop:"-25px"}} onChange={this.noneStudyOnchange} value='none'>
                   <span style={{marginRight:"10px"}}>기타 - 비학습카드</span>
                   <Tooltip title="prompt text" color="#2db7f5" >
                       <QuestionCircleOutlined />
                     </Tooltip>
                 </Radio>
-                <Radio style={radioStyle} value='share'>
+                <Radio style={radioStyle} onChange={this.shareStudyOnchange} value='share'>
                   <span style={{marginRight:"10px"}}>기타 - 공통지문카드</span>
                   <Tooltip title="prompt text" color="#2db7f5" >
                       <QuestionCircleOutlined />
@@ -224,11 +224,11 @@ class NewCardTemplete extends Component {
                     <li>
                       <span>앞면 - 행 개수</span><InputNumber value={this.state.face1Num} onChange={this.onChangeFace1} size="small" style={{width:"100px", fontSize:"11px", marginLeft:"10px"}}placeholder="최대 5행"/>
                     </li>
-                    {this.state.onChangeFlipMode === "selection" ? 
+                    {this.state.onChangeFlipMode === "selection" && this.state.type !== "none" && this.state.type !== "share" && this.state.type !== "read"  ? 
                     <li>
                     <span>앞면 - 보기 개수</span><InputNumber value={this.state.selection} onChange={this.onChangeSelection} size="small" style={{width:"100px", fontSize:"11px", marginLeft:"10px"}}/>
                   </li>  : null}
-                  {this.state.type === "flip-normal" ? 
+                  {this.state.type === "flip-normal" && this.state.type !== "none" && this.state.type !== "share" ? 
                     <li>
                     <span>뒷면 - 행 개수</span><InputNumber value={this.state.face2Num} onChange={this.onChangeFace2} size="small" style={{width:"100px", fontSize:"11px", marginLeft:"10px"}}placeholder="최대 5행"/>
                   </li>  : null}

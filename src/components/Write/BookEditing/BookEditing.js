@@ -89,7 +89,7 @@ export class BookWriting extends Component {
       book_id:value
     })
       .then(res => {
-        console.log("Index List Received : ", res.data.indexList)
+        console.log(res.data)
         sessionStorage.setItem('firstIndex', res.data.indexList[0]._id)
         this.setState({ 
           table_of_contents:res.data.indexList,
@@ -105,7 +105,7 @@ export class BookWriting extends Component {
       book_id:value
     })
       .then(res => {
-        console.log("Cardtype list Received:", res.data.cardtypes)
+        console.log(res.data)
         this.setState({ 
           card_type:res.data.cardtypes
         });
@@ -213,6 +213,7 @@ export class BookWriting extends Component {
     console.log('------------------->',key)
     console.log("check 1", this.state.card_type)
     const contentsList = this.state.card_type.map((content)=>{
+      console.log(content)
       console.log(content.name)
       if(content.name === key){
         console.log('here', content)
@@ -224,10 +225,10 @@ export class BookWriting extends Component {
             const annotLength = content.num_of_row.annotation
             const face_array = []
             for ( var i = 1; i < faceLength_1+1; i++) {
-              face_array.push('1면'+i+'행')
+              face_array.push(content.nick_of_row.face1[i-1])
             }
             for ( i = 1; i < annotLength+1; i++) {
-              face_array.push('주석')
+              face_array.push(content.nick_of_row.annotation[i-1])
             }
             console.log(face_array)
             this.setState({
@@ -243,16 +244,16 @@ export class BookWriting extends Component {
               const annotLength = content.num_of_row.annotation
               const face_array = []
               for ( i = 1; i < faceLength_1+1; i++) {
-                face_array.push('1면'+i+'행')
+                face_array.push(content.nick_of_row.face1[i-1])
               }
               for ( i = 1; i < selectionLength+1; i++) {
-                face_array.push('보기'+i+'행')
+                face_array.push(content.nick_of_row.selection[i-1])
               }
               for ( i = 1; i < faceLength_2+1; i++) {
-                face_array.push('2면'+i+'행')
+                face_array.push(content.nick_of_row.face2[i-1])
               }
               for ( i = 1; i < annotLength+1; i++) {
-                face_array.push('주석')
+                face_array.push(content.nick_of_row.annotation[i-1])
               }
               console.log(face_array)
               this.setState({
@@ -268,13 +269,13 @@ export class BookWriting extends Component {
               const annotLength = content.num_of_row.annotation
               const face_array = []
               for ( i = 1; i < faceLength_1+1; i++) {
-                face_array.push('1면'+i+'행')
+                face_array.push(content.nick_of_row.face1[i-1])
               }
               for ( i = 1; i < faceLength_2+1; i++) {
-                face_array.push('2면'+i+'행')
+                face_array.push(content.nick_of_row.face2[i-1])
               }
               for ( i = 1; i < annotLength+1; i++) {
-                face_array.push('주석')
+                face_array.push(content.nick_of_row.annotation[i-1])
               }
               console.log(face_array)
               this.setState({
@@ -286,36 +287,36 @@ export class BookWriting extends Component {
             }
             
           } else if (cardType === 'share') {
-            const shareLength = content.num_of_row.share
+            const faceLength_1 = content.num_of_row.face1
             const annotLength = content.num_of_row.annotation
             const face_array = []
-            for ( i = 1; i < shareLength+1; i++) {
-              face_array.push('공통'+i+'행')
+            for ( i = 1; i < faceLength_1+1; i++) {
+              face_array.push(content.nick_of_row.face1[i-1])
             }
             for ( i = 1; i < annotLength+1; i++) {
-              face_array.push('주석')
+              face_array.push(content.nick_of_row.annotation[i-1])
             }
             console.log(face_array)
             this.setState({
-              current_card: {'share':shareLength,'annot':annotLength},
+              current_card: {'face1':faceLength_1,'annot':annotLength},
               current_card_type:content._id,
               card_type_name:content.type
             })
             return face_array
 
           } else if (cardType === 'none') {
-            const noneLength = content.num_of_row.none
+            const faceLength_1 = content.num_of_row.face1
             const annotLength = content.num_of_row.annotation
             const face_array = []
-            for ( i = 1; i < noneLength+1; i++) {
-              face_array.push('비학습카드')
+            for ( i = 1; i < faceLength_1+1; i++) {
+              face_array.push(content.nick_of_row.face1[i-1])
             }
             for ( i = 1; i < annotLength+1; i++) {
-              face_array.push('주석')
+              face_array.push(content.nick_of_row.annotation[i-1])
             }
             console.log(face_array)
             this.setState({
-              current_card: {'none':noneLength,'annot':annotLength},
+              current_card: {'face1':faceLength_1,'annot':annotLength},
               current_card_type:content._id,
               card_type_name:content.type
             })
@@ -368,7 +369,6 @@ export class BookWriting extends Component {
     sortValue.sort(function(a, b) { 
       return a.time_created > b.time_created ? -1 : a.time_created < b.time_created ? 1 : 0;
     });
-    console.log("after sort:", sortValue[0])
     const card_id = sortValue[0]._id
     const seq = sortValue[0].seq_in_index
     this.onClickCardHandler(card_id, seq)
@@ -393,11 +393,101 @@ export class BookWriting extends Component {
     this.setState({
       card_selected_detailsetting:value
     })
+    this.getInitialValues(value)
   }
-
+  getInitialValues = (id) => {
+    console.log('11111111111111111111111111',id)
+      const direction = []
+      const margin = []
+      const padding = []
+      const background_color = []
+      const left_right_ratio = []
+        console.log('22222222222222222222222222222')
+        this.state.card_type.map((value)=>{
+          if(value._id === id){
+            direction.push(value.card_style.card_direction)
+            margin.push(value.card_style.outer_margin)
+            padding.push(value.card_style.inner_padding)
+            background_color.push(value.card_style.background_color)
+            left_right_ratio.push(value.card_style.left_right_ratio)
+          }
+        })
+  
+        if(margin.length > 0){
+          var top = margin[0].top
+          var bottom = margin[0].bottom
+          var left = margin[0].left
+          var right = margin[0].right
+        } else {
+          top = ''
+          bottom = ''
+          left = ''
+          right = ''
+        }
+  
+        if(padding.length > 0){
+          var innerPaddingTop = padding[0].top
+          var innerPaddingBottom = padding[0].bottom
+          var innerPaddingLeft = padding[0].left
+          var innerPaddingRight = padding[0].right
+        } else {
+          innerPaddingTop = ''
+          innerPaddingBottom = ''
+          innerPaddingLeft = ''
+          innerPaddingRight = ''
+        }
+  
+        if(background_color.length > 0){
+          var backgroundColor = background_color[0]
+        } else {
+          backgroundColor = background_color[0]
+        }
+  
+        if(backgroundColor === null){
+          backgroundColor = "#ffffff"
+        } else {
+          backgroundColor = background_color[0]
+        }
+  
+        if(left_right_ratio.length > 0){
+          var face1_ratio = left_right_ratio[0].face1
+          var face2_ratio = left_right_ratio[0].face2
+        } else {
+          face1_ratio = left_right_ratio[0].face1
+          face2_ratio = left_right_ratio[0].face2
+        }
+  
+  
+        const initialValues = {
+          card_direction: direction[0],
+          outer_margin:{
+            top,
+            right,
+            left,
+            bottom,
+          },
+          inner_padding:{
+            top:innerPaddingTop,
+            bottom:innerPaddingBottom,
+            left:innerPaddingLeft,
+            right:innerPaddingRight
+          },
+          background_color:backgroundColor,
+          left_right_ratio:{
+            face1:face1_ratio,
+            face2:face2_ratio,
+          }
+        }
+        
+  
+      
+      console.log('선택한 카드타입의 기본값 :',initialValues)
+      this.setState({
+        initialValues:initialValues
+      })
+    
+  }
   async onSelect(selectedKeys, info){
-    console.log('selectedKeys', selectedKeys)
-    console.log('info',info)
     this.setState({
       index_id: info.node.index_id,
       loading : true,
@@ -407,7 +497,7 @@ export class BookWriting extends Component {
       index_id: info.node.index_id
     })
       .then(res => {
-        console.log('Index Clicked!! & Get Crdlist Data: ', res.data.cardlist)
+        console.log(res.data)
         this.setState({ 
           contents:res.data.cardlist,
           loading : false
@@ -416,7 +506,6 @@ export class BookWriting extends Component {
   };
   
   onClickCardHandler = (value, seq) => {
-    console.log(value, seq)
     var elemClass = document.getElementsByClassName("card_class");
     var elemBtnsClass = document.getElementsByClassName("card_edit_btns");
     
@@ -526,20 +615,20 @@ export class BookWriting extends Component {
     
     if(this.state.contents){
       var contentsList = this.state.contents.map((content)=>{
-        console.log('----------------',content)
-        const flag_column_num = content.cardtype_id.num_of_row.maker_flag;
-        const face1_column_num = content.cardtype_id.num_of_row.face1;
-        const selection_column_num = content.cardtype_id.num_of_row.selection;
-        const face2_column_num = content.cardtype_id.num_of_row.face2;
-        const annot_column_num = content.cardtype_id.num_of_row.annotation;
-        const none_column_num = content.cardtype_id.num_of_row.none;
-        const share_column_num = content.cardtype_id.num_of_row.share;
+        const cardTypeChosen = this.state.card_type.find(element => element._id === content.cardtype_id)
+        const flag_column_num = cardTypeChosen.num_of_row.maker_flag;
+        const face1_column_num = cardTypeChosen.num_of_row.face1;
+        const selection_column_num = cardTypeChosen.num_of_row.selection;
+        const face2_column_num = cardTypeChosen.num_of_row.face2;
+        const annot_column_num = cardTypeChosen.num_of_row.annotation;
+        const none_column_num = cardTypeChosen.num_of_row.none;
+        const share_column_num = cardTypeChosen.num_of_row.share;
 
-        const direction = content.cardtype_id.card_style.card_direction;
-        // const annotation_on = content.cardtype_id.annotation;
+        const direction = cardTypeChosen.card_style.card_direction;
+        // const annotation_on = cardTypeChosen.annotation;
 
         // 읽기카드
-        if (content.cardtype_id.type === "read"){
+        if (cardTypeChosen.type === "read"){
             const flag = []
             for( var i = 0; i <flag_column_num; i++){
               flag.push(content.contents.maker_flag[i]) 
@@ -553,10 +642,10 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'content':content,'face1':face1,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
+            total.push({cardTypeDetail:cardTypeChosen, 'content':content,'face1':face1,'annotation_contents':annotation_contents,'type':cardTypeChosen.type, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
 
-        } else if(content.cardtype_id.type === "flip-normal"){
+        } else if(cardTypeChosen.type === "flip-normal"){
           if(selection_column_num > 0){
             const flag = []
             for( i = 0; i <flag_column_num; i++){
@@ -579,7 +668,7 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'content':content,'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
+            total.push({cardTypeDetail:cardTypeChosen,'content':content,'face1':face1,'selection_contents':selection_contents,'face2':face2,'annotation_contents':annotation_contents,'type':cardTypeChosen.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
           } else {
             const flag = []
@@ -599,11 +688,11 @@ export class BookWriting extends Component {
               annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
             }
             const total = []
-            total.push({'content':content,'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':content.cardtype_id.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
+            total.push({cardTypeDetail:cardTypeChosen,'content':content,'face1':face1,'face2':face2,'annotation_contents':annotation_contents,'type':cardTypeChosen.type,'direction':direction, 'flag':flag, 'card_id':content._id, seq_in_index:content.seq_in_index})
             return total
           }
 
-        } else if (content.cardtype_id.type === "none"){
+        } else if (cardTypeChosen.type === "none"){
           const none = []
           for( i = 0; i <none_column_num; i++){
             none.push(<FroalaEditorView model={content.contents.none[i]}/>) 
@@ -613,10 +702,10 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'content':content,'none':none,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
+          total.push({cardTypeDetail:cardTypeChosen,'content':content,'none':none,'annotation_contents':annotation_contents,'type':cardTypeChosen.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
           return total
 
-        } else if (content.cardtype_id.type === "share"){
+        } else if (cardTypeChosen.type === "share"){
           const share = []
           for( i = 0; i <share_column_num; i++){
             share.push(<FroalaEditorView model={content.contents.share[i]}/>) 
@@ -626,7 +715,7 @@ export class BookWriting extends Component {
             annotation_contents.push(<FroalaEditorView model={content.contents.annotation[i]}/>)
           }
           const total = []
-          total.push({'content':content,'share':share,'annotation_contents':annotation_contents,'type':content.cardtype_id.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
+          total.push({cardTypeDetail:cardTypeChosen,'content':content,'share':share,'annotation_contents':annotation_contents,'type':cardTypeChosen.type, 'card_id':content._id, seq_in_index:content.seq_in_index})
           return total
         }
 
@@ -646,10 +735,9 @@ export class BookWriting extends Component {
 
     if(contentsList){
       var list = contentsList.map((content)=>{
-        console.log("why?1111111111111111111111",content[0])
-        const borderTopType = content[0].content.cardtype_id.card_style.border.package.type
-        const borderTopThickness = content[0].content.cardtype_id.card_style.border.package.thickness
-        const borderTopColor = content[0].content.cardtype_id.card_style.border.package.color
+        const borderTopType = content[0].cardTypeDetail.card_style.border.package.type
+        const borderTopThickness = content[0].cardTypeDetail.card_style.border.package.thickness
+        const borderTopColor = content[0].cardTypeDetail.card_style.border.package.color
 
           if(content[0].flag == "1"){
             var star = <StarTwoTone />
@@ -670,14 +758,13 @@ export class BookWriting extends Component {
             childStyle = {cursor:"pointer", backgroundColor:"white", padding:"5px"}
           }
           if(content[0].type === 'read'){
-            console.log(content[0].content.cardtype_id.name)
             return <> <div style={{cursor:"pointer", backgroundColor:"white", padding:"5px", border:`${borderTopType} ${borderTopThickness}px ${borderTopColor}`}} 
                         id={content[0].card_id} 
                         className="card_class"
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                    <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                    <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
@@ -685,7 +772,7 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -722,7 +809,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].face1}</div>
@@ -731,7 +818,7 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                     <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -788,7 +875,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> 
@@ -800,7 +887,7 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                     <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -858,7 +945,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -869,7 +956,7 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                       <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -927,7 +1014,7 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div>{star}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div style={{marginBottom:'5px', display:'flex', flexDirection:'column'}}>
@@ -939,7 +1026,7 @@ export class BookWriting extends Component {
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                     <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -997,14 +1084,14 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].none}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                     <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -1041,14 +1128,14 @@ export class BookWriting extends Component {
                         onClick={() => this.onClickCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseOver={() => this.onMouseOverCardHandler(content[0].card_id,content[0].seq_in_index)} 
                         onMouseLeave={() => this.onLeaveCardHandler(content[0].card_id)} >
-                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].content.cardtype_id.name}</div>
+                           <div style={{fontSize:'11px', color:"blue"}}>참고 : {content[0].cardTypeDetail.name}</div>
                     <div style={{marginBottom:'5px', display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <div>{content[0].share}</div>
                       <div>{content[0].annotation_contents}</div>
                     </div>
                     <div id={content[0].card_id+"_btn"} className="card_edit_btns" style={{display:"none"}}>
                     <div><DefaultButton 
-                                  onClick={() => this.addCardHandler(content[0].content.cardtype_id.name)} 
+                                  onClick={() => this.addCardHandler(content[0].cardTypeDetail.name)} 
                                   size="small" 
                                   >다음카드추가</DefaultButton>
                       </div> 
@@ -1178,7 +1265,7 @@ export class BookWriting extends Component {
           </div>
         </div>
         <div className="right_side_container" style={{marginRight:toggle}}>
-          <SettingTabs card_selected={this.state.card_selected_detailsetting} onCardChangeHandler={this.onCardChangeHandler} cardType={this.state.card_type} toggle={this.state.hide_show_toggle} onClick={this.handleClick}/>
+          <SettingTabs card_selected={this.state.card_selected_detailsetting} onCardChangeHandler={this.onCardChangeHandler} initialValues={this.state.initialValues} cardType={this.state.card_type} toggle={this.state.hide_show_toggle} onClick={this.handleClick}/>
         </div>
       </div>
       </>
